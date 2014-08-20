@@ -16,6 +16,7 @@ import cpw.mods.fml.common.Mod.EventHandler
 import cpw.mods.fml.common.event.{FMLInitializationEvent, FMLPostInitializationEvent, FMLPreInitializationEvent}
 import cpw.mods.fml.common.network.NetworkRegistry
 import cpw.mods.fml.relauncher.Side
+import net.bdew.generators.blocks.turbineController.MachineTurbine
 import net.bdew.generators.compat.PowerProxy
 import net.bdew.generators.config.{Config, TuningLoader}
 import org.apache.logging.log4j.Logger
@@ -52,5 +53,6 @@ object Generators {
   @EventHandler
   def postInit(event: FMLPostInitializationEvent) {
     TuningLoader.loadDealayed()
+    MachineTurbine.loadFuelValues()
   }
 }
