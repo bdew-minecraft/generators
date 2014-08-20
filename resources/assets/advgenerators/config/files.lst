@@ -1,0 +1,4 @@
+# List of internal config files to load
+
+generators.cfg
+recipes.cfg

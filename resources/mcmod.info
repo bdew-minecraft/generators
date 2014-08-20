@@ -1,0 +1,20 @@
+[
+{
+  "modid": "advgenerators",
+  "name": "Advanced Generatos",
+  "description": "",
+  "version": "@GENERATORS_VER@",
+  "url": "http://bdew.net/",
+  "updateUrl": "",
+  "authorList": [
+    "bdew"
+  ],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [
+  ],
+  "parent":"",
+  "dependencies": [
+  ]
+}
+]
