@@ -31,8 +31,8 @@ object FuelTooltipHandler extends IContainerTooltipHandler {
         Misc.asInstanceOpt(itemstack.getItem, classOf[IFluidContainerItem]) flatMap { cont =>
           Option(cont.getFluid(itemstack)) flatMap (fs => Option(fs.getFluid))
         }
-      }) map MachineTurbine.getFuelValue foreach (fv =>
-        currenttip.add(Misc.toLocalF("advgenerators.tooltip.turbine.fuel", DF.format(fv / MachineTurbine.fuelConsumptionMultiplier ))))
+      }) map MachineTurbine.getFuelValue filter (_ > 0) foreach (fv =>
+        currenttip.add(Misc.toLocalF("advgenerators.tooltip.turbine.fuel", DF.format(fv / MachineTurbine.fuelConsumptionMultiplier))))
     }
     currenttip
   }
