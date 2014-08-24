@@ -38,7 +38,7 @@ advgenerators.output.3=Yellow Output
 advgenerators.output.4=Cyan Output
 advgenerators.output.5=Purple Output
 
-advgenerators.tooltip.turbine.fuel=%s MJ/MB in Turbine Generator
+advgenerators.tooltip.turbine.fuel=%s MJ/mB in Turbine Generator
 
 itemGroup.bdew.generators=Advanced Generators
 

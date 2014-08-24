@@ -31,7 +31,7 @@ class GuiTurbine(val te: TileTurbineController, player: EntityPlayer) extends Ba
     widgets.add(new WidgetOutputs(Point(76, 18), te, 6))
     widgets.add(new WidgetInfo(Rect(10, 85, 59, 10), Textures.Icons.turbine, te.numTurbines.cval.toString, Misc.toLocal("advgenerators.label.turbine.turbines")))
     widgets.add(new WidgetInfo(Rect(10, 96, 59, 10), Textures.Icons.peak, int.format(te.mjPerTick.cval) + " MJ/t", Misc.toLocal("advgenerators.label.turbine.maxprod")))
-    widgets.add(new WidgetInfo(Rect(10, 107, 59, 10), Textures.Icons.fluid, dec.format(te.fuelPerTick.cval) + " MB/t", Misc.toLocal("advgenerators.label.turbine.fuel")))
+    widgets.add(new WidgetInfo(Rect(10, 107, 59, 10), Textures.Icons.fluid, dec.format(te.fuelPerTick.cval) + " mB/t", Misc.toLocal("advgenerators.label.turbine.fuel")))
     widgets.add(new WidgetInfo(Rect(10, 118, 59, 10), Textures.Icons.power, int.format(te.mjPerTickAvg.cval) + " MJ/t", Misc.toLocal("advgenerators.label.turbine.prod")))
   }
 }
