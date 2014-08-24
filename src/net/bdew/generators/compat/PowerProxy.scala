@@ -38,6 +38,7 @@ object PowerProxy {
   lazy val haveBC = haveModVersion(BC_MOD_ID)
   lazy val haveIC2 = haveModVersion(IC2_MOD_ID)
   lazy val haveTE = haveModVersion(TE_MOD_ID)
+  lazy val haveBCfuel = haveModVersion("BuildCraftAPI|fuels")
 
   def haveModVersion(modid: String) = lookup.contains(modid)
 

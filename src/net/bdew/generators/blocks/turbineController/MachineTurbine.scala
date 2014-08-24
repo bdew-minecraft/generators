@@ -34,7 +34,7 @@ object MachineTurbine extends Machine("TurbineController", BlockTurbineControlle
   def getFuelValue(fluid: Fluid) = finalFuelValues.getOrElse(fluid, 0F)
 
   def loadFuelValues() {
-    if (tuning.getBoolean("ImportCombustionEngineFuels") && PowerProxy.haveBC)
+    if (tuning.getBoolean("ImportCombustionEngineFuels") && PowerProxy.haveBCfuel)
       finalFuelValues ++= BCCompat.getCombustionEngineFuels
 
     finalFuelValues ++= (fuelValues.keys
