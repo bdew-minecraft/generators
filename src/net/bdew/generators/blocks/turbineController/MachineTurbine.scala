@@ -38,8 +38,14 @@ object MachineTurbine extends Machine("TurbineController", BlockTurbineControlle
       finalFuelValues ++= BCCompat.getCombustionEngineFuels
 
     finalFuelValues ++= (fuelValues.keys
-      filter FluidRegistry.isFluidRegistered
-      map FluidRegistry.getFluid
+      filter { id =>
+      if (FluidRegistry.isFluidRegistered(id)) {
+        true
+      } else {
+        Generators.logWarn("Fuel not found: %s", id)
+        false
+      }
+    } map FluidRegistry.getFluid
       map (f => f -> fuelValues.getFloat(f.getName))
       ).toMap
 
