@@ -12,7 +12,6 @@ package net.bdew.generators.blocks.rfOutput
 import cofh.api.energy.IEnergyHandler
 import net.bdew.generators.config.Tuning
 import net.bdew.lib.multiblock.data.{OutputConfig, OutputConfigPower}
-import net.bdew.lib.multiblock.gui.WidgetPowerOutput
 import net.bdew.lib.multiblock.interact.CIPowerProducer
 import net.bdew.lib.multiblock.tile.{RSControllableOutput, TileOutput}
 import net.minecraftforge.common.util.ForgeDirection
