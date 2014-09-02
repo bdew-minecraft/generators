@@ -12,13 +12,15 @@ package net.bdew.generators.blocks.rfOutput
 import cofh.api.energy.IEnergyHandler
 import net.bdew.generators.config.Tuning
 import net.bdew.lib.multiblock.data.{OutputConfig, OutputConfigPower}
+import net.bdew.lib.multiblock.gui.WidgetPowerOutput
 import net.bdew.lib.multiblock.interact.CIPowerProducer
-import net.bdew.lib.multiblock.tile.TileOutput
+import net.bdew.lib.multiblock.tile.{RSControllableOutput, TileOutput}
 import net.minecraftforge.common.util.ForgeDirection
 
-class TileRfOutput extends TileOutput with IEnergyHandler {
+class TileRfOutput extends TileOutput with RSControllableOutput with IEnergyHandler {
   val kind = "PowerOutput"
-  val unit = "RF"
+
+  override def makeCfgObject(face: ForgeDirection) = new OutputConfigPower("RF")
 
   val ratio = Tuning.getSection("Power").getFloat("RF_MJ_Ratio")
 

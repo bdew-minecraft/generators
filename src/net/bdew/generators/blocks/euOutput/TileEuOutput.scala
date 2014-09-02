@@ -14,16 +14,17 @@ import net.bdew.generators.compat.Ic2EnetRegister
 import net.bdew.generators.config.Tuning
 import net.bdew.lib.multiblock.data.{OutputConfig, OutputConfigPower}
 import net.bdew.lib.multiblock.interact.CIPowerProducer
-import net.bdew.lib.multiblock.tile.TileOutput
+import net.bdew.lib.multiblock.tile.{RSControllableOutput, TileOutput}
 import net.bdew.lib.rotate.RotateableTile
 import net.minecraft.tileentity.TileEntity
 import net.minecraftforge.common.util.ForgeDirection
 
-abstract class TileEuOutputBase(val maxOutput: Int, val tier: Int) extends TileOutput with IEnergySource with Ic2EnetRegister with RotateableTile {
+abstract class TileEuOutputBase(val maxOutput: Int, val tier: Int) extends TileOutput with RSControllableOutput with IEnergySource with Ic2EnetRegister with RotateableTile {
   val kind = "PowerOutput"
-  val unit = "EU"
   val ratio = Tuning.getSection("Power").getFloat("EU_MJ_Ratio")
   var outThisTick = 0F
+
+  override def makeCfgObject(face: ForgeDirection) = new OutputConfigPower("EU")
 
   override def canConnectoToFace(d: ForgeDirection): Boolean = {
     if (rotation.cval != d) return false

@@ -12,12 +12,13 @@ package net.bdew.generators.blocks.mjOutput
 import buildcraft.api.power.{IPowerEmitter, IPowerReceptor, PowerHandler}
 import net.bdew.lib.multiblock.data.{OutputConfig, OutputConfigPower}
 import net.bdew.lib.multiblock.interact.CIPowerProducer
-import net.bdew.lib.multiblock.tile.TileOutput
+import net.bdew.lib.multiblock.tile.{RSControllableOutput, TileOutput}
 import net.minecraftforge.common.util.ForgeDirection
 
-class TileMjOutput extends TileOutput with IPowerReceptor with IPowerEmitter {
+class TileMjOutput extends TileOutput with RSControllableOutput with IPowerReceptor with IPowerEmitter {
   val kind = "PowerOutput"
-  val unit = "MJ"
+
+  override def makeCfgObject(face: ForgeDirection) = new OutputConfigPower("MJ")
 
   def canEmitPowerFrom(side: ForgeDirection): Boolean = true
   def getPowerReceiver(side: ForgeDirection) = null
