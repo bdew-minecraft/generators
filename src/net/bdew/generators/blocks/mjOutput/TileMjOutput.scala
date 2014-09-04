@@ -10,14 +10,15 @@
 package net.bdew.generators.blocks.mjOutput
 
 import buildcraft.api.power.{IPowerEmitter, IPowerReceptor, PowerHandler}
-import net.bdew.lib.multiblock.data.{OutputConfig, OutputConfigPower}
+import net.bdew.lib.multiblock.data.OutputConfigPower
 import net.bdew.lib.multiblock.interact.CIPowerProducer
 import net.bdew.lib.multiblock.tile.{RSControllableOutput, TileOutput}
 import net.minecraftforge.common.util.ForgeDirection
 
-class TileMjOutput extends TileOutput with RSControllableOutput with IPowerReceptor with IPowerEmitter {
+class TileMjOutput extends TileOutput[OutputConfigPower] with RSControllableOutput with IPowerReceptor with IPowerEmitter {
   val kind = "PowerOutput"
 
+  override val outputConfigType = classOf[OutputConfigPower]
   override def makeCfgObject(face: ForgeDirection) = new OutputConfigPower("MJ")
 
   def canEmitPowerFrom(side: ForgeDirection): Boolean = true
@@ -31,9 +32,9 @@ class TileMjOutput extends TileOutput with RSControllableOutput with IPowerRecep
     return pr != null
   }
 
-  def doOutput(face: ForgeDirection, cfg: OutputConfig) {
+  def doOutput(face: ForgeDirection, cfg: OutputConfigPower) {
     getCoreAs[CIPowerProducer] map { core =>
-      val out = if (checkCanOutput(cfg.asInstanceOf[OutputConfigPower])) {
+      val out = if (checkCanOutput(cfg)) {
         mypos.neighbour(face).getTile[IPowerReceptor](worldObj) flatMap (x => Option(x.getPowerReceiver(face))) map { pr =>
           val canExtract = core.extract(pr.getMaxEnergyReceived.toFloat, true)
           if (canExtract >= pr.getMinEnergyReceived) {
@@ -43,7 +44,7 @@ class TileMjOutput extends TileOutput with RSControllableOutput with IPowerRecep
           } else 0
         } getOrElse 0F
       } else 0
-      cfg.asInstanceOf[OutputConfigPower].updateAvg(out)
+      cfg.updateAvg(out)
       core.outputConfig.updated()
     }
   }

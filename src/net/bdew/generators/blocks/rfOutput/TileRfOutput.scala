@@ -11,14 +11,15 @@ package net.bdew.generators.blocks.rfOutput
 
 import cofh.api.energy.IEnergyHandler
 import net.bdew.generators.config.Tuning
-import net.bdew.lib.multiblock.data.{OutputConfig, OutputConfigPower}
+import net.bdew.lib.multiblock.data.OutputConfigPower
 import net.bdew.lib.multiblock.interact.CIPowerProducer
 import net.bdew.lib.multiblock.tile.{RSControllableOutput, TileOutput}
 import net.minecraftforge.common.util.ForgeDirection
 
-class TileRfOutput extends TileOutput with RSControllableOutput with IEnergyHandler {
+class TileRfOutput extends TileOutput[OutputConfigPower] with RSControllableOutput with IEnergyHandler {
   val kind = "PowerOutput"
 
+  override val outputConfigType = classOf[OutputConfigPower]
   override def makeCfgObject(face: ForgeDirection) = new OutputConfigPower("RF")
 
   val ratio = Tuning.getSection("Power").getFloat("RF_MJ_Ratio")
@@ -29,14 +30,14 @@ class TileRfOutput extends TileOutput with RSControllableOutput with IEnergyHand
   override def getEnergyStored(from: ForgeDirection): Int = 0
   override def getMaxEnergyStored(from: ForgeDirection): Int = 0
 
-  def canConnectoToFace(d: ForgeDirection): Boolean = {
+  override def canConnectoToFace(d: ForgeDirection): Boolean = {
     val tile = mypos.neighbour(d).getTile[IEnergyHandler](worldObj).getOrElse(return false)
     return tile.canConnectEnergy(d.getOpposite)
   }
 
-  def doOutput(face: ForgeDirection, cfg: OutputConfig) {
+  override def doOutput(face: ForgeDirection, cfg: OutputConfigPower) {
     getCoreAs[CIPowerProducer] map { core =>
-      val out = if (checkCanOutput(cfg.asInstanceOf[OutputConfigPower])) {
+      val out = if (checkCanOutput(cfg)) {
         mypos.neighbour(face).getTile[IEnergyHandler](worldObj) map { tile =>
           val canExtract = core.extract(Int.MaxValue, true)
           val injected = tile.receiveEnergy(face.getOpposite, (canExtract * ratio).toInt, false)
@@ -44,7 +45,7 @@ class TileRfOutput extends TileOutput with RSControllableOutput with IEnergyHand
           injected
         } getOrElse 0
       } else 0
-      cfg.asInstanceOf[OutputConfigPower].updateAvg(out)
+      cfg.updateAvg(out)
       core.outputConfig.updated()
     }
   }

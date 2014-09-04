@@ -12,18 +12,19 @@ package net.bdew.generators.blocks.euOutput
 import ic2.api.energy.tile.{IEnergyAcceptor, IEnergySource}
 import net.bdew.generators.compat.Ic2EnetRegister
 import net.bdew.generators.config.Tuning
-import net.bdew.lib.multiblock.data.{OutputConfig, OutputConfigPower}
+import net.bdew.lib.multiblock.data.OutputConfigPower
 import net.bdew.lib.multiblock.interact.CIPowerProducer
 import net.bdew.lib.multiblock.tile.{RSControllableOutput, TileOutput}
 import net.bdew.lib.rotate.RotateableTile
 import net.minecraft.tileentity.TileEntity
 import net.minecraftforge.common.util.ForgeDirection
 
-abstract class TileEuOutputBase(val maxOutput: Int, val tier: Int) extends TileOutput with RSControllableOutput with IEnergySource with Ic2EnetRegister with RotateableTile {
+abstract class TileEuOutputBase(val maxOutput: Int, val tier: Int) extends TileOutput[OutputConfigPower] with RSControllableOutput with IEnergySource with Ic2EnetRegister with RotateableTile {
   val kind = "PowerOutput"
   val ratio = Tuning.getSection("Power").getFloat("EU_MJ_Ratio")
   var outThisTick = 0F
 
+  override val outputConfigType = classOf[OutputConfigPower]
   override def makeCfgObject(face: ForgeDirection) = new OutputConfigPower("EU")
 
   override def canConnectoToFace(d: ForgeDirection): Boolean = {
@@ -73,7 +74,7 @@ abstract class TileEuOutputBase(val maxOutput: Int, val tier: Int) extends TileO
 
   serverTick.listen(updateOutput)
 
-  def doOutput(face: ForgeDirection, cfg: OutputConfig) {}
+  def doOutput(face: ForgeDirection, cfg: OutputConfigPower) {}
 }
 
 class TileEuOutputLV extends TileEuOutputBase(128, 1)
