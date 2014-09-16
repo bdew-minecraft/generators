@@ -11,11 +11,12 @@ package net.bdew.generators.blocks.turbineController
 
 import java.text.DecimalFormat
 
+import net.bdew.generators.gui.WidgetOutputs
 import net.bdew.generators.{Generators, Textures}
 import net.bdew.lib.Misc
 import net.bdew.lib.gui._
 import net.bdew.lib.gui.widgets.{WidgetFluidGauge, WidgetLabel}
-import net.bdew.lib.multiblock.gui.{WidgetInfo, WidgetOutputs}
+import net.bdew.lib.multiblock.gui.WidgetInfo
 import net.bdew.lib.power.WidgetPowerGauge
 import net.minecraft.entity.player.EntityPlayer
 
