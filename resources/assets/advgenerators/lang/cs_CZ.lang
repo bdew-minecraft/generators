@@ -1,0 +1,44 @@
+tile.advgenerators.FluidInput.name=Kapalinový vtokový ventil
+tile.advgenerators.FuelTank.name=Palivová nádrž
+tile.advgenerators.MJOutput.name=Emitor pneumatické síly
+tile.advgenerators.PowerCapacitor.name=Kondenzátor
+tile.advgenerators.Turbine.name=Turbína
+tile.advgenerators.TurbineController.name=Ovladač turbíny
+tile.advgenerators.FuelTank.name=Palivová nádrž
+tile.advgenerators.EuOutputLV.name=LV emitor
+tile.advgenerators.EuOutputMV.name=MV emitor
+tile.advgenerators.EuOutputHV.name=HV emitor
+tile.advgenerators.RFOutput.name=Generátor proudění
+
+item.advgenerators.TurbineBlade.name=Čepel turbíny
+item.advgenerators.TurbineRotor.name=Rotor turbíny
+item.advgenerators.IronFrame.name=Železný rám
+item.advgenerators.PowerIO.name=IO modul napájení
+item.advgenerators.IronTubing.name=Železná trubka
+item.advgenerators.IronWiring.name=Rudito-železné vedení
+item.advgenerators.Controller.name=Ovládací obvod
+
+advgenerators.gui.turbine.title=Ovládání turbogenerátoru
+
+advgenerators.module.PowerOutput.name=Vysílací modul napájení
+advgenerators.module.Turbine.name=Turbína
+advgenerators.module.FluidInput.name=Ventil pro příjem tekutin
+advgenerators.module.FuelTank.name=Palivová nádrž
+advgenerators.module.PowerCapacitor.name=Kondenzátor
+
+advgenerators.label.turbine.turbines=Připojené turbíny
+advgenerators.label.turbine.maxprod=Maximální produkce
+advgenerators.label.turbine.fuel=Spotřeba paliva při maximální produkci
+advgenerators.label.turbine.prod=Momentální produkce
+
+advgenerators.output.0=Červený výstup
+advgenerators.output.1=Zelený výstup
+advgenerators.output.2=Modrý výstup
+advgenerators.output.3=Žlutý výstup
+advgenerators.output.4=Azurový výstup
+advgenerators.output.5=Fialový výstup
+
+advgenerators.tooltip.turbine.fuel=%s MJ/mB v Turbogenerátoru
+
+itemGroup.bdew.generators=Pokročilé Generátory
+
