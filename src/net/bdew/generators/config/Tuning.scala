@@ -24,7 +24,7 @@ object TuningLoader {
     override def newParser() = new RecipeParser with GenericConfigParser
   }
 
-  def loadDealayed() = loader.processDelayedStatements()
+  def loadDealayed() = loader.processRecipeStatements()
 
   def loadConfigFiles() {
     val listReader = new BufferedReader(new InputStreamReader(
