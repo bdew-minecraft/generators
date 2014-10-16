@@ -1,13 +1,13 @@
 tile.advgenerators.FluidInput.name=액체 주입 밸브
 tile.advgenerators.FuelTank.name=연료 탱크
-tile.advgenerators.MJOutput.name=마인크래프트 쥴 방출체
+tile.advgenerators.MJOutput.name=마인크래프트 쥴 방출블럭
 tile.advgenerators.PowerCapacitor.name=축전기
 tile.advgenerators.Turbine.name=터빈
 tile.advgenerators.TurbineController.name=터빈 조작기
 tile.advgenerators.FuelTank.name=연료 탱크
-tile.advgenerators.EuOutputLV.name=LV 방출체
-tile.advgenerators.EuOutputMV.name=MV 방출체
-tile.advgenerators.EuOutputHV.name=HV 방출체
+tile.advgenerators.EuOutputLV.name=LV 방출블럭
+tile.advgenerators.EuOutputMV.name=MV 방출블럭
+tile.advgenerators.EuOutputHV.name=HV 방출블럭
 tile.advgenerators.RFOutput.name=플럭스 발전기
 
 item.advgenerators.TurbineBlade.name=터빈 날
@@ -20,7 +20,7 @@ item.advgenerators.Controller.name=조작 회로
 
 advgenerators.gui.turbine.title=터빈 조작기
 
-advgenerators.module.PowerOutput.name=파워 방출체 모듈
+advgenerators.module.PowerOutput.name=파워 방출블럭 모듈
 advgenerators.module.Turbine.name=터빈
 advgenerators.module.FluidInput.name=액체 주입 밸브
 advgenerators.module.FuelTank.name=연료 탱크
@@ -31,14 +31,14 @@ advgenerators.label.turbine.maxprod=최대생산량
 advgenerators.label.turbine.fuel=최대 연료 소비
 advgenerators.label.turbine.prod=전력 생산
 
-advgenerators.output.0=빨강색 출력
-advgenerators.output.1=초록색 출력
-advgenerators.output.2=파랑색 출력
-advgenerators.output.3=노랑색 출력
-advgenerators.output.4=청록색 출력
-advgenerators.output.5=보라색 출력
+advgenerators.output.0=빨강색부분 출력
+advgenerators.output.1=초록색부분 출력
+advgenerators.output.2=파랑색부분 출력
+advgenerators.output.3=노랑색부분 출력
+advgenerators.output.4=청록색부분 출력
+advgenerators.output.5=보라색부분 출력
 
 advgenerators.tooltip.turbine.fuel=%s MJ/mB 터빈이 발전중입니다
 
-itemGroup.bdew.generators=어드벤스드 제너레이터
+itemGroup.bdew.generators=어드벤스드 제너레이터[Advanced Generators]
 
