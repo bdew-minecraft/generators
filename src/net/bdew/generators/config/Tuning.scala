@@ -11,10 +11,9 @@ package net.bdew.generators.config
 
 import java.io._
 
-import cpw.mods.fml.common.FMLCommonHandler
 import net.bdew.generators.Generators
 import net.bdew.lib.recipes.gencfg.{ConfigSection, GenericConfigLoader, GenericConfigParser}
-import net.bdew.lib.recipes.{RecipeLoader, RecipeParser}
+import net.bdew.lib.recipes.{RecipeLoader, RecipeParser, RecipesHelper}
 
 object Tuning extends ConfigSection
 
@@ -27,57 +26,21 @@ object TuningLoader {
   def loadDealayed() = loader.processRecipeStatements()
 
   def loadConfigFiles() {
-    val listReader = new BufferedReader(new InputStreamReader(
-      getClass.getResourceAsStream("/assets/advgenerators/config/files.lst")))
-    val list = Iterator.continually(listReader.readLine)
-      .takeWhile(_ != null)
-      .map(_.trim)
-      .filterNot(_.startsWith("#"))
-      .filterNot(_.isEmpty)
-      .toList
-    listReader.close()
-
     if (!Generators.configDir.exists()) {
       Generators.configDir.mkdir()
+      val nl = System.getProperty("line.separator")
       val f = new FileWriter(new File(Generators.configDir, "readme.txt"))
-      f.write("Any .cfg files in this directory will be loaded after the internal configuration, in alpahabetic order\n")
-      f.write("Files in 'overrides' directory with matching names cab be used to override internal configuration\n")
+      f.write("Any .cfg files in this directory will be loaded after the internal configuration, in alpahabetic order" + nl)
+      f.write("Files in 'overrides' directory with matching names cab be used to override internal configuration" + nl)
       f.close()
     }
 
-    val overrideDir = new File(Generators.configDir, "overrides")
-    if (!overrideDir.exists()) overrideDir.mkdir()
-
-    Generators.logInfo("Loading internal config files")
-
-    for (fileName <- list) {
-      val overrideFile = new File(overrideDir, fileName)
-      if (overrideFile.exists()) {
-        tryLoadConfig(new FileReader(overrideFile), overrideFile.getCanonicalPath)
-      } else {
-        val resname = "/assets/advgenerators/config/" + fileName
-        tryLoadConfig(new InputStreamReader(getClass.getResourceAsStream(resname)), getClass.getResource(resname).toString)
-      }
-    }
-
-    Generators.logInfo("Loading user config files")
-
-    for (fileName <- Generators.configDir.list().sorted if fileName.endsWith(".cfg")) {
-      val file = new File(Generators.configDir, fileName)
-      if (file.canRead) tryLoadConfig(new FileReader(file), file.getCanonicalPath)
-    }
-  }
-
-  def tryLoadConfig(reader: Reader, path: String) {
-    Generators.logInfo("Loading config: %s", path)
-    try {
-      loader.load(reader)
-    } catch {
-      case e: Throwable =>
-        FMLCommonHandler.instance().raiseException(e, "generators config loading failed in file %s: %s".format(path, e.getMessage), true)
-    } finally {
-      reader.close()
-    }
+    RecipesHelper.loadConfigs(
+      modName = "Advanced Generators",
+      listResource = "/assets/advgenerators/config/files.lst",
+      configDir = Generators.configDir,
+      resBaseName = "/assets/advgenerators/config/",
+      loader = loader)
   }
 }
 
