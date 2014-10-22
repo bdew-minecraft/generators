@@ -9,7 +9,7 @@
 
 package net.bdew.generators.blocks.turbineController
 
-import net.bdew.generators.config.Modules
+import net.bdew.generators.config.{TurbineFuel, Modules}
 import net.bdew.generators.{Generators, GeneratorsResourceProvider}
 import net.bdew.lib.Misc
 import net.bdew.lib.data.base.UpdateKind
@@ -44,7 +44,7 @@ class TileTurbineController extends TileControllerGui with CIFluidInput with CIO
   }
 
   def doUpdate() {
-    val fuelPerMj = if (fuel.getFluidAmount > 0) 1 / cfg.getFuelValue(fuel.getFluid.getFluid) * cfg.fuelConsumptionMultiplier else 0
+    val fuelPerMj = if (fuel.getFluidAmount > 0) 1 / TurbineFuel.getFuelValue(fuel.getFluid.getFluid) * cfg.fuelConsumptionMultiplier else 0
     fuelPerTick := fuelPerMj * mjPerTick
 
     if (burnTime < 5 && fuelPerMj > 0 && mjPerTick > 0) {
@@ -70,7 +70,7 @@ class TileTurbineController extends TileControllerGui with CIFluidInput with CIO
   def inputFluid(resource: FluidStack, doFill: Boolean): Int =
     if (canInputFluid(resource.getFluid)) fuel.fill(resource, doFill) else 0
 
-  def canInputFluid(fluid: Fluid) = cfg.getFuelValue(fluid) > 0
+  def canInputFluid(fluid: Fluid) = TurbineFuel.isValidFuel(fluid)
   def getTankInfo = Array(fuel.getInfo)
 
   def extract(v: Float, simulate: Boolean) = power.extract(v, simulate)

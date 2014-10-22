@@ -13,14 +13,50 @@ import java.io._
 
 import net.bdew.generators.Generators
 import net.bdew.lib.recipes.gencfg.{ConfigSection, GenericConfigLoader, GenericConfigParser}
-import net.bdew.lib.recipes.{RecipeLoader, RecipeParser, RecipesHelper}
+import net.bdew.lib.recipes.{RecipeLoader, RecipeParser, RecipeStatement, RecipesHelper}
+import net.minecraftforge.fluids.FluidRegistry
 
 object Tuning extends ConfigSection
 
 object TuningLoader {
+
+  case class RsTurbineFuel(fluid: String, value: Float) extends RecipeStatement
+
+  case class RsTurbineBlacklist(fluid: String) extends RecipeStatement
+
+  class Parser extends RecipeParser with GenericConfigParser {
+    def valOrDisable = (
+      (decimalNumber <~ "MJ/mB") ^^ { case x => Some(x.toFloat) }
+        | "BLACKLIST" ^^^ None
+      )
+
+    def turbineFuel = "turbine-fuel" ~> ":" ~> str ~ valOrDisable ^^ {
+      case fluid ~ Some(v) => RsTurbineFuel(fluid, v)
+      case fluid ~ None => RsTurbineBlacklist(fluid)
+    }
+
+    override def recipeStatement = super.recipeStatement | turbineFuel
+  }
+
   val loader = new RecipeLoader with GenericConfigLoader {
     val cfgStore = Tuning
-    override def newParser() = new RecipeParser with GenericConfigParser
+
+    def getFluid(s: String) =
+      Option(FluidRegistry.getFluid(s)).getOrElse(error("Fluid %s not found", s))
+
+    override def newParser() = new Parser
+    override def processRecipeStatement(st: RecipeStatement) = st match {
+
+      case RsTurbineFuel(fluid, value) =>
+        Generators.logInfo("Adding turbine fuel %s at %f MJ/mB", fluid, value)
+        TurbineFuel.addFuel(getFluid(fluid), value)
+
+      case RsTurbineBlacklist(fluid) =>
+        Generators.logInfo("Blacklisting turbine fuel %s")
+        TurbineFuel.removeFuel(getFluid(fluid))
+
+      case _ => super.processRecipeStatement(st)
+    }
   }
 
   def loadDealayed() = loader.processRecipeStatements()

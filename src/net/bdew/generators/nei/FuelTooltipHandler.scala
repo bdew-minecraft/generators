@@ -14,6 +14,7 @@ import java.util
 
 import codechicken.nei.guihook.IContainerTooltipHandler
 import net.bdew.generators.blocks.turbineController.MachineTurbine
+import net.bdew.generators.config.TurbineFuel
 import net.bdew.lib.Misc
 import net.minecraft.client.gui.inventory.GuiContainer
 import net.minecraft.item.ItemStack
@@ -31,7 +32,7 @@ object FuelTooltipHandler extends IContainerTooltipHandler {
         Misc.asInstanceOpt(itemstack.getItem, classOf[IFluidContainerItem]) flatMap { cont =>
           Option(cont.getFluid(itemstack)) flatMap (fs => Option(fs.getFluid))
         }
-      }) map MachineTurbine.getFuelValue filter (_ > 0) foreach (fv =>
+      }) map TurbineFuel.getFuelValue filter (_ > 0) foreach (fv =>
         currenttip.add(Misc.toLocalF("advgenerators.tooltip.turbine.fuel", DF.format(fv / MachineTurbine.fuelConsumptionMultiplier))))
     }
     currenttip

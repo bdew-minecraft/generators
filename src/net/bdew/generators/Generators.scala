@@ -18,7 +18,7 @@ import cpw.mods.fml.common.network.NetworkRegistry
 import cpw.mods.fml.relauncher.Side
 import net.bdew.generators.blocks.turbineController.MachineTurbine
 import net.bdew.generators.compat.PowerProxy
-import net.bdew.generators.config.{Config, TuningLoader}
+import net.bdew.generators.config.{TurbineFuel, Config, TuningLoader}
 import org.apache.logging.log4j.Logger
 
 @Mod(modid = Generators.modId, version = "GENERATORS_VER", name = "Advanced Generators", dependencies = "after:BuildCraft|energy;after:BuildCraft|Silicon;after:IC2;after:CoFHCore;after:ThermalExpansion;required-after:bdlib", modLanguage = "scala")
@@ -47,12 +47,13 @@ object Generators {
 
   @EventHandler
   def init(event: FMLInitializationEvent) {
+    TurbineFuel.init()
     NetworkRegistry.INSTANCE.registerGuiHandler(this, Config.guiHandler)
   }
 
   @EventHandler
   def postInit(event: FMLPostInitializationEvent) {
     TuningLoader.loadDealayed()
-    MachineTurbine.loadFuelValues()
+    TurbineFuel.postInit()
   }
 }

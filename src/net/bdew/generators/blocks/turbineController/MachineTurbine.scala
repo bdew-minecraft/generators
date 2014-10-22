@@ -22,40 +22,10 @@ object MachineTurbine extends Machine("TurbineController", BlockTurbineControlle
   def guiId: Int = 1
   type TEClass = TileTurbineController
 
-  var finalFuelValues = Map.empty[Fluid, Float]
-
-  lazy val fuelValues = tuning.getSection("FuelValues")
   lazy val mjPerTickPerTurbine = tuning.getFloat("MJPerTickPerTurbine")
   lazy val fuelConsumptionMultiplier = tuning.getFloat("FuelConsumptionMultiplier")
   lazy val internalPowerCapacity = tuning.getInt("InternalPowerCapacity")
   lazy val internalFuelCapacity = tuning.getInt("InternalFuelCapacity")
-  lazy val minFuelValue = tuning.getFloat("MinimumFuelValue")
-
-  def getFuelValue(fluid: Fluid) = finalFuelValues.getOrElse(fluid, 0F)
-
-  def loadFuelValues() {
-    if (tuning.getBoolean("ImportCombustionEngineFuels") && PowerProxy.haveBCfuel)
-      finalFuelValues ++= BCCompat.getCombustionEngineFuels
-
-    finalFuelValues ++= (fuelValues.keys
-      filter { id =>
-      if (FluidRegistry.isFluidRegistered(id)) {
-        true
-      } else {
-        Generators.logWarn("Fuel not found: %s", id)
-        false
-      }
-    } map FluidRegistry.getFluid
-      map (f => f -> fuelValues.getFloat(f.getName))
-      ).toMap
-
-    finalFuelValues = finalFuelValues.filter(_._2 > minFuelValue) // remove disabled fuels
-
-    Generators.logInfo("Turbine fuels:")
-    for ((fuel, value) <- finalFuelValues) {
-      Generators.logInfo(" * %s: %.0f MJ/MB".format(fuel.getName, value))
-    }
-  }
 
   @SideOnly(Side.CLIENT)
   def getGui(te: TileTurbineController, player: EntityPlayer) = new GuiTurbine(te, player)
