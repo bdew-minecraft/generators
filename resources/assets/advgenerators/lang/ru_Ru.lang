@@ -1,0 +1,43 @@
+tile.advgenerators.FluidInput.name=Жидкостный клапан
+tile.advgenerators.FuelTank.name=Топливный бак
+tile.advgenerators.MJOutput.name=Излучатель MJ
+tile.advgenerators.PowerCapacitor.name=Накопитель энергии
+tile.advgenerators.Turbine.name=Турбина
+tile.advgenerators.TurbineController.name=Контроллер турбины
+tile.advgenerators.FuelTank.name=Топливный бак
+tile.advgenerators.EuOutputLV.name=Излучатель НН
+tile.advgenerators.EuOutputMV.name=Излучатель СН
+tile.advgenerators.EuOutputHV.name=Излучатель ВН
+tile.advgenerators.RFOutput.name=Излучатель RF
+
+item.advgenerators.TurbineBlade.name=Лопатка турбины
+item.advgenerators.TurbineRotor.name=Ротор турбины
+item.advgenerators.IronFrame.name=Железная рамка
+item.advgenerators.PowerIO.name=Модуль управления
+item.advgenerators.IronTubing.name=Железная проводка
+item.advgenerators.IronWiring.name=Редстоун проводка
+item.advgenerators.Controller.name=Контрольная схема
+
+advgenerators.gui.turbine.title=Управление турбиновым генератором
+
+advgenerators.module.PowerOutput.name=Модуль вывода энергии
+advgenerators.module.Turbine.name=Турбина
+advgenerators.module.FluidInput.name=Жидкостный клапан
+advgenerators.module.FuelTank.name=Топливный бак
+advgenerators.module.PowerCapacitor.name=Накопитель энергии
+
+advgenerators.label.turbine.turbines=Подключенные турбины
+advgenerators.label.turbine.maxprod=Пик.продукция
+advgenerators.label.turbine.fuel=Пик.расход топлива
+advgenerators.label.turbine.prod=Текущ.продукция
+
+advgenerators.output.0=Красный выход
+advgenerators.output.1=Зеленый выход
+advgenerators.output.2=Синий выход
+advgenerators.output.3=Жёлтый выход
+advgenerators.output.4=Голубой выход
+advgenerators.output.5=Фиолетовый выход
+
+advgenerators.tooltip.turbine.fuel=%s MJ/mB в Турбиновом генераторе
+
+itemGroup.bdew.generators=Продвинутые генераторы
