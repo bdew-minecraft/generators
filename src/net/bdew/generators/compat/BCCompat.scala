@@ -10,13 +10,15 @@
 package net.bdew.generators.compat
 
 import buildcraft.api.fuels.BuildcraftFuelRegistry
+import net.bdew.generators.config.Tuning
 
 object BCCompat {
+  lazy val rfRatio = Tuning.getSection("Power").getFloat("RF_MJ_Ratio")
 
   import scala.collection.JavaConversions._
 
   def getCombustionEngineFuels =
     for (fuel <- BuildcraftFuelRegistry.fuel.getFuels) yield {
-      fuel.getFluid -> fuel.getPowerPerCycle * fuel.getTotalBurningTime / 1000F
+      fuel.getFluid -> fuel.getPowerPerCycle * fuel.getTotalBurningTime / 1000F / rfRatio
     }
 }
