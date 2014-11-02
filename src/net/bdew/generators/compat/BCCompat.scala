@@ -9,13 +9,14 @@
 
 package net.bdew.generators.compat
 
-import buildcraft.api.fuels.IronEngineFuel
+import buildcraft.api.fuels.BuildcraftFuelRegistry
 
 object BCCompat {
-  def getCombustionEngineFuels = {
-    import scala.collection.JavaConversions._
-    IronEngineFuel.fuels map { case (id, fuel) =>
-      fuel.liquid -> fuel.powerPerCycle * fuel.totalBurningTime / 1000F
+
+  import scala.collection.JavaConversions._
+
+  def getCombustionEngineFuels =
+    for (fuel <- BuildcraftFuelRegistry.fuel.getFuels) yield {
+      fuel.getFluid -> fuel.getPowerPerCycle * fuel.getTotalBurningTime / 1000F
     }
-  }
 }
