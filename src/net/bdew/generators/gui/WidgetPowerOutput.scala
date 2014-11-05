@@ -21,5 +21,5 @@ class WidgetPowerOutput(te: CIOutputFaces, output: Int) extends WidgetOutputDisp
   def cfg = te.outputConfig(output).asInstanceOf[OutputConfigPower]
   val dec = new DecimalFormat("#,##0")
   add(new WidgetDynLabel("%s %s/t".format(dec.format(cfg.avg), cfg.unit), 1, 5, Color.darkgray))
-  add(new WidgetRSConfig(te, output, Point(56, 1)))
+  add(new WidgetRSConfig(te, output, Point(73, 1)))
 }

@@ -15,14 +15,14 @@ import net.bdew.lib.multiblock.data.OutputConfigPower
 import net.bdew.lib.multiblock.gui.WidgetOutputIcon
 import net.bdew.lib.multiblock.interact.CIOutputFaces
 
-class WidgetOutputs(p: Point, te: CIOutputFaces, rows: Int) extends WidgetSubcontainer(new Rect(p, 92, 19 * rows)) {
+class WidgetOutputs(p: Point, te: CIOutputFaces, rows: Int) extends WidgetSubcontainer(new Rect(p, 108, 19 * rows)) {
   for (i <- 0 until rows)
     add(new WidgetOutputRow(Point(0, 19 * i), te, i))
 }
 
-class WidgetOutputDisplay extends WidgetSubcontainer(Rect(20, 0, 72, 18))
+class WidgetOutputDisplay extends WidgetSubcontainer(Rect(20, 0, 88, 18))
 
-class WidgetOutputRow(p: Point, te: CIOutputFaces, output: Int) extends WidgetMultipane(new Rect(p, 92, 18)) {
+class WidgetOutputRow(p: Point, te: CIOutputFaces, output: Int) extends WidgetMultipane(new Rect(p, 108, 18)) {
   add(new WidgetOutputIcon(Point(1, 1), te, output))
   val emptyPane = addPane(new WidgetSubcontainer(rect))
   val powerPane = addPane(new WidgetPowerOutput(te, output))
