@@ -7,19 +7,10 @@
  * http://bdew.net/minecraft-mod-public-license/
  */
 
-package net.bdew.generators.config
+package net.bdew.generators.modules.fuelTank
 
-import net.bdew.lib.recipes.gencfg.ConfigSection
+import net.bdew.lib.multiblock.tile.TileModule
 
-object Tuning extends ConfigSection
-
-
-
-
-
-
-
-
-
-
-
+class TileFuelTank extends TileModule {
+  val kind: String = "FuelTank"
+}

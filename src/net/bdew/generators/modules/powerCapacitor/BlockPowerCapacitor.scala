@@ -7,19 +7,8 @@
  * http://bdew.net/minecraft-mod-public-license/
  */
 
-package net.bdew.generators.config
+package net.bdew.generators.modules.powerCapacitor
 
-import net.bdew.lib.recipes.gencfg.ConfigSection
+import net.bdew.generators.modules.BaseModule
 
-object Tuning extends ConfigSection
-
-
-
-
-
-
-
-
-
-
-
+object BlockPowerCapacitor extends BaseModule("PowerCapacitor", "PowerCapacitor", classOf[TilePowerCapacitor])

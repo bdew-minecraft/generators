@@ -7,19 +7,10 @@
  * http://bdew.net/minecraft-mod-public-license/
  */
 
-package net.bdew.generators.config
+package net.bdew.generators.config.loader
 
-import net.bdew.lib.recipes.gencfg.ConfigSection
+import net.bdew.lib.recipes.RecipeStatement
 
-object Tuning extends ConfigSection
+case class RsTurbineFuel(fluid: String, value: Float) extends RecipeStatement
 
-
-
-
-
-
-
-
-
-
-
+case class RsTurbineBlacklist(fluid: String) extends RecipeStatement

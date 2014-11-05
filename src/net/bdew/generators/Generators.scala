@@ -16,9 +16,9 @@ import cpw.mods.fml.common.Mod.EventHandler
 import cpw.mods.fml.common.event.{FMLInitializationEvent, FMLPostInitializationEvent, FMLPreInitializationEvent}
 import cpw.mods.fml.common.network.NetworkRegistry
 import cpw.mods.fml.relauncher.Side
-import net.bdew.generators.blocks.turbineController.MachineTurbine
 import net.bdew.generators.compat.PowerProxy
-import net.bdew.generators.config.{TurbineFuel, Config, TuningLoader}
+import net.bdew.generators.config.loader.TuningLoader
+import net.bdew.generators.config.{Config, TurbineFuel}
 import org.apache.logging.log4j.Logger
 
 @Mod(modid = Generators.modId, version = "GENERATORS_VER", name = "Advanced Generators", dependencies = "after:BuildCraft|energy;after:BuildCraft|Silicon;after:IC2;after:CoFHCore;after:ThermalExpansion;required-after:bdlib", modLanguage = "scala")

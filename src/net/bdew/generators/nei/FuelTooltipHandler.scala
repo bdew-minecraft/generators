@@ -13,8 +13,8 @@ import java.text.DecimalFormat
 import java.util
 
 import codechicken.nei.guihook.IContainerTooltipHandler
-import net.bdew.generators.blocks.turbineController.MachineTurbine
 import net.bdew.generators.config.TurbineFuel
+import net.bdew.generators.controllers.turbine.MachineTurbine
 import net.bdew.lib.Misc
 import net.minecraft.client.gui.inventory.GuiContainer
 import net.minecraft.item.ItemStack

@@ -7,19 +7,8 @@
  * http://bdew.net/minecraft-mod-public-license/
  */
 
-package net.bdew.generators.config
+package net.bdew.generators.modules.fuelTank
 
-import net.bdew.lib.recipes.gencfg.ConfigSection
+import net.bdew.generators.modules.BaseModule
 
-object Tuning extends ConfigSection
-
-
-
-
-
-
-
-
-
-
-
+object BlockFuelTank extends BaseModule("FuelTank", "FuelTank", classOf[TileFuelTank])

@@ -10,14 +10,14 @@
 package net.bdew.generators.config
 
 import net.bdew.generators.CreativeTabsGenerators
-import net.bdew.generators.blocks.euOutput.{BlockEuOutputHV, BlockEuOutputLV, BlockEuOutputMV}
-import net.bdew.generators.blocks.fluidInput.BlockFluidInput
-import net.bdew.generators.blocks.fuelTank.BlockFuelTank
-import net.bdew.generators.blocks.mjOutput.BlockMjOutput
-import net.bdew.generators.blocks.powerCapacitor.BlockPowerCapacitor
-import net.bdew.generators.blocks.rfOutput.BlockRfOutput
-import net.bdew.generators.blocks.turbine.BlockTurbine
 import net.bdew.generators.compat.PowerProxy
+import net.bdew.generators.modules.euOutput.{BlockEuOutputHV, BlockEuOutputLV, BlockEuOutputMV}
+import net.bdew.generators.modules.fluidInput.BlockFluidInput
+import net.bdew.generators.modules.fuelTank.BlockFuelTank
+import net.bdew.generators.modules.mjOutput.BlockMjOutput
+import net.bdew.generators.modules.powerCapacitor.BlockPowerCapacitor
+import net.bdew.generators.modules.rfOutput.BlockRfOutput
+import net.bdew.generators.modules.turbine.BlockTurbine
 import net.bdew.lib.config.BlockManager
 
 object Blocks extends BlockManager(CreativeTabsGenerators.main) {

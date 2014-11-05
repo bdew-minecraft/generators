@@ -7,19 +7,8 @@
  * http://bdew.net/minecraft-mod-public-license/
  */
 
-package net.bdew.generators.config
+package net.bdew.generators.modules.fluidInput
 
-import net.bdew.lib.recipes.gencfg.ConfigSection
+import net.bdew.generators.modules.BaseModule
 
-object Tuning extends ConfigSection
-
-
-
-
-
-
-
-
-
-
-
+object BlockFluidInput extends BaseModule("FluidInput", "FluidInput", classOf[TileFluidInput])
