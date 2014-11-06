@@ -10,6 +10,7 @@
 package net.bdew.generators.compat
 
 import buildcraft.api.fuels.BuildcraftFuelRegistry
+import net.bdew.generators.Generators
 import net.bdew.generators.config.Tuning
 
 object BCCompat {
@@ -18,7 +19,12 @@ object BCCompat {
   import scala.collection.JavaConversions._
 
   def getCombustionEngineFuels =
-    for (fuel <- BuildcraftFuelRegistry.fuel.getFuels) yield {
-      fuel.getFluid -> fuel.getPowerPerCycle * fuel.getTotalBurningTime / 1000F / rfRatio
+    if (BuildcraftFuelRegistry.fuel == null) {
+      Generators.logWarn("Buildcraft fuel API is available but registry is not initialized - not importing fuels")
+      List.empty
+    } else {
+      for (fuel <- BuildcraftFuelRegistry.fuel.getFuels) yield {
+        fuel.getFluid -> fuel.getPowerPerCycle * fuel.getTotalBurningTime / 1000F / rfRatio
+      }
     }
 }

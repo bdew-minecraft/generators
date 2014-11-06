@@ -11,6 +11,7 @@ package net.bdew.generators.compat
 
 import java.util
 
+import cpw.mods.fml.common.versioning.VersionParser
 import cpw.mods.fml.common.{Loader, ModAPIManager, ModContainer}
 import net.bdew.generators.Generators
 import net.bdew.generators.config.Tuning
@@ -38,9 +39,12 @@ object PowerProxy {
   lazy val haveBC = haveModVersion(BC_MOD_ID)
   lazy val haveIC2 = haveModVersion(IC2_MOD_ID)
   lazy val haveTE = haveModVersion(TE_MOD_ID)
-  lazy val haveBCfuel = haveModVersion("BuildCraftAPI|fuels")
+  lazy val haveBCfuel = haveModVersion("BuildCraftAPI|fuels@[2.0,)")
 
   def haveModVersion(modid: String) = lookup.contains(modid)
+
+  def haveModVersion(modid: String, spec: String) =
+    lookup.contains(modid) && VersionParser.parseVersionReference(spec).containsVersion(lookup(modid).getProcessedVersion)
 
   def getModVersion(modid: String): String = {
     val cont = lookup.getOrElse(modid, return "NOT FOUND")
