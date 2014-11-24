@@ -9,7 +9,7 @@
 
 package net.bdew.generators.config
 
-import net.bdew.generators.CreativeTabsGenerators
+import net.bdew.generators.blocks.BlockSteam
 import net.bdew.generators.compat.PowerProxy
 import net.bdew.generators.modules.euOutput.{BlockEuOutputHV, BlockEuOutputLV, BlockEuOutputMV}
 import net.bdew.generators.modules.fluidInput.BlockFluidInput
@@ -18,7 +18,10 @@ import net.bdew.generators.modules.mjOutput.BlockMjOutput
 import net.bdew.generators.modules.powerCapacitor.BlockPowerCapacitor
 import net.bdew.generators.modules.rfOutput.BlockRfOutput
 import net.bdew.generators.modules.turbine.BlockTurbine
+import net.bdew.generators.{CreativeTabsGenerators, Generators}
 import net.bdew.lib.config.BlockManager
+import net.minecraft.item.EnumRarity
+import net.minecraftforge.fluids.{Fluid, FluidRegistry}
 
 object Blocks extends BlockManager(CreativeTabsGenerators.main) {
   regBlock(BlockFluidInput)
@@ -38,4 +41,21 @@ object Blocks extends BlockManager(CreativeTabsGenerators.main) {
   regBlock(BlockTurbine)
   regBlock(BlockFuelTank)
   regBlock(BlockPowerCapacitor)
+
+  val steamFluid = if (!FluidRegistry.isFluidRegistered("steam")) {
+    Generators.logInfo("Steam not registered by any other mod, creating...")
+    val newSteam = new Fluid("steam") // Values shamelesly stolen from BR
+      .setTemperature(1000)
+      .setGaseous(true)
+      .setLuminosity(0)
+      .setRarity(EnumRarity.common)
+      .setDensity(-10)
+    FluidRegistry.registerFluid(newSteam)
+    newSteam
+  } else FluidRegistry.getFluid("steam")
+
+  if (steamFluid.getBlock == null) {
+    Generators.logInfo("Adding steam block")
+    steamFluid.setBlock(regBlock(new BlockSteam(steamFluid), "steam"))
+  }
 }

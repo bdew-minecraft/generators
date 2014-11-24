@@ -9,6 +9,7 @@ tile.advgenerators.EuOutputLV.name=LV Emitter
 tile.advgenerators.EuOutputMV.name=MV Emitter
 tile.advgenerators.EuOutputHV.name=HV Emitter
 tile.advgenerators.RFOutput.name=Flux Generator
+tile.advgenerators.steam.name=Steam
 
 item.advgenerators.TurbineBlade.name=Turbine Blade
 item.advgenerators.TurbineRotor.name=Turbine Rotor
@@ -43,3 +44,7 @@ advgenerators.tooltip.turbine.fuel=%s MJ/mB in Turbine Generator
 
 itemGroup.bdew.generators=Advanced Generators
 
+resource.item.format = %s / %s
+resource.fluid.format =  %s / %s mB
+
+fluid.steam=Steam
