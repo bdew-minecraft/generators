@@ -18,11 +18,9 @@ import net.bdew.generators.config.Tuning
 
 object PowerProxy {
   final val IC2_MOD_ID = "IC2"
-  final val BC_MOD_ID = "BuildCraftAPI|power"
   final val TE_MOD_ID = "CoFHAPI"
 
   lazy val EUEnabled = Tuning.getSection("Power").getSection("EU").getBoolean("Enabled")
-  lazy val MJEnabled = Tuning.getSection("Power").getSection("BC").getBoolean("Enabled")
   lazy val RFEnabled = Tuning.getSection("Power").getSection("RF").getBoolean("Enabled")
 
   lazy val lookup: collection.Map[String, ModContainer] = {
@@ -36,7 +34,6 @@ object PowerProxy {
     nameLookup.asScala
   }
 
-  lazy val haveBC = haveModVersion(BC_MOD_ID)
   lazy val haveIC2 = haveModVersion(IC2_MOD_ID)
   lazy val haveTE = haveModVersion(TE_MOD_ID)
   lazy val haveBCfuel = haveModVersion("BuildCraftAPI|fuels@[2.0,)")
@@ -52,14 +49,12 @@ object PowerProxy {
   }
 
   def logModVersions() {
-    if (!haveBC && !haveIC2 && !haveTE) {
+    if (!haveIC2 && !haveTE) {
       Generators.logWarn("No useable energy system detected")
       Generators.logWarn("This mod requires at least one of the following mods to function properly:")
-      Generators.logWarn("* BuildCraft 4.2.0+ or any mod that properly bundles the BC API")
-      Generators.logWarn("* Thermal Expansion or any mod that properly bundles the RF API")
+      Generators.logWarn("* CoFHCore (or any mod that includes the API)")
       Generators.logWarn("* IC2 Experimental")
     }
-    Generators.logInfo("BC API Version: %s", getModVersion(BC_MOD_ID))
     Generators.logInfo("IC2 Version: %s", getModVersion(IC2_MOD_ID))
     Generators.logInfo("RF Version: %s", getModVersion(TE_MOD_ID))
   }
