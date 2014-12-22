@@ -14,7 +14,7 @@ import net.bdew.generators.compat.PowerProxy
 import net.bdew.generators.modules.euOutput.{BlockEuOutputHV, BlockEuOutputLV, BlockEuOutputMV}
 import net.bdew.generators.modules.fluidInput.BlockFluidInput
 import net.bdew.generators.modules.fuelTank.BlockFuelTank
-import net.bdew.generators.modules.mjOutput.BlockMjOutput
+import net.bdew.generators.modules.itemOutput.BlockItemOutput
 import net.bdew.generators.modules.powerCapacitor.BlockPowerCapacitor
 import net.bdew.generators.modules.rfOutput.BlockRfOutput
 import net.bdew.generators.modules.turbine.BlockTurbine
@@ -25,9 +25,6 @@ import net.minecraftforge.fluids.{Fluid, FluidRegistry}
 
 object Blocks extends BlockManager(CreativeTabsGenerators.main) {
   regBlock(BlockFluidInput)
-
-  if (PowerProxy.haveBC)
-    regBlock(BlockMjOutput)
 
   if (PowerProxy.haveIC2) {
     regBlock(BlockEuOutputLV)
@@ -44,7 +41,7 @@ object Blocks extends BlockManager(CreativeTabsGenerators.main) {
 
   val steamFluid = if (!FluidRegistry.isFluidRegistered("steam")) {
     Generators.logInfo("Steam not registered by any other mod, creating...")
-    val newSteam = new Fluid("steam") // Values shamelesly stolen from BR
+    val newSteam = new Fluid("steam") // Values shamelessly stolen from BR
       .setTemperature(1000)
       .setGaseous(true)
       .setLuminosity(0)
