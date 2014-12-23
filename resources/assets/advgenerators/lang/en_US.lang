@@ -42,9 +42,13 @@ advgenerators.output.5=Purple Output
 
 advgenerators.tooltip.turbine.fuel=%s MJ/mB in Turbine Generator
 
+advgenerators.exchanger.output.hot=Hot fluid
+advgenerators.exchanger.output.cold=Cold fluid
+advgenerators.exchanger.output.both=Both fluids
+
 itemGroup.bdew.generators=Advanced Generators
 
-resource.item.format = %s / %s
-resource.fluid.format =  %s / %s mB
+resource.item.format=%s / %s
+resource.fluid.format=%s / %s mB
 
 fluid.steam=Steam

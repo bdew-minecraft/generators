@@ -17,8 +17,10 @@ import cpw.mods.fml.common.event.{FMLInitializationEvent, FMLPostInitializationE
 import cpw.mods.fml.common.network.NetworkRegistry
 import cpw.mods.fml.relauncher.Side
 import net.bdew.generators.compat.PowerProxy
+import net.bdew.generators.compat.itempush.ItemPush
 import net.bdew.generators.config.loader.TuningLoader
 import net.bdew.generators.config.{Config, TurbineFuel}
+import net.bdew.lib.multiblock.data.{OutputConfigItems, OutputConfigManager}
 import org.apache.logging.log4j.Logger
 
 @Mod(modid = Generators.modId, version = "GENERATORS_VER", name = "Advanced Generators", dependencies = "after:BuildCraft|energy;after:BuildCraft|Silicon;after:IC2;after:CoFHCore;after:ThermalExpansion;required-after:bdlib", modLanguage = "scala")
@@ -38,7 +40,9 @@ object Generators {
     log = event.getModLog
     configDir = new File(event.getModConfigurationDirectory, "AdvGenerators")
     PowerProxy.logModVersions()
+    ItemPush.init()
     TuningLoader.loadConfigFiles()
+    OutputConfigManager.register("items", () => new OutputConfigItems)
     Config.load()
     if (event.getSide == Side.CLIENT) {
       IconCache.init()
@@ -53,7 +57,7 @@ object Generators {
 
   @EventHandler
   def postInit(event: FMLPostInitializationEvent) {
-    TuningLoader.loadDealayed()
+    TuningLoader.loadDelayed()
     TurbineFuel.postInit()
   }
 }

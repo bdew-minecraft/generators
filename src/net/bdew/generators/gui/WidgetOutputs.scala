@@ -11,7 +11,7 @@ package net.bdew.generators.gui
 
 import net.bdew.lib.gui.widgets.{WidgetMultipane, WidgetSubcontainer}
 import net.bdew.lib.gui.{Rect, _}
-import net.bdew.lib.multiblock.data.OutputConfigPower
+import net.bdew.lib.multiblock.data.{OutputConfigFluidSlots, OutputConfigItems, OutputConfigPower}
 import net.bdew.lib.multiblock.gui.WidgetOutputIcon
 import net.bdew.lib.multiblock.interact.CIOutputFaces
 
@@ -26,10 +26,14 @@ class WidgetOutputRow(p: Point, te: CIOutputFaces, output: Int) extends WidgetMu
   add(new WidgetOutputIcon(Point(1, 1), te, output))
   val emptyPane = addPane(new WidgetSubcontainer(rect))
   val powerPane = addPane(new WidgetPowerOutput(te, output))
+  val fluidSlotsPane = addPane(new WidgetFluidSlotsOutput(te, output))
+  val itemPane = addPane(new WidgetItemsOutput(te, output))
 
   def getActivePane =
     te.outputConfig.get(output) match {
       case Some(x: OutputConfigPower) => powerPane
+      case Some(x: OutputConfigFluidSlots) => fluidSlotsPane
+      case Some(x: OutputConfigItems) => itemPane
       case _ => emptyPane
     }
 }
