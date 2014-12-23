@@ -22,4 +22,9 @@ object Modules {
     lazy val capacity = cfg.getInt("Capacity")
   }
 
+  object HeatExchanger {
+    lazy val cfg = Modules.cfg.getSection("HeatExchanger")
+    lazy val heatTransfer = cfg.getInt("HeatTransfer")
+  }
+
 }

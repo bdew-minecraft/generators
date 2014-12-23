@@ -12,7 +12,9 @@ package net.bdew.generators.config
 import net.bdew.generators.blocks.BlockSteam
 import net.bdew.generators.compat.PowerProxy
 import net.bdew.generators.modules.euOutput.{BlockEuOutputHV, BlockEuOutputLV, BlockEuOutputMV}
+import net.bdew.generators.modules.exchanger.BlockExchanger
 import net.bdew.generators.modules.fluidInput.BlockFluidInput
+import net.bdew.generators.modules.fluidOutputSelect.BlockFluidOutputSelect
 import net.bdew.generators.modules.fuelTank.BlockFuelTank
 import net.bdew.generators.modules.itemOutput.BlockItemOutput
 import net.bdew.generators.modules.powerCapacitor.BlockPowerCapacitor
@@ -38,6 +40,12 @@ object Blocks extends BlockManager(CreativeTabsGenerators.main) {
   regBlock(BlockTurbine)
   regBlock(BlockFuelTank)
   regBlock(BlockPowerCapacitor)
+
+  regBlock(BlockExchanger)
+
+  regBlock(BlockFluidOutputSelect)
+
+  regBlock(BlockItemOutput)
 
   val steamFluid = if (!FluidRegistry.isFluidRegistered("steam")) {
     Generators.logInfo("Steam not registered by any other mod, creating...")
