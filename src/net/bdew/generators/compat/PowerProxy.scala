@@ -11,6 +11,7 @@ package net.bdew.generators.compat
 
 import java.util
 
+import cpw.mods.fml.common.versioning.VersionParser
 import cpw.mods.fml.common.{Loader, ModAPIManager, ModContainer}
 import net.bdew.generators.Generators
 import net.bdew.generators.config.Tuning
@@ -35,9 +36,12 @@ object PowerProxy {
 
   lazy val haveIC2 = haveModVersion(IC2_MOD_ID)
   lazy val haveTE = haveModVersion(TE_MOD_ID)
-  lazy val haveBCFuel = haveModVersion("BuildCraftAPI|fuels")
+  lazy val haveBCFuel = haveModVersion("BuildCraftAPI|fuels@[2.0,)")
 
-  def haveModVersion(modId: String) = lookup.contains(modId)
+  def haveModVersion(modid: String) = {
+    val spec = VersionParser.parseVersionReference(modid)
+    lookup.contains(spec.getLabel) && spec.containsVersion(lookup(spec.getLabel).getProcessedVersion)
+  }
 
   def getModVersion(modId: String): String = {
     val cont = lookup.getOrElse(modId, return "NOT FOUND")
@@ -46,9 +50,9 @@ object PowerProxy {
 
   def logModVersions() {
     if (!haveIC2 && !haveTE) {
-      Generators.logWarn("No usable energy system detected")
+      Generators.logWarn("No useable energy system detected")
       Generators.logWarn("This mod requires at least one of the following mods to function properly:")
-      Generators.logWarn("* Thermal Expansion or any mod that properly bundles the RF API")
+      Generators.logWarn("* CoFHCore (or any mod that includes the API)")
       Generators.logWarn("* IC2 Experimental")
     }
     Generators.logInfo("IC2 Version: %s", getModVersion(IC2_MOD_ID))
