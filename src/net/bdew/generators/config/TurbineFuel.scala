@@ -18,7 +18,7 @@ object TurbineFuel {
 
   def init() {
     val bcCfg = Tuning.getSection("ModSupport").getSection("BuildCraft")
-    if (bcCfg.getBoolean("ImportCombustionEngineFuels") && PowerProxy.haveBCfuel) {
+    if (bcCfg.getBoolean("ImportCombustionEngineFuels") && PowerProxy.haveBCFuel) {
       val min = bcCfg.getDouble("TurbineMinimumFuelValue")
       map ++= BCCompat.getCombustionEngineFuels filter (_._2 >= min)
     }

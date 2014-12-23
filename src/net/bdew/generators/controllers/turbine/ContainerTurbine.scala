@@ -19,5 +19,5 @@ class ContainerTurbine(val te: TileTurbineController, player: EntityPlayer) exte
 
   bindPlayerInventory(player.inventory, 8, 94, 152)
 
-  def canInteractWith(entityplayer: EntityPlayer) = true
+  def canInteractWith(entityPlayer: EntityPlayer) = true
 }

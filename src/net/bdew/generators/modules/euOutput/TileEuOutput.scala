@@ -42,8 +42,8 @@ abstract class TileEuOutputBase(val maxOutput: Int, val tier: Int) extends TileO
 
   def getCfg: Option[OutputConfigPower] = {
     val core = getCoreAs[CIPowerProducer].getOrElse(return None)
-    val onum = core.outputFaces.find(_._1.origin == mypos).getOrElse(return None)._2
-    Some(core.outputConfig.getOrElse(onum, return None).asInstanceOf[OutputConfigPower])
+    val oNum = core.outputFaces.find(_._1.origin == mypos).getOrElse(return None)._2
+    Some(core.outputConfig.getOrElse(oNum, return None).asInstanceOf[OutputConfigPower])
   }
 
   override def getOfferedEnergy: Double = {

@@ -14,5 +14,4 @@ import net.bdew.lib.CreativeTabContainer
 
 object CreativeTabsGenerators extends CreativeTabContainer {
   val main = new Tab("bdew.generators", Items.rotor)
-
 }

@@ -9,32 +9,30 @@
 
 package net.bdew.generators.nei
 
-import java.text.DecimalFormat
 import java.util
 
 import codechicken.nei.guihook.IContainerTooltipHandler
 import net.bdew.generators.config.TurbineFuel
 import net.bdew.generators.controllers.turbine.MachineTurbine
-import net.bdew.lib.Misc
+import net.bdew.lib.{DecFormat, Misc}
 import net.minecraft.client.gui.inventory.GuiContainer
 import net.minecraft.item.ItemStack
 import net.minecraftforge.fluids.{FluidContainerRegistry, IFluidContainerItem}
 
 object FuelTooltipHandler extends IContainerTooltipHandler {
-  val DF = new DecimalFormat("#,###")
-  override def handleTooltip(gui: GuiContainer, mousex: Int, mousey: Int, currenttip: util.List[String]) = currenttip
-  override def handleItemDisplayName(gui: GuiContainer, itemstack: ItemStack, currenttip: util.List[String]) = currenttip
-  override def handleItemTooltip(gui: GuiContainer, itemstack: ItemStack, mousex: Int, mousey: Int, currenttip: util.List[String]) = {
-    if (itemstack != null && itemstack.getItem != null) {
-      (if (FluidContainerRegistry.isContainer(itemstack))
-        Option(FluidContainerRegistry.getFluidForFilledItem(itemstack)) flatMap (fs => Option(fs.getFluid))
+  override def handleTooltip(gui: GuiContainer, mouseX: Int, mouseY: Int, currentTip: util.List[String]) = currentTip
+  override def handleItemDisplayName(gui: GuiContainer, itemStack: ItemStack, currentTip: util.List[String]) = currentTip
+  override def handleItemTooltip(gui: GuiContainer, itemStack: ItemStack, mouseX: Int, mouseY: Int, currentTip: util.List[String]) = {
+    if (itemStack != null && itemStack.getItem != null) {
+      (if (FluidContainerRegistry.isContainer(itemStack))
+        Option(FluidContainerRegistry.getFluidForFilledItem(itemStack)) flatMap (fs => Option(fs.getFluid))
       else {
-        Misc.asInstanceOpt(itemstack.getItem, classOf[IFluidContainerItem]) flatMap { cont =>
-          Option(cont.getFluid(itemstack)) flatMap (fs => Option(fs.getFluid))
+        Misc.asInstanceOpt(itemStack.getItem, classOf[IFluidContainerItem]) flatMap { cont =>
+          Option(cont.getFluid(itemStack)) flatMap (fs => Option(fs.getFluid))
         }
       }) map TurbineFuel.getFuelValue filter (_ > 0) foreach (fv =>
-        currenttip.add(Misc.toLocalF("advgenerators.tooltip.turbine.fuel", DF.format(fv / MachineTurbine.fuelConsumptionMultiplier))))
+        currentTip.add(Misc.toLocalF("advgenerators.tooltip.turbine.fuel", DecFormat.round(fv / MachineTurbine.fuelConsumptionMultiplier))))
     }
-    currenttip
+    currentTip
   }
 }
