@@ -17,14 +17,14 @@ import net.bdew.lib.recipes.RecipesHelper
 object TuningLoader {
   val loader = new Loader
 
-  def loadDealayed() = loader.processRecipeStatements()
+  def loadDelayed() = loader.processRecipeStatements()
 
   def loadConfigFiles() {
     if (!Generators.configDir.exists()) {
       Generators.configDir.mkdir()
       val nl = System.getProperty("line.separator")
       val f = new FileWriter(new File(Generators.configDir, "readme.txt"))
-      f.write("Any .cfg files in this directory will be loaded after the internal configuration, in alpahabetic order" + nl)
+      f.write("Any .cfg files in this directory will be loaded after the internal configuration, in alphabetic order" + nl)
       f.write("Files in 'overrides' directory with matching names cab be used to override internal configuration" + nl)
       f.close()
     }
