@@ -21,7 +21,7 @@ object BlockRfOutput extends BaseModule("RFOutput", "PowerOutput", classOf[TileR
   var enabledIcon: IIcon = null
 
   override def getIcon(world: IBlockAccess, x: Int, y: Int, z: Int, side: Int) =
-    if (getTE(world, x, y, z).canConnectoToFace(ForgeDirection.values()(side)))
+    if (getTE(world, x, y, z).canConnectToFace(ForgeDirection.values()(side)))
       enabledIcon
     else
       blockIcon

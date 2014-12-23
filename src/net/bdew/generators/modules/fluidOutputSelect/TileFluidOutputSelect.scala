@@ -22,9 +22,9 @@ class TileFluidOutputSelect extends TileOutput[OutputConfigFluidSlots] with RSCo
   override def getCore = getCoreAs[CIFluidOutputSelect]
   override val outputConfigType = classOf[OutputConfigFluidSlots]
 
-  override def canConnectoToFace(d: ForgeDirection) =
+  override def canConnectToFace(d: ForgeDirection) =
     getCore exists { core =>
-      mypos.neighbour(d).getTile[IFluidHandler](worldObj).isDefined
+      myPos.neighbour(d).getTile[IFluidHandler](worldObj).isDefined
     }
 
   override def fill(from: ForgeDirection, resource: FluidStack, doFill: Boolean) = 0
@@ -39,7 +39,7 @@ class TileFluidOutputSelect extends TileOutput[OutputConfigFluidSlots] with RSCo
     val outputted = if (checkCanOutput(cfg)) {
       for {
         core <- getCore
-        target <- mypos.neighbour(face).getTile[IFluidHandler](worldObj)
+        target <- myPos.neighbour(face).getTile[IFluidHandler](worldObj)
         tSlot <- Misc.asInstanceOpt(cfg.slot, classOf[core.outputSlotsDef.Slot])
         toSend <- Option(core.outputFluid(tSlot, Int.MaxValue, false))
       } yield {

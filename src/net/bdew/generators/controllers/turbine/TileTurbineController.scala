@@ -76,9 +76,9 @@ class TileTurbineController extends TileControllerGui with CIFluidInput with CIO
   def extract(v: Float, simulate: Boolean) = power.extract(v, simulate)
 
   def onModulesChanged() {
-    fuel.setCapacity(getNumOfMoudules("FuelTank") * Modules.FuelTank.capacity + cfg.internalFuelCapacity)
-    power.capacity = getNumOfMoudules("PowerCapacitor") * Modules.PowerCapacitor.capacity + cfg.internalPowerCapacity
-    numTurbines := getNumOfMoudules("Turbine")
+    fuel.setCapacity(getNumOfModules("FuelTank") * Modules.FuelTank.capacity + cfg.internalFuelCapacity)
+    power.capacity = getNumOfModules("PowerCapacitor") * Modules.PowerCapacitor.capacity + cfg.internalPowerCapacity
+    numTurbines := getNumOfModules("Turbine")
     mjPerTick := numTurbines * cfg.mjPerTickPerTurbine
   }
 }

@@ -12,7 +12,7 @@ package net.bdew.generators.modules.euOutput
 import cpw.mods.fml.relauncher.{Side, SideOnly}
 import net.bdew.generators.modules.BaseModule
 import net.bdew.lib.multiblock.block.BlockOutput
-import net.bdew.lib.rotate.{IconType, RotateableTileBlock}
+import net.bdew.lib.rotate.{IconType, RotatableTileBlock}
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.util.IIcon
 import net.minecraft.world.World
@@ -20,7 +20,7 @@ import net.minecraftforge.common.util.ForgeDirection
 
 class BlockEuOutputBase[T <: TileEuOutputBase](name: String, texture: String, TEClass: Class[T])
   extends BaseModule(name, "PowerOutput", TEClass) with BlockOutput[T]
-  with RotateableTileBlock {
+  with RotatableTileBlock {
   var frontIcon: IIcon = null
 
   override def setFacing(world: World, x: Int, y: Int, z: Int, facing: ForgeDirection) {

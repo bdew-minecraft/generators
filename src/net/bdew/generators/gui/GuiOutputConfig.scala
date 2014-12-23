@@ -29,7 +29,7 @@ class GuiOutputConfig(parent: GuiOutputFaces) extends BaseScreen(new ContainerOu
   override def initGui() {
     super.initGui()
     widgets.add(new WidgetOutputs(Point(7, 18), parent.te, 6))
-    widgets.add(new WidgetLabel(Misc.toLocal("advgenerators.gui.output.title"), 8, 6, Color.darkgray))
+    widgets.add(new WidgetLabel(Misc.toLocal("advgenerators.gui.output.title"), 8, 6, Color.darkGray))
   }
 
   override def keyTyped(char: Char, keyCode: Int) {

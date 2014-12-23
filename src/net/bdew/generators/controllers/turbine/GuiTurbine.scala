@@ -28,9 +28,9 @@ class GuiTurbine(val te: TileTurbineController, player: EntityPlayer) extends Ba
       icon = Textures.Button16.wrench
       hover = Misc.toLocal("advgenerators.gui.output.title")
     })
-    widgets.add(new WidgetLabel(Misc.toLocal("advgenerators.gui.turbine.title"), 8, 6, Color.darkgray))
-    widgets.add(new WidgetLabel(Misc.toLocal("container.inventory"), 8, this.ySize - 96 + 3, Color.darkgray))
-    widgets.add(new WidgetInfo(Rect(75, 21, 59, 10), Textures.Icons.turbine, te.numTurbines.cval.toString, Misc.toLocal("advgenerators.label.turbine.turbines")))
+    widgets.add(new WidgetLabel(Misc.toLocal("advgenerators.gui.turbine.title"), 8, 6, Color.darkGray))
+    widgets.add(new WidgetLabel(Misc.toLocal("container.inventory"), 8, this.ySize - 96 + 3, Color.darkGray))
+    widgets.add(new WidgetInfo(Rect(75, 21, 59, 10), Textures.Icons.turbine, te.numTurbines.value.toString, Misc.toLocal("advgenerators.label.turbine.turbines")))
     widgets.add(new WidgetInfo(Rect(75, 32, 59, 10), Textures.Icons.peak, DecFormat.round(te.mjPerTick) + " MJ/t", Misc.toLocal("advgenerators.label.turbine.maxprod")))
     widgets.add(new WidgetInfo(Rect(75, 43, 59, 10), Textures.Icons.fluid, DecFormat.round(te.fuelPerTick) + " mB/t", Misc.toLocal("advgenerators.label.turbine.fuel")))
     widgets.add(new WidgetInfo(Rect(75, 54, 59, 10), Textures.Icons.power, DecFormat.dec2(te.mjPerTickAvg) + " MJ/t", Misc.toLocal("advgenerators.label.turbine.prod")))

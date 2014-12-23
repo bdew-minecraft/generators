@@ -30,7 +30,7 @@ class TileItemOutput extends TileOutput[OutputConfigItems] with RSControllableOu
 
   val ratio = Tuning.getSection("Power").getFloat("RF_MJ_Ratio")
 
-  override def canConnectoToFace(d: ForgeDirection) = ItemPush.isValidTarget(this, d)
+  override def canConnectToFace(d: ForgeDirection) = ItemPush.isValidTarget(this, d)
 
   override def doOutput(face: ForgeDirection, cfg: OutputConfigItems): Unit = {
     for {

@@ -50,7 +50,7 @@ class TileExchangerController extends TileControllerGui with CIFluidInput with C
 
     // now use heat
     if (heat > cfg.startHeating && coolerIn.resource.isDefined) {
-      val transfer = Misc.clamp(heat.cval, 0D, maxHeatTransfer.cval)
+      val transfer = Misc.clamp(heat.value, 0D, maxHeatTransfer.value)
       for {
         cooler <- coolerIn.resource
         rec <- ExchangerRegistry.getCooling(cooler.kind)
@@ -67,7 +67,7 @@ class TileExchangerController extends TileControllerGui with CIFluidInput with C
 
     // and finally restore heat
     if (heat < cfg.maxHeat && heaterIn.resource.isDefined) {
-      val transfer = Misc.clamp(cfg.maxHeat - heat.cval, 0D, maxHeatTransfer.cval)
+      val transfer = Misc.clamp(cfg.maxHeat - heat.value, 0D, maxHeatTransfer.value)
       for {
         heater <- heaterIn.resource
         rec <- ExchangerRegistry.getHeating(heater.kind)
@@ -101,7 +101,7 @@ class TileExchangerController extends TileControllerGui with CIFluidInput with C
   override def getTankInfo = Array(heaterIn.getTankInfo, coolerIn.getTankInfo, heaterOut.getTankInfo, coolerOut.getTankInfo)
 
   def onModulesChanged() {
-    maxHeatTransfer := getNumOfMoudules("HeatExchanger") * Modules.HeatExchanger.heatTransfer
+    maxHeatTransfer := getNumOfModules("HeatExchanger") * Modules.HeatExchanger.heatTransfer
   }
 
   override val outputSlotsDef = OutputSlotsExchanger

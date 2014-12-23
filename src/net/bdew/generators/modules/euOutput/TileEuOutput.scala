@@ -15,11 +15,11 @@ import net.bdew.generators.config.Tuning
 import net.bdew.lib.multiblock.data.OutputConfigPower
 import net.bdew.lib.multiblock.interact.CIPowerProducer
 import net.bdew.lib.multiblock.tile.{RSControllableOutput, TileOutput}
-import net.bdew.lib.rotate.RotateableTile
+import net.bdew.lib.rotate.RotatableTile
 import net.minecraft.tileentity.TileEntity
 import net.minecraftforge.common.util.ForgeDirection
 
-abstract class TileEuOutputBase(val maxOutput: Int, val tier: Int) extends TileOutput[OutputConfigPower] with RSControllableOutput with IEnergySource with Ic2EnetRegister with RotateableTile {
+abstract class TileEuOutputBase(val maxOutput: Int, val tier: Int) extends TileOutput[OutputConfigPower] with RSControllableOutput with IEnergySource with Ic2EnetRegister with RotatableTile {
   val kind = "PowerOutput"
   val ratio = Tuning.getSection("Power").getFloat("EU_MJ_Ratio")
   var outThisTick = 0F
@@ -27,9 +27,9 @@ abstract class TileEuOutputBase(val maxOutput: Int, val tier: Int) extends TileO
   override val outputConfigType = classOf[OutputConfigPower]
   override def makeCfgObject(face: ForgeDirection) = new OutputConfigPower("EU")
 
-  override def canConnectoToFace(d: ForgeDirection): Boolean = {
-    if (rotation.cval != d) return false
-    val tile = mypos.neighbour(d).getTile[IEnergyAcceptor](worldObj).getOrElse(return false)
+  override def canConnectToFace(d: ForgeDirection): Boolean = {
+    if (rotation.value != d) return false
+    val tile = myPos.neighbour(d).getTile[IEnergyAcceptor](worldObj).getOrElse(return false)
     return tile.acceptsEnergyFrom(this, d.getOpposite)
   }
 
@@ -38,11 +38,11 @@ abstract class TileEuOutputBase(val maxOutput: Int, val tier: Int) extends TileO
   }
 
   override def emitsEnergyTo(receiver: TileEntity, direction: ForgeDirection) =
-    getCore.isDefined && rotation.cval == direction
+    getCore.isDefined && rotation.value == direction
 
   def getCfg: Option[OutputConfigPower] = {
     val core = getCoreAs[CIPowerProducer].getOrElse(return None)
-    val oNum = core.outputFaces.find(_._1.origin == mypos).getOrElse(return None)._2
+    val oNum = core.outputFaces.find(_._1.origin == myPos).getOrElse(return None)._2
     Some(core.outputConfig.getOrElse(oNum, return None).asInstanceOf[OutputConfigPower])
   }
 

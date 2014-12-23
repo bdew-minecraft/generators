@@ -18,6 +18,6 @@ import net.bdew.lib.multiblock.interact.CIOutputFaces
 
 class WidgetPowerOutput(te: CIOutputFaces, output: Int) extends WidgetOutputDisplay {
   def cfg = te.outputConfig(output).asInstanceOf[OutputConfigPower]
-  add(new WidgetDynLabel("%s %s/t".format(DecFormat.round(cfg.avg), cfg.unit), 1, 5, Color.darkgray))
+  add(new WidgetDynLabel("%s %s/t".format(DecFormat.round(cfg.avg), cfg.unit), 1, 5, Color.darkGray))
   add(new WidgetRSConfig(te, output, Point(73, 1)))
 }

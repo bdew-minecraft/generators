@@ -30,15 +30,15 @@ class TileRfOutput extends TileOutput[OutputConfigPower] with RSControllableOutp
   override def getEnergyStored(from: ForgeDirection): Int = 0
   override def getMaxEnergyStored(from: ForgeDirection): Int = 0
 
-  override def canConnectoToFace(d: ForgeDirection): Boolean = {
-    val tile = mypos.neighbour(d).getTile[IEnergyHandler](worldObj).getOrElse(return false)
+  override def canConnectToFace(d: ForgeDirection): Boolean = {
+    val tile = myPos.neighbour(d).getTile[IEnergyHandler](worldObj).getOrElse(return false)
     return tile.canConnectEnergy(d.getOpposite)
   }
 
   override def doOutput(face: ForgeDirection, cfg: OutputConfigPower) {
     getCoreAs[CIPowerProducer] map { core =>
       val out = if (checkCanOutput(cfg)) {
-        mypos.neighbour(face).getTile[IEnergyHandler](worldObj) map { tile =>
+        myPos.neighbour(face).getTile[IEnergyHandler](worldObj) map { tile =>
           val canExtract = core.extract(Int.MaxValue, true)
           val injected = tile.receiveEnergy(face.getOpposite, (canExtract * ratio).toInt, false)
           core.extract(injected / ratio, false)

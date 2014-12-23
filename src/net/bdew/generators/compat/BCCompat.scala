@@ -20,7 +20,7 @@ object BCCompat {
 
   def getCombustionEngineFuels =
     if (BuildcraftFuelRegistry.fuel == null) {
-      Generators.logWarn("Buildcraft fuel API is available but registry is not initialized - not importing fuels")
+      Generators.logWarn("BuildCraft fuel API is available but registry is not initialized - not importing fuels")
       List.empty
     } else {
       for (fuel <- BuildcraftFuelRegistry.fuel.getFuels) yield {

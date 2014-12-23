@@ -11,12 +11,12 @@ package net.bdew.generators.gui
 
 import net.bdew.lib.Misc
 import net.bdew.lib.gui._
-import net.bdew.lib.gui.widgets.{WidgetButtonIcon, WidgetSubcontainer}
+import net.bdew.lib.gui.widgets.{WidgetButtonIcon, WidgetSubContainer}
 import net.bdew.lib.multiblock.data.OutputConfigSlots
 import net.bdew.lib.multiblock.interact.CIOutputFaces
 import net.bdew.lib.multiblock.network.{MsgOutputCfgSlot, NetHandler}
 
-class WidgetSlotConfig(te: CIOutputFaces, output: Int, p: Point) extends WidgetSubcontainer(new Rect(p, 16, 16)) {
+class WidgetSlotConfig(te: CIOutputFaces, output: Int, p: Point) extends WidgetSubContainer(new Rect(p, 16, 16)) {
   def cfg = te.outputConfig(output).asInstanceOf[OutputConfigSlots]
 
   val bt = add(new WidgetButtonIcon(Point(0, 0), clicked, te.resources.btBase, te.resources.btHover))

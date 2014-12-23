@@ -29,15 +29,15 @@ class GuiExchanger(val te: TileExchangerController, player: EntityPlayer) extend
       icon = Textures.Button16.wrench
       hover = Misc.toLocal("advgenerators.gui.output.title")
     })
-    widgets.add(new WidgetLabel(Misc.toLocal("advgenerators.gui.turbine.title"), 8, 6, Color.darkgray))
-    widgets.add(new WidgetLabel(Misc.toLocal("container.inventory"), 8, this.ySize - 96 + 3, Color.darkgray))
+    widgets.add(new WidgetLabel(Misc.toLocal("advgenerators.gui.turbine.title"), 8, 6, Color.darkGray))
+    widgets.add(new WidgetLabel(Misc.toLocal("container.inventory"), 8, this.ySize - 96 + 3, Color.darkGray))
 
     widgets.add(new WidgetInfo(Rect(75, 21, 59, 10), Textures.Icons.turbine,
-      DecFormat.round(te.heat.cval) + " HU",
+      DecFormat.round(te.heat.value) + " HU",
       Misc.toLocal("advgenerators.label.exchanger.heat")))
 
     widgets.add(new WidgetInfo(Rect(75, 32, 59, 10), Textures.Icons.peak,
-      DecFormat.dec2(te.maxHeatTransfer.cval) + " HU/t",
+      DecFormat.dec2(te.maxHeatTransfer.value) + " HU/t",
       Misc.toLocal("advgenerators.label.exchanger.maxtransfer")))
   }
 
