@@ -23,7 +23,7 @@ import net.bdew.generators.config.{Config, TurbineFuel}
 import net.bdew.lib.multiblock.data.{OutputConfigItems, OutputConfigManager}
 import org.apache.logging.log4j.Logger
 
-@Mod(modid = Generators.modId, version = "GENERATORS_VER", name = "Advanced Generators", dependencies = "after:BuildCraft|energy;after:BuildCraft|Silicon;after:IC2;after:CoFHCore;after:ThermalExpansion;required-after:bdlib", modLanguage = "scala")
+@Mod(modid = Generators.modId, version = "GENERATORS_VER", name = "Advanced Generators", dependencies = "after:pressure;after:BuildCraft|energy;after:BuildCraft|Silicon;after:IC2;after:CoFHCore;after:ThermalExpansion;required-after:bdlib", modLanguage = "scala")
 object Generators {
   var log: Logger = null
   var instance = this

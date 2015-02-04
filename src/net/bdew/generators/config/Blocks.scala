@@ -18,10 +18,13 @@ import net.bdew.generators.modules.fluidOutputSelect.BlockFluidOutputSelect
 import net.bdew.generators.modules.fuelTank.BlockFuelTank
 import net.bdew.generators.modules.itemOutput.BlockItemOutput
 import net.bdew.generators.modules.powerCapacitor.BlockPowerCapacitor
+import net.bdew.generators.modules.pressure.{BlockPressureOutput, BlockPressureInput}
 import net.bdew.generators.modules.rfOutput.BlockRfOutput
 import net.bdew.generators.modules.turbine.BlockTurbine
 import net.bdew.generators.{CreativeTabsGenerators, Generators}
+import net.bdew.lib.Misc
 import net.bdew.lib.config.BlockManager
+import net.bdew.pressure.api.PressureAPI
 import net.minecraft.item.EnumRarity
 import net.minecraftforge.fluids.{Fluid, FluidRegistry}
 
@@ -46,6 +49,12 @@ object Blocks extends BlockManager(CreativeTabsGenerators.main) {
   regBlock(BlockFluidOutputSelect)
 
   regBlock(BlockItemOutput)
+
+  if (Misc.haveModVersion("pressure") && PressureAPI.HELPER != null) {
+    Generators.logInfo("Pressure pipes detected (%s), adding pressure modules", PressureAPI.HELPER)
+    regBlock(BlockPressureInput)
+    regBlock(BlockPressureOutput)
+  }
 
   val steamFluid = if (!FluidRegistry.isFluidRegistered("steam")) {
     Generators.logInfo("Steam not registered by any other mod, creating...")

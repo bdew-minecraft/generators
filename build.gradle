@@ -71,7 +71,7 @@ dependencies {
     compile "net.industrial-craft:industrialcraft-2:2.2.667-experimental:api"
     compile "mcp.mobius.waila:Waila:1.5.6a_1.7.10"
     compile "net.bdew.thirdparty:CoFHLib:1.7.10R3.0.0.8:api"
-    compile "net.bdew:pressure:1.0.3.51:api"
+    compile "net.bdew:pressure:1.0.3.52:api"
 }
 
 import org.apache.tools.ant.filters.ReplaceTokens
