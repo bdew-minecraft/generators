@@ -36,7 +36,7 @@ object Textures {
     val rsOff = Texture(sheet, 21, 35, 14, 14)
     val enabled = Texture(sheet, 53, 35, 14, 14)
     val disabled = Texture(sheet, 69, 35, 14, 14)
-    val wrench = Texture(sheet, 85, 35, 14, 14)
+    val wrench = Texture(sheet, 84, 35, 14, 14)
   }
 
   object Icons {

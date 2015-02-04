@@ -17,19 +17,15 @@ import net.minecraftforge.common.util.ForgeDirection
 
 object BlockExchangerController extends BaseController("ExchangerController", classOf[TileExchangerController]) {
   var topIcon: IIcon = null
-  var bottomIcon: IIcon = null
 
   @SideOnly(Side.CLIENT)
   override def regIcons(ir: IIconRegister) {
     topIcon = ir.registerIcon("advgenerators:" + name.toLowerCase + "/top")
-    bottomIcon = ir.registerIcon("advgenerators:" + name.toLowerCase + "/bottom")
   }
 
   override def getIcon(side: Int, meta: Int) =
-    if (side == ForgeDirection.UP.ordinal())
+    if (side == ForgeDirection.UP.ordinal() || side == ForgeDirection.DOWN.ordinal())
       topIcon
-    else if (side == ForgeDirection.DOWN.ordinal())
-      bottomIcon
     else
       blockIcon
 

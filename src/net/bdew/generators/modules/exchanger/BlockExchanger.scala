@@ -15,14 +15,4 @@ import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.util.IIcon
 import net.minecraftforge.common.util.ForgeDirection
 
-object BlockExchanger extends BaseModule("HeatExchanger", "HeatExchanger", classOf[TileExchanger]) {
-  var topIcon: IIcon = null
-
-  @SideOnly(Side.CLIENT)
-  override def regIcons(ir: IIconRegister) {
-    topIcon = ir.registerIcon("advgenerators:" + name.toLowerCase + "/top")
-  }
-
-  override def getIcon(side: Int, meta: Int) =
-    if (side == ForgeDirection.UP.ordinal() || side == ForgeDirection.DOWN.ordinal()) topIcon else blockIcon
-}
+object BlockExchanger extends BaseModule("HeatExchanger", "HeatExchanger", classOf[TileExchanger])
