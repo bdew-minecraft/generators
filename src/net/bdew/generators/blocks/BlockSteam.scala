@@ -33,8 +33,8 @@ class BlockSteam(fluid: Fluid) extends BlockFluidClassic(fluid, MaterialSteam) {
   @SideOnly(Side.CLIENT)
   override def registerBlockIcons(register: IIconRegister) {
     if (ownIcons) {
-      fluid.setStillIcon(register.registerIcon(Generators.modId + "steam/still"))
-      fluid.setFlowingIcon(register.registerIcon(Generators.modId + "steam/flowing"))
+      fluid.setStillIcon(register.registerIcon(Generators.modId + ":steam/still"))
+      fluid.setFlowingIcon(register.registerIcon(Generators.modId + ":steam/flowing"))
     }
   }
 }
