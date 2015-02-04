@@ -21,9 +21,9 @@ object MachineExchanger extends Machine("HeatExchangerController", BlockExchange
   type TEClass = TileExchangerController
 
   lazy val internalTankCapacity = tuning.getInt("InternalTankCapacity")
-  lazy val maxHeat = tuning.getInt("MaxHeat")
-  lazy val startHeating = tuning.getInt("StartHeating")
-  lazy val heatDecay = tuning.getInt("HeatDecay")
+  lazy val maxHeat = tuning.getDouble("MaxHeat")
+  lazy val startHeating = tuning.getDouble("StartHeating")
+  lazy val heatDecay = tuning.getDouble("HeatDecay")
 
   OutputConfigManager.register("fluidslots_exchanger", () => new OutputConfigFluidSlots(OutputSlotsExchanger))
 

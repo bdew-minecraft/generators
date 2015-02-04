@@ -21,6 +21,7 @@ item.advgenerators.Controller.name=Control Circuit
 
 advgenerators.gui.turbine.title=Turbine Generator Control
 advgenerators.gui.output.title=Output Configuration
+advgenerators.gui.exchanger.title=Heat Exchanger
 
 advgenerators.module.PowerOutput.name=Power Emitter Module
 advgenerators.module.Turbine.name=Turbine
@@ -32,6 +33,17 @@ advgenerators.label.turbine.turbines=Connected turbines
 advgenerators.label.turbine.maxprod=Peak production
 advgenerators.label.turbine.fuel=Peak fuel consumption
 advgenerators.label.turbine.prod=Current production
+
+advgenerators.label.exchanger.heat=Current Heat
+advgenerators.label.exchanger.maxtransfer=Maximum Heat Transfer
+advgenerators.label.exchanger.inrate=%s consumed
+advgenerators.label.exchanger.noinput=No input
+advgenerators.label.exchanger.outrate=%s produced
+advgenerators.label.exchanger.nooutput=No output
+advgenerators.label.exchanger.heatloss=Heat Loss
+
+advgenerators.flow.fluid=%s mB/T
+advgenerators.flow.other=%s/T
 
 advgenerators.output.0=Red Output
 advgenerators.output.1=Green Output

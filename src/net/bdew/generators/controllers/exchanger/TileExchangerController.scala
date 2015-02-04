@@ -10,13 +10,14 @@
 package net.bdew.generators.controllers.exchanger
 
 import net.bdew.generators.config.{ExchangerRegistry, Modules}
+import net.bdew.generators.gui.DataSlotMovingAverage
 import net.bdew.generators.{Generators, GeneratorsResourceProvider}
 import net.bdew.lib.Misc
 import net.bdew.lib.data.DataSlotDouble
 import net.bdew.lib.data.base.UpdateKind
-import net.bdew.lib.multiblock.interact.{CIFluidOutputSelect, CIItemOutput, CIFluidInput, CIOutputFaces}
+import net.bdew.lib.multiblock.interact.{CIFluidInput, CIFluidOutputSelect, CIItemOutput, CIOutputFaces}
 import net.bdew.lib.multiblock.tile.TileControllerGui
-import net.bdew.lib.resource.{ResourceInventoryOutput, Resource, FluidResource, DataSlotResource}
+import net.bdew.lib.resource._
 import net.bdew.lib.tile.inventory.MultipleInventoryAdapter
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraftforge.fluids.{Fluid, FluidStack}
@@ -33,24 +34,23 @@ class TileExchangerController extends TileControllerGui with CIFluidInput with C
   val heat = new DataSlotDouble("heat", this).setUpdate(UpdateKind.SAVE, UpdateKind.GUI)
   val maxHeatTransfer = new DataSlotDouble("maxHeatTransfer", this).setUpdate(UpdateKind.SAVE, UpdateKind.GUI)
 
+  val inputRate = DataSlotMovingAverage("inputRate", this, 20)
+  val outputRate = DataSlotMovingAverage("outputRate", this, 20)
+  val heatLoss = DataSlotMovingAverage("heatLoss", this, 20)
+
   var outInventory = new MultipleInventoryAdapter(
     ResourceInventoryOutput(heaterOut), ResourceInventoryOutput(coolerOut)
   )
 
   lazy val maxOutputs = 6
 
-  final val decay = 0.5F
-
   def doUpdate() {
-    // first apply heat decay
-    if (heat > cfg.heatDecay)
-      heat := heat - cfg.heatDecay
-    else if (heat > 0)
-      heat := 0
+    var tickInput = 0D
+    var tickOutput = 0D
 
-    // now use heat
+    // first use heat
     if (heat > cfg.startHeating && coolerIn.resource.isDefined) {
-      val transfer = Misc.clamp(heat.value, 0D, maxHeatTransfer.value)
+      val transfer = Misc.clamp(heat.value - cfg.startHeating, 0D, maxHeatTransfer.value)
       for {
         cooler <- coolerIn.resource
         rec <- ExchangerRegistry.getCooling(cooler.kind)
@@ -60,9 +60,18 @@ class TileExchangerController extends TileControllerGui with CIFluidInput with C
         if (toDrain > 0) {
           coolerIn.rawDrain(toDrain, false, true)
           coolerOut.rawFill(Resource(rec.out, toDrain / rec.inPerHU * rec.outPerHU), false, true)
+          tickOutput = toDrain / rec.inPerHU * rec.outPerHU
           heat -= toDrain / rec.inPerHU
         }
       }
+    }
+
+    // head decay is applied now to penalize overheated small exchanger and inactive exchangers in general
+    if (heat > 0) {
+      heatLoss.update(heat * cfg.heatDecay)
+      heat := heat * (1 - cfg.heatDecay)
+    } else {
+      heatLoss.update(0)
     }
 
     // and finally restore heat
@@ -77,10 +86,14 @@ class TileExchangerController extends TileControllerGui with CIFluidInput with C
         if (toDrain > 0) {
           heaterIn.rawDrain(toDrain, false, true)
           heaterOut.rawFill(Resource(rec.out, toDrain / rec.inPerHU * rec.outPerHU), false, true)
+          tickInput = toDrain
           heat += toDrain / rec.inPerHU
         }
       }
     }
+
+    inputRate.update(tickInput)
+    outputRate.update(tickOutput)
   }
 
   serverTick.listen(doUpdate)
@@ -137,5 +150,6 @@ class TileExchangerController extends TileControllerGui with CIFluidInput with C
     getTanks(slot).exists(t => t.resource.contains(FluidResource(fluid)))
 
   override def getItemOutputInventory = outInventory
+
   override def canOutputItemFromSlot(slot: Int) = true
 }
