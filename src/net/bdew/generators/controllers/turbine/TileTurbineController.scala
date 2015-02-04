@@ -10,6 +10,7 @@
 package net.bdew.generators.controllers.turbine
 
 import net.bdew.generators.config.{Modules, TurbineFuel}
+import net.bdew.generators.gui.DataSlotMovingAverage
 import net.bdew.generators.{Generators, GeneratorsResourceProvider}
 import net.bdew.lib.Misc
 import net.bdew.lib.data.base.UpdateKind
@@ -31,17 +32,13 @@ class TileTurbineController extends TileControllerGui with CIFluidInput with CIO
   val mjPerTick = new DataSlotFloat("mjPerTick", this).setUpdate(UpdateKind.GUI, UpdateKind.SAVE)
   val burnTime = new DataSlotFloat("burnTime", this).setUpdate(UpdateKind.SAVE)
 
-  val mjPerTickAvg = new DataSlotFloat("mjAvg", this).setUpdate(UpdateKind.GUI)
   val numTurbines = new DataSlotInt("turbines", this).setUpdate(UpdateKind.GUI)
   val fuelPerTick = new DataSlotFloat("fuelPerTick", this).setUpdate(UpdateKind.GUI)
 
+  val outputAverage = new DataSlotMovingAverage("outputAverage", this, 20)
+  val fuelPerTickAverage = new DataSlotMovingAverage("fuelPerTickAverage", this, 20)
+
   lazy val maxOutputs = 6
-
-  final val decay = 0.5F
-
-  def updateAvg(v: Float) {
-    mjPerTickAvg := mjPerTickAvg * decay + (1 - decay) * v
-  }
 
   def doUpdate() {
     val fuelPerMj = if (fuel.getFluidAmount > 0) 1 / TurbineFuel.getFuelValue(fuel.getFluid.getFluid) * cfg.fuelConsumptionMultiplier else 0
@@ -51,15 +48,18 @@ class TileTurbineController extends TileControllerGui with CIFluidInput with CIO
       val needFuel = Misc.clamp((10 * fuelPerTick).ceil, 0F, fuel.getFluidAmount.toFloat).floor.toInt
       burnTime += needFuel / fuelPerTick
       fuel.drain(needFuel, true)
+      fuelPerTickAverage.update(needFuel)
+    } else {
+      fuelPerTickAverage.update(0)
     }
 
     if (burnTime > 1 && power.capacity - power.stored > mjPerTick) {
       burnTime -= 1
       power.stored += mjPerTick
-      updateAvg(mjPerTick)
+      outputAverage.update(mjPerTick.toDouble)
       lastChange = worldObj.getTotalWorldTime
     } else {
-      updateAvg(0)
+      outputAverage.update(0)
     }
   }
 

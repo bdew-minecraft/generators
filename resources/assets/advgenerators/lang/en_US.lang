@@ -33,6 +33,7 @@ advgenerators.label.turbine.turbines=Connected turbines
 advgenerators.label.turbine.maxprod=Peak production
 advgenerators.label.turbine.fuel=Peak fuel consumption
 advgenerators.label.turbine.prod=Current production
+advgenerators.label.turbine.fuelaverage=Current fuel consumption
 
 advgenerators.label.exchanger.heat=Current Heat
 advgenerators.label.exchanger.maxtransfer=Maximum Heat Transfer

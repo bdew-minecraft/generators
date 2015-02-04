@@ -35,15 +35,15 @@ class GuiExchanger(val te: TileExchangerController, player: EntityPlayer) extend
     widgets.add(new WidgetLabel(Misc.toLocal("container.inventory"), 8, this.ySize - 96 + 3, Color.darkGray))
 
     widgets.add(new WidgetInfo(Rect(75, 21, 59, 10), Textures.Icons.turbine,
-      DecFormat.round(te.heat.value) + " HU",
+      DecFormat.short(te.heat.value) + " HU",
       Misc.toLocal("advgenerators.label.exchanger.heat")))
 
     widgets.add(new WidgetInfo(Rect(75, 32, 59, 10), Textures.Icons.peak,
-      DecFormat.round(te.maxHeatTransfer.value) + " HU/t",
+      DecFormat.short(te.maxHeatTransfer.value) + " HU/t",
       Misc.toLocal("advgenerators.label.exchanger.maxtransfer")))
 
     widgets.add(new WidgetInfo(Rect(75, 43, 59, 10), Textures.Icons.peak,
-      DecFormat.dec2(te.heatLoss.average) + " HU/t",
+      DecFormat.short(te.heatLoss.average) + " HU/t",
       Misc.toLocal("advgenerators.label.exchanger.heatloss")))
 
     widgets.add(new WidgetRateInfo(Rect(75, 54, 59, 10),
@@ -65,11 +65,9 @@ class GuiExchanger(val te: TileExchangerController, player: EntityPlayer) extend
 
   def formatFlowRate(r: Option[Resource], v: Double) = r match {
     case Some(Resource(FluidResource(_), _)) =>
-      Misc.toLocalF("advgenerators.flow.fluid",
-        if (v > 10) "%.0f".format(v) else "%.2f".format(v))
+      Misc.toLocalF("advgenerators.flow.fluid", DecFormat.short(v))
     case Some(Resource(_, _)) =>
-      Misc.toLocalF("advgenerators.flow.other",
-        if (v > 10) "%.0f".format(v) else "%.2f".format(v))
+      Misc.toLocalF("advgenerators.flow.other", DecFormat.short(v))
     case _ => ""
   }
 
