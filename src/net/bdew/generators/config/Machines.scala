@@ -11,10 +11,12 @@ package net.bdew.generators.config
 
 import net.bdew.generators.CreativeTabsGenerators
 import net.bdew.generators.controllers.exchanger.MachineExchanger
+import net.bdew.generators.controllers.steam.MachineSteamTurbine
 import net.bdew.generators.controllers.turbine.MachineTurbine
 import net.bdew.lib.config.MachineManager
 
 object Machines extends MachineManager(Tuning.getSection("Machines"), Config.guiHandler, CreativeTabsGenerators.main) {
   registerMachine(MachineTurbine)
   registerMachine(MachineExchanger)
+  registerMachine(MachineSteamTurbine)
 }
