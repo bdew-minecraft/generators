@@ -27,13 +27,8 @@ class TileSteamTurbineController extends TileControllerGui with CIFluidInput wit
 
   val steam = new DataSlotTank("steam", this, cfg.internalSteamCapacity)
   val power = new DataSlotPower("power", this)
-
-  //  val mjPerTick = new DataSlotFloat("mjPerTick", this).setUpdate(UpdateKind.GUI, UpdateKind.SAVE)
-
   val speed = new DataSlotDouble("speed", this).setUpdate(UpdateKind.GUI, UpdateKind.SAVE)
-
   val numTurbines = new DataSlotInt("turbines", this).setUpdate(UpdateKind.GUI)
-  //  val fuelPerTick = new DataSlotFloat("fuelPerTick", this).setUpdate(UpdateKind.GUI)
 
   val outputAverage = new DataSlotMovingAverage("outputAverage", this, 20)
   val steamAverage = new DataSlotMovingAverage("steamAverage", this, 20)
@@ -41,12 +36,14 @@ class TileSteamTurbineController extends TileControllerGui with CIFluidInput wit
   lazy val maxOutputs = 6
 
   def doUpdate() {
-    if (speed > 0 && power.stored < power.capacity) {
-      val canGenerate = (speed / cfg.maxRPM) * numTurbines * cfg.mjPerTickPerTurbine
+    if (speed > 1 && power.stored < power.capacity) {
+      val canGenerate = Math.min(speed / cfg.effectiveRPM, 1) * numTurbines * cfg.mjPerTickPerTurbine
       val injected = Math.min(canGenerate, power.capacity - power.stored)
       power.stored += injected.toFloat
       outputAverage.update(injected)
-      speed -= speed * cfg.dragMultiplier * (injected / numTurbines / cfg.mjPerTickPerTurbine)
+      speed -= cfg.maxRPM * cfg.spinDownMultiplier * (injected / numTurbines / cfg.mjPerTickPerTurbine)
+      if (speed < 1)
+        speed := 0
       lastChange = worldObj.getTotalWorldTime
     } else outputAverage.update(0)
 
@@ -54,8 +51,8 @@ class TileSteamTurbineController extends TileControllerGui with CIFluidInput wit
       val steamPerTick = cfg.steamPerTickPerTurbine * numTurbines
       val canUseSteam = Math.min(steam.getFluidAmount, steamPerTick)
       steam.drain(canUseSteam.ceil.toInt, true)
-      if (canUseSteam > steamPerTick * (speed / cfg.maxRPM))
-        speed += (canUseSteam - (steamPerTick * speed / cfg.maxRPM)) / steamPerTick * cfg.maxRPM * cfg.dragMultiplier * 2
+      if ((canUseSteam / steamPerTick) * cfg.maxRPM > speed)
+        speed += ((canUseSteam / steamPerTick) * cfg.maxRPM - speed) * cfg.spinUpMultiplier
       steamAverage.update(canUseSteam)
     } else steamAverage.update(0)
 
