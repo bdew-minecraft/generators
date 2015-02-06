@@ -34,15 +34,15 @@ class GuiExchanger(val te: TileExchangerController, player: EntityPlayer) extend
     widgets.add(new WidgetLabel(Misc.toLocal("advgenerators.gui.exchanger.title"), 8, 6, Color.darkGray))
     widgets.add(new WidgetLabel(Misc.toLocal("container.inventory"), 8, this.ySize - 96 + 3, Color.darkGray))
 
-    widgets.add(new WidgetInfo(Rect(75, 21, 59, 10), Textures.Icons.turbine,
+    widgets.add(new WidgetInfo(Rect(75, 21, 59, 10), Textures.Icons.temperature,
       DecFormat.short(te.heat.value) + " HU",
       Misc.toLocal("advgenerators.label.exchanger.heat")))
 
-    widgets.add(new WidgetInfo(Rect(75, 32, 59, 10), Textures.Icons.peak,
+    widgets.add(new WidgetInfo(Rect(75, 32, 59, 10), Textures.Icons.heatExchange,
       DecFormat.short(te.maxHeatTransfer.value) + " HU/t",
       Misc.toLocal("advgenerators.label.exchanger.maxtransfer")))
 
-    widgets.add(new WidgetInfo(Rect(75, 43, 59, 10), Textures.Icons.peak,
+    widgets.add(new WidgetInfo(Rect(75, 43, 59, 10), Textures.Icons.heatLoss,
       DecFormat.short(te.heatLoss.average) + " HU/t",
       Misc.toLocal("advgenerators.label.exchanger.heatloss")))
 

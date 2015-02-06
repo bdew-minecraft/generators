@@ -36,7 +36,7 @@ object Textures {
     val rsOff = Texture(sheet, 21, 35, 14, 14)
     val enabled = Texture(sheet, 53, 35, 14, 14)
     val disabled = Texture(sheet, 69, 35, 14, 14)
-    val wrench = Texture(sheet, 84, 35, 14, 14)
+    val wrench = Texture(sheet, 85, 35, 14, 14)
   }
 
   object Icons {
@@ -45,6 +45,10 @@ object Textures {
     val peak = Texture(sheet, 32, 106, 16, 16)
     val power = Texture(sheet, 48, 90, 16, 16)
     val fluid = Texture(sheet, 64, 90, 32, 32)
+    val temperature = Texture(sheet, 96, 90, 32, 32)
+    val heatExchange = Texture(sheet, 48, 106, 16, 16)
+    val heatLoss = Texture(sheet, 0, 122, 16, 16)
+    val speed = Texture(sheet, 32, 122, 32, 32)
   }
 
   def progress(width: Int) = Texture(sheet, 136 - width, 74, width, 16)
