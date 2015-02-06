@@ -10,7 +10,7 @@
 package net.bdew.generators.controllers.exchanger
 
 import net.bdew.generators.config.{ExchangerRegistry, Modules}
-import net.bdew.generators.gui.DataSlotMovingAverage
+import net.bdew.generators.gui.{DataSlotResourceKindOption, DataSlotFluidOption, DataSlotMovingAverage}
 import net.bdew.generators.{Generators, GeneratorsResourceProvider}
 import net.bdew.lib.Misc
 import net.bdew.lib.data.DataSlotDouble
@@ -36,6 +36,8 @@ class TileExchangerController extends TileControllerGui with CIFluidInput with C
 
   val inputRate = DataSlotMovingAverage("inputRate", this, 20)
   val outputRate = DataSlotMovingAverage("outputRate", this, 20)
+  val lastInput = DataSlotResourceKindOption("lastInputRes", this)
+  val lastOutput = DataSlotResourceKindOption("lastOutputRes", this)
   val heatLoss = DataSlotMovingAverage("heatLoss", this, 20)
 
   var outInventory = new MultipleInventoryAdapter(
@@ -61,6 +63,10 @@ class TileExchangerController extends TileControllerGui with CIFluidInput with C
           coolerIn.rawDrain(toDrain, false, true)
           coolerOut.rawFill(Resource(rec.out, toDrain / rec.inPerHU * rec.outPerHU), false, true)
           tickOutput = toDrain / rec.inPerHU * rec.outPerHU
+          if (!lastOutput.contains(rec.out)) {
+            lastOutput.set(rec.out)
+            outputRate.values.clear()
+          }
           heat -= toDrain / rec.inPerHU
         }
       }
@@ -87,6 +93,10 @@ class TileExchangerController extends TileControllerGui with CIFluidInput with C
           heaterIn.rawDrain(toDrain, false, true)
           heaterOut.rawFill(Resource(rec.out, toDrain / rec.inPerHU * rec.outPerHU), false, true)
           tickInput = toDrain
+          if (!lastInput.contains(rec.in)) {
+            lastInput.set(rec.in)
+            inputRate.values.clear()
+          }
           heat += toDrain / rec.inPerHU
         }
       }

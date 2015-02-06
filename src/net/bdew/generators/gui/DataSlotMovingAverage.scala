@@ -20,6 +20,13 @@ case class DataSlotMovingAverage(name: String, parent: TileDataSlots, size: Int)
   val values = mutable.Queue.empty[Double]
   var average: Double = 0
 
+  setUpdate(UpdateKind.GUI, UpdateKind.SAVE)
+
+  def reset() {
+    values.clear()
+    average = 0
+  }
+
   def update(v: Double) = {
     values += v
     if (values.length > size)
@@ -27,9 +34,6 @@ case class DataSlotMovingAverage(name: String, parent: TileDataSlots, size: Int)
     average = values.sum / values.length
     parent.dataSlotChanged(this)
   }
-
-  setUpdate(UpdateKind.GUI, UpdateKind.SAVE)
-
   override def save(t: NBTTagCompound, kind: UpdateKind.Value) {
     if (kind == UpdateKind.GUI) {
       t.setDouble(name, average)

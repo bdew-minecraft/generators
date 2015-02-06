@@ -14,7 +14,7 @@ import net.bdew.generators.{Generators, IconCache, Textures}
 import net.bdew.lib.gui._
 import net.bdew.lib.gui.widgets.{WidgetButtonIcon, WidgetLabel}
 import net.bdew.lib.multiblock.gui.WidgetInfo
-import net.bdew.lib.resource.{FluidResource, Resource}
+import net.bdew.lib.resource.{FluidResource, ResourceKind}
 import net.bdew.lib.{Client, DecFormat, Misc}
 import net.minecraft.entity.player.EntityPlayer
 
@@ -47,26 +47,26 @@ class GuiExchanger(val te: TileExchangerController, player: EntityPlayer) extend
       Misc.toLocal("advgenerators.label.exchanger.heatloss")))
 
     widgets.add(new WidgetRateInfo(Rect(75, 54, 59, 10),
-      te.heaterIn.resource map (_.kind.getTexture) getOrElse IconCache.disabled,
-      te.heaterIn.resource map (_.kind.getColor) getOrElse Color.red,
-      formatFlowRate(te.heaterIn.resource, te.inputRate.average),
-      te.heaterIn.resource map (x => Misc.toLocalF("advgenerators.label.exchanger.inrate", x.kind.getLocalizedName))
+      te.lastInput map (_.getTexture) getOrElse IconCache.disabled,
+      te.lastInput map (_.getColor) getOrElse Color.red,
+      formatFlowRate(te.lastInput, te.inputRate.average),
+      te.lastInput map (x => Misc.toLocalF("advgenerators.label.exchanger.inrate", x.getLocalizedName))
         getOrElse Misc.toLocal("advgenerators.label.exchanger.noinput")
     ))
 
     widgets.add(new WidgetRateInfo(Rect(75, 65, 59, 10),
-      te.coolerOut.resource map (_.kind.getTexture) getOrElse IconCache.disabled,
-      te.coolerOut.resource map (_.kind.getColor) getOrElse Color.red,
-      formatFlowRate(te.coolerOut.resource, te.outputRate.average),
-      te.coolerOut.resource map (x => Misc.toLocalF("advgenerators.label.exchanger.outrate", x.kind.getLocalizedName))
+      te.lastOutput map (_.getTexture) getOrElse IconCache.disabled,
+      te.lastOutput map (_.getColor) getOrElse Color.red,
+      formatFlowRate(te.lastOutput, te.outputRate.average),
+      te.lastOutput map (x => Misc.toLocalF("advgenerators.label.exchanger.outrate", x.getLocalizedName))
         getOrElse Misc.toLocal("advgenerators.label.exchanger.nooutput")
     ))
   }
 
-  def formatFlowRate(r: Option[Resource], v: Double) = r match {
-    case Some(Resource(FluidResource(_), _)) =>
+  def formatFlowRate(r: Option[ResourceKind], v: Double) = r match {
+    case Some(FluidResource(_)) =>
       Misc.toLocalF("advgenerators.flow.fluid", DecFormat.short(v))
-    case Some(Resource(_, _)) =>
+    case Some(x: ResourceKind) =>
       Misc.toLocalF("advgenerators.flow.other", DecFormat.short(v))
     case _ => ""
   }
