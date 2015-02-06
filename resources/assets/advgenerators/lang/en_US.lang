@@ -1,9 +1,8 @@
 tile.advgenerators.FluidInput.name=Fluid Intake Valve
 tile.advgenerators.FuelTank.name=Fuel Tank
-tile.advgenerators.MJOutput.name=Pneumatic Power Emitter
 tile.advgenerators.PowerCapacitor.name=Power Capacitor
 tile.advgenerators.Turbine.name=Turbine
-tile.advgenerators.TurbineController.name=Turbine Controller
+tile.advgenerators.TurbineController.name=Gas Turbine Controller
 tile.advgenerators.FuelTank.name=Fuel Tank
 tile.advgenerators.EuOutputLV.name=LV Emitter
 tile.advgenerators.EuOutputMV.name=MV Emitter
@@ -26,7 +25,8 @@ item.advgenerators.IronTubing.name=Iron Tubing
 item.advgenerators.IronWiring.name=Redstone-Iron Wiring
 item.advgenerators.Controller.name=Control Circuit
 
-advgenerators.gui.turbine.title=Turbine Generator Control
+advgenerators.gui.turbine.title=Gas Turbine Control
+advgenerators.gui.turbine.steam.title=Steam Turbine Control
 advgenerators.gui.output.title=Output Configuration
 advgenerators.gui.exchanger.title=Heat Exchanger
 

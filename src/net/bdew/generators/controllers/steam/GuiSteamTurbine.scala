@@ -33,7 +33,7 @@ class GuiSteamTurbine(val te: TileSteamTurbineController, player: EntityPlayer) 
     })
     val steamTexture = new IconWrapper(Texture.BLOCKS, Blocks.steamFluid.getStillIcon)
 
-    widgets.add(new WidgetLabel(Misc.toLocal("advgenerators.gui.turbine.title"), 8, 6, Color.darkGray))
+    widgets.add(new WidgetLabel(Misc.toLocal("advgenerators.gui.turbine.steam.title"), 8, 6, Color.darkGray))
     widgets.add(new WidgetLabel(Misc.toLocal("container.inventory"), 8, this.ySize - 96 + 3, Color.darkGray))
     widgets.add(new WidgetInfo(Rect(75, 21, 59, 10), Textures.Icons.turbine, te.numTurbines.value.toString, Misc.toLocal("advgenerators.label.turbine.turbines")))
     widgets.add(new WidgetInfo(Rect(75, 32, 59, 10), Textures.Icons.peak, DecFormat.short(te.numTurbines * te.cfg.mjPerTickPerTurbine * ratio) + " RF/t", Misc.toLocal("advgenerators.label.turbine.maxprod")))
