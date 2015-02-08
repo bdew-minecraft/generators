@@ -10,12 +10,11 @@
 package net.bdew.generators.controllers.steam
 
 import net.bdew.generators.config.{Blocks, Tuning}
-import net.bdew.generators.gui.{GuiOutputConfig, GuiOutputFaces}
+import net.bdew.generators.gui.{GuiOutputConfig, GuiOutputFaces, WidgetPowerGaugeCustom}
 import net.bdew.generators.{Generators, Textures}
 import net.bdew.lib.gui._
 import net.bdew.lib.gui.widgets.{WidgetButtonIcon, WidgetFluidGauge, WidgetLabel}
 import net.bdew.lib.multiblock.gui.WidgetInfo
-import net.bdew.lib.power.WidgetPowerGauge
 import net.bdew.lib.{Client, DecFormat, Misc}
 import net.minecraft.entity.player.EntityPlayer
 
@@ -25,7 +24,7 @@ class GuiSteamTurbine(val te: TileSteamTurbineController, player: EntityPlayer) 
 
   override def initGui() {
     super.initGui()
-    widgets.add(new WidgetPowerGauge(new Rect(61, 19, 9, 58), Textures.powerFill, te.power))
+    widgets.add(new WidgetPowerGaugeCustom(new BaseRect(61, 19, 9, 58), Textures.powerFill, te.power))
     widgets.add(new WidgetFluidGauge(new Rect(9, 19, 9, 58), Textures.tankOverlay, te.steam))
     widgets.add(new WidgetButtonIcon(Point(153, 18), openCfg, Textures.Button16.base, Textures.Button16.hover) {
       icon = Textures.Button16.wrench
