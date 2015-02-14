@@ -52,6 +52,10 @@ advgenerators.label.exchanger.outrate=%s produced
 advgenerators.label.exchanger.nooutput=No output
 advgenerators.label.exchanger.heatloss=Heat Loss
 
+advgenerators.waila.turbine.nofuel=No fuel
+advgenerators.waila.turbine.consuming=Consuming %s %s/t
+advgenerators.waila.turbine.producing=Producing %s %s/t
+
 advgenerators.flow.fluid=%s mB/T
 advgenerators.flow.other=%s/T
 
@@ -62,7 +66,7 @@ advgenerators.output.3=Yellow Output
 advgenerators.output.4=Cyan Output
 advgenerators.output.5=Purple Output
 
-advgenerators.tooltip.turbine.fuel=%s MJ/mB in Turbine Generator
+advgenerators.tooltip.turbine.fuel=%s %s/mB in Turbine Generator
 
 advgenerators.exchanger.output.hot=Hot fluid
 advgenerators.exchanger.output.cold=Cold fluid

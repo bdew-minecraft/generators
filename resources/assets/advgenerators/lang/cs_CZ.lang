@@ -38,7 +38,7 @@ advgenerators.output.3=Žlutý výstup
 advgenerators.output.4=Azurový výstup
 advgenerators.output.5=Fialový výstup
 
-advgenerators.tooltip.turbine.fuel=%s MJ/mB v Turbogenerátoru
+advgenerators.tooltip.turbine.fuel=%s %s/mB v Turbogenerátoru
 
 itemGroup.bdew.generators=Pokročilé Generátory
 

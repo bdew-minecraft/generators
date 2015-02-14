@@ -38,6 +38,6 @@ advgenerators.output.3=黄色输出
 advgenerators.output.4=青色输出
 advgenerators.output.5=紫色输出
 
-advgenerators.tooltip.turbine.fuel=涡轮发电机组输出%s MJ/mB
+advgenerators.tooltip.turbine.fuel=涡轮发电机组输出%s %s/mB
 
 itemGroup.bdew.generators=高级发电机

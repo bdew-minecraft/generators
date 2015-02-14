@@ -32,5 +32,5 @@ advgenerators.output.2=Blauer Ausgang
 advgenerators.output.3=Gelber Ausgang
 advgenerators.output.4=Türkiser Ausgang
 advgenerators.output.5=Violetter Ausgang
-advgenerators.tooltip.turbine.fuel=%s MJ/mB in Turbine
+advgenerators.tooltip.turbine.fuel=%s %s/mB in Turbine
 itemGroup.bdew.generators=Advanced Generators

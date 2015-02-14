@@ -38,6 +38,6 @@ advgenerators.output.3=Жёлтый выход
 advgenerators.output.4=Голубой выход
 advgenerators.output.5=Фиолетовый выход
 
-advgenerators.tooltip.turbine.fuel=%s MJ/mB в Турбиновом генераторе
+advgenerators.tooltip.turbine.fuel=%s %s/mB в Турбиновом генераторе
 
 itemGroup.bdew.generators=Продвинутые генераторы
