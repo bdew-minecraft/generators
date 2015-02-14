@@ -9,12 +9,29 @@
 
 package net.bdew.generators.config
 
+import java.io.File
+
+import net.bdew.generators.Generators
 import net.bdew.lib.gui.GuiHandler
+import net.minecraftforge.common.config.Configuration
 
 object Config {
   val guiHandler = new GuiHandler
 
+  var powerShowUnits = "MJ"
+  var powerShowMultiplier = 1F
+
   def load() {
+    val c = new Configuration(new File(Generators.configDir, "client.config"))
+    c.load()
+
+    try {
+      powerShowUnits = c.get("Display", "PowerShowUnits", "RF", "Units to use when displaying power. Valid values: MJ, EU, RF").getString
+      if (powerShowUnits != "MJ") powerShowMultiplier = Tuning.getSection("Power").getFloat(powerShowUnits + "_MJ_Ratio")
+    } finally {
+      c.save()
+    }
+
     Items.load()
     Blocks.load()
     Machines.load()

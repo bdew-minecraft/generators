@@ -9,7 +9,7 @@
 
 package net.bdew.generators.gui
 
-import net.bdew.generators.config.Tuning
+import net.bdew.generators.config.Config
 import net.bdew.lib.DecFormat
 import net.bdew.lib.gui._
 import net.bdew.lib.power.{DataSlotPower, WidgetPowerGauge}
@@ -17,8 +17,6 @@ import net.bdew.lib.power.{DataSlotPower, WidgetPowerGauge}
 import scala.collection.mutable
 
 class WidgetPowerGaugeCustom(rect: Rect, texture: Texture, dSlot: DataSlotPower) extends WidgetPowerGauge(rect, texture, dSlot) {
-  val ratio = Tuning.getSection("Power").getFloat("RF_MJ_Ratio")
-
   override def handleTooltip(p: Point, tip: mutable.MutableList[String]) =
-    tip += DecFormat.round(dSlot.stored * ratio) + "/" + DecFormat.round(dSlot.capacity * ratio) + " RF"
+    tip += "%s/%s %s".format(DecFormat.round(dSlot.stored * Config.powerShowMultiplier), DecFormat.round(dSlot.capacity * Config.powerShowMultiplier), Config.powerShowUnits)
 }

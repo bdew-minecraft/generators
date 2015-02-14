@@ -9,7 +9,7 @@
 
 package net.bdew.generators.controllers.steam
 
-import net.bdew.generators.config.{Blocks, Tuning}
+import net.bdew.generators.config.{Blocks, Config}
 import net.bdew.generators.gui.{GuiOutputConfig, GuiOutputFaces, WidgetPowerGaugeCustom}
 import net.bdew.generators.{Generators, Textures}
 import net.bdew.lib.gui._
@@ -20,7 +20,6 @@ import net.minecraft.entity.player.EntityPlayer
 
 class GuiSteamTurbine(val te: TileSteamTurbineController, player: EntityPlayer) extends BaseScreen(new ContainerSteamTurbine(te, player), 176, 175) with GuiOutputFaces {
   val background = Texture(Generators.modId, "textures/gui/turbine.png", rect)
-  val ratio = Tuning.getSection("Power").getFloat("RF_MJ_Ratio")
 
   override def initGui() {
     super.initGui()
@@ -34,11 +33,36 @@ class GuiSteamTurbine(val te: TileSteamTurbineController, player: EntityPlayer) 
 
     widgets.add(new WidgetLabel(Misc.toLocal("advgenerators.gui.turbine.steam.title"), 8, 6, Color.darkGray))
     widgets.add(new WidgetLabel(Misc.toLocal("container.inventory"), 8, this.ySize - 96 + 3, Color.darkGray))
-    widgets.add(new WidgetInfo(Rect(75, 21, 59, 10), Textures.Icons.turbine, te.numTurbines.value.toString, Misc.toLocal("advgenerators.label.turbine.turbines")))
-    widgets.add(new WidgetInfo(Rect(75, 32, 59, 10), Textures.Icons.peak, DecFormat.short(te.numTurbines * te.cfg.mjPerTickPerTurbine * ratio) + " RF/t", Misc.toLocal("advgenerators.label.turbine.maxprod")))
-    widgets.add(new WidgetInfo(Rect(75, 43, 59, 10), Textures.Icons.speed, DecFormat.short(te.speed) + " RPM", Misc.toLocal("advgenerators.label.turbine.rpm")))
-    widgets.add(new WidgetInfo(Rect(75, 54, 59, 10), Textures.Icons.power, DecFormat.short(te.outputAverage.average * ratio) + " RF/t", Misc.toLocal("advgenerators.label.turbine.prod")))
-    widgets.add(new WidgetInfo(Rect(75, 65, 59, 10), steamTexture, DecFormat.short(te.steamAverage.average) + " mB/t", Misc.toLocal("advgenerators.label.turbine.steamaverage")))
+
+    widgets.add(new WidgetInfo(Rect(75, 21, 59, 10),
+      Textures.Icons.turbine,
+      te.numTurbines.value.toString,
+      Misc.toLocal("advgenerators.label.turbine.turbines"))
+    )
+
+    widgets.add(new WidgetInfo(Rect(75, 32, 59, 10),
+      Textures.Icons.peak,
+      "%s %s/t".format(DecFormat.short(te.numTurbines * te.cfg.mjPerTickPerTurbine * Config.powerShowMultiplier), Config.powerShowUnits),
+      Misc.toLocal("advgenerators.label.turbine.maxprod"))
+    )
+
+    widgets.add(new WidgetInfo(Rect(75, 43, 59, 10),
+      Textures.Icons.speed,
+      DecFormat.short(te.speed) + " RPM",
+      Misc.toLocal("advgenerators.label.turbine.rpm"))
+    )
+
+    widgets.add(new WidgetInfo(Rect(75, 54, 59, 10),
+      Textures.Icons.power,
+      "%s %s/t".format(DecFormat.short(te.outputAverage.average * Config.powerShowMultiplier), Config.powerShowUnits),
+      Misc.toLocal("advgenerators.label.turbine.prod"))
+    )
+
+    widgets.add(new WidgetInfo(Rect(75, 65, 59, 10),
+      steamTexture,
+      DecFormat.short(te.steamAverage.average) + " mB/t",
+      Misc.toLocal("advgenerators.label.turbine.steamaverage"))
+    )
   }
 
   def openCfg(b: WidgetButtonIcon) {
