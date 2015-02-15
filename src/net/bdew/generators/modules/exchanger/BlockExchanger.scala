@@ -9,10 +9,6 @@
 
 package net.bdew.generators.modules.exchanger
 
-import cpw.mods.fml.relauncher.{Side, SideOnly}
 import net.bdew.generators.modules.BaseModule
-import net.minecraft.client.renderer.texture.IIconRegister
-import net.minecraft.util.IIcon
-import net.minecraftforge.common.util.ForgeDirection
 
 object BlockExchanger extends BaseModule("HeatExchanger", "HeatExchanger", classOf[TileExchanger])

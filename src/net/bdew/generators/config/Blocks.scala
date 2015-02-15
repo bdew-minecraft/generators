@@ -18,7 +18,7 @@ import net.bdew.generators.modules.fluidOutputSelect.BlockFluidOutputSelect
 import net.bdew.generators.modules.fuelTank.BlockFuelTank
 import net.bdew.generators.modules.itemOutput.BlockItemOutput
 import net.bdew.generators.modules.powerCapacitor.BlockPowerCapacitor
-import net.bdew.generators.modules.pressure.{BlockPressureOutput, BlockPressureInput}
+import net.bdew.generators.modules.pressure.{BlockPressureInput, BlockPressureOutput}
 import net.bdew.generators.modules.rfOutput.BlockRfOutput
 import net.bdew.generators.modules.turbine.BlockTurbine
 import net.bdew.generators.{CreativeTabsGenerators, Generators}

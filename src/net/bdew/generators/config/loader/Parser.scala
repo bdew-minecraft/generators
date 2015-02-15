@@ -14,7 +14,7 @@ import net.bdew.lib.recipes.gencfg.GenericConfigParser
 
 class Parser extends RecipeParser with GenericConfigParser {
   def valOrDisable = (
-    (decimalNumber <~ "MJ/mB") ^^ { case x => Some(x.toFloat)}
+    (decimalNumber <~ "MJ/mB") ^^ { case x => Some(x.toFloat) }
       | "BLACKLIST" ^^^ None
     )
 
@@ -23,21 +23,21 @@ class Parser extends RecipeParser with GenericConfigParser {
     case fluid ~ None => RsTurbineBlacklist(fluid)
   }
 
-  def fluidAmt = str ~ decimalNumber <~ "mB" ^^ { case f ~ n => (f, n.toDouble)}
+  def fluidAmt = str ~ decimalNumber <~ "mB" ^^ { case f ~ n => (f, n.toDouble) }
   def heatUnits = decimalNumber <~ "HU" ^^ (_.toDouble)
 
   def resRefFluid = "fluid:" ~> str ^^ ResKindFluid
   def resRefItem = spec ^^ ResKindItem
 
-  def resFluid = resRefFluid ~ decimalNumber <~ "mB" ^^ { case f ~ n => ResourceRef(f, n.toDouble)}
-  def resItem = resRefItem ~ decimalNumber ^^ { case s ~ n => ResourceRef(s, n.toDouble)}
+  def resFluid = resRefFluid ~ decimalNumber <~ "mB" ^^ { case f ~ n => ResourceRef(f, n.toDouble) }
+  def resItem = resRefItem ~ decimalNumber ^^ { case s ~ n => ResourceRef(s, n.toDouble) }
 
   def resource = resFluid | resItem
   def resourceRef = resRefFluid | resRefItem
 
   def exchangerRecipe = "exchanger" ~> ":" ~> (
-    resource ~ "+" ~ heatUnits ~ "=>" ~ resource ^^ { case i ~ p ~ hu ~ arw ~ o => RsExchangerCool(i, o, hu)} |
-      resource ~ "=>" ~ resource ~ "+" ~ heatUnits ^^ { case i ~ arw ~ o ~ p ~ hu => RsExchangerHeat(i, o, hu)} |
+    resource ~ "+" ~ heatUnits ~ "=>" ~ resource ^^ { case i ~ p ~ hu ~ arw ~ o => RsExchangerCool(i, o, hu) } |
+      resource ~ "=>" ~ resource ~ "+" ~ heatUnits ^^ { case i ~ arw ~ o ~ p ~ hu => RsExchangerHeat(i, o, hu) } |
       "BLACKLIST" ~> resourceRef ^^ RsExchangerBlacklist
     )
 

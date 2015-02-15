@@ -18,7 +18,7 @@ case class DataSlotFluidOption(name: String, parent: TileDataSlots) extends Data
   setUpdate(UpdateKind.SAVE, UpdateKind.GUI)
 
   override def save(t: NBTTagCompound, kind: UpdateKind.Value) {
-    value map { x => t.setString(name, x.getName)}
+    value map { x => t.setString(name, x.getName) }
   }
 
   override def load(t: NBTTagCompound, kind: UpdateKind.Value): Unit = {

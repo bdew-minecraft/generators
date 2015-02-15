@@ -10,7 +10,7 @@
 package net.bdew.generators.controllers.exchanger
 
 import net.bdew.generators.config.{ExchangerRegistry, Modules}
-import net.bdew.generators.gui.{DataSlotResourceKindOption, DataSlotFluidOption, DataSlotMovingAverage}
+import net.bdew.generators.gui.{DataSlotMovingAverage, DataSlotResourceKindOption}
 import net.bdew.generators.{Generators, GeneratorsResourceProvider}
 import net.bdew.lib.Misc
 import net.bdew.lib.data.DataSlotDouble

@@ -46,7 +46,7 @@ class TilePressureOutput extends TileOutput[OutputConfigFluidSlots] with Pressur
   override def doOutput(face: ForgeDirection, cfg: OutputConfigFluidSlots) = {
     val outputted = if (checkCanOutput(cfg)) {
       if (!connections.isDefinedAt(face))
-        Option(PressureAPI.HELPER.recalculateConnectionInfo(this, face)) map { cObj => connections += face -> cObj}
+        Option(PressureAPI.HELPER.recalculateConnectionInfo(this, face)) map { cObj => connections += face -> cObj }
       for {
         core <- getCore
         tSlot <- Misc.asInstanceOpt(cfg.slot, classOf[core.outputSlotsDef.Slot])
