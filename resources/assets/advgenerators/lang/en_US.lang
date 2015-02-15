@@ -53,11 +53,12 @@ advgenerators.label.exchanger.nooutput=No output
 advgenerators.label.exchanger.heatloss=Heat Loss
 
 advgenerators.waila.turbine.nofuel=No fuel
+advgenerators.waila.turbine.nosteam=No steam
 advgenerators.waila.turbine.consuming=Consuming %s %s/t
 advgenerators.waila.turbine.producing=Producing %s %s/t
 
-advgenerators.flow.fluid=%s mB/T
-advgenerators.flow.other=%s/T
+advgenerators.flow.fluid=%s mB/t
+advgenerators.flow.other=%s/t
 
 advgenerators.output.0=Red Output
 advgenerators.output.1=Green Output

@@ -13,7 +13,7 @@ import java.io.File
 
 import cpw.mods.fml.common.Mod
 import cpw.mods.fml.common.Mod.EventHandler
-import cpw.mods.fml.common.event.{FMLInitializationEvent, FMLPostInitializationEvent, FMLPreInitializationEvent}
+import cpw.mods.fml.common.event.{FMLInitializationEvent, FMLInterModComms, FMLPostInitializationEvent, FMLPreInitializationEvent}
 import cpw.mods.fml.common.network.NetworkRegistry
 import cpw.mods.fml.relauncher.Side
 import net.bdew.generators.compat.PowerProxy
@@ -34,6 +34,9 @@ object Generators {
 
   def logInfo(msg: String, args: Any*) = log.info(msg.format(args: _*))
   def logWarn(msg: String, args: Any*) = log.warn(msg.format(args: _*))
+  def logError(msg: String, args: Any*) = log.error(msg.format(args: _*))
+  def logWarnException(msg: String, t: Throwable, args: Any*) = log.warn(msg.format(args: _*), t)
+  def logErrorException(msg: String, t: Throwable, args: Any*) = log.error(msg.format(args: _*), t)
 
   @EventHandler
   def preInit(event: FMLPreInitializationEvent) {
@@ -53,6 +56,7 @@ object Generators {
   def init(event: FMLInitializationEvent) {
     TurbineFuel.init()
     NetworkRegistry.INSTANCE.registerGuiHandler(this, Config.guiHandler)
+    FMLInterModComms.sendMessage("Waila", "register", "net.bdew.generators.waila.WailaHandler.loadCallback")
   }
 
   @EventHandler
