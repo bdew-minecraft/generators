@@ -10,6 +10,7 @@
 package net.bdew.generators.controllers.exchanger
 
 import net.bdew.generators.gui.{GuiOutputConfig, GuiOutputFaces, WidgetRateInfo, WidgetResourceGauge}
+import net.bdew.generators.network.{NetworkHandler, PktDumpBuffers}
 import net.bdew.generators.{Generators, IconCache, Textures}
 import net.bdew.lib.gui._
 import net.bdew.lib.gui.widgets.{WidgetButtonIcon, WidgetLabel}
@@ -27,10 +28,18 @@ class GuiExchanger(val te: TileExchangerController, player: EntityPlayer) extend
     widgets.add(new WidgetResourceGauge(new Rect(21, 19, 37, 16), null, te.heaterIn))
     widgets.add(new WidgetResourceGauge(new Rect(61, 19, 9, 58), Textures.tankOverlay, te.coolerOut))
     widgets.add(new WidgetResourceGauge(new Rect(21, 61, 37, 16), null, te.heaterOut))
-    widgets.add(new WidgetButtonIcon(Point(153, 18), openCfg, Textures.Button16.base, Textures.Button16.hover) {
+
+    widgets.add(new WidgetButtonIcon(Point(153, 19), openCfg, Textures.Button16.base, Textures.Button16.hover) {
       icon = Textures.Button16.wrench
       hover = Misc.toLocal("advgenerators.gui.output.title")
     })
+
+    widgets.add(new WidgetButtonIcon(Point(153, 61), (b) => NetworkHandler.sendToServer(PktDumpBuffers()),
+      Textures.Button16.base, Textures.Button16.red) {
+      icon = Textures.Button16.disabled
+      hover = Misc.toLocal("advgenerators.gui.dump")
+    })
+
     widgets.add(new WidgetLabel(Misc.toLocal("advgenerators.gui.exchanger.title"), 8, 6, Color.darkGray))
     widgets.add(new WidgetLabel(Misc.toLocal("container.inventory"), 8, this.ySize - 96 + 3, Color.darkGray))
 

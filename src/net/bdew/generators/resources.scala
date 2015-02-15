@@ -32,6 +32,8 @@ object Textures {
   object Button16 {
     val base = Texture(sheet, 20, 18, 16, 16)
     val hover = Texture(sheet, 36, 18, 16, 16)
+    val red = Texture(sheet, 52, 18, 16, 16)
+
     val rsOn = Texture(sheet, 37, 35, 14, 14)
     val rsOff = Texture(sheet, 21, 35, 14, 14)
     val enabled = Texture(sheet, 53, 35, 14, 14)
@@ -49,6 +51,7 @@ object Textures {
     val heatExchange = Texture(sheet, 48, 106, 16, 16)
     val heatLoss = Texture(sheet, 0, 122, 16, 16)
     val speed = Texture(sheet, 32, 122, 32, 32)
+    val fire = Texture(sheet, 69, 19, 14, 14)
   }
 
   def progress(width: Int) = Texture(sheet, 136 - width, 74, width, 16)

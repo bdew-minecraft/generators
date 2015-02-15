@@ -11,6 +11,7 @@ package net.bdew.generators.controllers.steam
 
 import net.bdew.generators.config.{Blocks, Config}
 import net.bdew.generators.gui.{GuiOutputConfig, GuiOutputFaces, WidgetPowerGaugeCustom}
+import net.bdew.generators.network.{NetworkHandler, PktDumpBuffers}
 import net.bdew.generators.{Generators, Textures}
 import net.bdew.lib.gui._
 import net.bdew.lib.gui.widgets.{WidgetButtonIcon, WidgetFluidGauge, WidgetLabel}
@@ -25,10 +26,18 @@ class GuiSteamTurbine(val te: TileSteamTurbineController, player: EntityPlayer) 
     super.initGui()
     widgets.add(new WidgetPowerGaugeCustom(new BaseRect(61, 19, 9, 58), Textures.powerFill, te.power))
     widgets.add(new WidgetFluidGauge(new Rect(9, 19, 9, 58), Textures.tankOverlay, te.steam))
-    widgets.add(new WidgetButtonIcon(Point(153, 18), openCfg, Textures.Button16.base, Textures.Button16.hover) {
+
+    widgets.add(new WidgetButtonIcon(Point(153, 19), openCfg, Textures.Button16.base, Textures.Button16.hover) {
       icon = Textures.Button16.wrench
       hover = Misc.toLocal("advgenerators.gui.output.title")
     })
+
+    widgets.add(new WidgetButtonIcon(Point(153, 61), (b) => NetworkHandler.sendToServer(PktDumpBuffers()),
+      Textures.Button16.base, Textures.Button16.red) {
+      icon = Textures.Button16.disabled
+      hover = Misc.toLocal("advgenerators.gui.dump")
+    })
+
     val steamTexture = new IconWrapper(Texture.BLOCKS, Blocks.steamFluid.getStillIcon)
 
     widgets.add(new WidgetLabel(Misc.toLocal("advgenerators.gui.turbine.steam.title"), 8, 6, Color.darkGray))

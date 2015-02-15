@@ -29,6 +29,7 @@ advgenerators.gui.turbine.title=Gas Turbine Control
 advgenerators.gui.turbine.steam.title=Steam Turbine Control
 advgenerators.gui.output.title=Output Configuration
 advgenerators.gui.exchanger.title=Heat Exchanger
+advgenerators.gui.dump=Clear internal buffers
 
 advgenerators.module.PowerOutput.name=Power Emitter Module
 advgenerators.module.Turbine.name=Turbine

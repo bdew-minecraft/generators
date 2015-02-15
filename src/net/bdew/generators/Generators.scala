@@ -20,6 +20,7 @@ import net.bdew.generators.compat.PowerProxy
 import net.bdew.generators.compat.itempush.ItemPush
 import net.bdew.generators.config.loader.TuningLoader
 import net.bdew.generators.config.{Config, TurbineFuel}
+import net.bdew.generators.network.NetworkHandler
 import net.bdew.lib.multiblock.data.{OutputConfigItems, OutputConfigManager}
 import org.apache.logging.log4j.Logger
 
@@ -29,6 +30,7 @@ object Generators {
   var instance = this
 
   final val modId = "advgenerators"
+  final val channel = "bdew.generators"
 
   var configDir: File = null
 
@@ -56,6 +58,7 @@ object Generators {
   def init(event: FMLInitializationEvent) {
     TurbineFuel.init()
     NetworkRegistry.INSTANCE.registerGuiHandler(this, Config.guiHandler)
+    NetworkHandler.init()
     FMLInterModComms.sendMessage("Waila", "register", "net.bdew.generators.waila.WailaHandler.loadCallback")
   }
 
