@@ -9,6 +9,7 @@ tile.advgenerators.EuOutputMV.name=MV Emitter
 tile.advgenerators.EuOutputHV.name=HV Emitter
 tile.advgenerators.RFOutput.name=Flux Generator
 tile.advgenerators.steam.name=Steam
+tile.advgenerators.syngas.name=Syngas
 tile.advgenerators.SteamTurbineController.name=Steam Turbine Controller
 tile.advgenerators.ExchangerController.name=Heat Exchanger Controller
 tile.advgenerators.FluidOutputSelect.name=Fluid Output Valve
@@ -80,3 +81,4 @@ resource.item.format=%s / %s
 resource.fluid.format=%s / %s mB
 
 fluid.steam=Steam
+fluid.syngas=Syngas

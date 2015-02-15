@@ -9,7 +9,7 @@
 
 package net.bdew.generators.config
 
-import net.bdew.generators.blocks.BlockSteam
+import net.bdew.generators.blocks.{BlockSyngas, BlockSteam}
 import net.bdew.generators.compat.PowerProxy
 import net.bdew.generators.modules.euOutput.{BlockEuOutputHV, BlockEuOutputLV, BlockEuOutputMV}
 import net.bdew.generators.modules.exchanger.BlockExchanger
@@ -25,6 +25,7 @@ import net.bdew.generators.{CreativeTabsGenerators, Generators}
 import net.bdew.lib.Misc
 import net.bdew.lib.config.BlockManager
 import net.bdew.pressure.api.PressureAPI
+import net.minecraft.block.Block
 import net.minecraft.item.EnumRarity
 import net.minecraftforge.fluids.{Fluid, FluidRegistry}
 
@@ -56,20 +57,36 @@ object Blocks extends BlockManager(CreativeTabsGenerators.main) {
     regBlock(BlockPressureOutput)
   }
 
-  val steamFluid = if (!FluidRegistry.isFluidRegistered("steam")) {
-    Generators.logInfo("Steam not registered by any other mod, creating...")
-    val newSteam = new Fluid("steam") // Values shamelessly stolen from BR
-      .setTemperature(1000)
+  val steamFluid = regFluid("steam", new BlockSteam(_)) {
+    _.setTemperature(1000)
       .setGaseous(true)
       .setLuminosity(0)
       .setRarity(EnumRarity.common)
       .setDensity(-10)
-    FluidRegistry.registerFluid(newSteam)
-    newSteam
-  } else FluidRegistry.getFluid("steam")
+  }
 
-  if (steamFluid.getBlock == null) {
-    Generators.logInfo("Adding steam block")
-    steamFluid.setBlock(regBlock(new BlockSteam(steamFluid), "steam"))
+  val syngasFluid = regFluid("syngas", new BlockSyngas(_)) {
+    _.setTemperature(1000)
+      .setGaseous(true)
+      .setLuminosity(0)
+      .setRarity(EnumRarity.common)
+      .setDensity(-10)
+  }
+
+  def regFluid(name: String, block: (Fluid) => Block)(params: (Fluid) => Unit): Fluid = {
+    val fluid = if (!FluidRegistry.isFluidRegistered(name)) {
+      Generators.logInfo("Fluid '%s' not registered by any other mod, creating...", name)
+      val newFluid = new Fluid(name) // Values shamelessly stolen from BR
+      params.apply(newFluid)
+      FluidRegistry.registerFluid(newFluid)
+      newFluid
+    } else FluidRegistry.getFluid(name)
+
+    if (fluid.getBlock == null) {
+      Generators.logInfo("Adding block for fluid '%s'", name)
+      fluid.setBlock(regBlock(block(fluid), name))
+    }
+
+    fluid
   }
 }
