@@ -20,7 +20,9 @@ import net.bdew.lib.multiblock.tile.TileControllerGui
 import net.bdew.lib.resource._
 import net.bdew.lib.tile.inventory.MultipleInventoryAdapter
 import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.nbt.NBTTagCompound
 import net.minecraftforge.fluids.{Fluid, FluidStack}
+import net.minecraftforge.oredict.OreDictionary
 
 class TileExchangerController extends TileControllerGui with CIFluidInput with CIOutputFaces with CIFluidOutputSelect with CIItemOutput {
   val cfg = MachineExchanger
@@ -157,9 +159,22 @@ class TileExchangerController extends TileControllerGui with CIFluidInput with C
   }
 
   override def canOutputFluid(slot: OutputSlotsExchanger.Slot, fluid: Fluid) =
-    getTanks(slot).exists(t => t.resource.contains(FluidResource(fluid)))
+    getTanks(slot).exists(t => t.resource.exists(_.kind == FluidResource(fluid)))
 
   override def getItemOutputInventory = outInventory
 
   override def canOutputItemFromSlot(slot: Int) = true
+
+  override def doLoad(kind: UpdateKind.Value, t: NBTTagCompound) {
+    super.doLoad(kind, t)
+    if (kind == UpdateKind.SAVE) {
+      heaterOut.resource match {
+        case Some(Resource(ItemResource(item, dmg), amt)) if dmg == OreDictionary.WILDCARD_VALUE =>
+          heaterOut.resource = Some(Resource(ItemResource(item, 0), amt))
+          Generators.logInfo("Heat exchanger at %d, %d, %d contains item with wildcard damage in output slot, resetting to 0 - %s",
+            xCoord, yCoord, zCoord, heaterOut.resource)
+        case _ =>
+      }
+    }
+  }
 }

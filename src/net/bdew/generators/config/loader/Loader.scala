@@ -15,6 +15,7 @@ import net.bdew.lib.recipes.gencfg.GenericConfigLoader
 import net.bdew.lib.recipes.{RecipeLoader, RecipeStatement}
 import net.bdew.lib.resource.{FluidResource, ItemResource, Resource}
 import net.minecraftforge.fluids.FluidRegistry
+import net.minecraftforge.oredict.OreDictionary
 
 class Loader extends RecipeLoader with GenericConfigLoader {
   val cfgStore = Tuning
@@ -25,6 +26,10 @@ class Loader extends RecipeLoader with GenericConfigLoader {
   def resolveResourceKind(x: ResKindRef) = x match {
     case ResKindItem(sr) =>
       val is = getConcreteStack(sr)
+      if (is.getItemDamage == OreDictionary.WILDCARD_VALUE) {
+        Generators.logInfo("Meta is unset in %s, defaulting to 0", x)
+        is.setItemDamage(0)
+      }
       ItemResource(is.getItem, is.getItemDamage)
     case ResKindFluid(f) =>
       FluidResource(getFluid(f))
