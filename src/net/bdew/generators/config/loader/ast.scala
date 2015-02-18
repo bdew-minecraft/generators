@@ -29,3 +29,12 @@ case class RsExchangerCool(input: ResourceRef, output: ResourceRef, heat: Double
 
 case class RsExchangerBlacklist(res: ResKindRef) extends RecipeStatement
 
+abstract class CarbonValue
+
+case class CarbonValueSpecified(v: Int) extends CarbonValue
+
+case class CarbonValueDefault() extends CarbonValue
+
+case class CarbonValueBlacklist() extends CarbonValue
+
+case class RsCarbonValue(stack: StackRef, value: CarbonValue) extends RecipeStatement

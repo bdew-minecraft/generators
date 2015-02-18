@@ -10,10 +10,11 @@
 package net.bdew.generators.config.loader
 
 import net.bdew.generators.Generators
-import net.bdew.generators.config.{ExchangerRegistry, Tuning, TurbineFuel}
+import net.bdew.generators.config.{CarbonValueRegistry, ExchangerRegistry, Tuning, TurbineFuel}
 import net.bdew.lib.recipes.gencfg.GenericConfigLoader
 import net.bdew.lib.recipes.{RecipeLoader, RecipeStatement}
 import net.bdew.lib.resource.{FluidResource, ItemResource, Resource}
+import net.minecraft.tileentity.TileEntityFurnace
 import net.minecraftforge.fluids.FluidRegistry
 import net.minecraftforge.oredict.OreDictionary
 
@@ -65,6 +66,28 @@ class Loader extends RecipeLoader with GenericConfigLoader {
       val res = resolveResourceKind(rk)
       Generators.logInfo("Blacklisting from exchanger: %s", res)
       ExchangerRegistry.remove(res)
+
+    case RsCarbonValue(spec, cVal) =>
+      Generators.logInfo("Processing carbon value %s => %s", spec, cVal)
+      for (stack <- getAllConcreteStacks(spec)) {
+        (cVal match {
+          case CarbonValueSpecified(value) =>
+            Generators.logInfo("Adding carbon value: %s -> %d", stack, value)
+            Some(value)
+          case CarbonValueDefault() =>
+            val value = TileEntityFurnace.getItemBurnTime(stack)
+            if (value > 0) {
+              Generators.logInfo("Adding carbon value: %s -> %d (from burn time)", stack, value)
+              Some(value)
+            } else {
+              Generators.logWarn("No burn time for %s, skipping", stack)
+              None
+            }
+          case CarbonValueBlacklist() =>
+            Generators.logInfo("Blacklist carbon value: %s", stack)
+            Some(0)
+        }) map (CarbonValueRegistry.register(stack, _))
+      }
 
     case _ => super.processRecipeStatement(st)
   }

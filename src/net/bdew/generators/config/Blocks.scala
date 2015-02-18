@@ -9,14 +9,17 @@
 
 package net.bdew.generators.config
 
-import net.bdew.generators.blocks.{BlockSyngas, BlockSteam}
+import net.bdew.generators.blocks.{BlockSteam, BlockSyngas}
 import net.bdew.generators.compat.PowerProxy
 import net.bdew.generators.modules.euOutput.{BlockEuOutputHV, BlockEuOutputLV, BlockEuOutputMV}
 import net.bdew.generators.modules.exchanger.BlockExchanger
 import net.bdew.generators.modules.fluidInput.BlockFluidInput
 import net.bdew.generators.modules.fluidOutputSelect.BlockFluidOutputSelect
 import net.bdew.generators.modules.fuelTank.BlockFuelTank
+import net.bdew.generators.modules.heatingChamber.BlockHeatingChamber
+import net.bdew.generators.modules.itemInput.BlockItemInput
 import net.bdew.generators.modules.itemOutput.BlockItemOutput
+import net.bdew.generators.modules.mixingChamber.BlockMixingChamber
 import net.bdew.generators.modules.powerCapacitor.BlockPowerCapacitor
 import net.bdew.generators.modules.pressure.{BlockPressureInput, BlockPressureOutput}
 import net.bdew.generators.modules.rfOutput.BlockRfOutput
@@ -30,8 +33,6 @@ import net.minecraft.item.EnumRarity
 import net.minecraftforge.fluids.{Fluid, FluidRegistry}
 
 object Blocks extends BlockManager(CreativeTabsGenerators.main) {
-  regBlock(BlockFluidInput)
-
   if (PowerProxy.haveIC2) {
     regBlock(BlockEuOutputLV)
     regBlock(BlockEuOutputMV)
@@ -41,15 +42,18 @@ object Blocks extends BlockManager(CreativeTabsGenerators.main) {
   if (PowerProxy.haveTE)
     regBlock(BlockRfOutput)
 
+  regBlock(BlockFluidInput)
+  regBlock(BlockFluidOutputSelect)
+
+  regBlock(BlockItemInput)
+  regBlock(BlockItemOutput)
+
   regBlock(BlockTurbine)
   regBlock(BlockFuelTank)
   regBlock(BlockPowerCapacitor)
-
+  regBlock(BlockHeatingChamber)
+  regBlock(BlockMixingChamber)
   regBlock(BlockExchanger)
-
-  regBlock(BlockFluidOutputSelect)
-
-  regBlock(BlockItemOutput)
 
   if (Misc.haveModVersion("pressure") && PressureAPI.HELPER != null) {
     Generators.logInfo("Pressure pipes detected (%s), adding pressure modules", PressureAPI.HELPER)

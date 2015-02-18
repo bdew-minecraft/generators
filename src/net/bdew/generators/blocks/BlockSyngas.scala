@@ -19,6 +19,7 @@ import net.minecraft.block.Block
 import net.minecraft.block.material.{MapColor, MaterialLiquid}
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.creativetab.CreativeTabs
+import net.minecraft.entity.Entity
 import net.minecraft.init.Blocks
 import net.minecraft.item.Item
 import net.minecraft.util.IIcon
@@ -48,6 +49,8 @@ object BlockSyngasFlaming extends SimpleBlock("syngas_flaming", MaterialSyngas) 
 }
 
 class BlockSyngas(fluid: Fluid) extends BlockFluidClassic(fluid, MaterialSyngas) {
+  val openFlames = Set(Blocks.fire, Blocks.torch, Blocks.lava, Blocks.flowing_lava)
+
   val ownIcons = fluid.getIcon == null
 
   setBlockName(Generators.modId + ".syngas")
@@ -59,11 +62,18 @@ class BlockSyngas(fluid: Fluid) extends BlockFluidClassic(fluid, MaterialSyngas)
     if (!world.isRemote) {
       for {
         (dir, nRef) <- BlockRef(x, y, z).neighbours
-        nBlock <- nRef.block(world) if nBlock == Blocks.fire || nBlock == Blocks.torch
+        nBlock <- nRef.block(world) if openFlames.contains(nBlock)
       } {
         world.setBlockToAir(x, y, z)
         world.createExplosion(null, x, y, z, 5, true)
       }
+    }
+  }
+
+  override def onEntityCollidedWithBlock(world: World, x: Int, y: Int, z: Int, ent: Entity) = {
+    if (ent.isBurning && !world.isRemote) {
+      world.setBlockToAir(x, y, z)
+      world.createExplosion(null, x, y, z, 5, true)
     }
   }
 

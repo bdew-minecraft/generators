@@ -41,5 +41,12 @@ class Parser extends RecipeParser with GenericConfigParser {
       "BLACKLIST" ~> resourceRef ^^ RsExchangerBlacklist
     )
 
-  override def recipeStatement = super.recipeStatement | turbineFuel | exchangerRecipe
+  def carbonValue =
+    ("=>" ~> int ^^ CarbonValueSpecified) |
+      "DEFAULT" ^^^ CarbonValueDefault() |
+      "BLACKLIST" ^^^ CarbonValueBlacklist()
+
+  def carbonValueRecipe = "carbon-value" ~> ":" ~> spec ~ carbonValue ^^ { case sp ~ cv => RsCarbonValue(sp, cv) }
+
+  override def recipeStatement = super.recipeStatement | turbineFuel | exchangerRecipe | carbonValueRecipe
 }

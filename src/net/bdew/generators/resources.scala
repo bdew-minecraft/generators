@@ -26,6 +26,7 @@ object IconCache extends IconPreloader(0) {
 object Textures {
   val sheet = new ScaledResourceLocation(Generators.modId, "textures/gui/widgets.png")
   val tankOverlay = Texture(sheet, 10, 0, 9, 58)
+  val tankOverlaySmaller = Texture(sheet, 137, 54, 10, 35)
   val powerFill = Texture(sheet, 0, 0, 9, 58)
   val slotSelect = Texture(sheet, 20, 0, 18, 18)
 
