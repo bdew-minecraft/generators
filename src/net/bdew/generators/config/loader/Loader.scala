@@ -28,7 +28,7 @@ class Loader extends RecipeLoader with GenericConfigLoader {
     case ResKindItem(sr) =>
       val is = getConcreteStack(sr)
       if (is.getItemDamage == OreDictionary.WILDCARD_VALUE) {
-        Generators.logInfo("Meta is unset in %s, defaulting to 0", x)
+        Generators.logDebug("Meta is unset in %s, defaulting to 0", x)
         is.setItemDamage(0)
       }
       ItemResource(is.getItem, is.getItemDamage)
@@ -43,48 +43,52 @@ class Loader extends RecipeLoader with GenericConfigLoader {
   override def processRecipeStatement(st: RecipeStatement) = st match {
 
     case RsTurbineFuel(fluid, value) =>
-      Generators.logInfo("Adding turbine fuel %s at %f MJ/mB", fluid, value)
-      TurbineFuel.addFuel(getFluid(fluid), value)
+      if (FluidRegistry.isFluidRegistered(fluid)) {
+        Generators.logDebug("Adding turbine fuel %s at %f MJ/mB", fluid, value)
+        TurbineFuel.addFuel(getFluid(fluid), value)
+      } else {
+        Generators.logDebug("Skipping turbine fuel %s - not registered", fluid)
+      }
 
     case RsTurbineBlacklist(fluid) =>
-      Generators.logInfo("Blacklisting turbine fuel %s", fluid)
+      Generators.logDebug("Blacklisting turbine fuel %s", fluid)
       TurbineFuel.removeFuel(getFluid(fluid))
 
     case RsExchangerHeat(input, output, heat) =>
       val inRes = resolveResource(input)
       val outRes = resolveResource(output)
-      Generators.logInfo("Adding exchanger heating %s (%f) -> %s (%f)", inRes.kind, inRes.amount / heat, outRes.kind, outRes.amount / heat)
+      Generators.logDebug("Adding exchanger heating %s (%f) -> %s (%f)", inRes.kind, inRes.amount / heat, outRes.kind, outRes.amount / heat)
       ExchangerRegistry.addHeating(inRes.kind, outRes.kind, inRes.amount / heat, outRes.amount / heat)
 
     case RsExchangerCool(input, output, heat) =>
       val inRes = resolveResource(input)
       val outRes = resolveResource(output)
-      Generators.logInfo("Adding exchanger cooling %s (%f) -> %s (%f)", inRes.kind, inRes.amount / heat, outRes.kind, outRes.amount / heat)
+      Generators.logDebug("Adding exchanger cooling %s (%f) -> %s (%f)", inRes.kind, inRes.amount / heat, outRes.kind, outRes.amount / heat)
       ExchangerRegistry.addCooling(inRes.kind, outRes.kind, inRes.amount / heat, outRes.amount / heat)
 
     case RsExchangerBlacklist(rk) =>
       val res = resolveResourceKind(rk)
-      Generators.logInfo("Blacklisting from exchanger: %s", res)
+      Generators.logDebug("Blacklisting from exchanger: %s", res)
       ExchangerRegistry.remove(res)
 
     case RsCarbonValue(spec, cVal) =>
-      Generators.logInfo("Processing carbon value %s => %s", spec, cVal)
+      Generators.logDebug("Processing carbon value %s => %s", spec, cVal)
       for (stack <- getAllConcreteStacks(spec)) {
         (cVal match {
           case CarbonValueSpecified(value) =>
-            Generators.logInfo("Adding carbon value: %s -> %d", stack, value)
+            Generators.logDebug("Adding carbon value: %s -> %d", stack, value)
             Some(value)
           case CarbonValueDefault() =>
             val value = TileEntityFurnace.getItemBurnTime(stack)
             if (value > 0) {
-              Generators.logInfo("Adding carbon value: %s -> %d (from burn time)", stack, value)
+              Generators.logDebug("Adding carbon value: %s -> %d (from burn time)", stack, value)
               Some(value)
             } else {
               Generators.logWarn("No burn time for %s, skipping", stack)
               None
             }
           case CarbonValueBlacklist() =>
-            Generators.logInfo("Blacklist carbon value: %s", stack)
+            Generators.logDebug("Blacklist carbon value: %s", stack)
             Some(0)
         }) map (CarbonValueRegistry.register(stack, _))
       }

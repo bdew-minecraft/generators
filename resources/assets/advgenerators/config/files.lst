@@ -2,3 +2,6 @@
 
 generators.cfg
 recipes.cfg
+turbine.cfg
+exchanger.cfg
+syngas.cfg
