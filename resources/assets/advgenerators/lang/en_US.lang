@@ -14,9 +14,14 @@ tile.advgenerators.SteamTurbineController.name=Steam Turbine Controller
 tile.advgenerators.ExchangerController.name=Heat Exchanger Controller
 tile.advgenerators.FluidOutputSelect.name=Fluid Output Valve
 tile.advgenerators.ItemOutput.name=Item Output Port
+tile.advgenerators.ItemInput.name=Item Input Port
 tile.advgenerators.PressureOutputSelect.name=Pressurized Output Valve
 tile.advgenerators.PressureInput.name=Pressurized Input Valve
 tile.advgenerators.HeatExchanger.name=Heat Exchanger
+
+tile.advgenerators.SyngasController.name=Syngas Producer Controller
+tile.advgenerators.HeatingChamber.name=Heating Chamber
+tile.advgenerators.MixingChamber.name=Mixing Chamber
 
 item.advgenerators.TurbineBlade.name=Turbine Blade
 item.advgenerators.TurbineRotor.name=Turbine Rotor
@@ -25,6 +30,7 @@ item.advgenerators.PowerIO.name=Power IO Module
 item.advgenerators.IronTubing.name=Iron Tubing
 item.advgenerators.IronWiring.name=Redstone-Iron Wiring
 item.advgenerators.Controller.name=Control Circuit
+item.advgenerators.PressureValve.name=Pressure Valve
 
 advgenerators.gui.turbine.title=Gas Turbine Control
 advgenerators.gui.turbine.steam.title=Steam Turbine Control
@@ -55,6 +61,12 @@ advgenerators.label.exchanger.outrate=%s produced
 advgenerators.label.exchanger.nooutput=No output
 advgenerators.label.exchanger.heatloss=Heat Loss
 
+advgenerators.label.syngas.steam=%s / %s Steam
+advgenerators.label.syngas.carbon=%s / %s Carbon
+advgenerators.label.syngas.heat=Heat: %s / %s
+advgenerators.label.syngas.produced=Syngas produced (per tick)
+advgenerators.label.syngas.consumed=Carbon consumed (per tick)
+
 advgenerators.waila.turbine.nofuel=No fuel
 advgenerators.waila.turbine.nosteam=No steam
 advgenerators.waila.turbine.consuming=Consuming %s %s/t
@@ -71,6 +83,7 @@ advgenerators.output.4=Cyan Output
 advgenerators.output.5=Purple Output
 
 advgenerators.tooltip.turbine.fuel=%s %s/mB in Turbine Generator
+advgenerators.tooltip.carbon=Carbon value: %s
 
 advgenerators.exchanger.output.hot=Hot fluid
 advgenerators.exchanger.output.cold=Cold fluid
