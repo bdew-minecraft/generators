@@ -17,6 +17,7 @@ import net.minecraft.item.ItemStack
 class NEIGeneratorsConfig extends IConfigureNEI {
   override def loadConfig() {
     GuiContainerManager.addTooltipHandler(FuelTooltipHandler)
+    GuiContainerManager.addTooltipHandler(CarbonValueTooltipHandler)
     API.hideItem(new ItemStack(BlockSyngasFlaming))
   }
 

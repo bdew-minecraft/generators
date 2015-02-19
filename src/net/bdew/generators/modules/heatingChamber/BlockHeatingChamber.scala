@@ -9,20 +9,6 @@
 
 package net.bdew.generators.modules.heatingChamber
 
-import cpw.mods.fml.relauncher.{Side, SideOnly}
 import net.bdew.generators.modules.BaseModule
-import net.minecraft.client.renderer.texture.IIconRegister
-import net.minecraft.util.IIcon
-import net.minecraftforge.common.util.ForgeDirection
 
-object BlockHeatingChamber extends BaseModule("HeatingChamber", "HeatingChamber", classOf[TileHeatingChamber]) {
-  var topIcon: IIcon = null
-
-  @SideOnly(Side.CLIENT)
-  override def regIcons(ir: IIconRegister) {
-    topIcon = ir.registerIcon("advgenerators:" + name.toLowerCase + "/top")
-  }
-
-  override def getIcon(side: Int, meta: Int) =
-    if (side == ForgeDirection.UP.ordinal() || side == ForgeDirection.DOWN.ordinal()) topIcon else blockIcon
-}
+object BlockHeatingChamber extends BaseModule("HeatingChamber", "HeatingChamber", classOf[TileHeatingChamber])

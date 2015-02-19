@@ -14,13 +14,13 @@ import net.bdew.generators.{Generators, GeneratorsResourceProvider}
 import net.bdew.lib.Misc
 import net.bdew.lib.data._
 import net.bdew.lib.data.base.UpdateKind
-import net.bdew.lib.multiblock.interact.{CIFluidInput, CIOutputFaces}
+import net.bdew.lib.multiblock.interact.{CIFluidInput, CIFluidOutputSelect, CIItemInput, CIOutputFaces}
 import net.bdew.lib.multiblock.tile.TileControllerGui
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraftforge.fluids._
 
-class TileSyngasController extends TileControllerGui with CIFluidInput with CIOutputFaces {
+class TileSyngasController extends TileControllerGui with CIFluidInput with CIItemInput with CIOutputFaces with CIFluidOutputSelect {
   override val cfg = MachineSyngas
   override val resources = GeneratorsResourceProvider
   override lazy val maxOutputs = 6
@@ -38,28 +38,32 @@ class TileSyngasController extends TileControllerGui with CIFluidInput with CIOu
   val heatingChambers = DataSlotInt("heatingChambers", this)
   val mixingChambers = DataSlotInt("mixingChambers", this)
 
+  val avgCarbonUsed = DataSlotMovingAverage("carbonUsed", this, 20)
+  val avgSyngasProduced = DataSlotMovingAverage("syngasProduced", this, 20)
+
   def doUpdate(): Unit = {
+    var carbonUsed = 0D
+    var syngasProduced = 0D
+
     // Consume carbon to add heat
     if (heat < cfg.maxHeat && carbonBuffer > 0) {
       val addHeat = Misc.min(
         cfg.maxHeat - heat,
         carbonBuffer / cfg.carbonPerHeat,
-        mixingChambers * cfg.mixingChamberThroughput
+        heatingChambers * cfg.heatingChamberHeating
       )
       heat += addHeat
       carbonBuffer -= addHeat * cfg.carbonPerHeat
+      carbonUsed += addHeat * cfg.carbonPerHeat
     }
 
     // Consume heat to make steam
     if (heat > cfg.workHeat && waterTank.getFluidAmount > 0 && steamBuffer < cfg.internalTankCapacity) {
       val addSteam = Misc.min(
-        (cfg.workHeat - heat) * cfg.steamPerHeat,
         waterTank.getFluidAmount * cfg.waterSteamRatio,
         cfg.internalTankCapacity - steamBuffer,
-        heatingChambers * cfg.heatingChamberThroughput
-
+        heatingChambers * cfg.heatingChamberThroughput * (heat / cfg.maxHeat)
       )
-      heat -= addSteam / cfg.steamPerHeat
       steamBuffer += addSteam
       waterTank.drain((addSteam / cfg.waterSteamRatio).ceil.toInt, true)
     }
@@ -67,18 +71,20 @@ class TileSyngasController extends TileControllerGui with CIFluidInput with CIOu
     // Consume steam and carbon to make syngas
     if (steamBuffer > 0 && carbonBuffer > 0 && syngasTank.getFluidAmount < syngasTank.getCapacity) {
       val addSyngas = Misc.min[Double](
-        carbonBuffer / cfg.carbonValuePerMBSyngas,
+        carbonBuffer / cfg.carbonPerMBSyngas,
         steamBuffer / cfg.steamPerMBSyngas,
         syngasTank.getCapacity - syngasTank.getFluidAmount,
         cfg.mixingChamberThroughput * mixingChambers
       ).floor.toInt
-      carbonBuffer -= addSyngas * cfg.carbonValuePerMBSyngas
+      carbonBuffer -= addSyngas * cfg.carbonPerMBSyngas
       steamBuffer -= addSyngas * cfg.steamPerMBSyngas
       syngasTank.fill(addSyngas, true)
+      syngasProduced += addSyngas
+      carbonUsed += addSyngas * cfg.carbonPerMBSyngas
     }
 
     if (heat > 0) {
-      heat := Misc.min(heat - cfg.heatingChamberHeating * cfg.heatLossMultiplier * heatingChambers, 0D)
+      heat := Misc.max(heat - cfg.heatingChamberLoss * heatingChambers, 0D)
     }
 
     // Consume fuel to add carbon
@@ -91,6 +97,9 @@ class TileSyngasController extends TileControllerGui with CIFluidInput with CIOu
       inventory.decrStackSize(slot, 1)
       carbonBuffer += cValue
     }
+
+    avgCarbonUsed.update(carbonUsed)
+    avgSyngasProduced.update(syngasProduced)
   }
 
   serverTick.listen(doUpdate)
@@ -107,4 +116,17 @@ class TileSyngasController extends TileControllerGui with CIFluidInput with CIOu
     heatingChambers := getNumOfModules("HeatingChamber")
     mixingChambers := getNumOfModules("MixingChamber")
   }
+
+  override def getItemInputInventory = inventory
+  override def canInputItemToSlot(slot: Int) = true
+
+  override val outputSlotsDef = OutputSlotsSyngas
+  override def outputFluid(slot: outputSlotsDef.Slot, amount: Int, doDrain: Boolean) = syngasTank.drain(amount, doDrain)
+  override def canOutputFluid(slot: outputSlotsDef.Slot, fluid: Fluid) = fluid == Blocks.syngasFluid
+  override def outputFluid(slot: outputSlotsDef.Slot, resource: FluidStack, doDrain: Boolean) =
+    if (resource.getFluid == Blocks.syngasFluid)
+      syngasTank.drain(resource.amount, doDrain)
+    else
+      null
+
 }

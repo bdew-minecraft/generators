@@ -21,4 +21,5 @@ object Items extends ItemManager(CreativeTabsGenerators.main) {
   regSimpleItem("IronTubing")
   regSimpleItem("IronWiring")
   regSimpleItem("Controller")
+  regSimpleItem("PressureValve")
 }

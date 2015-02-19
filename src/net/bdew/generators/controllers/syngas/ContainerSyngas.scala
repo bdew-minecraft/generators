@@ -30,5 +30,6 @@ class ContainerSyngas(val te: TileSyngasController, player: EntityPlayer) extend
     te.syngasTank.setFluid(null)
     te.steamBuffer := 0
     te.carbonBuffer := 0
+    te.heat := 0
   }
 }

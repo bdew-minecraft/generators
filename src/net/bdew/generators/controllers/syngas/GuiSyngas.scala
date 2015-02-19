@@ -9,29 +9,45 @@
 
 package net.bdew.generators.controllers.syngas
 
-import net.bdew.generators.gui.{GuiOutputConfig, GuiOutputFaces}
+import net.bdew.generators.gui.{GuiOutputConfig, GuiOutputFaces, WidgetFillDataSlotTooltip}
 import net.bdew.generators.network.{NetworkHandler, PktDumpBuffers}
 import net.bdew.generators.{Generators, Textures, config}
 import net.bdew.lib.gui._
-import net.bdew.lib.gui.widgets.{WidgetButtonIcon, WidgetFillDataSlot, WidgetFluidGauge, WidgetLabel}
-import net.bdew.lib.{Client, Misc}
+import net.bdew.lib.gui.widgets.{WidgetButtonIcon, WidgetFluidGauge, WidgetLabel}
+import net.bdew.lib.multiblock.gui.WidgetInfo
+import net.bdew.lib.{Client, DecFormat, Misc}
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
 
 class GuiSyngas(val te: TileSyngasController, player: EntityPlayer) extends BaseScreen(new ContainerSyngas(te, player), 176, 175) with GuiOutputFaces {
   val background = Texture(Generators.modId, "textures/gui/syngas.png", rect)
 
-  lazy val coalTexture = new IconWrapper(Texture.BLOCKS, Blocks.coal_block.getIcon(0, 0))
-  lazy val steamTexture = new IconWrapper(Texture.BLOCKS, config.Blocks.steamFluid.getStillIcon)
+  val coalTexture = new IconWrapper(Texture.BLOCKS, Blocks.coal_block.getIcon(0, 0))
+  val steamTexture = new IconWrapper(Texture.BLOCKS, config.Blocks.steamFluid.getStillIcon)
+  val syngasTexture = new IconWrapper(Texture.BLOCKS, config.Blocks.syngasFluid.getStillIcon)
+
+  def bufferTooltip =
+    List(
+      Misc.toLocalF("advgenerators.label.syngas.steam", DecFormat.round(te.steamBuffer), DecFormat.round(te.cfg.internalTankCapacity)),
+      Misc.toLocalF("advgenerators.label.syngas.carbon", DecFormat.round(te.carbonBuffer), DecFormat.round(te.cfg.internalTankCapacity))
+    )
 
   override def initGui() {
     super.initGui()
 
     widgets.add(new WidgetFluidGauge(new Rect(11, 19, 10, 35), Textures.tankOverlaySmaller, te.waterTank))
     widgets.add(new WidgetFluidGauge(new Rect(57, 19, 10, 35), Textures.tankOverlaySmaller, te.syngasTank))
-    widgets.add(new WidgetFillDataSlot(Rect(30, 61, 37, 8), steamTexture, Direction.DOWN, te.steamBuffer, te.cfg.internalTankCapacity.toDouble))
-    widgets.add(new WidgetFillDataSlot(Rect(30, 69, 37, 8), coalTexture, Direction.UP, te.steamBuffer, te.cfg.internalTankCapacity.toDouble))
-    widgets.add(new WidgetFillDataSlot(Rect(62, 9, 14, 14), Textures.Icons.fire, Direction.UP, te.heat, te.cfg.maxHeat))
+
+    widgets.add(new WidgetFillDataSlotTooltip(
+      Rect(30, 61, 37, 8), steamTexture, Direction.DOWN, te.steamBuffer, te.cfg.internalTankCapacity, bufferTooltip))
+
+    widgets.add(new WidgetFillDataSlotTooltip(
+      Rect(30, 69, 37, 8), coalTexture, Direction.UP, te.carbonBuffer, te.cfg.internalTankCapacity, bufferTooltip))
+
+    widgets.add(new WidgetFillDataSlotTooltip(
+      Rect(9, 62, 14, 14), Textures.Icons.fire, Direction.UP, te.heat, te.cfg.maxHeat,
+      List(Misc.toLocalF("advgenerators.label.syngas.heat", DecFormat.round(te.heat), DecFormat.round(te.cfg.maxHeat)))
+    ))
 
     widgets.add(new WidgetButtonIcon(Point(153, 19), openCfg, Textures.Button16.base, Textures.Button16.hover) {
       icon = Textures.Button16.wrench
@@ -53,17 +69,17 @@ class GuiSyngas(val te: TileSyngasController, player: EntityPlayer) extends Base
     //      Misc.toLocal("advgenerators.label.turbine.turbines"))
     //    )
     //
-    //    widgets.add(new WidgetInfo(Rect(75, 32, 59, 10),
-    //      Textures.Icons.peak,
-    //      "%s %s/t".format(DecFormat.short(te.mjPerTick * Config.powerShowMultiplier), Config.powerShowUnits),
-    //      Misc.toLocal("advgenerators.label.turbine.maxprod"))
-    //    )
-    //
-    //    widgets.add(new WidgetInfo(Rect(75, 43, 59, 10),
-    //      Textures.Icons.fluid,
-    //      DecFormat.short(te.fuelPerTick) + " mB/t",
-    //      Misc.toLocal("advgenerators.label.turbine.fuel"))
-    //    )
+    widgets.add(new WidgetInfo(Rect(75, 32, 59, 10),
+      coalTexture,
+      DecFormat.short(te.avgCarbonUsed.average) + " C/t",
+      Misc.toLocal("advgenerators.label.syngas.consumed"))
+    )
+
+    widgets.add(new WidgetInfo(Rect(75, 43, 59, 10),
+      syngasTexture,
+      DecFormat.short(te.avgSyngasProduced.average) + " mB/t",
+      Misc.toLocal("advgenerators.label.syngas.produced"))
+    )
     //
     //    widgets.add(new WidgetInfo(Rect(75, 54, 59, 10),
     //      Textures.Icons.power,
