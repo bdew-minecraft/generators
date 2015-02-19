@@ -10,10 +10,9 @@
 package net.bdew.generators.controllers.steam
 
 import net.bdew.generators.config.Modules
-import net.bdew.generators.gui.DataSlotMovingAverage
 import net.bdew.generators.{Generators, GeneratorsResourceProvider}
 import net.bdew.lib.data.base.UpdateKind
-import net.bdew.lib.data.{DataSlotDouble, DataSlotInt, DataSlotTank}
+import net.bdew.lib.data.{DataSlotDouble, DataSlotInt, DataSlotMovingAverage, DataSlotTank}
 import net.bdew.lib.multiblock.interact.{CIFluidInput, CIOutputFaces, CIPowerProducer}
 import net.bdew.lib.multiblock.tile.TileControllerGui
 import net.bdew.lib.power.DataSlotPower

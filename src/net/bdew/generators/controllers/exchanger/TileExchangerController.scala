@@ -10,11 +10,10 @@
 package net.bdew.generators.controllers.exchanger
 
 import net.bdew.generators.config.{ExchangerRegistry, Modules}
-import net.bdew.generators.gui.{DataSlotMovingAverage, DataSlotResourceKindOption}
 import net.bdew.generators.{Generators, GeneratorsResourceProvider}
 import net.bdew.lib.Misc
-import net.bdew.lib.data.DataSlotDouble
 import net.bdew.lib.data.base.UpdateKind
+import net.bdew.lib.data.{DataSlotDouble, DataSlotMovingAverage}
 import net.bdew.lib.multiblock.interact.{CIFluidInput, CIFluidOutputSelect, CIItemOutput, CIOutputFaces}
 import net.bdew.lib.multiblock.tile.TileControllerGui
 import net.bdew.lib.resource._
