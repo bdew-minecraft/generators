@@ -40,10 +40,12 @@ class TileSyngasController extends TileControllerGui with CIFluidInput with CIIt
 
   val avgCarbonUsed = DataSlotMovingAverage("carbonUsed", this, 20)
   val avgSyngasProduced = DataSlotMovingAverage("syngasProduced", this, 20)
+  val avgHeatDelta = DataSlotMovingAverage("heatDelta", this, 20)
 
   def doUpdate(): Unit = {
     var carbonUsed = 0D
     var syngasProduced = 0D
+    var heatDelta = 0D
 
     // Consume carbon to add heat
     if (heat < cfg.maxHeat && carbonBuffer > 0) {
@@ -55,9 +57,10 @@ class TileSyngasController extends TileControllerGui with CIFluidInput with CIIt
       heat += addHeat
       carbonBuffer -= addHeat * cfg.carbonPerHeat
       carbonUsed += addHeat * cfg.carbonPerHeat
+      heatDelta += addHeat
     }
 
-    // Consume heat to make steam
+    // Consume water to make steam
     if (heat > cfg.workHeat && waterTank.getFluidAmount > 0 && steamBuffer < cfg.internalTankCapacity) {
       val addSteam = Misc.min(
         waterTank.getFluidAmount * cfg.waterSteamRatio,
@@ -84,7 +87,9 @@ class TileSyngasController extends TileControllerGui with CIFluidInput with CIIt
     }
 
     if (heat > 0) {
-      heat := Misc.max(heat - cfg.heatingChamberLoss * heatingChambers, 0D)
+      val heatLoss = Misc.min(heat.value, heatingChambers * cfg.heatingChamberLoss)
+      heat -= heatLoss
+      heatDelta -= heatLoss
     }
 
     // Consume fuel to add carbon
@@ -100,6 +105,7 @@ class TileSyngasController extends TileControllerGui with CIFluidInput with CIIt
 
     avgCarbonUsed.update(carbonUsed)
     avgSyngasProduced.update(syngasProduced)
+    avgHeatDelta.update(heatDelta)
   }
 
   serverTick.listen(doUpdate)

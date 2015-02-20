@@ -28,8 +28,8 @@ class GuiSyngas(val te: TileSyngasController, player: EntityPlayer) extends Base
 
   def bufferTooltip =
     List(
-      Misc.toLocalF("advgenerators.label.syngas.steam", DecFormat.round(te.steamBuffer), DecFormat.round(te.cfg.internalTankCapacity)),
-      Misc.toLocalF("advgenerators.label.syngas.carbon", DecFormat.round(te.carbonBuffer), DecFormat.round(te.cfg.internalTankCapacity))
+      Misc.toLocalF("advgenerators.label.syngas.steam", DecFormat.short(te.steamBuffer / te.cfg.internalTankCapacity * 100) + "%"),
+      Misc.toLocalF("advgenerators.label.syngas.carbon", DecFormat.short(te.carbonBuffer / te.cfg.internalTankCapacity * 100) + "%")
     )
 
   override def initGui() {
@@ -63,12 +63,12 @@ class GuiSyngas(val te: TileSyngasController, player: EntityPlayer) extends Base
     widgets.add(new WidgetLabel(Misc.toLocal("advgenerators.gui.syngas.title"), 8, 6, Color.darkGray))
     widgets.add(new WidgetLabel(Misc.toLocal("container.inventory"), 8, this.ySize - 96 + 3, Color.darkGray))
 
-    //    widgets.add(new WidgetInfo(Rect(75, 21, 59, 10),
-    //      Textures.Icons.turbine,
-    //      te.numTurbines.value.toString,
-    //      Misc.toLocal("advgenerators.label.turbine.turbines"))
-    //    )
-    //
+    widgets.add(new WidgetInfo(Rect(75, 21, 59, 10),
+      Textures.Icons.heatExchange,
+      (if (te.avgHeatDelta.average > 0) "+" else "") + DecFormat.short(te.avgHeatDelta.average) + " HU/t",
+      Misc.toLocal("advgenerators.label.syngas.heat.delta"))
+    )
+
     widgets.add(new WidgetInfo(Rect(75, 32, 59, 10),
       coalTexture,
       DecFormat.short(te.avgCarbonUsed.average) + " C/t",
@@ -80,18 +80,6 @@ class GuiSyngas(val te: TileSyngasController, player: EntityPlayer) extends Base
       DecFormat.short(te.avgSyngasProduced.average) + " mB/t",
       Misc.toLocal("advgenerators.label.syngas.produced"))
     )
-    //
-    //    widgets.add(new WidgetInfo(Rect(75, 54, 59, 10),
-    //      Textures.Icons.power,
-    //      "%s %s/t".format(DecFormat.short(te.outputAverage.average * Config.powerShowMultiplier), Config.powerShowUnits),
-    //      Misc.toLocal("advgenerators.label.turbine.prod"))
-    //    )
-    //
-    //    widgets.add(new WidgetRateInfo(Rect(75, 65, 59, 10),
-    //      if (te.fuel.getFluid != null) new IconWrapper(Texture.BLOCKS, te.fuel.getFluid.getFluid.getStillIcon) else IconCache.disabled,
-    //      if (te.fuel.getFluid != null) Color.fromInt(te.fuel.getFluid.getFluid.getColor) else Color.red,
-    //      DecFormat.short(te.fuelPerTickAverage.average) + " mB/t",
-    //      Misc.toLocal("advgenerators.label.turbine.fuelaverage")))
   }
 
   def openCfg(b: WidgetButtonIcon) {
