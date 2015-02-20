@@ -46,6 +46,9 @@ object BlockSyngasFlaming extends SimpleBlock("syngas_flaming", MaterialSyngas) 
 
   override def getIcon(side: Int, meta: Int): IIcon =
     config.Blocks.syngasFluid.getStillIcon
+
+  @SideOnly(Side.CLIENT) override
+  def registerBlockIcons(reg: IIconRegister): Unit = {}
 }
 
 class BlockSyngas(fluid: Fluid) extends BlockFluidClassic(fluid, MaterialSyngas) {
