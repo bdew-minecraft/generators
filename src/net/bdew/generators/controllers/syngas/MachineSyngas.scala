@@ -13,6 +13,7 @@ import cpw.mods.fml.relauncher.{Side, SideOnly}
 import net.bdew.lib.gui.GuiProvider
 import net.bdew.lib.machine.Machine
 import net.bdew.lib.multiblock.MachineCore
+import net.bdew.lib.multiblock.data.{OutputConfigFluidSlots, OutputConfigManager}
 import net.minecraft.entity.player.EntityPlayer
 
 object MachineSyngas extends Machine("SyngasController", BlockSyngasController) with MachineCore with GuiProvider {
@@ -30,6 +31,8 @@ object MachineSyngas extends Machine("SyngasController", BlockSyngasController) 
   lazy val heatingChamberHeating = tuning.getDouble("HeatingChamberHeating")
   lazy val heatingChamberLoss = tuning.getDouble("HeatingChamberLoss")
   lazy val carbonPerHeat = tuning.getDouble("CarbonPerHeat")
+
+  OutputConfigManager.register("fluidslots_syngas", () => new OutputConfigFluidSlots(OutputSlotsSyngas))
 
   @SideOnly(Side.CLIENT)
   def getGui(te: TileSyngasController, player: EntityPlayer) = new GuiSyngas(te, player)
