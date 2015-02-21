@@ -19,7 +19,6 @@ import net.bdew.lib.multiblock.interact.{CIFluidOutputSelect, CIOutputFaces}
 class WidgetFluidSlotsOutput(te: CIOutputFaces, output: Int) extends WidgetOutputDisplay {
   def cfg = te.outputConfig(output).asInstanceOf[OutputConfigFluidSlots]
   add(new WidgetDynLabel("%s mB/t".format(DecFormat.round(cfg.avg)), 1, 5, Color.darkGray))
-  if (te.asInstanceOf[CIFluidOutputSelect].outputSlotsDef.slotMap.size > 1)
-    add(new WidgetSlotConfig(te, output, Point(55, 1)))
+  add(new WidgetSlotConfig(te, output, Point(55, 1)))
   add(new WidgetRSConfig(te, output, Point(73, 1)))
 }
