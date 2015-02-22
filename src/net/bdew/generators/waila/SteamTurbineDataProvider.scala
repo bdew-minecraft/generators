@@ -12,11 +12,9 @@ package net.bdew.generators.waila
 import net.bdew.generators.config.Config
 import net.bdew.generators.controllers.steam.TileSteamTurbineController
 import net.bdew.lib.{DecFormat, Misc}
-import net.minecraft.nbt.NBTTagCompound
 
 object SteamTurbineDataProvider extends BaseControllerDataProvider(classOf[TileSteamTurbineController]) {
-  override def getBodyStringsFromData(te: TileSteamTurbineController, data: NBTTagCompound) = {
-    loadData(te, data)
+  override def getBodyStringsFromTE(te: TileSteamTurbineController) = {
     List(
       if (te.steam.getFluid == null) {
         Misc.toLocal("advgenerators.waila.turbine.nosteam")

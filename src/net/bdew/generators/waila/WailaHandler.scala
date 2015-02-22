@@ -17,7 +17,6 @@ import net.bdew.generators.controllers.syngas.TileSyngasController
 import net.bdew.generators.controllers.turbine.TileTurbineController
 import net.bdew.lib.multiblock.tile.{TileController, TileModule}
 
-
 object WailaHandler {
   var handlers = Set.empty[ControllerHandlerPair[_]]
 

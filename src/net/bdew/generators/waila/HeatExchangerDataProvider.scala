@@ -12,7 +12,6 @@ package net.bdew.generators.waila
 import net.bdew.generators.controllers.exchanger.TileExchangerController
 import net.bdew.lib.resource.{FluidResource, ResourceKind}
 import net.bdew.lib.{DecFormat, Misc}
-import net.minecraft.nbt.NBTTagCompound
 
 object HeatExchangerDataProvider extends BaseControllerDataProvider(classOf[TileExchangerController]) {
   def formatFlowRate(r: Option[ResourceKind], v: Double, fmt: String) = r match {
@@ -23,8 +22,7 @@ object HeatExchangerDataProvider extends BaseControllerDataProvider(classOf[Tile
     case _ => None
   }
 
-  override def getBodyStringsFromData(te: TileExchangerController, data: NBTTagCompound) = {
-    loadData(te, data)
+  override def getBodyStringsFromTE(te: TileExchangerController) = {
     val dsList = for {
       ds <- List(te.heaterIn, te.heaterOut, te.coolerIn, te.coolerOut)
       res <- ds.resource

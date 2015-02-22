@@ -27,12 +27,11 @@ abstract class BaseControllerDataProvider[T <: TileController](cls: Class[T]) ex
     tag
   }
 
-  override def getBodyStrings(target: T, stack: ItemStack, acc: IWailaDataAccessor, cfg: IWailaConfigHandler) = getBodyStringsFromData(target, acc.getNBTData)
-
-  def loadData(te: T, data: NBTTagCompound): Unit = {
-    if (data.hasKey("generators_waila_data"))
-      te.doLoad(UpdateKind.GUI, data.getCompoundTag("generators_waila_data"))
+  override def getBodyStrings(target: T, stack: ItemStack, acc: IWailaDataAccessor, cfg: IWailaConfigHandler) = {
+    if (acc.getNBTData.hasKey("generators_waila_data"))
+      target.doLoad(UpdateKind.GUI, acc.getNBTData.getCompoundTag("generators_waila_data"))
+    getBodyStringsFromTE(target)
   }
 
-  def getBodyStringsFromData(te: T, data: NBTTagCompound): Iterable[String]
+  def getBodyStringsFromTE(te: T): Iterable[String]
 }

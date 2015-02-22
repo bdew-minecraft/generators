@@ -12,11 +12,9 @@ package net.bdew.generators.waila
 import net.bdew.generators.config.Config
 import net.bdew.generators.controllers.turbine.TileTurbineController
 import net.bdew.lib.{DecFormat, Misc}
-import net.minecraft.nbt.NBTTagCompound
 
 object FuelTurbineDataProvider extends BaseControllerDataProvider(classOf[TileTurbineController]) {
-  override def getBodyStringsFromData(te: TileTurbineController, data: NBTTagCompound) = {
-    loadData(te, data)
+  override def getBodyStringsFromTE(te: TileTurbineController) = {
     List(
       if (te.fuel.getFluid == null) {
         Misc.toLocal("advgenerators.waila.turbine.nofuel")

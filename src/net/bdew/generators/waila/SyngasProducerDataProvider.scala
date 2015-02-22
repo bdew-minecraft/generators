@@ -12,12 +12,10 @@ package net.bdew.generators.waila
 import net.bdew.generators.config.Blocks
 import net.bdew.generators.controllers.syngas.TileSyngasController
 import net.bdew.lib.{DecFormat, Misc}
-import net.minecraft.nbt.NBTTagCompound
 import net.minecraftforge.fluids.FluidRegistry
 
 object SyngasProducerDataProvider extends BaseControllerDataProvider(classOf[TileSyngasController]) {
-  override def getBodyStringsFromData(te: TileSyngasController, data: NBTTagCompound) = {
-    loadData(te, data)
+  override def getBodyStringsFromTE(te: TileSyngasController) = {
     List(
       "%s/%s mB %s".format(DecFormat.round(te.waterTank.getFluidAmount), DecFormat.round(te.waterTank.getCapacity), FluidRegistry.WATER.getLocalizedName(null)),
       "%s/%s mB %s".format(DecFormat.round(te.syngasTank.getFluidAmount), DecFormat.round(te.syngasTank.getCapacity), Blocks.syngasFluid.getLocalizedName(null)),

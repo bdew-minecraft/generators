@@ -10,7 +10,9 @@
 package net.bdew.generators.waila
 
 import mcp.mobius.waila.api.{IWailaConfigHandler, IWailaDataAccessor}
+import net.bdew.lib.Misc
 import net.bdew.lib.block.BlockRef
+import net.bdew.lib.data.base.UpdateKind
 import net.bdew.lib.multiblock.tile.{TileController, TileModule}
 import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.item.ItemStack
@@ -27,22 +29,30 @@ object ModuleDataProvider extends BaseDataProvider(classOf[TileModule]) {
       data.setInteger("coreX", core.xCoord)
       data.setInteger("coreY", core.yCoord)
       data.setInteger("coreZ", core.zCoord)
-      data.setTag("coreData", handler.getNBTTag(player, core, new NBTTagCompound, world, core.xCoord, core.yCoord, core.zCoord))
-      tag.setTag("generators_waila_core", data)
+      data.setTag("coreData", Misc.applyMutator(new NBTTagCompound) {
+        core.doSave(UpdateKind.GUI, _)
+      })
+      tag.setTag("generators_waila_module", data)
     }
     tag
   }
 
   override def getBodyStrings(target: TileModule, stack: ItemStack, acc: IWailaDataAccessor, cfg: IWailaConfigHandler): Iterable[String] = {
-    if (acc.getNBTData.hasKey("generators_waila_core")) {
-      val coreData = acc.getNBTData.getCompoundTag("generators_waila_core")
-      val bp = BlockRef(coreData.getInteger("coreX"), coreData.getInteger("coreY"), coreData.getInteger("coreZ"))
-      (for {
-        core <- bp.getTile[TileController](acc.getWorld)
-        handler <- WailaHandler.handlers.find(_.isValidTE(core))
-      } yield {
-        handler.getBodyStringsFromData(core, coreData.getCompoundTag("coreData"))
-      }).getOrElse(List.empty)
-    } else List.empty
+    val coreOpt = if (acc.getNBTData.hasKey("generators_waila_module")) {
+      val data = acc.getNBTData.getCompoundTag("generators_waila_module")
+      val bp = BlockRef(data.getInteger("coreX"), data.getInteger("coreY"), data.getInteger("coreZ"))
+      bp.getTile[TileController](acc.getWorld) map { controller =>
+        controller.doLoad(UpdateKind.GUI, data.getCompoundTag("coreData"))
+        controller
+      }
+    } else {
+      target.getCore
+    }
+    (for {
+      core <- coreOpt
+      handler <- WailaHandler.handlers.find(_.isValidTE(core))
+    } yield {
+      handler.getBodyStringsFromTE(core)
+    }).getOrElse(List.empty)
   }
 }
