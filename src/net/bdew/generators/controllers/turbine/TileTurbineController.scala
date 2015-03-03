@@ -1,5 +1,5 @@
 /*
- * Copyright (c) bdew, 2014
+ * Copyright (c) bdew, 2015
  * https://github.com/bdew/generators
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
@@ -10,6 +10,8 @@
 package net.bdew.generators.controllers.turbine
 
 import net.bdew.generators.config.{Modules, TurbineFuel}
+import net.bdew.generators.controllers.PoweredController
+import net.bdew.generators.sensor.Sensors
 import net.bdew.generators.{Generators, GeneratorsResourceProvider}
 import net.bdew.lib.Misc
 import net.bdew.lib.data.base.UpdateKind
@@ -17,10 +19,11 @@ import net.bdew.lib.data.{DataSlotFloat, DataSlotInt, DataSlotMovingAverage, Dat
 import net.bdew.lib.multiblock.interact.{CIFluidInput, CIOutputFaces, CIPowerProducer}
 import net.bdew.lib.multiblock.tile.TileControllerGui
 import net.bdew.lib.power.DataSlotPower
+import net.bdew.lib.sensors.multiblock.CISensors
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraftforge.fluids.{Fluid, FluidStack}
 
-class TileTurbineController extends TileControllerGui with CIFluidInput with CIOutputFaces with CIPowerProducer {
+class TileTurbineController extends TileControllerGui with PoweredController with CIFluidInput with CIOutputFaces with CIPowerProducer with CISensors {
   val cfg = MachineTurbine
 
   val resources = GeneratorsResourceProvider
@@ -36,6 +39,8 @@ class TileTurbineController extends TileControllerGui with CIFluidInput with CIO
 
   val outputAverage = new DataSlotMovingAverage("outputAverage", this, 20)
   val fuelPerTickAverage = new DataSlotMovingAverage("fuelPerTickAverage", this, 20)
+
+  override val sensorTypes = Sensors.fuelTurbineSensors
 
   lazy val maxOutputs = 6
 

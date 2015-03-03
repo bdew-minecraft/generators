@@ -1,5 +1,5 @@
 /*
- * Copyright (c) bdew, 2014
+ * Copyright (c) bdew, 2015
  * https://github.com/bdew/generators
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
@@ -23,6 +23,7 @@ import net.bdew.generators.modules.mixingChamber.BlockMixingChamber
 import net.bdew.generators.modules.powerCapacitor.BlockPowerCapacitor
 import net.bdew.generators.modules.pressure.{BlockPressureInput, BlockPressureOutput}
 import net.bdew.generators.modules.rfOutput.BlockRfOutput
+import net.bdew.generators.modules.sensor.BlockSensor
 import net.bdew.generators.modules.turbine.BlockTurbine
 import net.bdew.generators.{CreativeTabsGenerators, Generators}
 import net.bdew.lib.Misc
@@ -54,6 +55,8 @@ object Blocks extends BlockManager(CreativeTabsGenerators.main) {
   regBlock(BlockHeatingChamber)
   regBlock(BlockMixingChamber)
   regBlock(BlockExchanger)
+
+  regBlock(BlockSensor)
 
   if (Misc.haveModVersion("pressure") && PressureAPI.HELPER != null) {
     Generators.logInfo("Pressure pipes detected (%s), adding pressure modules", PressureAPI.HELPER)

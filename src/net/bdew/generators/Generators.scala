@@ -21,6 +21,7 @@ import net.bdew.generators.compat.itempush.ItemPush
 import net.bdew.generators.config.loader.TuningLoader
 import net.bdew.generators.config.{Config, TurbineFuel}
 import net.bdew.generators.network.NetworkHandler
+import net.bdew.generators.sensor.Sensors
 import net.bdew.lib.multiblock.data.{OutputConfigItems, OutputConfigManager}
 import org.apache.logging.log4j.Logger
 
@@ -52,12 +53,14 @@ object Generators {
     Config.load()
     if (event.getSide == Side.CLIENT) {
       IconCache.init()
+      sensor.Icons.init()
     }
   }
 
   @EventHandler
   def init(event: FMLInitializationEvent) {
     TurbineFuel.init()
+    Sensors.load()
     NetworkRegistry.INSTANCE.registerGuiHandler(this, Config.guiHandler)
     NetworkHandler.init()
     FMLInterModComms.sendMessage("Waila", "register", "net.bdew.generators.waila.WailaHandler.loadCallback")

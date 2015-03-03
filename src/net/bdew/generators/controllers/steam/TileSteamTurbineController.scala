@@ -4,22 +4,25 @@
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
  * License 1.0, or MMPL. Please check the contents of the license located in
- * http://bdew.net/minecraft-mod-public-license
+ * http://bdew.net/minecraft-mod-public-license/
  */
 
 package net.bdew.generators.controllers.steam
 
 import net.bdew.generators.config.Modules
+import net.bdew.generators.controllers.PoweredController
+import net.bdew.generators.sensor.Sensors
 import net.bdew.generators.{Generators, GeneratorsResourceProvider}
 import net.bdew.lib.data.base.UpdateKind
 import net.bdew.lib.data.{DataSlotDouble, DataSlotInt, DataSlotMovingAverage, DataSlotTank}
 import net.bdew.lib.multiblock.interact.{CIFluidInput, CIOutputFaces, CIPowerProducer}
 import net.bdew.lib.multiblock.tile.TileControllerGui
 import net.bdew.lib.power.DataSlotPower
+import net.bdew.lib.sensors.multiblock.CISensors
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraftforge.fluids.{Fluid, FluidStack}
 
-class TileSteamTurbineController extends TileControllerGui with CIFluidInput with CIOutputFaces with CIPowerProducer {
+class TileSteamTurbineController extends TileControllerGui with PoweredController with CIFluidInput with CIOutputFaces with CIPowerProducer with CISensors {
   val cfg = MachineSteamTurbine
 
   val resources = GeneratorsResourceProvider
@@ -33,6 +36,8 @@ class TileSteamTurbineController extends TileControllerGui with CIFluidInput wit
   val steamAverage = new DataSlotMovingAverage("steamAverage", this, 20)
 
   lazy val maxOutputs = 6
+
+  override val sensorTypes = Sensors.steamTurbineSensors
 
   def doUpdate() {
     if (speed > 1 && power.stored < power.capacity) {
