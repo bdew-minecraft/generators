@@ -9,39 +9,21 @@
 
 package net.bdew.generators.modules.sensor
 
-import net.bdew.lib.Misc
 import net.bdew.lib.data.base.ContainerDataSlots
-import net.bdew.lib.gui.{NoInvContainer, SlotClickable}
-import net.bdew.lib.sensors.SensorPair
-import net.bdew.lib.tile.inventory.BaseInventory
+import net.bdew.lib.gui.NoInvContainer
+import net.bdew.lib.sensors._
+import net.bdew.lib.tile.inventory.SimpleInventory
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.inventory.Slot
 
 class ContainerSensor(val te: TileSensor, player: EntityPlayer) extends NoInvContainer with ContainerDataSlots {
   lazy val dataSource = te
 
-  val fakeInv = new BaseInventory {
-    override def getSizeInventory = 2
-    override def markDirty() {}
-  }
+  val fakeInv = new SimpleInventory(2)
 
-  addSlotToContainer(new Slot(fakeInv, 0, 53, 38) with SlotClickable {
-    override def onClick(button: Int, mods: Int, player: EntityPlayer) = {
-      te.getCore map { core =>
-        val newSensor = Misc.nextInSeq(core.sensorTypes, te.config.sensor)
-        te.config := SensorPair(newSensor, newSensor.defaultParameter)
-      }
-      player.inventory.getItemStack
-    }
-  })
+  addSlotToContainer(new SlotSensorType(fakeInv, 0, 53, 38, te.config,
+    te.getCore.map(_.sensorTypes).getOrElse(List(InvalidSensor))))
 
-  addSlotToContainer(new Slot(fakeInv, 1, 71, 38) with SlotClickable {
-    override def onClick(button: Int, mods: Int, player: EntityPlayer) = {
-      val newParam = te.config.sensor.paramClicked(te.config.param, player.inventory.getItemStack, button, mods)
-      te.config := te.config.value.copy(param = newParam)
-      player.inventory.getItemStack
-    }
-  })
+  addSlotToContainer(new SlotSensorParameter(fakeInv, 1, 71, 38, te.config))
 
   bindPlayerInventory(player.inventory, 8, 94, 152)
 
