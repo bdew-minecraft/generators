@@ -21,13 +21,14 @@ object BlockPressureInput extends BaseModule("PressureInput", "FluidInput", clas
 with BlockNotifyUpdates with IPressureConnectableBlock {
   override def canConnectTo(world: IBlockAccess, x: Int, y: Int, z: Int, side: ForgeDirection) =
     getTE(world, x, y, z).getCore.isDefined
+  override def isTraversable(world: IBlockAccess, x: Int, y: Int, z: Int) = false
 }
 
 class TilePressureInput extends TileModule with PressureModule with IPressureEject {
   val kind: String = "FluidInput"
   override def getCore = getCoreAs[CIFluidInput]
 
-  override def eject(resource: FluidStack, doEject: Boolean) = getCore map { core =>
+  override def eject(resource: FluidStack, direction: ForgeDirection, doEject: Boolean) = getCore map { core =>
     core.inputFluid(resource, doEject)
   } getOrElse 0
 

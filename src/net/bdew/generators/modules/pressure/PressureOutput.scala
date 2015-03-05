@@ -23,6 +23,7 @@ object BlockPressureOutput extends BaseModule("PressureOutputSelect", "FluidOutp
 with BlockOutput[TilePressureOutput] with BlockNotifyUpdates with IPressureConnectableBlock {
   override def canConnectTo(world: IBlockAccess, x: Int, y: Int, z: Int, side: ForgeDirection) =
     getTE(world, x, y, z).getCore.isDefined
+  override def isTraversable(world: IBlockAccess, x: Int, y: Int, z: Int) = false
 }
 
 class TilePressureOutput extends TileOutput[OutputConfigFluidSlots] with PressureModule with RSControllableOutput with IPressureInject {
@@ -39,7 +40,7 @@ class TilePressureOutput extends TileOutput[OutputConfigFluidSlots] with Pressur
 
   override def makeCfgObject(face: ForgeDirection) = new OutputConfigFluidSlots(getCore.get.outputSlotsDef)
 
-  override def invalidateConnection() = connections = Map.empty
+  override def invalidateConnection(direction: ForgeDirection) = connections -= direction
 
   var connections = Map.empty[ForgeDirection, IPressureConnection]
 
