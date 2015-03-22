@@ -60,7 +60,7 @@ object Generators {
   @EventHandler
   def init(event: FMLInitializationEvent) {
     TurbineFuel.init()
-    Sensors.load()
+    Sensors.init()
     NetworkRegistry.INSTANCE.registerGuiHandler(this, Config.guiHandler)
     NetworkHandler.init()
     FMLInterModComms.sendMessage("Waila", "register", "net.bdew.generators.waila.WailaHandler.loadCallback")

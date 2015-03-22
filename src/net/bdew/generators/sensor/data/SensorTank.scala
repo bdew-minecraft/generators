@@ -9,12 +9,13 @@
 
 package net.bdew.generators.sensor.data
 
-import net.bdew.generators.sensor.Icons
+import net.bdew.generators.sensor.{CastSensor, Icons}
 import net.bdew.lib.data.DataSlotTankBase
-import net.bdew.lib.sensors.{SensorParameter, SimpleSensor}
-import net.minecraft.tileentity.TileEntity
+import net.bdew.lib.sensors.GenericSensorParameter
 
-case class SensorTank(uid: String, iconName: String, accessor: TileEntity => Option[DataSlotTankBase]) extends SimpleSensor with Icons.Loader {
+import scala.reflect.ClassTag
+
+case class SensorTank[T: ClassTag](uid: String, iconName: String, accessor: T => DataSlotTankBase) extends CastSensor[T] with Icons.Loader {
   override val parameters = Vector(
     ParamFullness.empty,
     ParamFullness.nonEmpty,
@@ -24,9 +25,10 @@ case class SensorTank(uid: String, iconName: String, accessor: TileEntity => Opt
     ParamFullness.nonFull,
     ParamFullness.full
   )
-  override def isActive(param: SensorParameter, te: TileEntity) = param match {
-    case x: ParameterCompareFullness =>
-      accessor(te) exists { ds => x.test(ds.getFluidAmount.toDouble / ds.getCapacity) }
+  override def getResultTyped(param: GenericSensorParameter, te: T) = (param, te) match {
+    case (x: ParameterFill, y: T) =>
+      val ds = accessor(y)
+      x.test(ds.getFluidAmount, ds.getCapacity)
     case _ => false
   }
 }

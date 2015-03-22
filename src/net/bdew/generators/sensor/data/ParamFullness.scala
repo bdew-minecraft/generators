@@ -9,17 +9,16 @@
 
 package net.bdew.generators.sensor.data
 
-import net.bdew.generators.sensor.Icons
-import net.bdew.lib.sensors.SensorParameter
+import net.bdew.generators.sensor.{Icons, Sensors}
 
-case class ParameterCompareFullness(uid: String, iconName: String, test: (Double) => Boolean) extends SensorParameter with Icons.Loader
+case class ParameterFill(uid: String, iconName: String, test: (Double, Double) => Boolean) extends Sensors.SensorParameter with Icons.Loader
 
 object ParamFullness {
-  val empty = ParameterCompareFullness("generators.fullness.empty", "fillEmpty", _ <= 0.000001D)
-  val nonEmpty = ParameterCompareFullness("generators.fullness.not.empty", "fillNotEmpty", _ > 0.000001D)
-  val gt25 = ParameterCompareFullness("generators.fullness.gt25", "fill25", _ >= 0.25D)
-  val gt50 = ParameterCompareFullness("generators.fullness.gt50", "fill50", _ >= 0.50D)
-  val gt75 = ParameterCompareFullness("generators.fullness.gt75", "fill75", _ >= 0.75D)
-  val full = ParameterCompareFullness("generators.fullness.full", "fillFull", _ >= 0.9999999D)
-  val nonFull = ParameterCompareFullness("generators.fullness.not.full", "fillNotFull", _ < 0.9999999D)
+  val empty = ParameterFill("fill.empty", "fillEmpty", (n, c) => n <= 0)
+  val nonEmpty = ParameterFill("fill.not.empty", "fillNotEmpty", (n, c) => n > 0)
+  val gt25 = ParameterFill("fill.gt25", "fill25", _ / _ >= 0.25D)
+  val gt50 = ParameterFill("fill.gt50", "fill50", _ / _ >= 0.50D)
+  val gt75 = ParameterFill("fill.gt75", "fill75", _ / _ >= 0.75D)
+  val full = ParameterFill("fill.full", "fillFull", _ >= _)
+  val nonFull = ParameterFill("fill.not.full", "fillNotFull", _ < _)
 }

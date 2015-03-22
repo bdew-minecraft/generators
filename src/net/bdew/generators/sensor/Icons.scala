@@ -10,18 +10,10 @@
 package net.bdew.generators.sensor
 
 import cpw.mods.fml.relauncher.{Side, SideOnly}
-import net.bdew.lib.Misc
 import net.bdew.lib.gui.Texture
 import net.bdew.lib.render.IconPreloader
 
 object Icons extends IconPreloader(1) {
-  lazy val map = {
-    val tlClassName = classOf[TextureLoc].getName
-    (for {
-      method <- getClass.getMethods if method.getParameterTypes.length == 0 && method.getReturnType.getName == tlClassName
-      value <- Misc.asInstanceOpt(method.invoke(this), classOf[TextureLoc])
-    } yield method.getName -> value).toMap
-  }
 
   trait Loader {
     def iconName: String

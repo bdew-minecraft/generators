@@ -9,36 +9,37 @@
 
 package net.bdew.generators.modules.sensor
 
+import net.bdew.generators.sensor.Sensors
 import net.bdew.lib.Misc
 import net.bdew.lib.multiblock.tile.TileController
 import net.bdew.lib.sensors._
-import net.bdew.lib.sensors.multiblock.{CISensors, TileSensorModule}
+import net.bdew.lib.sensors.multiblock.{CIRedstoneSensors, TileRedstoneSensorModule}
 import net.minecraft.block.Block
 import net.minecraft.world.World
 
-class TileSensor extends TileSensorModule {
+class TileSensor extends TileRedstoneSensorModule {
   override val kind = "Sensor"
-  override val config = DataSlotSensor("sensor", this, InvalidSensor)
-  override def getCore = getCoreAs[CISensors]
+  override val config = DataSlotSensor(Sensors, "sensor", this, Sensors.DisabledSensor)
+  override def getCore = getCoreAs[CIRedstoneSensors]
 
   override def connect(target: TileController) = {
     super.connect(target)
     for {
-      core <- Misc.asInstanceOpt(target, classOf[CISensors])
+      core <- Misc.asInstanceOpt(target, classOf[CIRedstoneSensors])
       sensor <- core.sensorTypes.headOption
     } {
       config := SensorPair(sensor, sensor.defaultParameter)
     }
   }
   override def coreRemoved() = {
-    config := InvalidSensorPair
+    config := Sensors.DisabledSensorPair
     super.coreRemoved()
   }
 
   def isSignalOn = BlockSensor.isSignalOn(worldObj, xCoord, yCoord, zCoord)
 
   serverTick.listen(() => {
-    val act = getCore exists (config.sensor.isActive(config.param, _))
+    val act = getCore exists config.getResult
     if (BlockSensor.isSignalOn(worldObj, xCoord, yCoord, zCoord) != act) {
       BlockSensor.setSignal(worldObj, xCoord, yCoord, zCoord, act)
     }

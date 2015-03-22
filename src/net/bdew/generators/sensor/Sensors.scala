@@ -9,45 +9,27 @@
 
 package net.bdew.generators.sensor
 
-import net.bdew.generators.Generators
-import net.bdew.generators.controllers.PoweredController
+import cpw.mods.fml.relauncher.{Side, SideOnly}
 import net.bdew.generators.controllers.steam.TileSteamTurbineController
 import net.bdew.generators.controllers.turbine.TileTurbineController
 import net.bdew.generators.sensor.data.{SensorPower, SensorTank}
-import net.bdew.lib.data.DataSlotTankBase
-import net.bdew.lib.power.DataSlotPower
-import net.bdew.lib.sensors.SensorRegistry
+import net.bdew.lib.sensors.SensorSystem
 import net.minecraft.tileentity.TileEntity
 
-import scala.reflect.ClassTag
-
-object Sensors {
-  def accessHelper[T: ClassTag, R](ds: T => R): TileEntity => Option[R] = { t =>
-    if (implicitly[ClassTag[T]].runtimeClass.isInstance(t))
-      Some(ds(t.asInstanceOf[T]))
-    else
-      None
-  }
-
-  SensorRegistry.register(SensorNull)
-  val powerSensor = SensorRegistry.register(SensorPower("generators.power", "power",
-    accessHelper[PoweredController, DataSlotPower](_.power)))
+object Sensors extends SensorSystem[TileEntity, Boolean](false) {
+  @SideOnly(Side.CLIENT)
+  override def disabledTexture = Icons.disabled
+  override def localizationPrefix = "advgenerators.sensor"
 
   val fuelTurbineSensors = List(
-    SensorNull,
-    powerSensor,
-    SensorRegistry.register(SensorTank("generators.turbine.fuel", "fuelTank",
-      accessHelper[TileTurbineController, DataSlotTankBase](_.fuel)))
+    DisabledSensor,
+    SensorPower,
+    SensorTank[TileTurbineController]("turbine.fuel", "fuelTank", _.fuel)
   )
 
   val steamTurbineSensors = List(
-    SensorNull,
-    powerSensor,
-    SensorRegistry.register(SensorTank("generators.turbine.steam", "steamTank",
-      accessHelper[TileSteamTurbineController, DataSlotTankBase](_.steam)))
+    DisabledSensor,
+    SensorPower,
+    SensorTank[TileSteamTurbineController]("turbine.steam", "steamTank", _.steam)
   )
-
-  def load(): Unit = {
-    Generators.logDebug("Sensors loaded")
-  }
 }

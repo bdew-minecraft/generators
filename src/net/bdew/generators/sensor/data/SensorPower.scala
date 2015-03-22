@@ -9,12 +9,14 @@
 
 package net.bdew.generators.sensor.data
 
-import net.bdew.generators.sensor.Icons
-import net.bdew.lib.power.DataSlotPower
-import net.bdew.lib.sensors.{SensorParameter, SimpleSensor}
-import net.minecraft.tileentity.TileEntity
+import net.bdew.generators.controllers.PoweredController
+import net.bdew.generators.sensor.{CastSensor, Icons}
+import net.bdew.lib.sensors.GenericSensorParameter
 
-case class SensorPower(uid: String, iconName: String, accessor: TileEntity => Option[DataSlotPower]) extends SimpleSensor with Icons.Loader {
+object SensorPower extends CastSensor[PoweredController] with Icons.Loader {
+  override def iconName = "power"
+  override def uid = "power"
+
   override val parameters = Vector(
     ParamFullness.empty,
     ParamFullness.nonEmpty,
@@ -24,9 +26,10 @@ case class SensorPower(uid: String, iconName: String, accessor: TileEntity => Op
     ParamFullness.nonFull,
     ParamFullness.full
   )
-  override def isActive(param: SensorParameter, te: TileEntity) = param match {
-    case x: ParameterCompareFullness =>
-      accessor(te) exists { ds => x.test(ds.stored / ds.capacity) }
+
+  override def getResultTyped(param: GenericSensorParameter, te: PoweredController) = param match {
+    case x: ParameterFill =>
+      x.test(te.power.stored, te.power.capacity)
     case _ => false
   }
 }

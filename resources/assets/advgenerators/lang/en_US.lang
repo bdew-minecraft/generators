@@ -107,17 +107,17 @@ resource.fluid.format=%s / %s mB
 fluid.steam=Steam
 fluid.syngas=Syngas
 
-bdew.sensor.generators.disabled=Disabled
-bdew.sensor.param.generators.disabled=Disabled
+advgenerators.sensor.disabled=Disabled
+advgenerators.sensor.param.disabled=Disabled
 
-bdew.sensor.generators.power=Power Capacitor
-bdew.sensor.generators.turbine.fuel=Fuel Tank
-bdew.sensor.generators.turbine.steam=Steam Tank
+advgenerators.sensor.power=Power Capacitor
+advgenerators.sensor.turbine.fuel=Fuel Tank
+advgenerators.sensor.turbine.steam=Steam Tank
 
-bdew.sensor.param.generators.fullness.empty=Empty
-bdew.sensor.param.generators.fullness.not.empty=Not empty
-bdew.sensor.param.generators.fullness.gt25=Over 25% full
-bdew.sensor.param.generators.fullness.gt50=Over 50% full
-bdew.sensor.param.generators.fullness.gt75=Over 75% full
-bdew.sensor.param.generators.fullness.full=Full
-bdew.sensor.param.generators.fullness.not.full=Not full
+advgenerators.sensor.param.fill.empty=Empty
+advgenerators.sensor.param.fill.not.empty=Not empty
+advgenerators.sensor.param.fill.gt25=Over 25% full
+advgenerators.sensor.param.fill.gt50=Over 50% full
+advgenerators.sensor.param.fill.gt75=Over 75% full
+advgenerators.sensor.param.fill.full=Full
+advgenerators.sensor.param.fill.not.full=Not full

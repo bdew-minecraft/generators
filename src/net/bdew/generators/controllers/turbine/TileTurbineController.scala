@@ -19,11 +19,11 @@ import net.bdew.lib.data.{DataSlotFloat, DataSlotInt, DataSlotMovingAverage, Dat
 import net.bdew.lib.multiblock.interact.{CIFluidInput, CIOutputFaces, CIPowerProducer}
 import net.bdew.lib.multiblock.tile.TileControllerGui
 import net.bdew.lib.power.DataSlotPower
-import net.bdew.lib.sensors.multiblock.CISensors
+import net.bdew.lib.sensors.multiblock.CIRedstoneSensors
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraftforge.fluids.{Fluid, FluidStack}
 
-class TileTurbineController extends TileControllerGui with PoweredController with CIFluidInput with CIOutputFaces with CIPowerProducer with CISensors {
+class TileTurbineController extends TileControllerGui with PoweredController with CIFluidInput with CIOutputFaces with CIPowerProducer with CIRedstoneSensors {
   val cfg = MachineTurbine
 
   val resources = GeneratorsResourceProvider
