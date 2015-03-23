@@ -41,10 +41,6 @@ advgenerators.gui.sensor.title=Sensor module configuration
 
 advgenerators.gui.dump=Clear internal buffers
 
-advgenerators.label.sensor.on=Signal on
-advgenerators.label.sensor.off=Signal off
-
-
 advgenerators.module.PowerOutput.name=Power Emitter Module
 advgenerators.module.Turbine.name=Turbine
 advgenerators.module.FluidInput.name=Fluid Intake Valve
@@ -106,6 +102,10 @@ resource.fluid.format=%s / %s mB
 
 fluid.steam=Steam
 fluid.syngas=Syngas
+
+
+advgenerators.sensor.on=Signal on
+advgenerators.sensor.off=Signal off
 
 advgenerators.sensor.disabled=Disabled
 advgenerators.sensor.param.disabled=Disabled

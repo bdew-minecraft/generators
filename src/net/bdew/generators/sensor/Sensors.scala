@@ -13,10 +13,10 @@ import cpw.mods.fml.relauncher.{Side, SideOnly}
 import net.bdew.generators.controllers.steam.TileSteamTurbineController
 import net.bdew.generators.controllers.turbine.TileTurbineController
 import net.bdew.generators.sensor.data.{SensorPower, SensorTank}
-import net.bdew.lib.sensors.SensorSystem
+import net.bdew.lib.sensors.RedstoneSensors
 import net.minecraft.tileentity.TileEntity
 
-object Sensors extends SensorSystem[TileEntity, Boolean](false) {
+object Sensors extends RedstoneSensors[TileEntity] {
   @SideOnly(Side.CLIENT)
   override def disabledTexture = Icons.disabled
   override def localizationPrefix = "advgenerators.sensor"
