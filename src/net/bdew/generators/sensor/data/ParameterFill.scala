@@ -11,9 +11,9 @@ package net.bdew.generators.sensor.data
 
 import net.bdew.generators.sensor.{Icons, Sensors}
 
-case class ParameterFill(uid: String, iconName: String, test: (Double, Double) => Boolean) extends Sensors.SensorParameter with Icons.Loader
+case class ParameterFill(uid: String, iconName: String, test: (Double, Double) => Boolean) extends Sensors.SimpleParameter with Icons.Loader
 
-object ParamFullness {
+object ParameterFill {
   val empty = ParameterFill("fill.empty", "fillEmpty", (n, c) => n <= 0)
   val nonEmpty = ParameterFill("fill.not.empty", "fillNotEmpty", (n, c) => n > 0)
   val gt25 = ParameterFill("fill.gt25", "fill25", _ / _ >= 0.25D)

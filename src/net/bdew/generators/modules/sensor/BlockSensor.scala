@@ -32,10 +32,13 @@ object BlockSensor extends BaseModule("Sensor", "Sensor", classOf[TileSensor]) w
   override def onBlockActivated(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, meta: Int, xOffs: Float, yOffs: Float, zOffs: Float): Boolean = {
     if (player.isSneaking) return false
     if (world.isRemote) return true
-    if (getTE(world, x, y, z).getCore.isDefined)
+    val te = getTE(world, x, y, z)
+    if (te.getCore.isDefined) {
+      te.config.ensureValid(te.getCore.get)
       player.openGui(Generators, guiId, world, x, y, z)
-    else
+    } else {
       player.addChatMessage(new ChatComponentTranslation("bdlib.multiblock.notconnected"))
+    }
     true
   }
 

@@ -18,13 +18,13 @@ object SensorPower extends CastSensor[PoweredController] with Icons.Loader {
   override def uid = "power"
 
   override val parameters = Vector(
-    ParamFullness.empty,
-    ParamFullness.nonEmpty,
-    ParamFullness.gt25,
-    ParamFullness.gt50,
-    ParamFullness.gt75,
-    ParamFullness.nonFull,
-    ParamFullness.full
+    ParameterFill.empty,
+    ParameterFill.nonEmpty,
+    ParameterFill.gt25,
+    ParameterFill.gt50,
+    ParameterFill.gt75,
+    ParameterFill.nonFull,
+    ParameterFill.full
   )
 
   override def getResultTyped(param: GenericSensorParameter, te: PoweredController) = param match {
