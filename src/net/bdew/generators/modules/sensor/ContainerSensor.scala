@@ -22,7 +22,7 @@ class ContainerSensor(val te: TileSensor, player: EntityPlayer) extends NoInvCon
   val fakeInv = new SimpleInventory(2)
 
   addSlotToContainer(new SlotSensorType(fakeInv, 0, 53, 38, te.config,
-    te.getCore.map(_.sensorTypes).getOrElse(List(Sensors.DisabledSensor))))
+    te.getCore.map(_.redstoneSensorsType).getOrElse(List(Sensors.DisabledSensor))))
 
   addSlotToContainer(new SlotSensorParameter(fakeInv, 1, 71, 38, te.config, te.getCore))
 

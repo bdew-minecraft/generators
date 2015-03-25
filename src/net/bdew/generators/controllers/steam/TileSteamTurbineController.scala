@@ -37,7 +37,8 @@ class TileSteamTurbineController extends TileControllerGui with PoweredControlle
 
   lazy val maxOutputs = 6
 
-  override val sensorTypes = Sensors.steamTurbineSensors
+  override val redstoneSensorsType = Sensors.steamTurbineSensors
+  override val redstoneSensorSystem = Sensors
 
   def doUpdate() {
     if (speed > 1 && power.stored < power.capacity) {

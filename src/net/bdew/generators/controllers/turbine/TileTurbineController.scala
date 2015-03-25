@@ -40,7 +40,8 @@ class TileTurbineController extends TileControllerGui with PoweredController wit
   val outputAverage = new DataSlotMovingAverage("outputAverage", this, 20)
   val fuelPerTickAverage = new DataSlotMovingAverage("fuelPerTickAverage", this, 20)
 
-  override val sensorTypes = Sensors.fuelTurbineSensors
+  override val redstoneSensorsType = Sensors.fuelTurbineSensors
+  override val redstoneSensorSystem = Sensors
 
   lazy val maxOutputs = 6
 
