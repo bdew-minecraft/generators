@@ -127,6 +127,12 @@ advgenerators.sensor.param.heat.exchanger.low=Heating up ( < %s HU)
 advgenerators.sensor.param.heat.exchanger.medium=Can exchange heat ( > %s HU)
 advgenerators.sensor.param.heat.exchanger.high=Maximum Heat (%s HU)
 
+advgenerators.sensor.turbine.speed=Turbine speed
+advgenerators.sensor.param.turbine.speed.stop=Stopped
+advgenerators.sensor.param.turbine.speed.low=Spinning
+advgenerators.sensor.param.turbine.speed.medium=>= %s RPM
+advgenerators.sensor.param.turbine.speed.high=>= %s RPM (Max efficiency)
+
 advgenerators.sensor.param.fill.empty=Empty
 advgenerators.sensor.param.fill.not.empty=Not empty
 advgenerators.sensor.param.fill.gt25=Over 25% full

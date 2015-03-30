@@ -11,7 +11,7 @@ package net.bdew.generators.sensor
 
 import cpw.mods.fml.relauncher.{Side, SideOnly}
 import net.bdew.generators.controllers.exchanger.{MachineExchanger, TileExchangerController}
-import net.bdew.generators.controllers.steam.TileSteamTurbineController
+import net.bdew.generators.controllers.steam.{MachineSteamTurbine, TileSteamTurbineController}
 import net.bdew.generators.controllers.turbine.TileTurbineController
 import net.bdew.generators.sensor.data._
 import net.bdew.lib.DecFormat
@@ -32,7 +32,13 @@ object Sensors extends RedstoneSensors[TileEntity] {
   val steamTurbineSensors = List(
     DisabledSensor,
     SensorPower,
-    SensorTank[TileSteamTurbineController]("turbine.steam", "steamTank", _.steam)
+    SensorTank[TileSteamTurbineController]("turbine.steam", "steamTank", _.steam),
+    SensorNumber[TileSteamTurbineController, Double]("turbine.speed", "turbine", _.speed, Vector(
+      ParameterNumber("turbine.speed.stop", "turbineStop", _ <= 0, "0"),
+      ParameterNumber("turbine.speed.low", "turbineLow", x => x > 0, "0"),
+      ParameterNumber("turbine.speed.medium", "turbineMed", _ >= MachineSteamTurbine.effectiveRPM / 2, DecFormat.round(MachineSteamTurbine.effectiveRPM / 2)),
+      ParameterNumber("turbine.speed.high", "turbineHigh", _ >= MachineSteamTurbine.effectiveRPM, DecFormat.round(MachineSteamTurbine.effectiveRPM))
+    ))
   )
 
   val exchangerSensors = List(
