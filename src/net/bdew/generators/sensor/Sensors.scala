@@ -10,9 +10,11 @@
 package net.bdew.generators.sensor
 
 import cpw.mods.fml.relauncher.{Side, SideOnly}
+import net.bdew.generators.controllers.exchanger.{MachineExchanger, TileExchangerController}
 import net.bdew.generators.controllers.steam.TileSteamTurbineController
 import net.bdew.generators.controllers.turbine.TileTurbineController
-import net.bdew.generators.sensor.data.{SensorPower, SensorTank}
+import net.bdew.generators.sensor.data._
+import net.bdew.lib.DecFormat
 import net.bdew.lib.sensors.RedstoneSensors
 import net.minecraft.tileentity.TileEntity
 
@@ -31,5 +33,19 @@ object Sensors extends RedstoneSensors[TileEntity] {
     DisabledSensor,
     SensorPower,
     SensorTank[TileSteamTurbineController]("turbine.steam", "steamTank", _.steam)
+  )
+
+  val exchangerSensors = List(
+    DisabledSensor,
+    SensorResource[TileExchangerController]("exchanger.hot.input", "hotIn", _.heaterIn),
+    SensorResource[TileExchangerController]("exchanger.hot.output", "hotOut", _.coolerOut),
+    SensorResource[TileExchangerController]("exchanger.cold.input", "coldIn", _.coolerIn),
+    SensorResource[TileExchangerController]("exchanger.cold.output", "coldOut", _.heaterOut),
+    SensorNumber[TileExchangerController, Double]("exchanger.heat", "heat", _.heat, Vector(
+      ParameterNumber("heat.exchanger.cold", "heatCold", _ <= 0, "0"),
+      ParameterNumber("heat.exchanger.low", "heatLow", x => x > 0 && x < MachineExchanger.startHeating, DecFormat.round(MachineExchanger.startHeating)),
+      ParameterNumber("heat.exchanger.medium", "heatMed", _ >= MachineExchanger.startHeating, DecFormat.round(MachineExchanger.startHeating)),
+      ParameterNumber("heat.exchanger.high", "heatHigh", _ >= MachineExchanger.maxHeat, DecFormat.round(MachineExchanger.maxHeat))
+    ))
   )
 }

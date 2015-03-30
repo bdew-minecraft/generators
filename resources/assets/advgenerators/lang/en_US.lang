@@ -114,6 +114,19 @@ advgenerators.sensor.power=Power Capacitor
 advgenerators.sensor.turbine.fuel=Fuel Tank
 advgenerators.sensor.turbine.steam=Steam Tank
 
+advgenerators.sensor.exchanger.hot.input=Hot Input Tank
+advgenerators.sensor.exchanger.hot.output=Hot Output Tank
+advgenerators.sensor.exchanger.cold.input=Cold Input Tank
+advgenerators.sensor.exchanger.cold.output=Cold Output Tank
+advgenerators.sensor.param.resource.solid=Contains solid items
+advgenerators.sensor.param.resource.fluid=Contains fluid
+
+advgenerators.sensor.exchanger.heat=Internal Heat
+advgenerators.sensor.param.heat.exchanger.cold=No heat
+advgenerators.sensor.param.heat.exchanger.low=Heating up ( < %s HU)
+advgenerators.sensor.param.heat.exchanger.medium=Can exchange heat ( > %s HU)
+advgenerators.sensor.param.heat.exchanger.high=Maximum Heat (%s HU)
+
 advgenerators.sensor.param.fill.empty=Empty
 advgenerators.sensor.param.fill.not.empty=Not empty
 advgenerators.sensor.param.fill.gt25=Over 25% full

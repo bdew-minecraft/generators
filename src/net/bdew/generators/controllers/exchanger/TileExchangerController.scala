@@ -10,6 +10,7 @@
 package net.bdew.generators.controllers.exchanger
 
 import net.bdew.generators.config.{ExchangerRegistry, Modules}
+import net.bdew.generators.sensor.Sensors
 import net.bdew.generators.{Generators, GeneratorsResourceProvider}
 import net.bdew.lib.Misc
 import net.bdew.lib.data.base.UpdateKind
@@ -17,13 +18,14 @@ import net.bdew.lib.data.{DataSlotDouble, DataSlotMovingAverage}
 import net.bdew.lib.multiblock.interact.{CIFluidInput, CIFluidOutputSelect, CIItemOutput, CIOutputFaces}
 import net.bdew.lib.multiblock.tile.TileControllerGui
 import net.bdew.lib.resource._
+import net.bdew.lib.sensors.multiblock.CIRedstoneSensors
 import net.bdew.lib.tile.inventory.MultipleInventoryAdapter
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraftforge.fluids.{Fluid, FluidStack}
 import net.minecraftforge.oredict.OreDictionary
 
-class TileExchangerController extends TileControllerGui with CIFluidInput with CIOutputFaces with CIFluidOutputSelect with CIItemOutput {
+class TileExchangerController extends TileControllerGui with CIFluidInput with CIOutputFaces with CIFluidOutputSelect with CIItemOutput with CIRedstoneSensors {
   val cfg = MachineExchanger
 
   val resources = GeneratorsResourceProvider
@@ -176,4 +178,7 @@ class TileExchangerController extends TileControllerGui with CIFluidInput with C
       }
     }
   }
+
+  override def redstoneSensorsType = Sensors.exchangerSensors
+  override def redstoneSensorSystem = Sensors
 }
