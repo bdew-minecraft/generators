@@ -69,6 +69,7 @@ advgenerators.label.exchanger.heatloss=Heat Loss
 advgenerators.label.syngas.steam=Steam: %s
 advgenerators.label.syngas.carbon=Carbon: %s
 advgenerators.label.syngas.heat=Heat: %s / %s HU
+advgenerators.label.syngas.heat.disabled=No heating chambers installed
 advgenerators.label.syngas.produced=Syngas produced (per tick)
 advgenerators.label.syngas.consumed=Carbon consumed (per tick)
 advgenerators.label.syngas.heat.delta=Heat gain/loss

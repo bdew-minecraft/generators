@@ -16,6 +16,7 @@ import net.bdew.lib.data._
 import net.bdew.lib.data.base.UpdateKind
 import net.bdew.lib.multiblock.interact.{CIFluidInput, CIFluidOutputSelect, CIItemInput, CIOutputFaces}
 import net.bdew.lib.multiblock.tile.TileControllerGui
+import net.bdew.lib.tile.TankEmulator
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraftforge.fluids._
@@ -35,7 +36,9 @@ class TileSyngasController extends TileControllerGui with CIFluidInput with CIIt
   val waterTank = DataSlotTankRestricted("waterTank", this, cfg.internalTankCapacity, FluidRegistry.getFluidID("water"))
   val syngasTank = DataSlotTankRestricted("syngasTank", this, cfg.internalTankCapacity, Blocks.syngasFluid.getID)
 
-  val heatingChambers = DataSlotInt("heatingChambers", this)
+  lazy val steamTank = TankEmulator(Blocks.steamFluid, steamBuffer, cfg.internalTankCapacity)
+
+  val heatingChambers = DataSlotInt("heatingChambers", this).setUpdate(UpdateKind.SAVE, UpdateKind.GUI)
   val mixingChambers = DataSlotInt("mixingChambers", this)
 
   val avgCarbonUsed = DataSlotMovingAverage("carbonUsed", this, 20)
@@ -48,7 +51,7 @@ class TileSyngasController extends TileControllerGui with CIFluidInput with CIIt
     var heatDelta = 0D
 
     // Consume carbon to add heat
-    if (heat < cfg.maxHeat && carbonBuffer > 0) {
+    if (heat < cfg.maxHeat && carbonBuffer > 0 && heatingChambers > 0 && waterTank.getFluidAmount > 0) {
       val addHeat = Misc.min(
         cfg.maxHeat - heat,
         carbonBuffer / cfg.carbonPerHeat,
@@ -61,7 +64,7 @@ class TileSyngasController extends TileControllerGui with CIFluidInput with CIIt
     }
 
     // Consume water to make steam
-    if (heat > cfg.workHeat && waterTank.getFluidAmount > 0 && steamBuffer < cfg.internalTankCapacity) {
+    if (heat > cfg.workHeat && waterTank.getFluidAmount > 0 && steamBuffer < cfg.internalTankCapacity && heatingChambers > 0) {
       val addSteam = Misc.min(
         waterTank.getFluidAmount * cfg.waterSteamRatio,
         cfg.internalTankCapacity - steamBuffer,
@@ -113,9 +116,15 @@ class TileSyngasController extends TileControllerGui with CIFluidInput with CIIt
   override def openGui(player: EntityPlayer) = player.openGui(Generators, cfg.guiId, worldObj, xCoord, yCoord, zCoord)
 
   def inputFluid(resource: FluidStack, doFill: Boolean): Int =
-    if (canInputFluid(resource.getFluid)) waterTank.fill(resource, doFill) else 0
+    if (canInputFluid(resource.getFluid)) {
+      if (resource.getFluid == FluidRegistry.WATER)
+        waterTank.fill(resource, doFill)
+      else if (resource.getFluid == Blocks.steamFluid)
+        steamTank.fill(resource, doFill)
+      else 0
+    } else 0
 
-  def canInputFluid(fluid: Fluid) = fluid != null && fluid.getName == "water"
+  def canInputFluid(fluid: Fluid) = fluid != null && (fluid == FluidRegistry.WATER || fluid == Blocks.steamFluid)
   def getTankInfo = Array(waterTank.getInfo, syngasTank.getInfo)
 
   def onModulesChanged(): Unit = {

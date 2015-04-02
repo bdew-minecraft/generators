@@ -18,6 +18,9 @@ import net.bdew.lib.multiblock.gui.WidgetInfo
 import net.bdew.lib.{Client, DecFormat, Misc}
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.init.Blocks
+import net.minecraft.util.EnumChatFormatting
+
+import scala.collection.mutable
 
 class GuiSyngas(val te: TileSyngasController, player: EntityPlayer) extends BaseScreen(new ContainerSyngas(te, player), 176, 175) with GuiOutputFaces {
   val background = Texture(Generators.modId, "textures/gui/syngas.png", rect)
@@ -47,7 +50,20 @@ class GuiSyngas(val te: TileSyngasController, player: EntityPlayer) extends Base
     widgets.add(new WidgetFillDataSlotTooltip(
       Rect(9, 62, 14, 14), Textures.Icons.fire, Direction.UP, te.heat, te.cfg.maxHeat,
       List(Misc.toLocalF("advgenerators.label.syngas.heat", DecFormat.round(te.heat), DecFormat.round(te.cfg.maxHeat)))
-    ))
+    ) {
+      override def handleTooltip(p: Point, tip: mutable.MutableList[String]): Unit = {
+        if (te.heatingChambers > 0)
+          super.handleTooltip(p, tip)
+        else
+          tip += (EnumChatFormatting.RED + Misc.toLocal("advgenerators.label.syngas.heat.disabled") + EnumChatFormatting.RESET)
+      }
+      override def draw(mouse: Point): Unit = {
+        if (te.heatingChambers > 0)
+          super.draw(mouse)
+        else
+          parent.drawTexture(rect, Textures.Button16.disabled)
+      }
+    })
 
     widgets.add(new WidgetButtonIcon(Point(153, 19), openCfg, Textures.Button16.base, Textures.Button16.hover) {
       icon = Textures.Button16.wrench
@@ -65,7 +81,11 @@ class GuiSyngas(val te: TileSyngasController, player: EntityPlayer) extends Base
 
     widgets.add(new WidgetInfo(Rect(75, 21, 59, 10),
       Textures.Icons.heatExchange,
-      (if (te.avgHeatDelta.average > 0) "+" else "") + DecFormat.short(te.avgHeatDelta.average) + " HU/t",
+      if (te.heatingChambers > 0)
+        (if (te.avgHeatDelta.average > 0) "+" else "") + DecFormat.short(te.avgHeatDelta.average) + " HU/t"
+      else
+        "-----"
+      ,
       Misc.toLocal("advgenerators.label.syngas.heat.delta"))
     )
 
