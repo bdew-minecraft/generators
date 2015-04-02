@@ -10,18 +10,22 @@
 package net.bdew.generators.controllers.syngas
 
 import net.bdew.generators.config.{Blocks, CarbonValueRegistry}
+import net.bdew.generators.sensor.Sensors
 import net.bdew.generators.{Generators, GeneratorsResourceProvider}
 import net.bdew.lib.Misc
 import net.bdew.lib.data._
 import net.bdew.lib.data.base.UpdateKind
 import net.bdew.lib.multiblock.interact.{CIFluidInput, CIFluidOutputSelect, CIItemInput, CIOutputFaces}
 import net.bdew.lib.multiblock.tile.TileControllerGui
+import net.bdew.lib.sensors.multiblock.CIRedstoneSensors
+import net.bdew.lib.sensors.{GenericSensorType, SensorSystem}
 import net.bdew.lib.tile.TankEmulator
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
+import net.minecraft.tileentity.TileEntity
 import net.minecraftforge.fluids._
 
-class TileSyngasController extends TileControllerGui with CIFluidInput with CIItemInput with CIOutputFaces with CIFluidOutputSelect {
+class TileSyngasController extends TileControllerGui with CIFluidInput with CIItemInput with CIOutputFaces with CIFluidOutputSelect with CIRedstoneSensors {
   override val cfg = MachineSyngas
   override val resources = GeneratorsResourceProvider
   override lazy val maxOutputs = 6
@@ -144,4 +148,6 @@ class TileSyngasController extends TileControllerGui with CIFluidInput with CIIt
     else
       null
 
+  override def redstoneSensorsType: Seq[GenericSensorType[TileEntity, Boolean]] = Sensors.syngasSensors
+  override def redstoneSensorSystem: SensorSystem[TileEntity, Boolean] = Sensors
 }

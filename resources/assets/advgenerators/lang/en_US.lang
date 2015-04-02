@@ -134,6 +134,16 @@ advgenerators.sensor.param.turbine.speed.low=Spinning
 advgenerators.sensor.param.turbine.speed.medium=>= %s RPM
 advgenerators.sensor.param.turbine.speed.high=>= %s RPM (Max efficiency)
 
+advgenerators.sensor.syngas.water=Water Tank
+advgenerators.sensor.syngas.steam=Steam Buffer
+advgenerators.sensor.syngas.carbon=Carbon Buffer
+advgenerators.sensor.syngas.syngas=Syngas Tank
+advgenerators.sensor.syngas.heat=Internal Heat
+advgenerators.sensor.param.heat.syngas.cold=No heat
+advgenerators.sensor.param.heat.syngas.low=Heating up ( < %s HU)
+advgenerators.sensor.param.heat.syngas.medium=Can produce steam ( > %s HU)
+advgenerators.sensor.param.heat.syngas.high=Maximum Heat (%s HU)
+
 advgenerators.sensor.param.fill.empty=Empty
 advgenerators.sensor.param.fill.not.empty=Not empty
 advgenerators.sensor.param.fill.gt25=Over 25% full
