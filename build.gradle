@@ -22,24 +22,31 @@ buildscript {
 apply plugin: 'scala'
 apply plugin: 'forge'
 
-version = "0.9.12"
-ext.bdlibver = "1.7.0.70"
-ext.versuffix = "mc1710"
-ext.apiVer = version
+file "build.properties" withReader {
+    def prop = new Properties()
+    prop.load(it)
+    ext.config = new ConfigSlurper().parse prop
+}
+
+if (project.hasProperty('forgeOverride')) {
+    config.forge.version = forgeOverride
+}
 
 if (project.hasProperty('buildnum')) {
-    project.version = project.version + '.' + project.buildnum
+    ext.simpleVersion = "${config.generators.version}.${project.buildnum}"
 } else {
-    project.version = project.version + '-DEV'
+    ext.simpleVersion = "${config.generators.version}-DEV"
 }
+
+version = simpleVersion + '-mc' + config.minecraft.version
 
 group = "net.bdew"
 archivesBaseName = "generators"
 
 minecraft {
-    version = "1.7.10-10.13.2.1291"
-    replace("BDLIB_VER", project.bdlibver)
-    replace("GENERATORS_VER", project.version)
+    version = "${config.minecraft.version}-${config.forge.version}"
+    replace("BDLIB_VER", config.bdlib.version)
+    replace("GENERATORS_VER", simpleVersion.toString())
 }
 
 repositories {
@@ -60,18 +67,22 @@ repositories {
         name "waila"
         url "http://mobiusstrip.eu/maven"
     }
+    ivy {
+        name "CoFHLib"
+        artifactPattern "http://addons-origin.cursecdn.com/files/${config.cofhlib.cf}/[module]-[revision](-[classifier])(.[ext])"
+    }
 }
 
 dependencies {
-    compile "net.bdew:bdlib:" + bdlibver
-    compile "codechicken:NotEnoughItems:1.7.10-1.0.3.74:dev"
-    compile "codechicken:CodeChickenLib:1.7.10-1.1.1.110:dev"
-    compile "codechicken:CodeChickenCore:1.7.10-1.0.4.29:dev"
-    compile "com.mod-buildcraft:buildcraft:6.3.3:dev"
-    compile "net.industrial-craft:industrialcraft-2:2.2.667-experimental:api"
-    compile "mcp.mobius.waila:Waila:1.5.9_1.7.10"
-    compile "net.bdew.thirdparty:CoFHLib:1.7.10R3.0.0.9:api"
-    compile "net.bdew:pressure:1.1.0.73:api"
+    compile "net.bdew:bdlib:${config.bdlib.version}-mc${config.minecraft.version}:dev"
+    compile "net.bdew:pressure:${config.pressure.version}-mc${config.minecraft.version}:api"
+    compile "codechicken:NotEnoughItems:${config.minecraft.version}-${config.nei.version}:dev"
+    compile "codechicken:CodeChickenLib:${config.minecraft.version}-${config.ccl.version}:dev"
+    compile "codechicken:CodeChickenCore:${config.minecraft.version}-${config.ccc.version}:dev"
+    compile "com.mod-buildcraft:buildcraft:${config.buildcraft.version}:dev"
+    compile "net.industrial-craft:industrialcraft-2:${config.ic2.version}:api"
+    compile "mcp.mobius.waila:Waila:${config.waila.version}_${config.minecraft.version}"
+    compile ":CoFHLib:${config.cofhlib.version}:dev@jar"
 }
 
 import org.apache.tools.ant.filters.ReplaceTokens
@@ -101,17 +112,19 @@ processResources {
 }
 
 task sourceJar(type: Jar) {
+    classifier "sources"
 }
 
 task deobfJar(type: Jar) {
     from sourceSets.main.output
+    classifier "dev"
     exclude "**/*.psd"
+    duplicatesStrategy "exclude"
 }
 
 
 jar {
     exclude "**/*.psd"
-    appendix = project.versuffix
 }
 
 afterEvaluate { project ->
@@ -130,10 +143,7 @@ publishing {
     publications {
         maven(MavenPublication) {
             artifact deobfJar
-
-            artifact sourceJar {
-                classifier "sources"
-            }
+            artifact sourceJar
         }
     }
     repositories {
