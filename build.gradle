@@ -83,6 +83,7 @@ dependencies {
     compile "net.industrial-craft:industrialcraft-2:${config.ic2.version}:api"
     compile "mcp.mobius.waila:Waila:${config.waila.version}_${config.minecraft.version}"
     compile ":CoFHLib:${config.cofhlib.version}:dev@jar"
+    compile "net.bdew.thirdparty:mekanism:${config.mekanism.version}-mc${config.minecraft.version}:api"
 }
 
 import org.apache.tools.ant.filters.ReplaceTokens

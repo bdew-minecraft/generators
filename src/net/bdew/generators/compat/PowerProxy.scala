@@ -37,6 +37,8 @@ object PowerProxy {
   lazy val haveIC2 = haveModVersion(IC2_MOD_ID)
   lazy val haveTE = haveModVersion(TE_MOD_ID)
   lazy val haveBCFuel = haveModVersion("BuildCraftAPI|fuels@[2.0,)")
+  lazy val haveMekanismGasApi = haveModVersion("MekanismAPI|gas@[8.0.0,)")
+
 
   def haveModVersion(modId: String) = {
     val spec = VersionParser.parseVersionReference(modId)

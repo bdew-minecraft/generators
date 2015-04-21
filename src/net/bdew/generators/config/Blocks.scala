@@ -16,6 +16,7 @@ import net.bdew.generators.modules.exchanger.BlockExchanger
 import net.bdew.generators.modules.fluidInput.BlockFluidInput
 import net.bdew.generators.modules.fluidOutputSelect.BlockFluidOutputSelect
 import net.bdew.generators.modules.fuelTank.BlockFuelTank
+import net.bdew.generators.modules.gasInput.BlockGasInput
 import net.bdew.generators.modules.heatingChamber.BlockHeatingChamber
 import net.bdew.generators.modules.itemInput.BlockItemInput
 import net.bdew.generators.modules.itemOutput.BlockItemOutput
@@ -57,6 +58,10 @@ object Blocks extends BlockManager(CreativeTabsGenerators.main) {
   regBlock(BlockExchanger)
 
   regBlock(BlockSensor)
+
+  if (PowerProxy.haveMekanismGasApi) {
+    regBlock(BlockGasInput)
+  }
 
   if (Misc.haveModVersion("pressure") && PressureAPI.HELPER != null) {
     Generators.logInfo("Pressure pipes detected (%s), adding pressure modules", PressureAPI.HELPER)

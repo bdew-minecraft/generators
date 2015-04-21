@@ -22,6 +22,7 @@ tile.advgenerators.SyngasController.name=Syngas Producer Controller
 tile.advgenerators.HeatingChamber.name=Heating Chamber
 tile.advgenerators.MixingChamber.name=Mixing Chamber
 tile.advgenerators.Sensor.name=Sensor Module
+tile.advgenerators.GasInput.name=Gas Intake Valve
 
 item.advgenerators.TurbineBlade.name=Turbine Blade
 item.advgenerators.TurbineRotor.name=Turbine Rotor
