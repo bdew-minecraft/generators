@@ -81,7 +81,11 @@ dependencies {
     compile "codechicken:CodeChickenCore:${config.minecraft.version}-${config.ccc.version}:dev"
     compile "com.mod-buildcraft:buildcraft:${config.buildcraft.version}:dev"
     compile "net.industrial-craft:industrialcraft-2:${config.ic2.version}:api"
-    compile "mcp.mobius.waila:Waila:${config.waila.version}_${config.minecraft.version}"
+
+    compile module("mcp.mobius.waila:Waila:${config.waila.version}_${config.minecraft.version}") {
+        transitive = false // WAILA is depending on an invalid combination of CCC/NEI that doesn't run...
+    }
+
     compile ":CoFHLib:${config.cofhlib.version}:dev@jar"
     compile "net.bdew.thirdparty:mekanism:${config.mekanism.version}-mc${config.minecraft.version}:api"
 }
@@ -152,4 +156,24 @@ publishing {
             url "file://var/www/maven"
         }
     }
+}
+
+apply plugin: 'curseforge'
+
+curse {
+    projectId = config.curseforge.id
+    apiKey = project.hasProperty("curseForgeApiKey") ? project.curseForgeApiKey : ""
+    releaseType = 'alpha'
+
+    artifact = jar
+    changelog = project.hasProperty("changelog") ? project.changelog : "No changelog available"
+
+    additionalArtifact deobfJar
+    additionalArtifact sourceJar
+
+    relatedProject 'bdlib': 'requiredLibrary'
+    relatedProject 'cofhcore': 'optionalLibrary'
+    relatedProject 'buildcraft': 'optionalLibrary'
+    relatedProject 'notenoughitems': 'optionalLibrary'
+    relatedProject 'waila': 'optionalLibrary'
 }
