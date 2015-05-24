@@ -9,12 +9,9 @@
 
 package net.bdew.generators.compat
 
-import java.util
-
-import cpw.mods.fml.common.versioning.VersionParser
-import cpw.mods.fml.common.{Loader, ModAPIManager, ModContainer}
 import net.bdew.generators.Generators
 import net.bdew.generators.config.Tuning
+import net.bdew.lib.Misc
 
 object PowerProxy {
   final val IC2_MOD_ID = "IC2"
@@ -23,32 +20,10 @@ object PowerProxy {
   lazy val EUEnabled = Tuning.getSection("Power").getSection("EU").getBoolean("Enabled")
   lazy val RFEnabled = Tuning.getSection("Power").getSection("RF").getBoolean("Enabled")
 
-  lazy val lookup: collection.Map[String, ModContainer] = {
-    val mods = new util.ArrayList[ModContainer]
-    val nameLookup = new util.HashMap[String, ModContainer]
-
-    nameLookup.putAll(Loader.instance().getIndexedModList)
-    ModAPIManager.INSTANCE.injectAPIModContainers(mods, nameLookup)
-
-    import scala.collection.JavaConverters._
-    nameLookup.asScala
-  }
-
-  lazy val haveIC2 = haveModVersion(IC2_MOD_ID)
-  lazy val haveTE = haveModVersion(TE_MOD_ID)
-  lazy val haveBCFuel = haveModVersion("BuildCraftAPI|fuels@[2.0,)")
-  lazy val haveMekanismGasApi = haveModVersion("MekanismAPI|gas@[8.0.0,)")
-
-
-  def haveModVersion(modId: String) = {
-    val spec = VersionParser.parseVersionReference(modId)
-    lookup.contains(spec.getLabel) && spec.containsVersion(lookup(spec.getLabel).getProcessedVersion)
-  }
-
-  def getModVersion(modId: String): String = {
-    val cont = lookup.getOrElse(modId, return "NOT FOUND")
-    cont.getModId + " " + cont.getVersion
-  }
+  lazy val haveIC2 = Misc.haveModVersion(IC2_MOD_ID)
+  lazy val haveTE = Misc.haveModVersion(TE_MOD_ID)
+  lazy val haveBCFuel = Misc.haveModVersion("BuildCraftAPI|fuels@[2.0,)")
+  lazy val haveMekanismGasApi = Misc.haveModVersion("MekanismAPI|gas@[8.0.0,)")
 
   def logModVersions() {
     if (!haveIC2 && !haveTE) {
@@ -57,7 +32,7 @@ object PowerProxy {
       Generators.logWarn("* CoFHCore (or any mod that includes the API)")
       Generators.logWarn("* IC2 Experimental")
     }
-    Generators.logInfo("IC2 Version: %s", getModVersion(IC2_MOD_ID))
-    Generators.logInfo("RF Version: %s", getModVersion(TE_MOD_ID))
+    Generators.logInfo("IC2 Version: %s", Misc.getModVersionString(IC2_MOD_ID))
+    Generators.logInfo("RF Version: %s", Misc.getModVersionString(TE_MOD_ID))
   }
 }
