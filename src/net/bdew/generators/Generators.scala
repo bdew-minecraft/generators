@@ -19,7 +19,7 @@ import cpw.mods.fml.relauncher.Side
 import net.bdew.generators.compat.PowerProxy
 import net.bdew.generators.compat.itempush.ItemPush
 import net.bdew.generators.config.loader.TuningLoader
-import net.bdew.generators.config.{Config, TurbineFuel}
+import net.bdew.generators.config.{Config, IMC, TurbineFuel}
 import net.bdew.generators.network.NetworkHandler
 import net.bdew.generators.sensor.Sensors
 import net.bdew.lib.multiblock.data.{OutputConfigItems, OutputConfigManager}
@@ -64,6 +64,14 @@ object Generators {
     NetworkRegistry.INSTANCE.registerGuiHandler(this, Config.guiHandler)
     NetworkHandler.init()
     FMLInterModComms.sendMessage("Waila", "register", "net.bdew.generators.waila.WailaHandler.loadCallback")
+  }
+
+  @EventHandler
+  def imcCallback(event: FMLInterModComms.IMCEvent) {
+    import scala.collection.JavaConversions._
+    for (msg <- event.getMessages) {
+      IMC.processMessage(msg)
+    }
   }
 
   @EventHandler
