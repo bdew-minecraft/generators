@@ -28,6 +28,7 @@ import net.bdew.generators.modules.sensor.BlockSensor
 import net.bdew.generators.modules.turbine.{BlockTurbineIron, TileTurbineIron}
 import net.bdew.generators.{CreativeTabsGenerators, Generators}
 import net.bdew.lib.Misc
+import net.bdew.lib.block.ItemBlockTooltip
 import net.bdew.lib.config.BlockManager
 import net.bdew.pressure.api.PressureAPI
 import net.minecraft.block.Block
@@ -50,7 +51,7 @@ object Blocks extends BlockManager(CreativeTabsGenerators.main) {
   regBlock(BlockItemInput)
   regBlock(BlockItemOutput)
 
-  regBlock(BlockTurbineIron)
+  regBlock(BlockTurbineIron, classOf[ItemBlockTooltip])
   registerLegacyTileEntity("advgenerators.Turbine", classOf[TileTurbineIron])
 
 

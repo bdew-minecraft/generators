@@ -152,3 +152,6 @@ advgenerators.sensor.param.fill.gt50=Over 50% full
 advgenerators.sensor.param.fill.gt75=Over 75% full
 advgenerators.sensor.param.fill.full=Full
 advgenerators.sensor.param.fill.not.full=Not full
+
+advgenerators.tooltip.turbine.rf=Produces up to %s
+advgenerators.tooltip.turbine.inertia=Inertia Multiplier: %s
