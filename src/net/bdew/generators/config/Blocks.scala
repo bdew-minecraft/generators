@@ -25,7 +25,7 @@ import net.bdew.generators.modules.powerCapacitor.BlockPowerCapacitor
 import net.bdew.generators.modules.pressure.{BlockPressureInput, BlockPressureOutput}
 import net.bdew.generators.modules.rfOutput.BlockRfOutput
 import net.bdew.generators.modules.sensor.BlockSensor
-import net.bdew.generators.modules.turbine.{BlockTurbineIron, TileTurbineBase}
+import net.bdew.generators.modules.turbine.{BlockTurbineIron, TileTurbineIron}
 import net.bdew.generators.{CreativeTabsGenerators, Generators}
 import net.bdew.lib.Misc
 import net.bdew.lib.config.BlockManager
@@ -51,7 +51,7 @@ object Blocks extends BlockManager(CreativeTabsGenerators.main) {
   regBlock(BlockItemOutput)
 
   regBlock(BlockTurbineIron)
-  registerLegacyTileEntity("advgenerators.Turbine", classOf[TileTurbineBase])
+  registerLegacyTileEntity("advgenerators.Turbine", classOf[TileTurbineIron])
 
 
   regBlock(BlockFuelTank)
