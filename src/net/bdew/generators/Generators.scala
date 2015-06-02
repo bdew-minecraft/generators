@@ -13,16 +13,19 @@ import java.io.File
 
 import cpw.mods.fml.common.Mod
 import cpw.mods.fml.common.Mod.EventHandler
-import cpw.mods.fml.common.event.{FMLInitializationEvent, FMLInterModComms, FMLPostInitializationEvent, FMLPreInitializationEvent}
+import cpw.mods.fml.common.event._
 import cpw.mods.fml.common.network.NetworkRegistry
+import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.Side
 import net.bdew.generators.compat.PowerProxy
 import net.bdew.generators.compat.itempush.ItemPush
 import net.bdew.generators.config.loader.TuningLoader
 import net.bdew.generators.config.{Config, IMC, TurbineFuel}
+import net.bdew.generators.modules.turbine.BlockTurbineIron
 import net.bdew.generators.network.NetworkHandler
 import net.bdew.generators.sensor.Sensors
 import net.bdew.lib.multiblock.data.{OutputConfigItems, OutputConfigManager}
+import net.minecraft.item.Item
 import org.apache.logging.log4j.Logger
 
 @Mod(modid = Generators.modId, version = "GENERATORS_VER", name = "Advanced Generators", dependencies = "after:pressure;after:BuildCraft|energy;after:BuildCraft|Silicon;after:IC2;after:CoFHCore;after:ThermalExpansion;required-after:bdlib", modLanguage = "scala")
@@ -79,4 +82,18 @@ object Generators {
     TuningLoader.loadDelayed()
     TurbineFuel.postInit()
   }
+
+  @EventHandler
+  def missingMappings(event: FMLMissingMappingsEvent): Unit = {
+    import scala.collection.JavaConversions._
+    for (missing <- event.getAll) {
+      (missing.name, missing.`type`) match {
+        case ("advgenerators:Turbine", GameRegistry.Type.BLOCK) => missing.remap(BlockTurbineIron)
+        case ("advgenerators:Turbine", GameRegistry.Type.ITEM) => missing.remap(Item.getItemFromBlock(BlockTurbineIron))
+        case _ => // do nothing
+      }
+    }
+  }
+
+
 }

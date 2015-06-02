@@ -19,14 +19,16 @@ object MachineSteamTurbine extends Machine("SteamTurbineController", BlockSteamT
   def guiId: Int = 3
   type TEClass = TileSteamTurbineController
 
-  lazy val mjPerTickPerTurbine = tuning.getDouble("MJPerTickPerTurbine")
-  lazy val steamPerTickPerTurbine = tuning.getDouble("SteamPerTickPerTurbine")
-
-  lazy val maxRPM = tuning.getDouble("MaxRPM")
-  lazy val effectiveRPM = tuning.getDouble("EffectiveRPM")
+  lazy val inertiaFunctionMultiplier = tuning.getDouble("InertiaFunctionMultiplier")
+  lazy val inertiaFunctionExponent = tuning.getDouble("InertiaFunctionExponent")
 
   lazy val spinUpMultiplier = tuning.getDouble("SpinUpMultiplier")
-  lazy val spinDownMultiplier = tuning.getDouble("SpinDownMultiplier")
+  lazy val baseDragMultiplier = tuning.getDouble("BaseDragMultiplier")
+  lazy val coilDragMultiplier = tuning.getDouble("CoilDragMultiplier")
+
+  lazy val maxRPM = tuning.getDouble("MaxRPM")
+
+  lazy val steamEnergyDensity = tuning.getDouble("SteamEnergyDensity")
 
   lazy val internalPowerCapacity = tuning.getInt("InternalPowerCapacity")
   lazy val internalSteamCapacity = tuning.getInt("InternalSteamCapacity")

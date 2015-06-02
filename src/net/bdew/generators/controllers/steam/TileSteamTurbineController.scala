@@ -11,8 +11,10 @@ package net.bdew.generators.controllers.steam
 
 import net.bdew.generators.config.Modules
 import net.bdew.generators.controllers.PoweredController
+import net.bdew.generators.modules.turbine.BlockTurbineBase
 import net.bdew.generators.sensor.Sensors
 import net.bdew.generators.{Generators, GeneratorsResourceProvider}
+import net.bdew.lib.Misc
 import net.bdew.lib.data.base.UpdateKind
 import net.bdew.lib.data.{DataSlotDouble, DataSlotInt, DataSlotMovingAverage, DataSlotTank}
 import net.bdew.lib.multiblock.interact.{CIFluidInput, CIOutputFaces, CIPowerProducer}
@@ -32,8 +34,14 @@ class TileSteamTurbineController extends TileControllerGui with PoweredControlle
   val speed = new DataSlotDouble("speed", this).setUpdate(UpdateKind.GUI, UpdateKind.SAVE)
   val numTurbines = new DataSlotInt("turbines", this).setUpdate(UpdateKind.GUI)
 
+  val inertiaMultiplier = new DataSlotDouble("inertiaMultiplier", this).setUpdate(UpdateKind.SAVE)
+  val maxMJPerTick = new DataSlotDouble("maxMJPerTick", this).setUpdate(UpdateKind.SAVE, UpdateKind.GUI)
+
   val outputAverage = new DataSlotMovingAverage("outputAverage", this, 20)
   val steamAverage = new DataSlotMovingAverage("steamAverage", this, 20)
+
+  def canGeneratePower = true
+  def canUseSteam = true
 
   lazy val maxOutputs = 6
 
@@ -41,28 +49,32 @@ class TileSteamTurbineController extends TileControllerGui with PoweredControlle
   override val redstoneSensorSystem = Sensors
 
   def doUpdate() {
-    if (speed > 1 && power.stored < power.capacity) {
-      val canGenerate = Math.min(speed / cfg.effectiveRPM, 1) * numTurbines * cfg.mjPerTickPerTurbine
-      val injected = Math.min(canGenerate, power.capacity - power.stored)
-      power.stored += injected.toFloat
-      outputAverage.update(injected)
-      speed -= cfg.maxRPM * cfg.spinDownMultiplier * (injected / numTurbines / cfg.mjPerTickPerTurbine)
+    if (maxMJPerTick > 0) {
+      val maxSpeedDelta = cfg.maxRPM * cfg.inertiaFunctionMultiplier * Math.exp(cfg.inertiaFunctionExponent * speed / cfg.maxRPM) * inertiaMultiplier
+
+      speed -= maxSpeedDelta * cfg.baseDragMultiplier
+
+      if (canGeneratePower && speed > 1) {
+        if (power.stored < power.capacity) {
+          val injected = Math.min(speed / cfg.maxRPM * maxMJPerTick, power.capacity - power.stored)
+          power.stored += injected.toFloat
+          outputAverage.update(injected)
+        } else outputAverage.update(0)
+        speed -= maxSpeedDelta * cfg.coilDragMultiplier
+      } else outputAverage.update(0)
+
+      if (canUseSteam && steam.getFluidAmount > 0) {
+        val maxSteamPerTick = maxMJPerTick / cfg.steamEnergyDensity
+        val useSteam = Math.min(steam.getFluidAmount, maxSteamPerTick).ceil.toInt
+        steam.drain(useSteam, true)
+        steamAverage.update(useSteam)
+        speed := Misc.clamp((useSteam / maxSteamPerTick) * cfg.maxRPM, speed.value, speed.value + (maxSpeedDelta * cfg.spinUpMultiplier))
+      } else steamAverage.update(0)
+
       if (speed < 1)
         speed := 0
-      lastChange = worldObj.getTotalWorldTime
-    } else outputAverage.update(0)
 
-    if (steam.getFluidAmount > 0) {
-      val steamPerTick = cfg.steamPerTickPerTurbine * numTurbines
-      val canUseSteam = Math.min(steam.getFluidAmount, steamPerTick)
-      steam.drain(canUseSteam.ceil.toInt, true)
-      if ((canUseSteam / steamPerTick) * cfg.maxRPM > speed)
-        speed += ((canUseSteam / steamPerTick) * cfg.maxRPM - speed) * cfg.spinUpMultiplier
-      steamAverage.update(canUseSteam)
-    } else steamAverage.update(0)
-
-    if (speed > cfg.maxRPM)
-      speed := cfg.maxRPM
+    } else speed := 0
   }
 
   serverTick.listen(doUpdate)
@@ -79,6 +91,11 @@ class TileSteamTurbineController extends TileControllerGui with PoweredControlle
 
   def onModulesChanged() {
     power.capacity = getNumOfModules("PowerCapacitor") * Modules.PowerCapacitor.capacity + cfg.internalPowerCapacity
-    numTurbines := getNumOfModules("Turbine")
+
+    val turbines = modules.toList.flatMap(_.getBlock[BlockTurbineBase[_]](getWorldObj))
+    maxMJPerTick := turbines.map(_.maxMJPerTick).sum
+    inertiaMultiplier := turbines.map(_.inertiaMultiplier).sum / turbines.size
+    numTurbines := turbines.size
   }
+
 }

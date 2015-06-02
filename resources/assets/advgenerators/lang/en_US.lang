@@ -1,7 +1,7 @@
 tile.advgenerators.FluidInput.name=Fluid Intake Valve
 tile.advgenerators.FuelTank.name=Fuel Tank
 tile.advgenerators.PowerCapacitor.name=Power Capacitor
-tile.advgenerators.Turbine.name=Turbine
+tile.advgenerators.TurbineIron.name=Iron Turbine
 tile.advgenerators.TurbineController.name=Gas Turbine Controller
 tile.advgenerators.FuelTank.name=Fuel Tank
 tile.advgenerators.EuOutputLV.name=LV Emitter
@@ -133,7 +133,7 @@ advgenerators.sensor.turbine.speed=Turbine speed
 advgenerators.sensor.param.turbine.speed.stop=Stopped
 advgenerators.sensor.param.turbine.speed.low=Spinning
 advgenerators.sensor.param.turbine.speed.medium=>= %s RPM
-advgenerators.sensor.param.turbine.speed.high=>= %s RPM (Max efficiency)
+advgenerators.sensor.param.turbine.speed.high=at %s RPM (Maximum)
 
 advgenerators.sensor.syngas.water=Water Tank
 advgenerators.sensor.syngas.steam=Steam Buffer

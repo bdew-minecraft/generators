@@ -9,8 +9,6 @@
 
 package net.bdew.generators.modules.turbine
 
-import net.bdew.lib.multiblock.tile.TileModule
+class TileTurbineIron extends TileTurbineBase
 
-class TileTurbine extends TileModule {
-  val kind: String = "Turbine"
-}
+object BlockTurbineIron extends BlockTurbineBase("Iron", classOf[TileTurbineIron])

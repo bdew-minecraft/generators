@@ -11,6 +11,7 @@ package net.bdew.generators.controllers.steam
 
 import net.bdew.generators.config.{Blocks, Config}
 import net.bdew.generators.gui.{GuiOutputConfig, GuiOutputFaces, WidgetPowerGaugeCustom}
+import net.bdew.generators.modules.turbine.BlockTurbineBase
 import net.bdew.generators.network.{NetworkHandler, PktDumpBuffers}
 import net.bdew.generators.{Generators, Textures}
 import net.bdew.lib.gui._
@@ -18,6 +19,8 @@ import net.bdew.lib.gui.widgets.{WidgetButtonIcon, WidgetFluidGauge, WidgetLabel
 import net.bdew.lib.multiblock.gui.WidgetInfo
 import net.bdew.lib.{Client, DecFormat, Misc}
 import net.minecraft.entity.player.EntityPlayer
+
+import scala.collection.mutable
 
 class GuiSteamTurbine(val te: TileSteamTurbineController, player: EntityPlayer) extends BaseScreen(new ContainerSteamTurbine(te, player), 176, 175) with GuiOutputFaces {
   val background = Texture(Generators.modId, "textures/gui/turbine.png", rect)
@@ -46,12 +49,19 @@ class GuiSteamTurbine(val te: TileSteamTurbineController, player: EntityPlayer) 
     widgets.add(new WidgetInfo(Rect(75, 21, 59, 10),
       Textures.Icons.turbine,
       te.numTurbines.value.toString,
-      Misc.toLocal("advgenerators.label.turbine.turbines"))
-    )
+      Misc.toLocal("advgenerators.label.turbine.turbines")
+    ) {
+      override def handleTooltip(p: Point, tip: mutable.MutableList[String]): Unit = {
+        super.handleTooltip(p, tip)
+        tip ++= te.modules.toList.flatMap(_.getBlock[BlockTurbineBase[_]](te.getWorldObject))
+          .groupBy(identity).mapValues(_.size).toList.sortBy(_._2)
+          .map(x => "%d x %s".format(x._2, x._1.getLocalizedName))
+      }
+    })
 
     widgets.add(new WidgetInfo(Rect(75, 32, 59, 10),
       Textures.Icons.peak,
-      "%s %s/t".format(DecFormat.short(te.numTurbines * te.cfg.mjPerTickPerTurbine * Config.powerShowMultiplier), Config.powerShowUnits),
+      "%s %s/t".format(DecFormat.short(te.maxMJPerTick * Config.powerShowMultiplier), Config.powerShowUnits),
       Misc.toLocal("advgenerators.label.turbine.maxprod"))
     )
 

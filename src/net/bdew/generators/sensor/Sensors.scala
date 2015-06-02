@@ -37,8 +37,8 @@ object Sensors extends RedstoneSensors[TileEntity] {
     SensorNumber[TileSteamTurbineController, Double]("turbine.speed", "turbine", _.speed, Vector(
       ParameterNumber("turbine.speed.stop", "turbineStop", _ <= 0, "0"),
       ParameterNumber("turbine.speed.low", "turbineLow", _ > 0, "0"),
-      ParameterNumber("turbine.speed.medium", "turbineMed", _ >= MachineSteamTurbine.effectiveRPM / 2, DecFormat.round(MachineSteamTurbine.effectiveRPM / 2)),
-      ParameterNumber("turbine.speed.high", "turbineHigh", _ >= MachineSteamTurbine.effectiveRPM, DecFormat.round(MachineSteamTurbine.effectiveRPM))
+      ParameterNumber("turbine.speed.medium", "turbineMed", _ >= MachineSteamTurbine.maxRPM / 2, DecFormat.round(MachineSteamTurbine.maxRPM / 2)),
+      ParameterNumber("turbine.speed.high", "turbineHigh", _ >= MachineSteamTurbine.maxRPM, DecFormat.round(MachineSteamTurbine.maxRPM))
     ))
   )
 
