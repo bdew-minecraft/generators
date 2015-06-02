@@ -13,9 +13,6 @@ import net.bdew.generators.CreativeTabsGenerators
 import net.bdew.lib.config.ItemManager
 
 object Items extends ItemManager(CreativeTabsGenerators.main) {
-  val rotor = regSimpleItem("TurbineRotor")
-
-  regSimpleItem("TurbineBlade")
   regSimpleItem("IronFrame")
   regSimpleItem("PowerIO")
   regSimpleItem("IronTubing")

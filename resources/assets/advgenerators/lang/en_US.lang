@@ -1,7 +1,6 @@
 tile.advgenerators.FluidInput.name=Fluid Intake Valve
 tile.advgenerators.FuelTank.name=Fuel Tank
 tile.advgenerators.PowerCapacitor.name=Power Capacitor
-tile.advgenerators.TurbineIron.name=Iron Turbine
 tile.advgenerators.TurbineController.name=Gas Turbine Controller
 tile.advgenerators.FuelTank.name=Fuel Tank
 tile.advgenerators.EuOutputLV.name=LV Emitter
@@ -24,14 +23,44 @@ tile.advgenerators.MixingChamber.name=Mixing Chamber
 tile.advgenerators.Sensor.name=Sensor Module
 tile.advgenerators.GasInput.name=Gas Intake Valve
 
-item.advgenerators.TurbineBlade.name=Turbine Blade
-item.advgenerators.TurbineRotor.name=Turbine Rotor
 item.advgenerators.IronFrame.name=Iron Frame
 item.advgenerators.PowerIO.name=Power IO Module
 item.advgenerators.IronTubing.name=Iron Tubing
 item.advgenerators.IronWiring.name=Redstone-Iron Wiring
 item.advgenerators.Controller.name=Control Circuit
 item.advgenerators.PressureValve.name=Pressure Valve
+
+// === Turbine Materials
+
+item.advgenerators.TurbineBladeIron.name=Iron Turbine Blade
+item.advgenerators.TurbineRotorIron.name=Iron Turbine Rotor
+tile.advgenerators.TurbineIron.name=Iron Turbine
+
+item.advgenerators.TurbineRotorGold.name=Gold Plated Turbine Rotor
+item.advgenerators.TurbineKitGold.name=Gold Plated Turbine Upgrade Kit
+tile.advgenerators.TurbineGold.name=Gold Plated Turbine
+
+item.advgenerators.TurbineBladeSteel.name=Steel Turbine Blade
+item.advgenerators.TurbineRotorSteel.name=Steel Turbine Rotor
+item.advgenerators.TurbineKitSteel.name=Steel Turbine Upgrade Kit
+tile.advgenerators.TurbineSteel.name=Steel Turbine
+
+item.advgenerators.TurbineBladeBronze.name=Bronze Turbine Blade
+item.advgenerators.TurbineRotorBronze.name=Bronze Turbine Rotor
+item.advgenerators.TurbineKitBronze.name=Bronze Turbine Upgrade Kit
+tile.advgenerators.TurbineBronze.name=Bronze Turbine
+
+item.advgenerators.TurbineBladeEnderium.name=Enderium Turbine Blade
+item.advgenerators.TurbineRotorEnderium.name=Enderium Turbine Rotor
+item.advgenerators.TurbineKitEnderium.name=Enderium Turbine Upgrade Kit
+tile.advgenerators.TurbineEnderium.name=Enderium Turbine
+
+item.advgenerators.TurbineBladeVibrant.name=Vibrant Turbine Blade
+item.advgenerators.TurbineRotorVibrant.name=Vibrant Turbine Rotor
+item.advgenerators.TurbineKitVibrant.name=Vibrant Turbine Upgrade Kit
+tile.advgenerators.TurbineVibrant.name=Vibrant Turbine
+
+// ======
 
 advgenerators.gui.turbine.title=Gas Turbine Control
 advgenerators.gui.turbine.steam.title=Steam Turbine Control
@@ -154,4 +183,4 @@ advgenerators.sensor.param.fill.full=Full
 advgenerators.sensor.param.fill.not.full=Not full
 
 advgenerators.tooltip.turbine.rf=Produces up to %s
-advgenerators.tooltip.turbine.inertia=Inertia Multiplier: %s
+advgenerators.tooltip.turbine.inertia=Inertia: %s

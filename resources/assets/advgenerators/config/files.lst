@@ -2,6 +2,7 @@
 
 generators.cfg
 recipes.cfg
+turbine-materials.cfg
 turbine.cfg
 exchanger.cfg
 syngas.cfg

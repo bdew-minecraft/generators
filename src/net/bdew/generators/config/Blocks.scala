@@ -9,6 +9,7 @@
 
 package net.bdew.generators.config
 
+import cpw.mods.fml.common.registry.GameRegistry
 import net.bdew.generators.blocks.{BlockSteam, BlockSyngas}
 import net.bdew.generators.compat.PowerProxy
 import net.bdew.generators.modules.euOutput.{BlockEuOutputHV, BlockEuOutputLV, BlockEuOutputMV}
@@ -25,10 +26,9 @@ import net.bdew.generators.modules.powerCapacitor.BlockPowerCapacitor
 import net.bdew.generators.modules.pressure.{BlockPressureInput, BlockPressureOutput}
 import net.bdew.generators.modules.rfOutput.BlockRfOutput
 import net.bdew.generators.modules.sensor.BlockSensor
-import net.bdew.generators.modules.turbine.{BlockTurbineIron, TileTurbineIron}
+import net.bdew.generators.modules.turbine.TileTurbine
 import net.bdew.generators.{CreativeTabsGenerators, Generators}
 import net.bdew.lib.Misc
-import net.bdew.lib.block.ItemBlockTooltip
 import net.bdew.lib.config.BlockManager
 import net.bdew.pressure.api.PressureAPI
 import net.minecraft.block.Block
@@ -51,9 +51,7 @@ object Blocks extends BlockManager(CreativeTabsGenerators.main) {
   regBlock(BlockItemInput)
   regBlock(BlockItemOutput)
 
-  regBlock(BlockTurbineIron, classOf[ItemBlockTooltip])
-  registerLegacyTileEntity("advgenerators.Turbine", classOf[TileTurbineIron])
-
+  GameRegistry.registerTileEntityWithAlternatives(classOf[TileTurbine], "advgenerators.Turbine", "advgenerators.TurbineIron")
 
   regBlock(BlockFuelTank)
   regBlock(BlockPowerCapacitor)
@@ -92,7 +90,7 @@ object Blocks extends BlockManager(CreativeTabsGenerators.main) {
   def regFluid(name: String, block: (Fluid) => Block)(params: (Fluid) => Unit): Fluid = {
     val fluid = if (!FluidRegistry.isFluidRegistered(name)) {
       Generators.logInfo("Fluid '%s' not registered by any other mod, creating...", name)
-      val newFluid = new Fluid(name) // Values shamelessly stolen from BR
+      val newFluid = new Fluid(name)
       params.apply(newFluid)
       FluidRegistry.registerFluid(newFluid)
       newFluid

@@ -9,9 +9,9 @@
 
 package net.bdew.generators
 
-import net.bdew.generators.config.Items
+import net.bdew.generators.config.TurbineMaterials
 import net.bdew.lib.CreativeTabContainer
 
 object CreativeTabsGenerators extends CreativeTabContainer {
-  val main = new Tab("bdew.generators", Items.rotor)
+  val main = new Tab("bdew.generators", TurbineMaterials.registry("Iron").rotorItem.get)
 }

@@ -19,9 +19,8 @@ import cpw.mods.fml.common.registry.GameRegistry
 import cpw.mods.fml.relauncher.Side
 import net.bdew.generators.compat.PowerProxy
 import net.bdew.generators.compat.itempush.ItemPush
+import net.bdew.generators.config._
 import net.bdew.generators.config.loader.TuningLoader
-import net.bdew.generators.config.{Config, IMC, TurbineFuel}
-import net.bdew.generators.modules.turbine.BlockTurbineIron
 import net.bdew.generators.network.NetworkHandler
 import net.bdew.generators.sensor.Sensors
 import net.bdew.lib.multiblock.data.{OutputConfigItems, OutputConfigManager}
@@ -79,6 +78,7 @@ object Generators {
 
   @EventHandler
   def postInit(event: FMLPostInitializationEvent) {
+    TurbineMaterials.init()
     TuningLoader.loadDelayed()
     TurbineFuel.postInit()
   }
@@ -88,12 +88,17 @@ object Generators {
     import scala.collection.JavaConversions._
     for (missing <- event.getAll) {
       (missing.name, missing.`type`) match {
-        case ("advgenerators:Turbine", GameRegistry.Type.BLOCK) => missing.remap(BlockTurbineIron)
-        case ("advgenerators:Turbine", GameRegistry.Type.ITEM) => missing.remap(Item.getItemFromBlock(BlockTurbineIron))
+        case ("advgenerators:Turbine", GameRegistry.Type.BLOCK) =>
+          missing.remap(TurbineMaterials.registry("Iron").turbineBlock.get)
+        case ("advgenerators:Turbine", GameRegistry.Type.ITEM) =>
+          missing.remap(Item.getItemFromBlock(TurbineMaterials.registry("Iron").turbineBlock.get))
+        case ("advgenerators:TurbineRotor", GameRegistry.Type.ITEM) =>
+          missing.remap(TurbineMaterials.registry("Iron").rotorItem.get)
+        case ("advgenerators:TurbineBlade", GameRegistry.Type.ITEM) =>
+          missing.remap(TurbineMaterials.registry("Iron").bladeItem.get)
         case _ => // do nothing
       }
     }
   }
-
 
 }

@@ -11,7 +11,7 @@ package net.bdew.generators.controllers.steam
 
 import net.bdew.generators.config.{Blocks, Config}
 import net.bdew.generators.gui.{GuiOutputConfig, GuiOutputFaces, WidgetPowerGaugeCustom}
-import net.bdew.generators.modules.turbine.BlockTurbineBase
+import net.bdew.generators.modules.turbine.BlockTurbine
 import net.bdew.generators.network.{NetworkHandler, PktDumpBuffers}
 import net.bdew.generators.{Generators, Textures}
 import net.bdew.lib.gui._
@@ -53,7 +53,7 @@ class GuiSteamTurbine(val te: TileSteamTurbineController, player: EntityPlayer) 
     ) {
       override def handleTooltip(p: Point, tip: mutable.MutableList[String]): Unit = {
         super.handleTooltip(p, tip)
-        tip ++= te.modules.toList.flatMap(_.getBlock[BlockTurbineBase[_]](te.getWorldObject))
+        tip ++= te.modules.toList.flatMap(_.getBlock[BlockTurbine](te.getWorldObject))
           .groupBy(identity).mapValues(_.size).toList.sortBy(_._2)
           .map(x => "%d x %s".format(x._2, x._1.getLocalizedName))
       }

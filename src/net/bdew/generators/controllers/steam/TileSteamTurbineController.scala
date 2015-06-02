@@ -11,7 +11,7 @@ package net.bdew.generators.controllers.steam
 
 import net.bdew.generators.config.Modules
 import net.bdew.generators.controllers.PoweredController
-import net.bdew.generators.modules.turbine.BlockTurbineBase
+import net.bdew.generators.modules.turbine.BlockTurbine
 import net.bdew.generators.sensor.Sensors
 import net.bdew.generators.{Generators, GeneratorsResourceProvider}
 import net.bdew.lib.Misc
@@ -92,7 +92,7 @@ class TileSteamTurbineController extends TileControllerGui with PoweredControlle
   def onModulesChanged() {
     power.capacity = getNumOfModules("PowerCapacitor") * Modules.PowerCapacitor.capacity + cfg.internalPowerCapacity
 
-    val turbines = modules.toList.flatMap(_.getBlock[BlockTurbineBase[_]](getWorldObj))
+    val turbines = modules.toList.flatMap(_.getBlock[BlockTurbine](getWorldObj)).map(_.material)
     maxMJPerTick := turbines.map(_.maxMJPerTick).sum
     inertiaMultiplier := turbines.map(_.inertiaMultiplier).sum / turbines.size
     numTurbines := turbines.size
