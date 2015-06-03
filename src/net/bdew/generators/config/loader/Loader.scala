@@ -90,7 +90,14 @@ class Loader extends RecipeLoader with GenericConfigLoader {
           case CarbonValueBlacklist() =>
             Generators.logDebug("Blacklist carbon value: %s", stack)
             Some(0)
-        }) map (CarbonValueRegistry.register(stack, _))
+        }) foreach (CarbonValueRegistry.register(stack, _))
+      }
+
+    case RsSetContainer(item, container) =>
+      Generators.logDebug("Setting container %s => %s", item, container)
+      val target = getConcreteStack(container).getItem
+      for (stack <- getAllConcreteStacks(item)) {
+        stack.getItem.setContainerItem(target)
       }
 
     case _ => super.processRecipeStatement(st)

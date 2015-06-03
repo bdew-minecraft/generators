@@ -29,6 +29,7 @@ item.advgenerators.IronTubing.name=Iron Tubing
 item.advgenerators.IronWiring.name=Redstone-Iron Wiring
 item.advgenerators.Controller.name=Control Circuit
 item.advgenerators.PressureValve.name=Pressure Valve
+item.advgenerators.UpgradeKit.name=Upgrade Kit
 
 // === Turbine Materials
 

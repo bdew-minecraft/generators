@@ -11,6 +11,8 @@ package net.bdew.generators.config.loader
 
 import net.bdew.lib.recipes.{RecipeStatement, StackRef}
 
+case class RsSetContainer(item: StackRef, cont: StackRef) extends RecipeStatement
+
 abstract class ResKindRef
 
 case class ResKindFluid(name: String) extends ResKindRef

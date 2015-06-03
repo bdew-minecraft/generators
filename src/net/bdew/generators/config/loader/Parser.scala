@@ -48,5 +48,7 @@ class Parser extends RecipeParser with GenericConfigParser {
 
   def carbonValueRecipe = "carbon-value" ~> ":" ~> spec ~ carbonValue ^^ { case sp ~ cv => RsCarbonValue(sp, cv) }
 
-  override def recipeStatement = super.recipeStatement | turbineFuel | exchangerRecipe | carbonValueRecipe
+  def containerRecipe = "set-container" ~> ":" ~> spec ~ "=>" ~ spec ^^ { case i ~ a ~ c => RsSetContainer(i, c) }
+
+  override def recipeStatement = super.recipeStatement | turbineFuel | exchangerRecipe | carbonValueRecipe | containerRecipe
 }
