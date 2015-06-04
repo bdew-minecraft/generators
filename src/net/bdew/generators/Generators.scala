@@ -66,6 +66,8 @@ object Generators {
     NetworkRegistry.INSTANCE.registerGuiHandler(this, Config.guiHandler)
     NetworkHandler.init()
     FMLInterModComms.sendMessage("Waila", "register", "net.bdew.generators.waila.WailaHandler.loadCallback")
+    TurbineMaterials.init()
+    TuningLoader.loadDelayed()
   }
 
   @EventHandler
@@ -78,8 +80,6 @@ object Generators {
 
   @EventHandler
   def postInit(event: FMLPostInitializationEvent) {
-    TurbineMaterials.init()
-    TuningLoader.loadDelayed()
     TurbineFuel.postInit()
   }
 
