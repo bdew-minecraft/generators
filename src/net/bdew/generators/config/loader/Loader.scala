@@ -9,11 +9,16 @@
 
 package net.bdew.generators.config.loader
 
+import cofh.api.modhelpers.ThermalExpansionHelper
+import cpw.mods.fml.common.event.FMLInterModComms
 import net.bdew.generators.Generators
+import net.bdew.generators.compat.EnderIOXmlEncoder
 import net.bdew.generators.config.{CarbonValueRegistry, ExchangerRegistry, Tuning, TurbineFuel}
+import net.bdew.lib.Misc
 import net.bdew.lib.recipes.gencfg.GenericConfigLoader
 import net.bdew.lib.recipes.{RecipeLoader, RecipeStatement}
 import net.bdew.lib.resource.{FluidResource, ItemResource, Resource}
+import net.minecraft.item.ItemStack
 import net.minecraft.tileentity.TileEntityFurnace
 import net.minecraftforge.fluids.FluidRegistry
 import net.minecraftforge.oredict.OreDictionary
@@ -21,16 +26,24 @@ import net.minecraftforge.oredict.OreDictionary
 class Loader extends RecipeLoader with GenericConfigLoader {
   val cfgStore = Tuning
 
+  lazy val enderIOXmlEncoder = new EnderIOXmlEncoder(this)
+
+  def forceNoWildcardDamage(s: ItemStack) = {
+    if (s.getItemDamage == OreDictionary.WILDCARD_VALUE) {
+      Generators.logDebug("Damage value is unset in %s - forcing to 0", s)
+      s.setItemDamage(0)
+    }
+    s
+  }
+
+  def getConcreteStackCount(s: StackRefCount) = getConcreteStack(s.stack, s.count)
+
   def getFluid(s: String) =
     Option(FluidRegistry.getFluid(s)).getOrElse(error("Fluid %s not found", s))
 
   def resolveResourceKind(x: ResKindRef) = x match {
     case ResKindItem(sr) =>
-      val is = getConcreteStack(sr)
-      if (is.getItemDamage == OreDictionary.WILDCARD_VALUE) {
-        Generators.logDebug("Meta is unset in %s, defaulting to 0", x)
-        is.setItemDamage(0)
-      }
+      val is = forceNoWildcardDamage(getConcreteStack(sr))
       ItemResource(is.getItem, is.getItemDamage)
     case ResKindFluid(f) =>
       FluidResource(getFluid(f))
@@ -99,6 +112,28 @@ class Loader extends RecipeLoader with GenericConfigLoader {
       for (stack <- getAllConcreteStacks(item)) {
         stack.getItem.setContainerItem(target)
       }
+
+    case rec: RsEnderIOSmelt =>
+      Generators.logDebug("Registering EnderIO smelting: %s", rec)
+      val xml = enderIOXmlEncoder.encodeSmelterRecipe(rec).toString()
+      Generators.logDebug("XML: ", xml)
+      FMLInterModComms.sendMessage("EnderIO", enderIOXmlEncoder.IDAlloySmelter, xml)
+
+    case rec: RsEnderIOSagMill =>
+      Generators.logDebug("Registering EnderIO sag mill: %s", rec)
+      val xml = enderIOXmlEncoder.encodeSagMill(rec).toString()
+      Generators.logDebug("XML: ", xml)
+      FMLInterModComms.sendMessage("EnderIO", enderIOXmlEncoder.IDSagMill, xml)
+
+    case RsTESmelter(in1, in2, out1, out2, energy, chance) =>
+      if (!Misc.haveModVersion("ThermalExpansion")) error("Trying to register TE recipe without TE loaded")
+      Generators.logInfo("Registering ThermalExpansion smelter recipe: %s, %s -> %s, %s (%d rf)", in1, in2, out1, out2, energy)
+      val in1s = forceNoWildcardDamage(getConcreteStackCount(in1))
+      val in2s = in2.map(x => forceNoWildcardDamage(getConcreteStackCount(x))).orNull
+      val out1s = forceNoWildcardDamage(getConcreteStackCount(out1))
+      val out2s = out2.map(x => forceNoWildcardDamage(getConcreteStackCount(x))).orNull
+      Generators.logInfo("resolved items: %s, %s -> %s, %s", in1s, in2s, out1s, out2s, energy)
+      ThermalExpansionHelper.addSmelterRecipe(energy, in1s, in2s, out1s, out2s, chance)
 
     case _ => super.processRecipeStatement(st)
   }

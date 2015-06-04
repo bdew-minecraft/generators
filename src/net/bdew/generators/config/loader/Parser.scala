@@ -50,5 +50,28 @@ class Parser extends RecipeParser with GenericConfigParser {
 
   def containerRecipe = "set-container" ~> ":" ~> spec ~ "=>" ~ spec ^^ { case i ~ a ~ c => RsSetContainer(i, c) }
 
-  override def recipeStatement = super.recipeStatement | turbineFuel | exchangerRecipe | carbonValueRecipe | containerRecipe
+  def specCount = spec ~ ("*" ~> int).? ^^ { case s ~ c => StackRefCount(s, c.getOrElse(1)) }
+
+  def enderIoSmelt = "enderio-smelt:" ~> specCount ~ ("+" ~> specCount).* ~ ("+" ~> int <~ "RF") ~ "=>" ~ specCount ~ ("+" ~> decimalNumber <~ "xp").? ^^ {
+    case in1 ~ in2 ~ rf ~ arw ~ res ~ xp => RsEnderIOSmelt(List(in1) ++ in2, res, xp.getOrElse("0").toDouble, rf)
+  }
+
+  def enderIoSagMill = "enderio-sag-mill:" ~> spec ~ ("+" ~> int <~ "RF") ~ "=>" ~ specCount ~ ("+" ~> specCount).* ~ "NOBONUS".? ^^ {
+    case in ~ rf ~ arw ~ out1 ~ out2 ~ nb => RsEnderIOSagMill(in, List(out1) ++ out2, rf, nb.isEmpty)
+  }
+
+  def teSmelterRecipe = "TE-smelt:" ~> specCount ~ ("+" ~> specCount).? ~ ("+" ~> int <~ "RF") ~ "=>" ~ specCount ~ ("+" ~> specCount ~ (int <~ "%").?).? ^^ {
+    case in1 ~ in2 ~ rf ~ arw ~ out1 ~ None => RsTESmelter(in1, in2, out1, None, rf, 0)
+    case in1 ~ in2 ~ rf ~ arw ~ out1 ~ Some(out2 ~ chance) => RsTESmelter(in1, in2, out1, Some(out2), rf, chance.getOrElse(100))
+  }
+
+  override def recipeStatement = (super.recipeStatement
+    | turbineFuel
+    | exchangerRecipe
+    | carbonValueRecipe
+    | containerRecipe
+    | enderIoSmelt
+    | enderIoSagMill
+    | teSmelterRecipe
+    )
 }

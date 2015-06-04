@@ -9,9 +9,19 @@
 
 package net.bdew.generators.config.loader
 
-import net.bdew.lib.recipes.{RecipeStatement, StackRef}
+import net.bdew.lib.recipes.{CraftingStatement, RecipeStatement, StackRef}
 
 case class RsSetContainer(item: StackRef, cont: StackRef) extends RecipeStatement
+
+case class StackRefCount(stack: StackRef, count: Int)
+
+case class RsEnderIOSmelt(inputs: List[StackRefCount], output: StackRefCount, xp: Double, energy: Int) extends CraftingStatement {
+  override val result = output.stack
+}
+
+case class RsEnderIOSagMill(input: StackRef, outputs: List[StackRefCount], energy: Int, bonus: Boolean) extends RecipeStatement
+
+case class RsTESmelter(input1: StackRefCount, input2: Option[StackRefCount], output1: StackRefCount, output2: Option[StackRefCount], energy: Int, secondaryChance: Int) extends RecipeStatement
 
 abstract class ResKindRef
 
