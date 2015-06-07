@@ -42,5 +42,4 @@ object BlockSensor extends BaseModule("Sensor", "Sensor", classOf[TileSensor]) w
     frontIconOn = reg.registerIcon(Generators.modId + ":" + name.toLowerCase + "/front_on")
     sideIconOn = reg.registerIcon(Generators.modId + ":" + name.toLowerCase + "/side_on")
   }
-
 }

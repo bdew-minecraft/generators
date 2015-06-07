@@ -28,7 +28,7 @@ class WidgetResourceGauge(val rect: Rect, overlay: Texture, dSlot: DataSlotResou
     GL11.glEnable(GL11.GL_BLEND)
     GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
 
-    dSlot.resource map { resource =>
+    dSlot.resource foreach { resource =>
       val color = resource.kind.getColor
       val icon = resource.kind.getTexture
       var fillHeight = if (dSlot.getEffectiveCapacity > 0) rect.h * resource.amount / dSlot.getEffectiveCapacity else 0

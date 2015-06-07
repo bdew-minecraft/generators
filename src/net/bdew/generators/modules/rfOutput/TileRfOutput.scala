@@ -36,7 +36,7 @@ class TileRfOutput extends TileOutput[OutputConfigPower] with RSControllableOutp
   }
 
   override def doOutput(face: ForgeDirection, cfg: OutputConfigPower) {
-    getCoreAs[CIPowerProducer] map { core =>
+    getCoreAs[CIPowerProducer] foreach { core =>
       val out = if (checkCanOutput(cfg)) {
         myPos.neighbour(face).getTile[IEnergyReceiver](worldObj) map { tile =>
           val canExtract = core.extract(Int.MaxValue, true)

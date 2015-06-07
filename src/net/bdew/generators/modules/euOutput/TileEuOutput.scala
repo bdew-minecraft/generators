@@ -53,7 +53,7 @@ abstract class TileEuOutputBase(val maxOutput: Int, val tier: Int) extends TileO
   }
 
   override def drawEnergy(amount: Double) {
-    getCoreAs[CIPowerProducer] map { core =>
+    getCoreAs[CIPowerProducer] foreach { core =>
       core.extract(amount.toFloat / ratio, false)
       outThisTick += amount.toFloat
     }
