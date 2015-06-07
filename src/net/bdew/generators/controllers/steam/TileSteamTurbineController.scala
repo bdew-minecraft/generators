@@ -52,8 +52,6 @@ class TileSteamTurbineController extends TileControllerGui with PoweredControlle
     if (maxMJPerTick > 0) {
       val maxSpeedDelta = cfg.maxRPM * cfg.inertiaFunctionMultiplier * Math.exp(cfg.inertiaFunctionExponent * speed / cfg.maxRPM) * inertiaMultiplier
 
-      speed -= maxSpeedDelta * cfg.baseDragMultiplier
-
       if (canGeneratePower && speed > 1) {
         if (power.stored < power.capacity) {
           val injected = Math.min(speed / cfg.maxRPM * maxMJPerTick, power.capacity - power.stored)
@@ -62,6 +60,8 @@ class TileSteamTurbineController extends TileControllerGui with PoweredControlle
         } else outputAverage.update(0)
         speed -= maxSpeedDelta * cfg.coilDragMultiplier
       } else outputAverage.update(0)
+
+      speed -= maxSpeedDelta * cfg.baseDragMultiplier
 
       if (canUseSteam && steam.getFluidAmount > 0) {
         val maxSteamPerTick = maxMJPerTick / cfg.steamEnergyDensity
