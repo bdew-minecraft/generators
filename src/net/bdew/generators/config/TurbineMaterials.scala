@@ -10,8 +10,8 @@
 package net.bdew.generators.config
 
 import cpw.mods.fml.common.registry.GameRegistry
-import net.bdew.generators.Generators
 import net.bdew.generators.items.TurbineItem
+import net.bdew.generators.{CreativeTabsGenerators, Generators}
 import net.bdew.generators.modules.turbine.BlockTurbine
 import net.bdew.lib.block.ItemBlockTooltip
 import net.bdew.lib.recipes.gencfg.ConfigSection
@@ -49,6 +49,7 @@ object TurbineMaterials {
           material.kitItem = Some(Items.regItem(new TurbineItem(material, "Kit")))
 
         material.turbineBlock = Some(new BlockTurbine(material))
+        material.turbineBlock.get.setCreativeTab(CreativeTabsGenerators.main)
         GameRegistry.registerBlock(material.turbineBlock.get, classOf[ItemBlockTooltip], "Turbine" + material.name)
       }
     }
