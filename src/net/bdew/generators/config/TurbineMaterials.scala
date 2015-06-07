@@ -10,9 +10,9 @@
 package net.bdew.generators.config
 
 import cpw.mods.fml.common.registry.GameRegistry
-import net.bdew.generators.items.TurbineItem
-import net.bdew.generators.{CreativeTabsGenerators, Generators}
+import net.bdew.generators.items.{TurbineItem, TurbineUpgradeKit}
 import net.bdew.generators.modules.turbine.BlockTurbine
+import net.bdew.generators.{CreativeTabsGenerators, Generators}
 import net.bdew.lib.block.ItemBlockTooltip
 import net.bdew.lib.recipes.gencfg.ConfigSection
 import net.minecraftforge.oredict.OreDictionary
@@ -46,7 +46,7 @@ object TurbineMaterials {
         if ((!cfg.hasValue("RegisterRotor")) || cfg.getBoolean("RegisterRotor"))
           material.rotorItem = Some(Items.regItem(new TurbineItem(material, "Rotor")))
         if ((!cfg.hasValue("RegisterKit")) || cfg.getBoolean("RegisterKit"))
-          material.kitItem = Some(Items.regItem(new TurbineItem(material, "Kit")))
+          material.kitItem = Some(Items.regItem(new TurbineUpgradeKit(material)))
 
         material.turbineBlock = Some(new BlockTurbine(material))
         material.turbineBlock.get.setCreativeTab(CreativeTabsGenerators.main)

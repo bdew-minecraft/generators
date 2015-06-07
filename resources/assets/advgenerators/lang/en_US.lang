@@ -185,3 +185,4 @@ advgenerators.sensor.param.fill.not.full=Not full
 
 advgenerators.tooltip.turbine.rf=Produces up to %s
 advgenerators.tooltip.turbine.inertia=Inertia: %s
+advgenerators.tooltip.kit=Right click while sneaking to upgrade
