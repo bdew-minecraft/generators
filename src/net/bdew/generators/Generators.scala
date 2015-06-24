@@ -56,6 +56,7 @@ object Generators {
     if (event.getSide == Side.CLIENT) {
       IconCache.init()
       sensor.Icons.init()
+      control.Icons.init()
     }
   }
 

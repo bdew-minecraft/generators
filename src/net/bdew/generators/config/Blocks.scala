@@ -12,6 +12,7 @@ package net.bdew.generators.config
 import cpw.mods.fml.common.registry.GameRegistry
 import net.bdew.generators.blocks.{BlockSteam, BlockSyngas}
 import net.bdew.generators.compat.PowerProxy
+import net.bdew.generators.modules.control.BlockControl
 import net.bdew.generators.modules.euOutput.{BlockEuOutputHV, BlockEuOutputLV, BlockEuOutputMV}
 import net.bdew.generators.modules.exchanger.BlockExchanger
 import net.bdew.generators.modules.fluidInput.BlockFluidInput
@@ -60,6 +61,7 @@ object Blocks extends BlockManager(CreativeTabsGenerators.main) {
   regBlock(BlockExchanger)
 
   regBlock(BlockSensor)
+  regBlock(BlockControl)
 
   if (PowerProxy.haveMekanismGasApi) {
     regBlock(BlockGasInput)

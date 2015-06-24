@@ -22,6 +22,7 @@ tile.advgenerators.HeatingChamber.name=Heating Chamber
 tile.advgenerators.MixingChamber.name=Mixing Chamber
 tile.advgenerators.Sensor.name=Sensor Module
 tile.advgenerators.GasInput.name=Gas Intake Valve
+tile.advgenerators.Control.name=Redstone Control Module
 
 item.advgenerators.IronFrame.name=Iron Frame
 item.advgenerators.PowerIO.name=Power IO Module
@@ -69,6 +70,7 @@ advgenerators.gui.exchanger.title=Heat Exchanger Control
 advgenerators.gui.syngas.title=Syngas Producer Control
 advgenerators.gui.output.title=Output Configuration
 advgenerators.gui.sensor.title=Sensor module configuration
+advgenerators.gui.control.title=Control module configuration
 
 advgenerators.gui.dump=Clear internal buffers
 
@@ -186,3 +188,11 @@ advgenerators.sensor.param.fill.not.full=Not full
 advgenerators.tooltip.turbine.rf=Produces up to %s
 advgenerators.tooltip.turbine.inertia=Inertia: %s
 advgenerators.tooltip.kit=Right click while sneaking to upgrade
+
+advgenerators.control.mode.high=Enable on signal
+advgenerators.control.mode.low=Disable on signal
+
+advgenerators.control.action.disabled=Disabled
+advgenerators.control.action.useSteam=Steam Consumption
+advgenerators.control.action.useFuel=Fuel Consumption
+advgenerators.control.action.generateEnergy=Energy Generation
