@@ -12,14 +12,11 @@ package net.bdew.generators.control
 import net.bdew.lib.multiblock.tile.TileController
 
 trait CIControl extends TileController {
-  def availableControlActions: List[ControlAction]
-  def onControlStateChanged(): Unit
-}
-
-trait CIControlCached extends CIControl {
   var controlState = Map.empty[ControlAction, ControlResult.Value].withDefaultValue(ControlResult.NEUTRAL)
 
-  override def onControlStateChanged(): Unit = {
+  def availableControlActions: List[ControlAction]
+
+  def onControlStateChanged(): Unit = {
     val controlModules = modules.flatMap(_.getTile[MIControl](getWorldObject))
     val result = for (action <- availableControlActions) yield {
       val results = controlModules.map(_.getControlState(action))
@@ -35,8 +32,14 @@ trait CIControlCached extends CIControl {
     controlState = result.toMap.withDefaultValue(ControlResult.NEUTRAL)
   }
 
+  def getControlStateWithDefault(action: ControlAction, default: => Boolean) =
+    controlState(action) match {
+      case ControlResult.DISABLED => false
+      case ControlResult.ENABLED => false
+      case ControlResult.NEUTRAL => default
+    }
+
   override def onModulesChanged(): Unit = {
     onControlStateChanged()
   }
-
 }

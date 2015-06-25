@@ -10,7 +10,7 @@
 package net.bdew.generators.controllers.steam
 
 import net.bdew.generators.config.Modules
-import net.bdew.generators.control.{CIControlCached, ControlActions, ControlResult}
+import net.bdew.generators.control.{CIControl, ControlActions}
 import net.bdew.generators.controllers.PoweredController
 import net.bdew.generators.modules.turbine.BlockTurbine
 import net.bdew.generators.sensor.Sensors
@@ -25,7 +25,7 @@ import net.bdew.lib.sensors.multiblock.CIRedstoneSensors
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraftforge.fluids.{Fluid, FluidStack}
 
-class TileSteamTurbineController extends TileControllerGui with PoweredController with CIFluidInput with CIOutputFaces with CIPowerProducer with CIRedstoneSensors with CIControlCached {
+class TileSteamTurbineController extends TileControllerGui with PoweredController with CIFluidInput with CIOutputFaces with CIPowerProducer with CIRedstoneSensors with CIControl {
   val cfg = MachineSteamTurbine
 
   val resources = GeneratorsResourceProvider
@@ -41,19 +41,8 @@ class TileSteamTurbineController extends TileControllerGui with PoweredControlle
   val outputAverage = new DataSlotMovingAverage("outputAverage", this, 20)
   val steamAverage = new DataSlotMovingAverage("steamAverage", this, 20)
 
-  def canGeneratePower =
-    controlState(ControlActions.generateEnergy) match {
-      case ControlResult.DISABLED => false
-      case ControlResult.ENABLED => true
-      case ControlResult.NEUTRAL => power.stored < power.capacity
-    }
-
-  def canUseSteam =
-    controlState(ControlActions.useSteam) match {
-      case ControlResult.DISABLED => false
-      case ControlResult.ENABLED => true
-      case ControlResult.NEUTRAL => power.stored < power.capacity
-    }
+  def canGeneratePower = getControlStateWithDefault(ControlActions.generateEnergy, power.stored < power.capacity)
+  def canUseSteam = getControlStateWithDefault(ControlActions.useSteam, power.stored < power.capacity)
 
   lazy val maxOutputs = 6
 
