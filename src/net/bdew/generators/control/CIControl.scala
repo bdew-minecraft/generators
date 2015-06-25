@@ -35,7 +35,7 @@ trait CIControl extends TileController {
   def getControlStateWithDefault(action: ControlAction, default: => Boolean) =
     controlState(action) match {
       case ControlResult.DISABLED => false
-      case ControlResult.ENABLED => false
+      case ControlResult.ENABLED => true
       case ControlResult.NEUTRAL => default
     }
 
