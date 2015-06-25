@@ -18,8 +18,8 @@ object Modules {
   }
 
   object PowerCapacitor {
-    lazy val cfg = Modules.cfg.getSection("PowerCapacitor")
-    lazy val capacity = cfg.getInt("Capacity")
+    //TODO: Remove me when gas turbine is updated
+    lazy val capacity = CapacitorMaterials.registry("Redstone").mjCapacity.toFloat
   }
 
   object HeatExchanger {

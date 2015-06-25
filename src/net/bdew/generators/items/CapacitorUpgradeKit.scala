@@ -12,8 +12,8 @@ package net.bdew.generators.items
 import java.util
 
 import cpw.mods.fml.relauncher.{Side, SideOnly}
-import net.bdew.generators.config.TurbineMaterial
-import net.bdew.generators.modules.turbine.BlockTurbine
+import net.bdew.generators.config.CapacitorMaterial
+import net.bdew.generators.modules.powerCapacitor.BlockPowerCapacitor
 import net.bdew.lib.Misc
 import net.bdew.lib.block.BlockRef
 import net.bdew.lib.items.NamedItem
@@ -23,26 +23,20 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.world.World
 
-class TurbineItem(val material: TurbineMaterial, val kind: String) extends NamedItem {
-  override def name = "Turbine" + kind + material.name
-
+class CapacitorUpgradeKit(val material: CapacitorMaterial) extends NamedItem with UpgradeKit {
+  override def name: String = "CapacitorKit" + material.name
   setUnlocalizedName("advgenerators." + name)
 
   @SideOnly(Side.CLIENT)
   override def registerIcons(reg: IIconRegister): Unit = {
-    itemIcon = reg.registerIcon("advgenerators:turbine/%s/%s".format(material.name.toLowerCase, kind.toLowerCase))
+    itemIcon = reg.registerIcon("advgenerators:capacitorkit/%s".format(material.name.toLowerCase))
   }
-}
+  override def getNewBlock(pos: BlockRef, world: World): BlockModule[_] = material.capacitorBlock.get
 
-class TurbineUpgradeKit(material: TurbineMaterial) extends TurbineItem(material, "Kit") with UpgradeKit {
+  override def getReturnedItems(pos: BlockRef, world: World): List[ItemStack] = List.empty
+
   override def canUpgradeBlock(pos: BlockRef, world: World): Boolean =
-    pos.getBlock[BlockTurbine](world).exists(_.material.tier < material.tier)
-
-  override def getNewBlock(pos: BlockRef, world: World): BlockModule[_] =
-    material.turbineBlock.get
-
-  override def getReturnedItems(pos: BlockRef, world: World): List[ItemStack] =
-    List(new ItemStack((pos.getBlock[BlockTurbine](world) flatMap { block => block.material.rotorItem }).get))
+    pos.getBlock[BlockPowerCapacitor](world).exists(_.material.tier < material.tier)
 
   override def addInformation(stack: ItemStack, player: EntityPlayer, list: util.List[_], detailed: Boolean): Unit = {
     list.asInstanceOf[java.util.List[String]].add(Misc.toLocal("advgenerators.tooltip.kit"))

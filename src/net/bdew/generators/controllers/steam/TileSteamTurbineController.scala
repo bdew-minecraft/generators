@@ -9,9 +9,9 @@
 
 package net.bdew.generators.controllers.steam
 
-import net.bdew.generators.config.Modules
 import net.bdew.generators.control.{CIControl, ControlActions}
 import net.bdew.generators.controllers.PoweredController
+import net.bdew.generators.modules.powerCapacitor.BlockPowerCapacitor
 import net.bdew.generators.modules.turbine.BlockTurbine
 import net.bdew.generators.sensor.Sensors
 import net.bdew.generators.{Generators, GeneratorsResourceProvider}
@@ -91,7 +91,8 @@ class TileSteamTurbineController extends TileControllerGui with PoweredControlle
   def extract(v: Float, simulate: Boolean) = power.extract(v, simulate)
 
   override def onModulesChanged() {
-    power.capacity = getNumOfModules("PowerCapacitor") * Modules.PowerCapacitor.capacity + cfg.internalPowerCapacity
+    val capacitors = modules.toList.flatMap(_.getBlock[BlockPowerCapacitor](getWorldObj)).map(_.material)
+    power.capacity = cfg.internalPowerCapacity + capacitors.map(_.mjCapacity).sum.toFloat
 
     val turbines = modules.toList.flatMap(_.getBlock[BlockTurbine](getWorldObj)).map(_.material)
     maxMJPerTick := turbines.map(_.maxMJPerTick).sum
@@ -101,5 +102,5 @@ class TileSteamTurbineController extends TileControllerGui with PoweredControlle
     super.onModulesChanged()
   }
 
-  override def availableControlActions = List(ControlActions.useSteam, ControlActions.generateEnergy)
+  override def availableControlActions = List(ControlActions.disabled, ControlActions.useSteam, ControlActions.generateEnergy)
 }

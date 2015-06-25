@@ -68,6 +68,7 @@ object Generators {
     NetworkHandler.init()
     FMLInterModComms.sendMessage("Waila", "register", "net.bdew.generators.waila.WailaHandler.loadCallback")
     TurbineMaterials.init()
+    CapacitorMaterials.init()
     TuningLoader.loadDelayed()
   }
 
@@ -97,6 +98,10 @@ object Generators {
           missing.remap(TurbineMaterials.registry("Iron").rotorItem.get)
         case ("advgenerators:TurbineBlade", GameRegistry.Type.ITEM) =>
           missing.remap(TurbineMaterials.registry("Iron").bladeItem.get)
+        case ("advgenerators:PowerCapacitor", GameRegistry.Type.BLOCK) =>
+          missing.remap(CapacitorMaterials.registry("Redstone").capacitorBlock.get)
+        case ("advgenerators:PowerCapacitor", GameRegistry.Type.ITEM) =>
+          missing.remap(Item.getItemFromBlock(CapacitorMaterials.registry("Redstone").capacitorBlock.get))
         case _ => // do nothing
       }
     }

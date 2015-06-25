@@ -22,7 +22,7 @@ import net.minecraft.world.World
 trait UpgradeKit extends Item {
   def canUpgradeBlock(pos: BlockRef, world: World): Boolean
   def getNewBlock(pos: BlockRef, world: World): BlockModule[_]
-  def getReturnedItem(pos: BlockRef, world: World): ItemStack
+  def getReturnedItems(pos: BlockRef, world: World): Traversable[ItemStack]
   def saveData(te: TileModule) = NBT.from(te.writeToNBT)
   def restoreData(te: TileModule, data: NBTTagCompound) = te.readFromNBT(data)
 
@@ -30,10 +30,11 @@ trait UpgradeKit extends Item {
 
   private def doUpgrade(pos: BlockRef, world: World, player: EntityPlayer): Unit = {
     if (!world.isRemote) {
-      // If player not in creative, use up kit and give returned item
+      // If player not in creative, use up kit and give returned item(s)
       if (!player.capabilities.isCreativeMode) {
         player.inventory.decrStackSize(player.inventory.currentItem, 1)
-        ItemUtils.dropItemToPlayer(world, player, getReturnedItem(pos, world))
+        for (item <- getReturnedItems(pos, world))
+          ItemUtils.dropItemToPlayer(world, player, item)
       }
       // Save old connection info
       val oldTile = pos.getTile[TileModule](world).get

@@ -1,6 +1,6 @@
 tile.advgenerators.FluidInput.name=Fluid Intake Valve
 tile.advgenerators.FuelTank.name=Fuel Tank
-tile.advgenerators.PowerCapacitor.name=Power Capacitor
+tile.advgenerators.PowerCapacitorRedstone.name=Redstone Power Capacitor
 tile.advgenerators.TurbineController.name=Gas Turbine Controller
 tile.advgenerators.FuelTank.name=Fuel Tank
 tile.advgenerators.EuOutputLV.name=LV Emitter
@@ -185,8 +185,9 @@ advgenerators.sensor.param.fill.gt75=Over 75% full
 advgenerators.sensor.param.fill.full=Full
 advgenerators.sensor.param.fill.not.full=Not full
 
-advgenerators.tooltip.turbine.rf=Produces up to %s
+advgenerators.tooltip.turbine.produce=Produces up to %s
 advgenerators.tooltip.turbine.inertia=Inertia: %s
+advgenerators.tooltip.capacitor=Capacity: %s
 advgenerators.tooltip.kit=Right click while sneaking to upgrade
 
 advgenerators.control.mode.high=Enable on signal

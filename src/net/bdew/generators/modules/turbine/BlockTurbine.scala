@@ -28,7 +28,7 @@ class BlockTurbine(val material: TurbineMaterial) extends BaseModule("Turbine" +
 
   override def getTooltip(stack: ItemStack, player: EntityPlayer, advanced: Boolean): List[String] = {
     List(
-      Misc.toLocalF("advgenerators.tooltip.turbine.rf", "%s%s %s/t".format(
+      Misc.toLocalF("advgenerators.tooltip.turbine.produce", "%s%s %s/t".format(
         EnumChatFormatting.YELLOW, DecFormat.short(material.maxMJPerTick * Config.powerShowMultiplier), Config.powerShowUnits
       )),
       Misc.toLocalF("advgenerators.tooltip.turbine.inertia", EnumChatFormatting.YELLOW + "%.0f%%".format(100D * material.inertiaMultiplier))

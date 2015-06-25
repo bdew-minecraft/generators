@@ -23,7 +23,7 @@ import net.bdew.generators.modules.heatingChamber.BlockHeatingChamber
 import net.bdew.generators.modules.itemInput.BlockItemInput
 import net.bdew.generators.modules.itemOutput.BlockItemOutput
 import net.bdew.generators.modules.mixingChamber.BlockMixingChamber
-import net.bdew.generators.modules.powerCapacitor.BlockPowerCapacitor
+import net.bdew.generators.modules.powerCapacitor.TilePowerCapacitor
 import net.bdew.generators.modules.pressure.{BlockPressureInput, BlockPressureOutput}
 import net.bdew.generators.modules.rfOutput.BlockRfOutput
 import net.bdew.generators.modules.sensor.BlockSensor
@@ -53,9 +53,9 @@ object Blocks extends BlockManager(CreativeTabsGenerators.main) {
   regBlock(BlockItemOutput)
 
   GameRegistry.registerTileEntityWithAlternatives(classOf[TileTurbine], "advgenerators.Turbine", "advgenerators.TurbineIron")
+  GameRegistry.registerTileEntity(classOf[TilePowerCapacitor], "advgenerators.PowerCapacitor")
 
   regBlock(BlockFuelTank)
-  regBlock(BlockPowerCapacitor)
   regBlock(BlockHeatingChamber)
   regBlock(BlockMixingChamber)
   regBlock(BlockExchanger)
