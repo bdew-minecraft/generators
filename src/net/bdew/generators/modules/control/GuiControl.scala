@@ -22,8 +22,8 @@ class GuiControl(val te: TileControl, player: EntityPlayer) extends BaseScreen(n
   override def initGui() {
     super.initGui()
 
-    widgets.add(new WidgetControlAction(Point(62, 38), te.action))
-    widgets.add(new WidgetControlMode(Point(98, 38), te.mode))
+    widgets.add(new WidgetControlAction(Point(98, 38), te.action))
+    widgets.add(new WidgetControlMode(Point(62, 38), te.mode))
 
     widgets.add(new WidgetLabel(Misc.toLocal("advgenerators.gui.control.title"), 8, 6, Color.darkGray))
     widgets.add(new WidgetLabel(Misc.toLocal("container.inventory"), 8, this.ySize - 96 + 3, Color.darkGray))

@@ -20,9 +20,9 @@ class ContainerControl(val te: TileControl, player: EntityPlayer) extends NoInvC
 
   val fakeInv = new SimpleInventory(2)
 
-  addSlotToContainer(new SlotControlAction(fakeInv, 0, 62, 38, te.action,
+  addSlotToContainer(new SlotControlAction(fakeInv, 0, 98, 38, te.action,
     te.getCore map (_.availableControlActions) getOrElse List(ControlActions.disabled)))
-  addSlotToContainer(new SlotControlMode(fakeInv, 1, 98, 38, te.mode))
+  addSlotToContainer(new SlotControlMode(fakeInv, 1, 62, 38, te.mode))
 
   bindPlayerInventory(player.inventory, 8, 94, 152)
 
