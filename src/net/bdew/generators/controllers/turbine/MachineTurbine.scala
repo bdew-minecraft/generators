@@ -19,7 +19,6 @@ object MachineTurbine extends Machine("TurbineController", BlockTurbineControlle
   def guiId: Int = 1
   type TEClass = TileTurbineController
 
-  lazy val mjPerTickPerTurbine = tuning.getFloat("MJPerTickPerTurbine")
   lazy val fuelConsumptionMultiplier = tuning.getFloat("FuelConsumptionMultiplier")
   lazy val internalPowerCapacity = tuning.getInt("InternalPowerCapacity")
   lazy val internalFuelCapacity = tuning.getInt("InternalFuelCapacity")
