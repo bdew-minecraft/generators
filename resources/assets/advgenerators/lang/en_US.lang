@@ -62,6 +62,11 @@ item.advgenerators.TurbineRotorVibrant.name=Vibrant Turbine Rotor
 item.advgenerators.TurbineKitVibrant.name=Vibrant Turbine Upgrade Kit
 tile.advgenerators.TurbineVibrant.name=Vibrant Turbine
 
+item.advgenerators.TurbineBladeManyullyn.name=Manyullyn Turbine Blade
+item.advgenerators.TurbineRotorManyullyn.name=Manyullyn Turbine Rotor
+item.advgenerators.TurbineKitManyullyn.name=Manyullyn Turbine Upgrade Kit
+tile.advgenerators.TurbineManyullyn.name=Manyullyn Turbine
+
 // ======
 
 advgenerators.gui.turbine.title=Gas Turbine Control
