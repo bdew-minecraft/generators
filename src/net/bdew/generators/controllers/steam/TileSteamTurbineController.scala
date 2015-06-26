@@ -42,7 +42,7 @@ class TileSteamTurbineController extends TileControllerGui with PoweredControlle
   val steamAverage = new DataSlotMovingAverage("steamAverage", this, 20)
 
   def canGeneratePower = getControlStateWithDefault(ControlActions.generateEnergy, power.stored < power.capacity)
-  def canUseSteam = getControlStateWithDefault(ControlActions.useSteam, power.stored < power.capacity)
+  def canUseSteam = getControlStateWithDefault(ControlActions.useSteam, true)
 
   lazy val maxOutputs = 6
 
