@@ -64,13 +64,16 @@ class TileSteamTurbineController extends TileControllerGui with PoweredControlle
 
       speed -= maxSpeedDelta * cfg.baseDragMultiplier
 
+      val maxSteamPerTick = maxMJPerTick / cfg.steamEnergyDensity
+
       if (canUseSteam && steam.getFluidAmount > 0) {
-        val maxSteamPerTick = maxMJPerTick / cfg.steamEnergyDensity
         val useSteam = Math.min(steam.getFluidAmount, maxSteamPerTick).ceil.toInt
         steam.drain(useSteam, true)
         steamAverage.update(useSteam)
-        speed := Misc.clamp((useSteam / maxSteamPerTick) * cfg.maxRPM, speed.value, speed.value + (maxSpeedDelta * cfg.spinUpMultiplier))
       } else steamAverage.update(0)
+
+      if (steamAverage.average > 0)
+        speed := Misc.clamp((steamAverage.average / maxSteamPerTick) * cfg.maxRPM, speed.value, speed.value + (maxSpeedDelta * cfg.spinUpMultiplier))
 
       if (speed < 1)
         speed := 0
