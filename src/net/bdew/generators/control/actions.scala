@@ -20,4 +20,7 @@ object ControlActions {
   val useSteam = ControlAction("useSteam", "steam")
   val useFuel = ControlAction("useFuel", "fuel")
   val generateEnergy = ControlAction("generateEnergy", "energy")
+  val exchangeHeat = ControlAction("exchangeHeat", "exchange")
+  val mix = ControlAction("mix", "mixing")
+  val heatWater = ControlAction("heatWater", "heating")
 }

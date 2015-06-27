@@ -10,6 +10,7 @@
 package net.bdew.generators.controllers.exchanger
 
 import net.bdew.generators.config.{ExchangerRegistry, Modules}
+import net.bdew.generators.control.{CIControl, ControlActions}
 import net.bdew.generators.sensor.Sensors
 import net.bdew.generators.{Generators, GeneratorsResourceProvider}
 import net.bdew.lib.Misc
@@ -25,7 +26,7 @@ import net.minecraft.nbt.NBTTagCompound
 import net.minecraftforge.fluids.{Fluid, FluidStack}
 import net.minecraftforge.oredict.OreDictionary
 
-class TileExchangerController extends TileControllerGui with CIFluidInput with CIOutputFaces with CIFluidOutputSelect with CIItemOutput with CIRedstoneSensors {
+class TileExchangerController extends TileControllerGui with CIFluidInput with CIOutputFaces with CIFluidOutputSelect with CIItemOutput with CIRedstoneSensors with CIControl {
   val cfg = MachineExchanger
 
   val resources = GeneratorsResourceProvider
@@ -54,7 +55,7 @@ class TileExchangerController extends TileControllerGui with CIFluidInput with C
     var tickOutput = 0D
 
     // first use heat
-    if (heat > cfg.startHeating && coolerIn.resource.isDefined) {
+    if (getControlStateWithDefault(ControlActions.exchangeHeat, true) && heat > cfg.startHeating && coolerIn.resource.isDefined) {
       val transfer = Misc.clamp(heat.value - cfg.startHeating, 0D, maxHeatTransfer.value)
       for {
         cooler <- coolerIn.resource
@@ -84,7 +85,7 @@ class TileExchangerController extends TileControllerGui with CIFluidInput with C
     }
 
     // and finally restore heat
-    if (heat < cfg.maxHeat && heaterIn.resource.isDefined) {
+    if (getControlStateWithDefault(ControlActions.exchangeHeat, true) && heat < cfg.maxHeat && heaterIn.resource.isDefined) {
       val transfer = Misc.clamp(cfg.maxHeat - heat.value, 0D, maxHeatTransfer.value)
       for {
         heater <- heaterIn.resource
@@ -126,8 +127,9 @@ class TileExchangerController extends TileControllerGui with CIFluidInput with C
 
   override def getTankInfo = Array(heaterIn.getTankInfo, coolerIn.getTankInfo, heaterOut.getTankInfo, coolerOut.getTankInfo)
 
-  def onModulesChanged() {
+  override def onModulesChanged() {
     maxHeatTransfer := getNumOfModules("HeatExchanger") * Modules.HeatExchanger.heatTransfer
+    super.onModulesChanged()
   }
 
   override val outputSlotsDef = OutputSlotsExchanger
@@ -181,4 +183,6 @@ class TileExchangerController extends TileControllerGui with CIFluidInput with C
 
   override def redstoneSensorsType = Sensors.exchangerSensors
   override def redstoneSensorSystem = Sensors
+
+  override def availableControlActions = List(ControlActions.disabled, ControlActions.exchangeHeat)
 }

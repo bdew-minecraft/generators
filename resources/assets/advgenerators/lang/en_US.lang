@@ -213,6 +213,9 @@ advgenerators.control.mode.high=Enable on signal
 advgenerators.control.mode.low=Disable on signal
 
 advgenerators.control.action.disabled=Disabled
-advgenerators.control.action.useSteam=Steam Consumption
-advgenerators.control.action.useFuel=Fuel Consumption
+advgenerators.control.action.useSteam=Steam Use
+advgenerators.control.action.useFuel=Fuel Use
 advgenerators.control.action.generateEnergy=Energy Generation
+advgenerators.control.action.exchangeHeat=Heat Exchange
+advgenerators.control.action.mix=Mixing Steam/Carbon
+advgenerators.control.action.heatWater=Water Heating

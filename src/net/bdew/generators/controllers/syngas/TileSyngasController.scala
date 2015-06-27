@@ -10,6 +10,7 @@
 package net.bdew.generators.controllers.syngas
 
 import net.bdew.generators.config.{Blocks, CarbonValueRegistry}
+import net.bdew.generators.control.{CIControl, ControlActions}
 import net.bdew.generators.sensor.Sensors
 import net.bdew.generators.{Generators, GeneratorsResourceProvider}
 import net.bdew.lib.Misc
@@ -25,7 +26,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.tileentity.TileEntity
 import net.minecraftforge.fluids._
 
-class TileSyngasController extends TileControllerGui with CIFluidInput with CIItemInput with CIOutputFaces with CIFluidOutputSelect with CIRedstoneSensors {
+class TileSyngasController extends TileControllerGui with CIFluidInput with CIItemInput with CIOutputFaces with CIFluidOutputSelect with CIRedstoneSensors with CIControl {
   override val cfg = MachineSyngas
   override val resources = GeneratorsResourceProvider
   override lazy val maxOutputs = 6
@@ -55,7 +56,7 @@ class TileSyngasController extends TileControllerGui with CIFluidInput with CIIt
     var heatDelta = 0D
 
     // Consume carbon to add heat
-    if (heat < cfg.maxHeat && carbonBuffer > 0 && heatingChambers > 0 && waterTank.getFluidAmount > 0) {
+    if (heat < cfg.maxHeat && carbonBuffer > 0 && heatingChambers > 0 && getControlStateWithDefault(ControlActions.heatWater, waterTank.getFluidAmount > 0)) {
       val addHeat = Misc.min(
         cfg.maxHeat - heat,
         carbonBuffer / cfg.carbonPerHeat,
@@ -79,7 +80,7 @@ class TileSyngasController extends TileControllerGui with CIFluidInput with CIIt
     }
 
     // Consume steam and carbon to make syngas
-    if (steamBuffer > 0 && carbonBuffer > 0 && syngasTank.getFluidAmount < syngasTank.getCapacity) {
+    if (steamBuffer > 0 && carbonBuffer > 0 && syngasTank.getFluidAmount < syngasTank.getCapacity && getControlStateWithDefault(ControlActions.mix, true)) {
       val addSyngas = Misc.min[Double](
         carbonBuffer / cfg.carbonPerMBSyngas,
         steamBuffer / cfg.steamPerMBSyngas,
@@ -131,9 +132,10 @@ class TileSyngasController extends TileControllerGui with CIFluidInput with CIIt
   def canInputFluid(fluid: Fluid) = fluid != null && (fluid == FluidRegistry.WATER || fluid == Blocks.steamFluid)
   def getTankInfo = Array(waterTank.getInfo, syngasTank.getInfo)
 
-  def onModulesChanged(): Unit = {
+  override def onModulesChanged(): Unit = {
     heatingChambers := getNumOfModules("HeatingChamber")
     mixingChambers := getNumOfModules("MixingChamber")
+    super.onModulesChanged()
   }
 
   override def getItemInputInventory = inventory
@@ -150,4 +152,6 @@ class TileSyngasController extends TileControllerGui with CIFluidInput with CIIt
 
   override def redstoneSensorsType: Seq[GenericSensorType[TileEntity, Boolean]] = Sensors.syngasSensors
   override def redstoneSensorSystem: SensorSystem[TileEntity, Boolean] = Sensors
+
+  override def availableControlActions = List(ControlActions.disabled, ControlActions.heatWater, ControlActions.mix)
 }

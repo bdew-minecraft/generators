@@ -25,4 +25,7 @@ object Icons extends IconPreloader(1) {
   val steam = TextureLoc("advgenerators:control/steam")
   val fuel = TextureLoc("advgenerators:control/fuel")
   val energy = TextureLoc("advgenerators:control/energy")
+  val exchange = TextureLoc("advgenerators:control/exchange")
+  val heating = TextureLoc("advgenerators:control/heating")
+  val mixing = TextureLoc("advgenerators:control/mix")
 }
