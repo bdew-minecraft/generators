@@ -12,6 +12,7 @@ package net.bdew.generators.config
 import net.bdew.generators.Generators
 import net.bdew.generators.items.{TurbineItem, TurbineUpgradeKit}
 import net.bdew.generators.modules.turbine.BlockTurbine
+import net.bdew.lib.Misc
 import net.bdew.lib.recipes.gencfg.ConfigSection
 import net.minecraftforge.oredict.OreDictionary
 
@@ -30,6 +31,8 @@ object TurbineMaterials {
     for ((name, cfg) <- Tuning.getSection("TurbineMaterials").filterType(classOf[ConfigSection])) {
       if (cfg.hasValue("ReqOreDict") && OreDictionary.getOres(cfg.getString("ReqOreDict")).isEmpty) {
         Generators.logInfo("Turbine material %s not present - skipping", name)
+      } else if (cfg.hasValue("ReqMod") && !Misc.haveModVersion(cfg.getString("ReqMod"))) {
+        Generators.logInfo("Mod %s for turbine material %s not present - skipping", cfg.getString("ReqMod"), name)
       } else {
         Generators.logInfo("Registering turbine material: %s", name)
         val material = TurbineMaterial(name,

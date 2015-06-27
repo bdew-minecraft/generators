@@ -66,6 +66,11 @@ item.advgenerators.TurbineRotorManyullyn.name=Manyullyn Turbine Rotor
 item.advgenerators.TurbineKitManyullyn.name=Manyullyn Turbine Upgrade Kit
 tile.advgenerators.TurbineManyullyn.name=Manyullyn Turbine
 
+item.advgenerators.TurbineBladeAdvAlloy.name=Advanced Alloy Turbine Blade
+item.advgenerators.TurbineRotorAdvAlloy.name=Advanced Alloy Turbine Rotor
+item.advgenerators.TurbineKitAdvAlloy.name=Advanced Alloy Turbine Upgrade Kit
+tile.advgenerators.TurbineAdvAlloy.name=Advanced Alloy Turbine
+
 // === Capacitors
 
 tile.advgenerators.PowerCapacitorRedstone.name=Basic Power Capacitor
