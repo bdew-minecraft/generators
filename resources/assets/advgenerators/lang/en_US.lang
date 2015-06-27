@@ -1,6 +1,5 @@
 tile.advgenerators.FluidInput.name=Fluid Intake Valve
 tile.advgenerators.FuelTank.name=Fuel Tank
-tile.advgenerators.PowerCapacitorRedstone.name=Redstone Power Capacitor
 tile.advgenerators.TurbineController.name=Gas Turbine Controller
 tile.advgenerators.FuelTank.name=Fuel Tank
 tile.advgenerators.EuOutputLV.name=LV Emitter
@@ -66,6 +65,16 @@ item.advgenerators.TurbineBladeManyullyn.name=Manyullyn Turbine Blade
 item.advgenerators.TurbineRotorManyullyn.name=Manyullyn Turbine Rotor
 item.advgenerators.TurbineKitManyullyn.name=Manyullyn Turbine Upgrade Kit
 tile.advgenerators.TurbineManyullyn.name=Manyullyn Turbine
+
+// === Capacitors
+
+tile.advgenerators.PowerCapacitorRedstone.name=Basic Power Capacitor
+tile.advgenerators.PowerCapacitorAdvanced.name=Advanced Power Capacitor
+tile.advgenerators.PowerCapacitorDense.name=High Density Power Capacitor
+
+item.advgenerators.CapacitorKitAdvanced.name=Advanced Capacitor Upgrade Kit
+item.advgenerators.CapacitorKitDense.name=High Density Capacitor Upgrade Kit
+
 
 // ======
 
