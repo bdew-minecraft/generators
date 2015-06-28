@@ -11,6 +11,7 @@ package net.bdew.generators.modules.rfOutput
 
 import cofh.api.energy.{IEnergyHandler, IEnergyReceiver}
 import net.bdew.generators.config.Tuning
+import net.bdew.generators.controllers.PoweredController
 import net.bdew.lib.multiblock.data.OutputConfigPower
 import net.bdew.lib.multiblock.interact.CIPowerProducer
 import net.bdew.lib.multiblock.tile.{RSControllableOutput, TileOutput}
@@ -27,8 +28,10 @@ class TileRfOutput extends TileOutput[OutputConfigPower] with RSControllableOutp
   override def receiveEnergy(from: ForgeDirection, maxReceive: Int, simulate: Boolean): Int = 0
   override def extractEnergy(from: ForgeDirection, maxExtract: Int, simulate: Boolean): Int = 0
   override def canConnectEnergy(p1: ForgeDirection) = true
-  override def getEnergyStored(from: ForgeDirection): Int = 0
-  override def getMaxEnergyStored(from: ForgeDirection): Int = 0
+  override def getEnergyStored(from: ForgeDirection): Int =
+    getCoreAs[PoweredController].map(c => (c.power.stored * ratio).toInt) getOrElse 0
+  override def getMaxEnergyStored(from: ForgeDirection): Int =
+    getCoreAs[PoweredController].map(c => (c.power.capacity * ratio).toInt) getOrElse 0
 
   override def canConnectToFace(d: ForgeDirection): Boolean = {
     val tile = myPos.neighbour(d).getTile[IEnergyHandler](worldObj).getOrElse(return false)

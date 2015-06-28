@@ -9,8 +9,9 @@
 
 package net.bdew.generators.controllers
 
+import net.bdew.lib.multiblock.tile.TileController
 import net.bdew.lib.power.DataSlotPower
 
-trait PoweredController {
+trait PoweredController extends TileController {
   def power: DataSlotPower
 }
