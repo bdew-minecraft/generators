@@ -23,13 +23,13 @@ class TileGasInput extends TileModule with IGasHandler with ITubeConnection {
   override def canTubeConnect(side: ForgeDirection): Boolean = getCore.isDefined
 
   override def drawGas(side: ForgeDirection, amount: Int): GasStack = null
-  override def receiveGas(side: ForgeDirection, stack: GasStack): Int = 0
   override def drawGas(side: ForgeDirection, amount: Int, doTransfer: Boolean): GasStack = null
   override def canDrawGas(side: ForgeDirection, gas: Gas): Boolean = false
 
   override def canReceiveGas(side: ForgeDirection, gas: Gas): Boolean =
     gas != null && gas.hasFluid && (getCore exists (_.canInputFluid(gas.getFluid)))
 
+  override def receiveGas(side: ForgeDirection, stack: GasStack): Int = receiveGas(side, stack, true)
   override def receiveGas(side: ForgeDirection, stack: GasStack, doTransfer: Boolean): Int =
     if (stack != null && canReceiveGas(side, stack.getGas))
       getCore map (_.inputFluid(new FluidStack(stack.getGas.getFluid, stack.amount), doTransfer)) getOrElse 0
