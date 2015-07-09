@@ -20,7 +20,7 @@ import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.util.{ChatComponentTranslation, IIcon}
-import net.minecraft.world.World
+import net.minecraft.world.{IBlockAccess, World}
 
 object BlockControl extends BaseModule("Control", "Control", classOf[TileControl]) with GuiProvider {
   override def guiId = 6
@@ -43,6 +43,8 @@ object BlockControl extends BaseModule("Control", "Control", classOf[TileControl
     }
     true
   }
+
+  override def canConnectRedstone(world: IBlockAccess, x: Int, y: Int, z: Int, side: Int): Boolean = true
 
   override def getIcon(side: Int, meta: Int) =
     if (meta == 1) onIcon else blockIcon
