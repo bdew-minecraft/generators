@@ -127,12 +127,12 @@ class Loader extends RecipeLoader with GenericConfigLoader {
 
     case RsTESmelter(in1, in2, out1, out2, energy, chance) =>
       if (!Misc.haveModVersion("ThermalExpansion")) error("Trying to register TE recipe without TE loaded")
-      Generators.logInfo("Registering ThermalExpansion smelter recipe: %s, %s -> %s, %s (%d rf)", in1, in2, out1, out2, energy)
+      Generators.logDebug("Registering ThermalExpansion smelter recipe: %s, %s -> %s, %s (%d rf)", in1, in2, out1, out2, energy)
       val in1s = forceNoWildcardDamage(getConcreteStackCount(in1))
       val in2s = in2.map(x => forceNoWildcardDamage(getConcreteStackCount(x))).orNull
       val out1s = forceNoWildcardDamage(getConcreteStackCount(out1))
       val out2s = out2.map(x => forceNoWildcardDamage(getConcreteStackCount(x))).orNull
-      Generators.logInfo("resolved items: %s, %s -> %s, %s", in1s, in2s, out1s, out2s, energy)
+      Generators.logDebug("resolved items: %s, %s -> %s, %s", in1s, in2s, out1s, out2s, energy)
       ThermalExpansionHelper.addSmelterRecipe(energy, in1s, in2s, out1s, out2s, chance)
 
     case _ => super.processRecipeStatement(st)
