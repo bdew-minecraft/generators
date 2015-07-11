@@ -105,7 +105,7 @@ class TileSyngasController extends TileControllerGui with CIFluidInput with CIIt
       slot <- 0 until inventory.size
       stack <- Option(inventory.getStackInSlot(slot))
       cValue <- CarbonValueRegistry.getValueOpt(stack)
-      if cfg.internalTankCapacity - carbonBuffer > cValue
+      if cfg.internalTankCapacity - carbonBuffer >= cValue
     } {
       inventory.decrStackSize(slot, 1)
       carbonBuffer += cValue
