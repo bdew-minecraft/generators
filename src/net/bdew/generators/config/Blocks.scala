@@ -73,7 +73,7 @@ object Blocks extends BlockManager(CreativeTabsGenerators.main) {
     regBlock(BlockPressureOutput)
   }
 
-  val steamFluid = regFluid("steam", new BlockSteam(_)) {
+  regFluid("steam", new BlockSteam(_)) {
     _.setTemperature(1000)
       .setGaseous(true)
       .setLuminosity(0)
@@ -81,13 +81,17 @@ object Blocks extends BlockManager(CreativeTabsGenerators.main) {
       .setDensity(-10)
   }
 
-  val syngasFluid = regFluid("syngas", new BlockSyngas(_)) {
+  regFluid("syngas", new BlockSyngas(_)) {
     _.setTemperature(1000)
       .setGaseous(true)
       .setLuminosity(0)
       .setRarity(EnumRarity.common)
       .setDensity(-10)
   }
+
+  // Can't store them before a world is loaded, because of forge multiple fluids of the same type nonsense
+  def syngasFluid = FluidRegistry.getFluid("syngas")
+  def steamFluid = FluidRegistry.getFluid("steam")
 
   def regFluid(name: String, block: (Fluid) => Block)(params: (Fluid) => Unit): Fluid = {
     val fluid = if (!FluidRegistry.isFluidRegistered(name)) {
