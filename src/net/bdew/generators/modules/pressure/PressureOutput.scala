@@ -24,6 +24,7 @@ with BlockOutput[TilePressureOutput] with BlockNotifyUpdates with IPressureConne
   override def canConnectTo(world: IBlockAccess, x: Int, y: Int, z: Int, side: ForgeDirection) =
     getTE(world, x, y, z).getCore.isDefined
   override def isTraversable(world: IBlockAccess, x: Int, y: Int, z: Int) = false
+  override def canConnectRedstone(world: IBlockAccess, x: Int, y: Int, z: Int, side: Int) = true
 }
 
 class TilePressureOutput extends TileOutput[OutputConfigFluidSlots] with PressureModule with RSControllableOutput with IPressureInject {

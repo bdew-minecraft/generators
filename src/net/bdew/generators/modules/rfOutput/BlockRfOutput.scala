@@ -31,4 +31,6 @@ object BlockRfOutput extends BaseModule("RFOutput", "PowerOutput", classOf[TileR
     blockIcon = ir.registerIcon("advgenerators:rfoutput/disabled")
     enabledIcon = ir.registerIcon("advgenerators:rfoutput/main")
   }
+
+  override def canConnectRedstone(world: IBlockAccess, x: Int, y: Int, z: Int, side: Int) = true
 }

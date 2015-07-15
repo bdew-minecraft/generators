@@ -15,7 +15,7 @@ import net.bdew.lib.multiblock.block.BlockOutput
 import net.bdew.lib.rotate.{IconType, RotatableTileBlock}
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.util.IIcon
-import net.minecraft.world.World
+import net.minecraft.world.{IBlockAccess, World}
 import net.minecraftforge.common.util.ForgeDirection
 
 class BlockEuOutputBase[T <: TileEuOutputBase](name: String, texture: String, TEClass: Class[T])
@@ -37,6 +37,8 @@ class BlockEuOutputBase[T <: TileEuOutputBase](name: String, texture: String, TE
   }
 
   def getIcon(meta: Int, kind: IconType.Value) = if (kind == IconType.FRONT) frontIcon else blockIcon
+
+  override def canConnectRedstone(world: IBlockAccess, x: Int, y: Int, z: Int, side: Int) = true
 }
 
 object BlockEuOutputLV extends BlockEuOutputBase("EuOutputLV", "lv", classOf[TileEuOutputLV])

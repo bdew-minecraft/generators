@@ -11,5 +11,8 @@ package net.bdew.generators.modules.fluidOutputSelect
 
 import net.bdew.generators.modules.BaseModule
 import net.bdew.lib.multiblock.block.BlockOutput
+import net.minecraft.world.IBlockAccess
 
-object BlockFluidOutputSelect extends BaseModule("FluidOutputSelect", "FluidOutputSelect", classOf[TileFluidOutputSelect]) with BlockOutput[TileFluidOutputSelect]
+object BlockFluidOutputSelect extends BaseModule("FluidOutputSelect", "FluidOutputSelect", classOf[TileFluidOutputSelect]) with BlockOutput[TileFluidOutputSelect] {
+  override def canConnectRedstone(world: IBlockAccess, x: Int, y: Int, z: Int, side: Int) = true
+}
