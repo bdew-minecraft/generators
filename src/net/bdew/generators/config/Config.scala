@@ -11,7 +11,6 @@ package net.bdew.generators.config
 
 import java.io.File
 
-import net.bdew.generators.Generators
 import net.bdew.lib.gui.GuiHandler
 import net.minecraftforge.common.config.Configuration
 
@@ -21,19 +20,21 @@ object Config {
   var powerShowUnits = "MJ"
   var powerShowMultiplier = 1F
 
-  def load() {
-    val c = new Configuration(new File(Generators.configDir, "client.config"))
+  var alwaysShowFuelTooltip = true
+  var alwaysShowCarbonTooltip = true
+
+  def load(config: File) {
+    val c = new Configuration(config)
     c.load()
 
     try {
       powerShowUnits = c.get("Display", "PowerShowUnits", "RF", "Units to use when displaying power. Valid values: MJ, EU, RF").getString
       if (powerShowUnits != "MJ") powerShowMultiplier = Tuning.getSection("Power").getFloat(powerShowUnits + "_MJ_Ratio")
+
+      alwaysShowFuelTooltip = c.get("Tooltips", "AlwaysShowFuelTooltip", true, "If false will only show tooltip in Turbine GUI").getBoolean
+      alwaysShowCarbonTooltip = c.get("Tooltips", "AlwaysShowCarbonTooltip", true, "If false will only show tooltip in Syngas Producer GUI").getBoolean
     } finally {
       c.save()
     }
-
-    Items.load()
-    Blocks.load()
-    Machines.load()
   }
 }

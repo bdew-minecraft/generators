@@ -21,9 +21,11 @@ import net.bdew.generators.compat.PowerProxy
 import net.bdew.generators.compat.itempush.ItemPush
 import net.bdew.generators.config._
 import net.bdew.generators.config.loader.TuningLoader
+import net.bdew.generators.gui.{CarbonValueTooltipProvider, FuelTooltipProvider}
 import net.bdew.generators.network.NetworkHandler
 import net.bdew.generators.sensor.Sensors
 import net.bdew.lib.multiblock.data.{OutputConfigItems, OutputConfigManager}
+import net.bdew.lib.tooltip.TooltipHandler
 import net.minecraft.item.Item
 import org.apache.logging.log4j.Logger
 
@@ -52,11 +54,18 @@ object Generators {
     ItemPush.init()
     TuningLoader.loadConfigFiles()
     OutputConfigManager.register("items", () => new OutputConfigItems)
-    Config.load()
+
+    Items.load()
+    Blocks.load()
+    Machines.load()
+
     if (event.getSide == Side.CLIENT) {
+      Config.load(new File(Generators.configDir, "client.config"))
       IconCache.init()
       sensor.Icons.init()
       control.Icons.init()
+      TooltipHandler.register(FuelTooltipProvider)
+      TooltipHandler.register(CarbonValueTooltipProvider)
     }
   }
 
