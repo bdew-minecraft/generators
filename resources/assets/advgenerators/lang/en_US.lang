@@ -198,9 +198,11 @@ advgenerators.sensor.param.heat.syngas.high=Maximum Heat (%s HU)
 
 advgenerators.sensor.param.fill.empty=Empty
 advgenerators.sensor.param.fill.not.empty=Not empty
+advgenerators.sensor.param.fill.gt5=Over 5% full
 advgenerators.sensor.param.fill.gt25=Over 25% full
 advgenerators.sensor.param.fill.gt50=Over 50% full
 advgenerators.sensor.param.fill.gt75=Over 75% full
+advgenerators.sensor.param.fill.gt95=Over 95% full
 advgenerators.sensor.param.fill.full=Full
 advgenerators.sensor.param.fill.not.full=Not full
 

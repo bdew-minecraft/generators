@@ -28,9 +28,11 @@ case class SensorResource[T: ClassTag](uid: String, iconName: String, accessor: 
     ParameterFill.empty,
     ParameterResource.solid,
     ParameterResource.fluid,
+    ParameterFill.gt5,
     ParameterFill.gt25,
     ParameterFill.gt50,
     ParameterFill.gt75,
+    ParameterFill.gt95,
     ParameterFill.nonFull,
     ParameterFill.full
   )

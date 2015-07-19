@@ -19,9 +19,11 @@ case class SensorTank[T: ClassTag](uid: String, iconName: String, accessor: T =>
   override val parameters = Vector(
     ParameterFill.empty,
     ParameterFill.nonEmpty,
+    ParameterFill.gt5,
     ParameterFill.gt25,
     ParameterFill.gt50,
     ParameterFill.gt75,
+    ParameterFill.gt95,
     ParameterFill.nonFull,
     ParameterFill.full
   )

@@ -12,7 +12,6 @@ package net.bdew.generators.sensor
 import cpw.mods.fml.relauncher.{Side, SideOnly}
 import net.bdew.lib.gui.Texture
 import net.bdew.lib.render.IconPreloader
-import net.minecraft.client.renderer.texture.TextureMap
 
 object Icons extends IconPreloader(1) {
 
@@ -40,9 +39,11 @@ object Icons extends IconPreloader(1) {
   val fillFull = TextureLoc("advgenerators:sensor/fill/full")
   val fillNotEmpty = TextureLoc("advgenerators:sensor/fill/not_empty")
   val fillNotFull = TextureLoc("advgenerators:sensor/fill/not_full")
+  val fill5 = TextureLoc("advgenerators:sensor/fill/5")
   val fill25 = TextureLoc("advgenerators:sensor/fill/25")
   val fill50 = TextureLoc("advgenerators:sensor/fill/50")
   val fill75 = TextureLoc("advgenerators:sensor/fill/75")
+  val fill95 = TextureLoc("advgenerators:sensor/fill/95")
 
   val turbine = TextureLoc("advgenerators:sensor/turbine/turbine")
   val turbineStop = TextureLoc("advgenerators:sensor/turbine/stopped")
