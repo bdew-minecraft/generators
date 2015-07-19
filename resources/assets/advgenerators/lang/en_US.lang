@@ -180,11 +180,17 @@ advgenerators.sensor.param.heat.exchanger.low=Heating up ( < %s HU)
 advgenerators.sensor.param.heat.exchanger.medium=Can exchange heat ( > %s HU)
 advgenerators.sensor.param.heat.exchanger.high=Maximum Heat (%s HU)
 
-advgenerators.sensor.turbine.speed=Turbine speed
+advgenerators.sensor.turbine.speed=Turbine Speed
 advgenerators.sensor.param.turbine.speed.stop=Stopped
 advgenerators.sensor.param.turbine.speed.low=Spinning
 advgenerators.sensor.param.turbine.speed.medium=>= %s RPM
 advgenerators.sensor.param.turbine.speed.high=at %s RPM (Maximum)
+
+advgenerators.sensor.turbine.generation=Power Generation
+advgenerators.sensor.param.turbine.generation.stop=Stopped
+advgenerators.sensor.param.turbine.generation.low=Generating (> %s %s/t)
+advgenerators.sensor.param.turbine.generation.medium=Above half power (> %s %s/t)
+advgenerators.sensor.param.turbine.generation.high=At maximum power (%s %s/t)
 
 advgenerators.sensor.syngas.water=Water Tank
 advgenerators.sensor.syngas.steam=Steam Buffer

@@ -27,7 +27,8 @@ object Sensors extends RedstoneSensors[TileEntity] {
   val fuelTurbineSensors = List(
     DisabledSensor,
     SensorPower,
-    SensorTank[TileTurbineController]("turbine.fuel", "fuelTank", _.fuel)
+    SensorTank[TileTurbineController]("turbine.fuel", "fuelTank", _.fuel),
+    SensorGeneration
   )
 
   val steamTurbineSensors = List(
