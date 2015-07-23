@@ -16,11 +16,10 @@ import net.bdew.generators.network.{NetworkHandler, PktDumpBuffers}
 import net.bdew.generators.{Generators, IconCache, Textures}
 import net.bdew.lib.gui._
 import net.bdew.lib.gui.widgets.{WidgetButtonIcon, WidgetFluidGauge, WidgetLabel}
-import net.bdew.lib.multiblock.gui.WidgetInfo
+import net.bdew.lib.multiblock.gui.{WidgetInfo, WidgetInfoMulti}
 import net.bdew.lib.{Client, DecFormat, Misc}
 import net.minecraft.entity.player.EntityPlayer
-
-import scala.collection.mutable
+import net.minecraft.util.EnumChatFormatting
 
 class GuiTurbine(val te: TileTurbineController, player: EntityPlayer) extends BaseScreen(new ContainerTurbine(te, player), 176, 175) with GuiOutputFaces {
   val background = Texture(Generators.modId, "textures/gui/turbine.png", rect)
@@ -44,18 +43,14 @@ class GuiTurbine(val te: TileTurbineController, player: EntityPlayer) extends Ba
     widgets.add(new WidgetLabel(Misc.toLocal("advgenerators.gui.turbine.title"), 8, 6, Color.darkGray))
     widgets.add(new WidgetLabel(Misc.toLocal("container.inventory"), 8, this.ySize - 96 + 3, Color.darkGray))
 
-    widgets.add(new WidgetInfo(Rect(75, 21, 59, 10),
+    widgets.add(new WidgetInfoMulti(Rect(75, 21, 59, 10),
       Textures.Icons.turbine,
       te.numTurbines.value.toString,
-      Misc.toLocal("advgenerators.label.turbine.turbines")
-    ) {
-      override def handleTooltip(p: Point, tip: mutable.MutableList[String]): Unit = {
-        super.handleTooltip(p, tip)
-        tip ++= te.modules.toList.flatMap(_.getBlock[BlockTurbine](te.getWorldObject))
-          .groupBy(identity).mapValues(_.size).toList.sortBy(_._2)
-          .map(x => "%d x %s".format(x._2, x._1.getLocalizedName))
-      }
-    })
+      List(Misc.toLocal("advgenerators.label.turbine.turbines"))
+        ++ te.modules.toList.flatMap(_.getBlock[BlockTurbine](te.getWorldObject))
+        .groupBy(identity).mapValues(_.size).toList.sortBy(_._2)
+        .map(x => "%d x %s".format(x._2, x._1.getLocalizedName))
+    ))
 
     widgets.add(new WidgetInfo(Rect(75, 32, 59, 10),
       Textures.Icons.peak,
@@ -63,11 +58,14 @@ class GuiTurbine(val te: TileTurbineController, player: EntityPlayer) extends Ba
       Misc.toLocal("advgenerators.label.turbine.maxprod"))
     )
 
-    widgets.add(new WidgetInfo(Rect(75, 43, 59, 10),
+    widgets.add(new WidgetInfoMulti(Rect(75, 43, 59, 10),
       Textures.Icons.fluid,
       DecFormat.short(te.fuelPerTick) + " mB/t",
-      Misc.toLocal("advgenerators.label.turbine.fuel"))
-    )
+      List(
+        Misc.toLocal("advgenerators.label.turbine.fuel"),
+        Misc.toLocalF("advgenerators.label.turbine.efficiency", "%s%.0f%%%s".format(EnumChatFormatting.YELLOW, te.fuelEfficiency * 100, EnumChatFormatting.RESET))
+      )
+    ))
 
     widgets.add(new WidgetInfo(Rect(75, 54, 59, 10),
       Textures.Icons.power,

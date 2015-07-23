@@ -12,6 +12,7 @@ package net.bdew.generators.controllers.turbine
 import net.bdew.generators.config.{Modules, TurbineFuel}
 import net.bdew.generators.control.{CIControl, ControlActions}
 import net.bdew.generators.controllers.PoweredController
+import net.bdew.generators.modules.efficiency.{BlockEfficiencyUpgradeTier1, BlockEfficiencyUpgradeTier2}
 import net.bdew.generators.modules.powerCapacitor.BlockPowerCapacitor
 import net.bdew.generators.modules.turbine.BlockTurbine
 import net.bdew.generators.sensor.Sensors
@@ -20,7 +21,7 @@ import net.bdew.lib.Misc
 import net.bdew.lib.data._
 import net.bdew.lib.data.base.UpdateKind
 import net.bdew.lib.multiblock.interact.{CIFluidInput, CIOutputFaces, CIPowerProducer}
-import net.bdew.lib.multiblock.tile.TileControllerGui
+import net.bdew.lib.multiblock.tile.{TileControllerGui, TileModule}
 import net.bdew.lib.power.DataSlotPower
 import net.bdew.lib.sensors.multiblock.CIRedstoneSensors
 import net.minecraft.entity.player.EntityPlayer
@@ -40,6 +41,8 @@ class TileTurbineController extends TileControllerGui with PoweredController wit
   val numTurbines = new DataSlotInt("turbines", this).setUpdate(UpdateKind.GUI)
   val fuelPerTick = new DataSlotFloat("fuelPerTick", this).setUpdate(UpdateKind.GUI)
 
+  val fuelEfficiency = new DataSlotFloat("fuelConsumptionMultiplier", this).setUpdate(UpdateKind.SAVE, UpdateKind.GUI)
+
   val outputAverage = new DataSlotMovingAverage("outputAverage", this, 20)
   val fuelPerTickAverage = new DataSlotMovingAverage("fuelPerTickAverage", this, 20)
 
@@ -49,7 +52,7 @@ class TileTurbineController extends TileControllerGui with PoweredController wit
   lazy val maxOutputs = 6
 
   def doUpdate() {
-    val fuelPerMj = if (fuel.getFluidAmount > 0) 1 / TurbineFuel.getFuelValue(fuel.getFluid.getFluid) * cfg.fuelConsumptionMultiplier else 0
+    val fuelPerMj = if (fuel.getFluidAmount > 0) 1 / TurbineFuel.getFuelValue(fuel.getFluid.getFluid) / fuelEfficiency else 0
     fuelPerTick := fuelPerMj * maxMJPerTick
 
     if (getControlStateWithDefault(ControlActions.useFuel, true)) {
@@ -97,6 +100,26 @@ class TileTurbineController extends TileControllerGui with PoweredController wit
     val turbines = modules.toList.flatMap(_.getBlock[BlockTurbine](getWorldObj)).map(_.material)
     maxMJPerTick := turbines.map(_.maxMJPerTick).sum.toFloat
     numTurbines := turbines.size
+
+    val hasT1Upgrade = modules.exists(_.blockIs(worldObj, BlockEfficiencyUpgradeTier1))
+
+    fuelEfficiency := modules.find(_.blockIs(worldObj, BlockEfficiencyUpgradeTier2)) map { t2 =>
+      if (hasT1Upgrade) {
+        MachineTurbine.fuelEfficiency.getFloat("Tier2")
+      } else {
+        t2.getTile[TileModule](worldObj).foreach { tile =>
+          tile.coreRemoved()
+          moduleRemoved(tile)
+        }
+        MachineTurbine.fuelEfficiency.getFloat("Base")
+      }
+    } getOrElse {
+      if (hasT1Upgrade) {
+        MachineTurbine.fuelEfficiency.getFloat("Tier1")
+      } else {
+        MachineTurbine.fuelEfficiency.getFloat("Base")
+      }
+    }
 
     super.onModulesChanged()
   }
