@@ -24,7 +24,7 @@ object BCCompat {
       List.empty
     } else {
       for (fuel <- BuildcraftFuelRegistry.fuel.getFuels) yield {
-        fuel.getFluid -> fuel.getPowerPerCycle * fuel.getTotalBurningTime / 1000F / rfRatio
+        fuel.getFluid.getName -> fuel.getPowerPerCycle * fuel.getTotalBurningTime / 1000F / rfRatio
       }
     }
 }

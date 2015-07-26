@@ -14,7 +14,7 @@ import net.bdew.generators.compat.{BCCompat, PowerProxy}
 import net.minecraftforge.fluids.{Fluid, FluidStack}
 
 object TurbineFuel {
-  var map = Map.empty[Fluid, Float]
+  var map = Map.empty[String, Float]
 
   def init() {
     val bcCfg = Tuning.getSection("ModSupport").getSection("BuildCraft")
@@ -27,14 +27,14 @@ object TurbineFuel {
   def postInit() {
     Generators.logInfo("Turbine fuels:")
     for ((fuel, value) <- map)
-      Generators.logInfo(" * %s: %.0f MJ/MB".format(fuel.getName, value))
+      Generators.logInfo(" * %s: %.0f MJ/MB".format(fuel, value))
   }
 
   def isValidFuel(fs: FluidStack): Boolean = fs != null && isValidFuel(fs.getFluid)
-  def isValidFuel(f: Fluid): Boolean = f != null && map.contains(f)
+  def isValidFuel(f: Fluid): Boolean = f != null && map.contains(f.getName)
 
-  def addFuel(f: Fluid, v: Float) = map += (f -> v)
-  def removeFuel(f: Fluid) = map -= f
+  def addFuel(f: Fluid, v: Float) = map += (f.getName -> v)
+  def removeFuel(f: Fluid) = map -= f.getName
 
-  def getFuelValue(fluid: Fluid) = map.getOrElse(fluid, 0F)
+  def getFuelValue(fluid: Fluid) = map.getOrElse(fluid.getName, 0F)
 }
