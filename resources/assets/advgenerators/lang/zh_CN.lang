@@ -20,7 +20,7 @@ tile.advgenerators.SyngasController.name=合成气制造器控制端
 tile.advgenerators.HeatingChamber.name=加热室
 tile.advgenerators.MixingChamber.name=混合室
 tile.advgenerators.Sensor.name=传感器模块
-tile.advgenerators.GasInput.name=Gas Intake Valve
+tile.advgenerators.GasInput.name=燃气输入阀门
 tile.advgenerators.Control.name=红石控制模块
 tile.advgenerators.EfficiencyUpgradeTier1.name=燃料/空气混合器
 tile.advgenerators.EfficiencyUpgradeTier2.name=气体混合加压器
@@ -32,47 +32,47 @@ item.advgenerators.IronWiring.name=红石-铁质线圈
 item.advgenerators.Controller.name=控制电路
 item.advgenerators.PressureValve.name=加压阀门
 item.advgenerators.AdvancedPressureValve.name=高级加压阀门
-item.advgenerators.UpgradeKit.name=升级工具组件
+item.advgenerators.UpgradeKit.name=升级组件
 
 // === Turbine Materials
 
 item.advgenerators.TurbineBladeIron.name=铁质涡轮叶片
-item.advgenerators.TurbineRotorIron.name=铁质转子
-tile.advgenerators.TurbineIron.name=铁质转子涡轮机
+item.advgenerators.TurbineRotorIron.name=铁质涡轮转子
+tile.advgenerators.TurbineIron.name=铁质涡轮机
 
-item.advgenerators.TurbineRotorGold.name=镀金转子
-item.advgenerators.TurbineKitGold.name=镀金转子升级工具
-tile.advgenerators.TurbineGold.name=镀金转子涡轮机
+item.advgenerators.TurbineRotorGold.name=镀金涡轮转子
+item.advgenerators.TurbineKitGold.name=镀金转子升级组件
+tile.advgenerators.TurbineGold.name=镀金涡轮机
 
 item.advgenerators.TurbineBladeSteel.name=钢制涡轮叶片
-item.advgenerators.TurbineRotorSteel.name=钢制转子
-item.advgenerators.TurbineKitSteel.name=钢制转子升级工具
-tile.advgenerators.TurbineSteel.name=钢制转子涡轮机
+item.advgenerators.TurbineRotorSteel.name=钢制涡轮转子
+item.advgenerators.TurbineKitSteel.name=钢制转子升级组件
+tile.advgenerators.TurbineSteel.name=钢质涡轮机
 
 item.advgenerators.TurbineBladeBronze.name=青铜涡轮叶片
-item.advgenerators.TurbineRotorBronze.name=青铜转子
-item.advgenerators.TurbineKitBronze.name=青铜转子升级工具
-tile.advgenerators.TurbineBronze.name=青铜转子涡轮机
+item.advgenerators.TurbineRotorBronze.name=青铜涡轮转子
+item.advgenerators.TurbineKitBronze.name=青铜转子升级组件
+tile.advgenerators.TurbineBronze.name=青铜涡轮机
 
 item.advgenerators.TurbineBladeEnderium.name=末影锭涡轮叶片
-item.advgenerators.TurbineRotorEnderium.name=，末影锭转子
-item.advgenerators.TurbineKitEnderium.name=末影锭转子升级工具
-tile.advgenerators.TurbineEnderium.name=末影锭转子涡轮机
+item.advgenerators.TurbineRotorEnderium.name=末影锭涡轮转子
+item.advgenerators.TurbineKitEnderium.name=末影锭转子升级组件
+tile.advgenerators.TurbineEnderium.name=末影锭涡轮机
 
-item.advgenerators.TurbineBladeVibrant.name=脉冲合金锭涡轮叶片
-item.advgenerators.TurbineRotorVibrant.name=脉冲合金锭转子
-item.advgenerators.TurbineKitVibrant.name=脉冲合金锭转子升级工具
-tile.advgenerators.TurbineVibrant.name=脉冲合金锭转子涡轮机
+item.advgenerators.TurbineBladeVibrant.name=脉冲合金涡轮叶片
+item.advgenerators.TurbineRotorVibrant.name=脉冲合金涡轮转子
+item.advgenerators.TurbineKitVibrant.name=脉冲合金转子升级组件
+tile.advgenerators.TurbineVibrant.name=脉冲合金涡轮机
 
-item.advgenerators.TurbineBladeManyullyn.name=玛玉玲锭涡轮叶片
-item.advgenerators.TurbineRotorManyullyn.name=玛玉玲锭转子
-item.advgenerators.TurbineKitManyullyn.name=玛玉玲锭转子升级工具
-tile.advgenerators.TurbineManyullyn.name=玛玉玲锭转子涡轮机
+item.advgenerators.TurbineBladeManyullyn.name=玛玉玲涡轮叶片
+item.advgenerators.TurbineRotorManyullyn.name=玛玉玲涡轮转子
+item.advgenerators.TurbineKitManyullyn.name=玛玉玲转子升级组件
+tile.advgenerators.TurbineManyullyn.name=玛玉玲涡轮机
 
 item.advgenerators.TurbineBladeAdvAlloy.name=高级合金涡轮叶片
-item.advgenerators.TurbineRotorAdvAlloy.name=高级合金转子
-item.advgenerators.TurbineKitAdvAlloy.name=高级合金转子升级工具
-tile.advgenerators.TurbineAdvAlloy.name=高级合金转子涡轮机
+item.advgenerators.TurbineRotorAdvAlloy.name=高级合金涡轮转子
+item.advgenerators.TurbineKitAdvAlloy.name=高级合金转子升级组件
+tile.advgenerators.TurbineAdvAlloy.name=高级合金涡轮机
 
 // === Capacitors
 
@@ -80,8 +80,8 @@ tile.advgenerators.PowerCapacitorRedstone.name=基础能量电容
 tile.advgenerators.PowerCapacitorAdvanced.name=高级能量电容
 tile.advgenerators.PowerCapacitorDense.name=高密度能量电容
 
-item.advgenerators.CapacitorKitAdvanced.name=高级能量电容升级工具
-item.advgenerators.CapacitorKitDense.name=高密度能量电容升级工具
+item.advgenerators.CapacitorKitAdvanced.name=高级能量电容升级组件
+item.advgenerators.CapacitorKitDense.name=高密度能量电容升级组件
 
 
 // ======
@@ -227,10 +227,10 @@ advgenerators.tooltip.efficiency.req=需要一个已连接的燃料/空气混合
 advgenerators.control.mode.high=未接受到信号时
 advgenerators.control.mode.low=接受到信号时
 
-advgenerators.control.action.disabled=无动作
+advgenerators.control.action.disabled=不工作
 advgenerators.control.action.useSteam=消耗蒸汽
 advgenerators.control.action.useFuel=消耗燃料
 advgenerators.control.action.generateEnergy=开始发电
 advgenerators.control.action.exchangeHeat=开始热交换
-advgenerators.control.action.mix=制造合成气
+advgenerators.control.action.mix=开始合成水煤气
 advgenerators.control.action.heatWater=加热水
