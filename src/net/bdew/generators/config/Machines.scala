@@ -14,9 +14,9 @@ import net.bdew.generators.controllers.exchanger.MachineExchanger
 import net.bdew.generators.controllers.steam.MachineSteamTurbine
 import net.bdew.generators.controllers.syngas.MachineSyngas
 import net.bdew.generators.controllers.turbine.MachineTurbine
-import net.bdew.lib.config.MachineManager
+import net.bdew.lib.config.{MachineManager, MachineManagerMultiblock}
 
-object Machines extends MachineManager(Tuning.getSection("Machines"), Config.guiHandler, CreativeTabsGenerators.main) {
+object Machines extends MachineManager(Tuning.getSection("Machines"), Config.guiHandler, CreativeTabsGenerators.main) with MachineManagerMultiblock {
   registerMachine(MachineTurbine)
   registerMachine(MachineExchanger)
   registerMachine(MachineSteamTurbine)

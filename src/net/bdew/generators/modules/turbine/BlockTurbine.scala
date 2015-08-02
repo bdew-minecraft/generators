@@ -32,7 +32,7 @@ class BlockTurbine(val material: TurbineMaterial) extends BaseModule("Turbine" +
         EnumChatFormatting.YELLOW, DecFormat.short(material.maxMJPerTick * Config.powerShowMultiplier), Config.powerShowUnits
       )),
       Misc.toLocalF("advgenerators.tooltip.turbine.inertia", EnumChatFormatting.YELLOW + "%.0f%%".format(100D * material.inertiaMultiplier))
-    )
+    ) ++ super.getTooltip(stack, player, advanced)
   }
 
   @SideOnly(Side.CLIENT)

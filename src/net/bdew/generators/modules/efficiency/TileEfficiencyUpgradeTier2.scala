@@ -23,7 +23,7 @@ object BlockEfficiencyUpgradeTier2 extends BaseModule("EfficiencyUpgradeTier2", 
     List(
       Misc.toLocalF("advgenerators.tooltip.efficiency", "%s%.0f%%%s".format(EnumChatFormatting.YELLOW, MachineTurbine.fuelEfficiency.getDouble("Tier2") * 100, EnumChatFormatting.RESET)),
       Misc.toLocal("advgenerators.tooltip.efficiency.req")
-    )
+    ) ++ super.getTooltip(stack, player, advanced)
 }
 
 class TileEfficiencyUpgradeTier2 extends TileModule {
