@@ -23,7 +23,7 @@ tile.advgenerators.Sensor.name=传感器模块
 tile.advgenerators.GasInput.name=燃气输入阀门
 tile.advgenerators.Control.name=红石控制模块
 tile.advgenerators.EfficiencyUpgradeTier1.name=燃料/空气混合器
-tile.advgenerators.EfficiencyUpgradeTier2.name=气体混合加压器
+tile.advgenerators.EfficiencyUpgradeTier2.name=燃气混合加压室
 
 item.advgenerators.IronFrame.name=铁质框架
 item.advgenerators.PowerIO.name=能量接口组件
@@ -104,6 +104,13 @@ advgenerators.module.PowerCapacitor.name=能量电容
 advgenerators.module.HeatExchanger.name=热交换器
 advgenerators.module.HeatingChamber.name=加热室
 advgenerators.module.MixingChamber.name=混合室
+advgenerators.module.Control.name=红石控制模块
+advgenerators.module.Sensor.name=传感器模块
+advgenerators.module.EfficiencyUpgradeTier1.name=燃料/空气混合器
+advgenerators.module.EfficiencyUpgradeTier2.name=燃气混合加压室
+advgenerators.module.ItemInput.name=物品输入端口
+advgenerators.module.ItemOutput.name=物品输出端口
+advgenerators.module.FluidOutputSelect.name=液体输出阀门
 
 advgenerators.label.turbine.turbines=已连接涡轮机
 advgenerators.label.turbine.maxprod=输出峰值
@@ -144,6 +151,7 @@ advgenerators.output.2=蓝色输出
 advgenerators.output.3=黄色输出
 advgenerators.output.4=青色输出
 advgenerators.output.5=紫色输出
+
 advgenerators.tooltip.turbine.fuel=涡轮机内燃料 %s %s/mB 
 advgenerators.tooltip.carbon=炭含量: %s
 
