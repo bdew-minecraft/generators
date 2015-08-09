@@ -10,7 +10,9 @@
 package net.bdew.generators.controllers.steam
 
 import cpw.mods.fml.relauncher.{Side, SideOnly}
+import net.bdew.generators.Generators
 import net.bdew.generators.modules.BaseController
+import net.bdew.lib.Misc
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.util.IIcon
 import net.minecraftforge.common.util.ForgeDirection
@@ -21,8 +23,8 @@ object BlockSteamTurbineController extends BaseController("SteamTurbineControlle
 
   @SideOnly(Side.CLIENT)
   override def regIcons(ir: IIconRegister) {
-    topIcon = ir.registerIcon("advgenerators:" + name.toLowerCase + "/top")
-    bottomIcon = ir.registerIcon("advgenerators:" + name.toLowerCase + "/bottom")
+    topIcon = ir.registerIcon(Misc.iconName(Generators.modId, name, "top"))
+    bottomIcon = ir.registerIcon(Misc.iconName(Generators.modId, name, "bottom"))
   }
 
   override def getIcon(side: Int, meta: Int) =

@@ -11,6 +11,7 @@ package net.bdew.generators.blocks
 
 import cpw.mods.fml.relauncher.{Side, SideOnly}
 import net.bdew.generators.Generators
+import net.bdew.lib.Misc
 import net.minecraft.block.material.{MapColor, MaterialLiquid}
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.util.IIcon
@@ -33,8 +34,8 @@ class BlockSteam(fluid: Fluid) extends BlockFluidClassic(fluid, MaterialSteam) {
   @SideOnly(Side.CLIENT)
   override def registerBlockIcons(register: IIconRegister) {
     if (ownIcons) {
-      fluid.setStillIcon(register.registerIcon(Generators.modId + ":steam/still"))
-      fluid.setFlowingIcon(register.registerIcon(Generators.modId + ":steam/flowing"))
+      fluid.setStillIcon(register.registerIcon(Misc.iconName(Generators.modId, "steam", "still")))
+      fluid.setFlowingIcon(register.registerIcon(Misc.iconName(Generators.modId, "steam", "flowing")))
     }
   }
 }

@@ -12,6 +12,7 @@ package net.bdew.generators.items
 import java.util
 
 import cpw.mods.fml.relauncher.{Side, SideOnly}
+import net.bdew.generators.Generators
 import net.bdew.generators.config.TurbineMaterial
 import net.bdew.generators.modules.turbine.BlockTurbine
 import net.bdew.lib.Misc
@@ -30,7 +31,7 @@ class TurbineItem(val material: TurbineMaterial, val kind: String) extends Named
 
   @SideOnly(Side.CLIENT)
   override def registerIcons(reg: IIconRegister): Unit = {
-    itemIcon = reg.registerIcon("advgenerators:turbine/%s/%s".format(material.name.toLowerCase, kind.toLowerCase))
+    itemIcon = reg.registerIcon(Misc.iconName(Generators.modId, "turbine", material.name, kind))
   }
 }
 

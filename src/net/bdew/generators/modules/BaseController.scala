@@ -10,7 +10,7 @@
 package net.bdew.generators.modules
 
 import cpw.mods.fml.relauncher.{Side, SideOnly}
-import net.bdew.generators.GeneratorsResourceProvider
+import net.bdew.generators.{Generators, GeneratorsResourceProvider}
 import net.bdew.lib.Misc
 import net.bdew.lib.block.NamedBlock
 import net.bdew.lib.multiblock.block.BlockController
@@ -29,7 +29,7 @@ class BaseController[T <: TileController](name: String, TEClass: Class[T])
 
   @SideOnly(Side.CLIENT)
   override def registerBlockIcons(ir: IIconRegister) {
-    blockIcon = ir.registerIcon(mod + ":" + name.toLowerCase + "/main")
+    blockIcon = ir.registerIcon(Misc.iconName(Generators.modId, name, "main"))
     regIcons(ir)
   }
 

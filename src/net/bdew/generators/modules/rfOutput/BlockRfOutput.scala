@@ -10,7 +10,9 @@
 package net.bdew.generators.modules.rfOutput
 
 import cpw.mods.fml.relauncher.{Side, SideOnly}
+import net.bdew.generators.Generators
 import net.bdew.generators.modules.BaseModule
+import net.bdew.lib.Misc
 import net.bdew.lib.multiblock.block.BlockOutput
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.util.IIcon
@@ -28,8 +30,8 @@ object BlockRfOutput extends BaseModule("RFOutput", "PowerOutput", classOf[TileR
 
   @SideOnly(Side.CLIENT)
   override def registerBlockIcons(ir: IIconRegister) {
-    blockIcon = ir.registerIcon("advgenerators:rfoutput/disabled")
-    enabledIcon = ir.registerIcon("advgenerators:rfoutput/main")
+    blockIcon = ir.registerIcon(Misc.iconName(Generators.modId, "rfoutput", "disabled"))
+    enabledIcon = ir.registerIcon(Misc.iconName(Generators.modId, "rfoutput", "main"))
   }
 
   override def canConnectRedstone(world: IBlockAccess, x: Int, y: Int, z: Int, side: Int) = true

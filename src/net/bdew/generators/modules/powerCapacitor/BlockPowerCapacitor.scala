@@ -10,6 +10,7 @@
 package net.bdew.generators.modules.powerCapacitor
 
 import cpw.mods.fml.relauncher.{Side, SideOnly}
+import net.bdew.generators.Generators
 import net.bdew.generators.config.{CapacitorMaterial, Config}
 import net.bdew.generators.modules.BaseModule
 import net.bdew.lib.block.BlockTooltip
@@ -27,6 +28,6 @@ class BlockPowerCapacitor(val material: CapacitorMaterial) extends BaseModule("P
 
   @SideOnly(Side.CLIENT)
   override def registerBlockIcons(ir: IIconRegister) {
-    blockIcon = ir.registerIcon("advgenerators:powercapacitor/" + material.name.toLowerCase)
+    blockIcon = ir.registerIcon(Misc.iconName(Generators.modId, "powercapacitor", material.name))
   }
 }

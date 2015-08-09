@@ -14,6 +14,7 @@ import net.bdew.generators.Generators
 import net.bdew.generators.config.Config
 import net.bdew.generators.modules.BaseModule
 import net.bdew.generators.sensor.Sensors
+import net.bdew.lib.Misc
 import net.bdew.lib.sensors.multiblock.{BlockRedstoneSensorModule, TileRedstoneSensorModule}
 import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.entity.player.EntityPlayer
@@ -36,10 +37,10 @@ object BlockSensor extends BaseModule("Sensor", "Sensor", classOf[TileSensor]) w
 
   @SideOnly(Side.CLIENT) override
   def registerBlockIcons(reg: IIconRegister): Unit = {
-    sideIcon = reg.registerIcon(Generators.modId + ":" + name.toLowerCase + "/side_off")
-    frontIcon = reg.registerIcon(Generators.modId + ":" + name.toLowerCase + "/front_off")
-    bottomIcon = reg.registerIcon(Generators.modId + ":" + name.toLowerCase + "/back")
-    frontIconOn = reg.registerIcon(Generators.modId + ":" + name.toLowerCase + "/front_on")
-    sideIconOn = reg.registerIcon(Generators.modId + ":" + name.toLowerCase + "/side_on")
+    sideIcon = reg.registerIcon(Misc.iconName(Generators.modId, name, "/side_off"))
+    frontIcon = reg.registerIcon(Misc.iconName(Generators.modId, name, "/front_off"))
+    bottomIcon = reg.registerIcon(Misc.iconName(Generators.modId, name, "/back"))
+    frontIconOn = reg.registerIcon(Misc.iconName(Generators.modId, name, "/front_on"))
+    sideIconOn = reg.registerIcon(Misc.iconName(Generators.modId, name, "/side_on"))
   }
 }

@@ -13,6 +13,7 @@ import cpw.mods.fml.relauncher.{Side, SideOnly}
 import net.bdew.generators.Generators
 import net.bdew.generators.config.Config
 import net.bdew.generators.modules.BaseModule
+import net.bdew.lib.Misc
 import net.bdew.lib.gui.GuiProvider
 import net.minecraft.block.Block
 import net.minecraft.client.renderer.texture.IIconRegister
@@ -71,7 +72,7 @@ object BlockControl extends BaseModule("Control", "Control", classOf[TileControl
 
   @SideOnly(Side.CLIENT) override
   def registerBlockIcons(reg: IIconRegister): Unit = {
-    blockIcon = reg.registerIcon(Generators.modId + ":" + name.toLowerCase + "/off")
-    onIcon = reg.registerIcon(Generators.modId + ":" + name.toLowerCase + "/on")
+    blockIcon = reg.registerIcon(Misc.iconName(Generators.modId, name, "off"))
+    onIcon = reg.registerIcon(Misc.iconName(Generators.modId, name, "on"))
   }
 }

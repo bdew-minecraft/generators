@@ -14,6 +14,7 @@ import java.util.Random
 
 import cpw.mods.fml.relauncher.{Side, SideOnly}
 import net.bdew.generators.{Generators, config}
+import net.bdew.lib.Misc
 import net.bdew.lib.block.{BlockRef, SimpleBlock}
 import net.minecraft.block.Block
 import net.minecraft.block.material.{MapColor, MaterialLiquid}
@@ -97,8 +98,8 @@ class BlockSyngas(fluid: Fluid) extends BlockFluidClassic(fluid, MaterialSyngas)
   @SideOnly(Side.CLIENT)
   override def registerBlockIcons(register: IIconRegister) {
     if (ownIcons) {
-      fluid.setStillIcon(register.registerIcon(Generators.modId + ":syngas/still"))
-      fluid.setFlowingIcon(register.registerIcon(Generators.modId + ":syngas/flowing"))
+      fluid.setStillIcon(register.registerIcon(Misc.iconName(Generators.modId, "syngas", "still")))
+      fluid.setFlowingIcon(register.registerIcon(Misc.iconName(Generators.modId, "syngas", "flowing")))
     }
   }
 }

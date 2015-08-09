@@ -10,7 +10,9 @@
 package net.bdew.generators.modules.euOutput
 
 import cpw.mods.fml.relauncher.{Side, SideOnly}
+import net.bdew.generators.Generators
 import net.bdew.generators.modules.BaseModule
+import net.bdew.lib.Misc
 import net.bdew.lib.multiblock.block.BlockOutput
 import net.bdew.lib.rotate.{IconType, RotatableTileBlock}
 import net.minecraft.client.renderer.texture.IIconRegister
@@ -32,8 +34,8 @@ class BlockEuOutputBase[T <: TileEuOutputBase](name: String, texture: String, TE
 
   @SideOnly(Side.CLIENT)
   override def registerBlockIcons(ir: IIconRegister) {
-    blockIcon = ir.registerIcon("advgenerators:euoutput/main")
-    frontIcon = ir.registerIcon("advgenerators:euoutput/front_" + texture)
+    blockIcon = ir.registerIcon(Misc.iconName(Generators.modId, "euoutput", "main"))
+    frontIcon = ir.registerIcon(Misc.iconName(Generators.modId, "euoutput", "front_" + texture))
   }
 
   def getIcon(meta: Int, kind: IconType.Value) = if (kind == IconType.FRONT) frontIcon else blockIcon

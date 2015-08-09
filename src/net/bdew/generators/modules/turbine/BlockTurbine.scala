@@ -10,6 +10,7 @@
 package net.bdew.generators.modules.turbine
 
 import cpw.mods.fml.relauncher.{Side, SideOnly}
+import net.bdew.generators.Generators
 import net.bdew.generators.config.{Config, TurbineMaterial}
 import net.bdew.generators.modules.BaseModule
 import net.bdew.lib.block.BlockTooltip
@@ -37,7 +38,7 @@ class BlockTurbine(val material: TurbineMaterial) extends BaseModule("Turbine" +
 
   @SideOnly(Side.CLIENT)
   override def registerBlockIcons(ir: IIconRegister) {
-    blockIcon = ir.registerIcon("advgenerators:turbine/" + material.name.toLowerCase + "/main")
-    topIcon = ir.registerIcon("advgenerators:turbine/" + material.name.toLowerCase + "/top")
+    blockIcon = ir.registerIcon(Misc.iconName(Generators.modId, "turbine", material.name, "main"))
+    topIcon = ir.registerIcon(Misc.iconName(Generators.modId, "turbine", material.name, "top"))
   }
 }

@@ -12,6 +12,7 @@ package net.bdew.generators.items
 import java.util
 
 import cpw.mods.fml.relauncher.{Side, SideOnly}
+import net.bdew.generators.Generators
 import net.bdew.generators.config.CapacitorMaterial
 import net.bdew.generators.modules.powerCapacitor.BlockPowerCapacitor
 import net.bdew.lib.Misc
@@ -29,8 +30,9 @@ class CapacitorUpgradeKit(val material: CapacitorMaterial) extends NamedItem wit
 
   @SideOnly(Side.CLIENT)
   override def registerIcons(reg: IIconRegister): Unit = {
-    itemIcon = reg.registerIcon("advgenerators:capacitorkit/%s".format(material.name.toLowerCase))
+    itemIcon = reg.registerIcon(Misc.iconName(Generators.modId, "capacitorkit", material.name))
   }
+
   override def getNewBlock(pos: BlockRef, world: World): BlockModule[_] = material.capacitorBlock.get
 
   override def getReturnedItems(pos: BlockRef, world: World): List[ItemStack] = List.empty
