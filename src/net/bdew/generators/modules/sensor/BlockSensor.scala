@@ -37,10 +37,10 @@ object BlockSensor extends BaseModule("Sensor", "Sensor", classOf[TileSensor]) w
 
   @SideOnly(Side.CLIENT) override
   def registerBlockIcons(reg: IIconRegister): Unit = {
-    sideIcon = reg.registerIcon(Misc.iconName(Generators.modId, name, "/side_off"))
-    frontIcon = reg.registerIcon(Misc.iconName(Generators.modId, name, "/front_off"))
-    bottomIcon = reg.registerIcon(Misc.iconName(Generators.modId, name, "/back"))
-    frontIconOn = reg.registerIcon(Misc.iconName(Generators.modId, name, "/front_on"))
-    sideIconOn = reg.registerIcon(Misc.iconName(Generators.modId, name, "/side_on"))
+    sideIcon = reg.registerIcon(Misc.iconName(Generators.modId, name, "side_off"))
+    frontIcon = reg.registerIcon(Misc.iconName(Generators.modId, name, "front_off"))
+    bottomIcon = reg.registerIcon(Misc.iconName(Generators.modId, name, "back"))
+    frontIconOn = reg.registerIcon(Misc.iconName(Generators.modId, name, "front_on"))
+    sideIconOn = reg.registerIcon(Misc.iconName(Generators.modId, name, "side_on"))
   }
 }
