@@ -1,0 +1,244 @@
+tile.advgenerators.FluidInput.name=Valve d'entrée de fluide
+tile.advgenerators.FuelTank.name=Réservoir de carburant
+tile.advgenerators.TurbineController.name=Contrôleur de la turbine à gaz
+tile.advgenerators.FuelTank.name=Réservoir de carburant
+tile.advgenerators.EuOutputLV.name=Émetteur BT
+tile.advgenerators.EuOutputMV.name=Émetteur MT
+tile.advgenerators.EuOutputHV.name=Émetteur HT
+tile.advgenerators.RFOutput.name=Générateur de Flux
+tile.advgenerators.steam.name=Vapeur
+tile.advgenerators.syngas.name=Gaz de synthèse
+tile.advgenerators.SteamTurbineController.name=Contrôleur de la turbine à vapeur
+tile.advgenerators.ExchangerController.name=Contrôleur de l'échangeur thermique
+tile.advgenerators.FluidOutputSelect.name=Valve de sortie de fluide
+tile.advgenerators.ItemOutput.name=Port de sortie d'élément
+tile.advgenerators.ItemInput.name=Port d'entrée d'élément
+tile.advgenerators.PressureOutputSelect.name=Valve de sortie pressurisée
+tile.advgenerators.PressureInput.name=Valve d'entrée pressurisée
+tile.advgenerators.HeatExchanger.name=Échangeur thermique
+tile.advgenerators.SyngasController.name=Contrôleur de producteur de gaz de synthèse
+tile.advgenerators.HeatingChamber.name=Corps de chauffe
+tile.advgenerators.MixingChamber.name=Chambre de mélange
+tile.advgenerators.Sensor.name=Module de capteur
+tile.advgenerators.GasInput.name=Valve d'entrée de gaz
+tile.advgenerators.Control.name=Module de contrôle redstone
+tile.advgenerators.EfficiencyUpgradeTier1.name=Mélangeur carburant/air
+tile.advgenerators.EfficiencyUpgradeTier2.name=Compresseur de mélange gaz
+
+item.advgenerators.IronFrame.name=Cadre de fer
+item.advgenerators.PowerIO.name=Module d'E/S énergétique
+item.advgenerators.IronTubing.name=Tuyau de fer
+item.advgenerators.IronWiring.name=Câblage redstone-fer
+item.advgenerators.Controller.name=Circuit de contrôle
+item.advgenerators.PressureValve.name=Valve pressurisée
+item.advgenerators.AdvancedPressureValve.name=Valve pressurisée avancée
+item.advgenerators.UpgradeKit.name=Kit d'amélioration
+
+// === Turbine Materials
+
+item.advgenerators.TurbineBladeIron.name=Lame de turbine en fer
+item.advgenerators.TurbineRotorIron.name=Rotor de turbine en fer
+tile.advgenerators.TurbineIron.name=Turbine en fer
+
+item.advgenerators.TurbineRotorGold.name=Lame de turbine en plaque dorée
+item.advgenerators.TurbineKitGold.name=Kit d'amélioration de turbine en plaque dorée
+tile.advgenerators.TurbineGold.name=Turbine en plaque dorée
+
+item.advgenerators.TurbineBladeSteel.name=Lame de turbine en acier
+item.advgenerators.TurbineRotorSteel.name=Rotor de turbine en acier
+item.advgenerators.TurbineKitSteel.name=Kit d'amélioration de turbine en acier
+tile.advgenerators.TurbineSteel.name=Turbine en acier
+
+item.advgenerators.TurbineBladeBronze.name=Lame de turbine en bronze
+item.advgenerators.TurbineRotorBronze.name=Rotor de turbine en bronze
+item.advgenerators.TurbineKitBronze.name=Kit d'amélioration de turbine en bronze
+tile.advgenerators.TurbineBronze.name=Turbine en bronze
+
+item.advgenerators.TurbineBladeEnderium.name=Lame de turbine en enderium
+item.advgenerators.TurbineRotorEnderium.name=Rotor de turbine en enderium
+item.advgenerators.TurbineKitEnderium.name=Kit d'amélioration de turbine en enderium
+tile.advgenerators.TurbineEnderium.name=Turbine en enderium
+
+item.advgenerators.TurbineBladeVibrant.name=Lame de turbine en vibrant
+item.advgenerators.TurbineRotorVibrant.name=Rotor de turbine en vibrant
+item.advgenerators.TurbineKitVibrant.name=Kit d'amélioration de turbine en vibrant
+tile.advgenerators.TurbineVibrant.name=Turbine en vibrant
+
+item.advgenerators.TurbineBladeManyullyn.name=Lame de turbine en manyullyn
+item.advgenerators.TurbineRotorManyullyn.name=Rotor de turbine en manyullyn
+item.advgenerators.TurbineKitManyullyn.name=Kit d'amélioration de turbine en manyullyn
+tile.advgenerators.TurbineManyullyn.name=Turbine en manyullyn
+
+item.advgenerators.TurbineBladeAdvAlloy.name=Lame de turbine en alliage avancé
+item.advgenerators.TurbineRotorAdvAlloy.name=Rotor de turbine en alliage avancé
+item.advgenerators.TurbineKitAdvAlloy.name=Kit d'amélioration de turbine en alliage avancé
+tile.advgenerators.TurbineAdvAlloy.name=Turbine en alliage avancé
+
+// === Capacitors
+
+tile.advgenerators.PowerCapacitorRedstone.name=Condensateur de puissance de base
+tile.advgenerators.PowerCapacitorAdvanced.name=Condensateur de puissance avancé
+tile.advgenerators.PowerCapacitorDense.name=Condensateur de puissance haute densité
+
+item.advgenerators.CapacitorKitAdvanced.name=Kit d'amélioration de condensateur de puissance avancé
+item.advgenerators.CapacitorKitDense.name=Kit d'amélioration de condensateur haute densité
+
+
+// ======
+
+advgenerators.gui.turbine.title=Contrôle de la turbine à gaz
+advgenerators.gui.turbine.steam.title=Contrôle de la turbine à vapeur
+advgenerators.gui.exchanger.title=Contrôle de l'échangeur thermique
+advgenerators.gui.syngas.title=Contrôle du producteur de gaz de synthèse
+advgenerators.gui.output.title=Configuration de sortie
+advgenerators.gui.sensor.title=Configuration du module de capteur
+advgenerators.gui.control.title=Configuration du module de contrôle
+
+advgenerators.gui.dump=Effaces les tampons internes
+
+advgenerators.module.PowerOutput.name=Module d'émission de puissance
+advgenerators.module.Turbine.name=Turbine
+advgenerators.module.FluidInput.name=Valve d'entrée de fluide
+advgenerators.module.FuelTank.name=Réservoir de carburant
+advgenerators.module.PowerCapacitor.name=Condensateur de puissance
+advgenerators.module.HeatExchanger.name=Échangeur thermique
+advgenerators.module.HeatingChamber.name=Corps de chauffe
+advgenerators.module.MixingChamber.name=Chambre de mélange
+advgenerators.module.Control.name=Module de contrôle redstone
+advgenerators.module.Sensor.name=module de capteur
+advgenerators.module.EfficiencyUpgradeTier1.name=Mélangeur carburant/air
+advgenerators.module.EfficiencyUpgradeTier2.name=Compresseur de mélange gaz
+advgenerators.module.ItemInput.name=Port d'entrée d'élément
+advgenerators.module.ItemOutput.name=Port de sortie d'élément
+advgenerators.module.FluidOutputSelect.name=Valve de sortie de fluide
+
+advgenerators.label.turbine.turbines=Turbines connectées
+advgenerators.label.turbine.maxprod=Pics de production
+advgenerators.label.turbine.fuel=Pics de consommation de carburant
+advgenerators.label.turbine.efficiency=Effucacité du carburant : %s
+advgenerators.label.turbine.prod=Production actuelle
+advgenerators.label.turbine.fuelaverage=Consommation de carburant actuelle
+advgenerators.label.turbine.rpm=Vitesse
+advgenerators.label.turbine.steamaverage=Consommation de vapeur
+
+advgenerators.label.exchanger.heat=Chaleur actuelle
+advgenerators.label.exchanger.maxtransfer=Transfert thermique maxi
+advgenerators.label.exchanger.inrate=%s consommé
+advgenerators.label.exchanger.noinput=Pas d'entrée
+advgenerators.label.exchanger.outrate=%s produit
+advgenerators.label.exchanger.nooutput=Pas de sortie
+advgenerators.label.exchanger.heatloss=Pertes thermique
+
+advgenerators.label.syngas.steam=Vapeur : %s
+advgenerators.label.syngas.carbon=Charbon : %s
+advgenerators.label.syngas.heat=Heat: %s / %s CU
+advgenerators.label.syngas.heat.disabled=pas de corps de chauffe installé
+advgenerators.label.syngas.produced=Gaz de synthèse produit (par tic)
+advgenerators.label.syngas.consumed=Charbon consommé (par tic)
+advgenerators.label.syngas.heat.delta=Gain/perte thermique
+
+advgenerators.waila.turbine.nofuel=Pas de carburant
+advgenerators.waila.turbine.nosteam=Pas de vapeur
+advgenerators.waila.turbine.consuming=Consomme %s %s/t
+advgenerators.waila.turbine.producing=Produit %s %s/t
+
+advgenerators.flow.fluid=%s mB/t
+advgenerators.flow.other=%s/t
+
+advgenerators.output.0=Sortie rouge
+advgenerators.output.1=Sortie verte
+advgenerators.output.2=Sortie bleue
+advgenerators.output.3=Sortie jaune
+advgenerators.output.4=Sortie cyan
+advgenerators.output.5=Sortie violette
+
+advgenerators.tooltip.turbine.fuel=%s %s/mB dans le générateur de turbine
+advgenerators.tooltip.carbon=Valeur de charbon : %s
+
+advgenerators.exchanger.output.hot=Fluide chaud
+advgenerators.exchanger.output.cold=Fluide froid
+advgenerators.exchanger.output.both=Tous fluides
+
+itemGroup.bdew.generators=Advanced Generators
+
+resource.item.format=%s / %s
+resource.fluid.format=%s / %s mB
+
+fluid.steam=Vapeur
+fluid.syngas=Gaz de synthèse
+
+
+advgenerators.sensor.on=Signal marche
+advgenerators.sensor.off=Signal arrêt
+
+advgenerators.sensor.disabled=Désactivé
+advgenerators.sensor.param.disabled=Désactivé
+
+advgenerators.sensor.power=Condensateur de puissance
+advgenerators.sensor.turbine.fuel=Réservoir de carburant
+advgenerators.sensor.turbine.steam=Réservoir de vapeur
+
+advgenerators.sensor.exchanger.hot.input=Entrée chaud du réservoir
+advgenerators.sensor.exchanger.hot.output=Sortie chaud du réservoir
+advgenerators.sensor.exchanger.cold.input=Entrée froid du réservoir
+advgenerators.sensor.exchanger.cold.output=Sortie froid du réservoir
+advgenerators.sensor.param.resource.solid=Contient des éléments solides
+advgenerators.sensor.param.resource.fluid=Contient des fluides
+
+advgenerators.sensor.exchanger.heat=Chaleur interne
+advgenerators.sensor.param.heat.exchanger.cold=Pas de chaleur
+advgenerators.sensor.param.heat.exchanger.low=Préchauffage ( < %s CU)
+advgenerators.sensor.param.heat.exchanger.medium=Échange thermique possible ( > %s CU)
+advgenerators.sensor.param.heat.exchanger.high=Chaleur maximum (%s CU)
+
+advgenerators.sensor.turbine.speed=Vitesse de turbine
+advgenerators.sensor.param.turbine.speed.stop=Arrêtée
+advgenerators.sensor.param.turbine.speed.low=Lancée
+advgenerators.sensor.param.turbine.speed.medium=>= %s RPM
+advgenerators.sensor.param.turbine.speed.high=à %s RPM (Maximum)
+
+advgenerators.sensor.turbine.generation=Génération de puissance
+advgenerators.sensor.param.turbine.generation.stop=Arrêtée
+advgenerators.sensor.param.turbine.generation.low=Génération (> %s %s/t)
+advgenerators.sensor.param.turbine.generation.medium=A mi-puissance (> %s %s/t)
+advgenerators.sensor.param.turbine.generation.high=A puissance maxi (%s %s/t)
+
+advgenerators.sensor.syngas.water=Réservoir d'eau
+advgenerators.sensor.syngas.steam=Tampon de vapeur
+advgenerators.sensor.syngas.carbon=Tampon de chabon
+advgenerators.sensor.syngas.syngas=Réservoir de gaz de synthèse
+advgenerators.sensor.syngas.heat=Challeur interne
+advgenerators.sensor.param.heat.syngas.cold=Pas de challeur
+advgenerators.sensor.param.heat.syngas.low=Préchauffage ( < %s HU)
+advgenerators.sensor.param.heat.syngas.medium=Production de vapeur possible ( > %s HU)
+advgenerators.sensor.param.heat.syngas.high=Challeur maximum (%s HU)
+
+advgenerators.sensor.param.fill.empty=Vide
+advgenerators.sensor.param.fill.not.empty=Non vide
+advgenerators.sensor.param.fill.gt5=Rempli à plus de 5%
+advgenerators.sensor.param.fill.gt25=Rempli à plus de 25% 
+advgenerators.sensor.param.fill.gt50=Rempli à plus de 50% 
+advgenerators.sensor.param.fill.gt75=Rempli à plus de 75% 
+advgenerators.sensor.param.fill.gt95=Rempli à plus de 95% 
+advgenerators.sensor.param.fill.full=Plein
+advgenerators.sensor.param.fill.not.full=Non plein
+
+advgenerators.tooltip.turbine.produce=produit plus de %s
+advgenerators.tooltip.turbine.inertia=Inertie : %s
+advgenerators.tooltip.capacitor=Capacité : %s
+advgenerators.tooltip.kit=Cliquez-droit en s'accroupissant pour mettre à jour
+advgenerators.tooltip.efficiency=Augmente le rendement du carburant à %s
+advgenerators.tooltip.efficiency.req=Veuillez installer un mélangeur carburant/air
+
+
+
+advgenerators.control.mode.high=Activé sur signal
+advgenerators.control.mode.low=Désactivé sur signal
+
+advgenerators.control.action.disabled=Désactivé
+advgenerators.control.action.useSteam=Vapeur utilisée
+advgenerators.control.action.useFuel=Carburant utilisé
+advgenerators.control.action.generateEnergy=Génération d'énergie
+advgenerators.control.action.exchangeHeat=Échange thermique
+advgenerators.control.action.mix=Mélange vapeur/charbon
+advgenerators.control.action.heatWater=Chauffage d'eau
