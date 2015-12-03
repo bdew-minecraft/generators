@@ -12,6 +12,8 @@ package net.bdew.generators.modules.euOutput
 import ic2.api.energy.tile.{IEnergyAcceptor, IEnergySource}
 import net.bdew.generators.compat.Ic2EnetRegister
 import net.bdew.generators.config.Tuning
+import net.bdew.lib.data.DataSlotDouble
+import net.bdew.lib.data.base.UpdateKind
 import net.bdew.lib.multiblock.data.OutputConfigPower
 import net.bdew.lib.multiblock.interact.CIPowerProducer
 import net.bdew.lib.multiblock.tile.{RSControllableOutput, TileOutput}
@@ -22,7 +24,8 @@ import net.minecraftforge.common.util.ForgeDirection
 abstract class TileEuOutputBase(val maxOutput: Int, val tier: Int) extends TileOutput[OutputConfigPower] with RSControllableOutput with IEnergySource with Ic2EnetRegister with RotatableTile {
   val kind = "PowerOutput"
   val ratio = Tuning.getSection("Power").getFloat("EU_MJ_Ratio")
-  var outThisTick = 0F
+
+  val buffer = DataSlotDouble("buffer", this).setUpdate(UpdateKind.SAVE)
 
   override val outputConfigType = classOf[OutputConfigPower]
   override def makeCfgObject(face: ForgeDirection) = new OutputConfigPower("EU")
@@ -47,34 +50,31 @@ abstract class TileEuOutputBase(val maxOutput: Int, val tier: Int) extends TileO
   }
 
   override def getOfferedEnergy: Double = {
-    if (checkCanOutput(getCfg.getOrElse(return 0)))
-      return getCoreAs[CIPowerProducer] map (_.extract(maxOutput / ratio, true).toDouble * ratio) getOrElse 0.0
-    else 0
+    if (buffer > 0 && checkCanOutput(getCfg.getOrElse(return 0)))
+      Math.min(buffer, maxOutput)
+    else
+      0
   }
 
   override def drawEnergy(amount: Double) {
-    getCoreAs[CIPowerProducer] foreach { core =>
-      core.extract(amount.toFloat / ratio, false)
-      outThisTick += amount.toFloat
-    }
+    buffer := buffer - amount
   }
 
   override def getSourceTier = tier
 
-  def updateOutput() {
-    for {
-      core <- getCore
-      cfg <- getCfg
-    } {
-      cfg.updateAvg(outThisTick)
-      core.outputConfig.updated()
+  def doOutput(face: ForgeDirection, cfg: OutputConfigPower): Unit = {
+    getCoreAs[CIPowerProducer] foreach { core =>
+      if (buffer < maxOutput) {
+        val extracted = core.extract(maxOutput / ratio, false) * ratio
+        buffer += extracted
+        cfg.updateAvg(extracted)
+        core.outputConfig.updated()
+      } else {
+        cfg.updateAvg(0)
+        core.outputConfig.updated()
+      }
     }
-    outThisTick = 0
   }
-
-  serverTick.listen(updateOutput)
-
-  def doOutput(face: ForgeDirection, cfg: OutputConfigPower) {}
 }
 
 class TileEuOutputLV extends TileEuOutputBase(128, 1)
