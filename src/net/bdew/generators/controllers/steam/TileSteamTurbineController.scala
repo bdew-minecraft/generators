@@ -97,6 +97,9 @@ class TileSteamTurbineController extends TileControllerGui with PoweredControlle
     val capacitors = modules.toList.flatMap(_.getBlock[BlockPowerCapacitor](getWorldObj)).map(_.material)
     power.capacity = cfg.internalPowerCapacity + capacitors.map(_.mjCapacity).sum.toFloat
 
+    if (power.stored > power.capacity)
+      power.stored = power.capacity
+
     val turbines = modules.toList.flatMap(_.getBlock[BlockTurbine](getWorldObj)).map(_.material)
     maxMJPerTick := turbines.map(_.maxMJPerTick).sum
     inertiaMultiplier := turbines.map(_.inertiaMultiplier).sum / turbines.size

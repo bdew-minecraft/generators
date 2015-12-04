@@ -94,8 +94,14 @@ class TileTurbineController extends TileControllerGui with PoweredController wit
   override def onModulesChanged() {
     fuel.setCapacity(getNumOfModules("FuelTank") * Modules.FuelTank.capacity + cfg.internalFuelCapacity)
 
+    if (fuel.getFluid != null && fuel.getFluidAmount > fuel.getCapacity)
+      fuel.getFluid.amount = fuel.getCapacity
+
     val capacitors = modules.toList.flatMap(_.getBlock[BlockPowerCapacitor](getWorldObj)).map(_.material)
     power.capacity = cfg.internalPowerCapacity + capacitors.map(_.mjCapacity).sum.toFloat
+
+    if (power.stored > power.capacity)
+      power.stored = power.capacity
 
     val turbines = modules.toList.flatMap(_.getBlock[BlockTurbine](getWorldObj)).map(_.material)
     maxMJPerTick := turbines.map(_.maxMJPerTick).sum.toFloat
