@@ -82,3 +82,5 @@ class TileEuOutputLV extends TileEuOutputBase(128, 1)
 class TileEuOutputMV extends TileEuOutputBase(512, 2)
 
 class TileEuOutputHV extends TileEuOutputBase(2048, 3)
+
+class TileEuOutputEV extends TileEuOutputBase(8192, 4)

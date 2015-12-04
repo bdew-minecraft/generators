@@ -48,3 +48,5 @@ object BlockEuOutputLV extends BlockEuOutputBase("EuOutputLV", "lv", classOf[Til
 object BlockEuOutputMV extends BlockEuOutputBase("EuOutputMV", "mv", classOf[TileEuOutputMV])
 
 object BlockEuOutputHV extends BlockEuOutputBase("EuOutputHV", "hv", classOf[TileEuOutputHV])
+
+object BlockEuOutputEV extends BlockEuOutputBase("EuOutputEV", "ev", classOf[TileEuOutputEV])

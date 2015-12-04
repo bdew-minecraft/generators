@@ -5,6 +5,7 @@ tile.advgenerators.FuelTank.name=Fuel Tank
 tile.advgenerators.EuOutputLV.name=LV Emitter
 tile.advgenerators.EuOutputMV.name=MV Emitter
 tile.advgenerators.EuOutputHV.name=HV Emitter
+tile.advgenerators.EuOutputEV.name=EV Emitter
 tile.advgenerators.RFOutput.name=Flux Generator
 tile.advgenerators.steam.name=Steam
 tile.advgenerators.syngas.name=Syngas
