@@ -16,6 +16,7 @@ import net.bdew.generators.modules.turbine.BlockTurbine
 import net.bdew.generators.sensor.Sensors
 import net.bdew.generators.{Generators, GeneratorsResourceProvider}
 import net.bdew.lib.Misc
+import net.bdew.lib.PimpVanilla._
 import net.bdew.lib.data.base.UpdateKind
 import net.bdew.lib.data.{DataSlotDouble, DataSlotInt, DataSlotMovingAverage, DataSlotTank}
 import net.bdew.lib.multiblock.interact.{CIFluidInput, CIOutputFaces, CIPowerProducer}
@@ -83,7 +84,7 @@ class TileSteamTurbineController extends TileControllerGui with PoweredControlle
 
   serverTick.listen(doUpdate)
 
-  override def openGui(player: EntityPlayer) = player.openGui(Generators, cfg.guiId, worldObj, xCoord, yCoord, zCoord)
+  override def openGui(player: EntityPlayer) = player.openGui(Generators, cfg.guiId, worldObj, pos.getX, pos.getY, pos.getZ)
 
   def inputFluid(resource: FluidStack, doFill: Boolean): Int =
     if (canInputFluid(resource.getFluid)) steam.fill(resource, doFill) else 0
@@ -94,13 +95,12 @@ class TileSteamTurbineController extends TileControllerGui with PoweredControlle
   def extract(v: Float, simulate: Boolean) = power.extract(v, simulate)
 
   override def onModulesChanged() {
-    val capacitors = modules.toList.flatMap(_.getBlock[BlockPowerCapacitor](getWorldObj)).map(_.material)
-    power.capacity = cfg.internalPowerCapacity + capacitors.map(_.mjCapacity).sum.toFloat
+    power.capacity = getModuleBlocks[BlockPowerCapacitor].values.map(_.material.mjCapacity).sum.toFloat
 
     if (power.stored > power.capacity)
       power.stored = power.capacity
 
-    val turbines = modules.toList.flatMap(_.getBlock[BlockTurbine](getWorldObj)).map(_.material)
+    val turbines = getModuleBlocks[BlockTurbine].values.map(_.material)
     maxMJPerTick := turbines.map(_.maxMJPerTick).sum
     inertiaMultiplier := turbines.map(_.inertiaMultiplier).sum / turbines.size
     numTurbines := turbines.size

@@ -18,6 +18,7 @@ import net.bdew.generators.modules.turbine.BlockTurbine
 import net.bdew.generators.sensor.Sensors
 import net.bdew.generators.{Generators, GeneratorsResourceProvider}
 import net.bdew.lib.Misc
+import net.bdew.lib.PimpVanilla._
 import net.bdew.lib.data._
 import net.bdew.lib.data.base.UpdateKind
 import net.bdew.lib.multiblock.interact.{CIFluidInput, CIOutputFaces, CIPowerProducer}
@@ -81,7 +82,7 @@ class TileTurbineController extends TileControllerGui with PoweredController wit
 
   serverTick.listen(doUpdate)
 
-  override def openGui(player: EntityPlayer) = player.openGui(Generators, cfg.guiId, worldObj, xCoord, yCoord, zCoord)
+  override def openGui(player: EntityPlayer) = player.openGui(Generators, cfg.guiId, worldObj, pos.getX, pos.getY, pos.getZ)
 
   def inputFluid(resource: FluidStack, doFill: Boolean): Int =
     if (canInputFluid(resource.getFluid)) fuel.fill(resource, doFill) else 0
@@ -97,23 +98,22 @@ class TileTurbineController extends TileControllerGui with PoweredController wit
     if (fuel.getFluid != null && fuel.getFluidAmount > fuel.getCapacity)
       fuel.getFluid.amount = fuel.getCapacity
 
-    val capacitors = modules.toList.flatMap(_.getBlock[BlockPowerCapacitor](getWorldObj)).map(_.material)
-    power.capacity = cfg.internalPowerCapacity + capacitors.map(_.mjCapacity).sum.toFloat
+    power.capacity = getModuleBlocks[BlockPowerCapacitor].values.map(_.material.mjCapacity).sum.toFloat
 
     if (power.stored > power.capacity)
       power.stored = power.capacity
 
-    val turbines = modules.toList.flatMap(_.getBlock[BlockTurbine](getWorldObj)).map(_.material)
+    val turbines = getModuleBlocks[BlockTurbine].values.map(_.material)
     maxMJPerTick := turbines.map(_.maxMJPerTick).sum.toFloat
     numTurbines := turbines.size
 
-    val hasT1Upgrade = modules.exists(_.blockIs(worldObj, BlockEfficiencyUpgradeTier1))
+    val hasT1Upgrade = getModulePositions(BlockEfficiencyUpgradeTier1).nonEmpty
 
-    fuelEfficiency := modules.find(_.blockIs(worldObj, BlockEfficiencyUpgradeTier2)) map { t2 =>
+    fuelEfficiency := getModulePositions(BlockEfficiencyUpgradeTier2).headOption map { t2 =>
       if (hasT1Upgrade) {
         MachineTurbine.fuelEfficiency.getFloat("Tier2")
       } else {
-        t2.getTile[TileModule](worldObj).foreach { tile =>
+        worldObj.getTileSafe[TileModule](t2) foreach { tile =>
           tile.coreRemoved()
           moduleRemoved(tile)
         }

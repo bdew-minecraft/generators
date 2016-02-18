@@ -11,8 +11,9 @@ package net.bdew.generators.modules.itemOutput
 
 import net.bdew.generators.modules.BaseModule
 import net.bdew.lib.multiblock.block.BlockOutput
+import net.minecraft.util.{BlockPos, EnumFacing}
 import net.minecraft.world.IBlockAccess
 
 object BlockItemOutput extends BaseModule("ItemOutput", "ItemOutput", classOf[TileItemOutput]) with BlockOutput[TileItemOutput] {
-  override def canConnectRedstone(world: IBlockAccess, x: Int, y: Int, z: Int, side: Int) = true
+  override def canConnectRedstone(world: IBlockAccess, pos: BlockPos, side: EnumFacing) = true
 }

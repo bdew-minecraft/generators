@@ -1,0 +1,17 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": {
+      "top": "advgenerators:blocks/fluidoutputselect/main",
+      "bottom": "advgenerators:blocks/fluidoutputselect/main",
+      "side": "advgenerators:blocks/fluidoutputselect/main"
+    },
+    "model": "advgenerators:sided_multiblock.extended"
+  },
+  "variants": {
+    "normal": [{}],
+    "inventory": {
+      "transform": "forge:default-block"
+    }
+  }
+}

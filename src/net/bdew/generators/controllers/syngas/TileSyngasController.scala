@@ -118,7 +118,7 @@ class TileSyngasController extends TileControllerGui with CIFluidInput with CIIt
 
   serverTick.listen(doUpdate)
 
-  override def openGui(player: EntityPlayer) = player.openGui(Generators, cfg.guiId, worldObj, xCoord, yCoord, zCoord)
+  override def openGui(player: EntityPlayer) = player.openGui(Generators, cfg.guiId, worldObj, pos.getX, pos.getY, pos.getZ)
 
   def inputFluid(resource: FluidStack, doFill: Boolean): Int =
     if (canInputFluid(resource.getFluid)) {

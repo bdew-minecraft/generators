@@ -11,17 +11,7 @@ package net.bdew.generators
 
 import net.bdew.lib.gui.{Color, ScaledResourceLocation, Texture}
 import net.bdew.lib.multiblock.ResourceProvider
-import net.bdew.lib.render.IconPreloader
-
-object IconCache extends IconPreloader(0) {
-  val edgeIcon = TextureLoc("advgenerators:connected/edge")
-  val output = TextureLoc("advgenerators:connected/output")
-  val disabled = TextureLoc("advgenerators:connected/disabled")
-  val arTop = TextureLoc("advgenerators:connected/artop")
-  val arRight = TextureLoc("advgenerators:connected/arright")
-  val arBottom = TextureLoc("advgenerators:connected/arbottom")
-  val arLeft = TextureLoc("advgenerators:connected/arleft")
-}
+import net.minecraft.util.ResourceLocation
 
 object Textures {
   val sheet = new ScaledResourceLocation(Generators.modId, "textures/gui/widgets.png")
@@ -59,14 +49,10 @@ object Textures {
 }
 
 object GeneratorsResourceProvider extends ResourceProvider {
-  override def edge = IconCache.edgeIcon
-  override def output = IconCache.output
-  override def disabled = IconCache.disabled
-
-  override def arrowBottom = IconCache.arBottom
-  override def arrowRight = IconCache.arRight
-  override def arrowTop = IconCache.arTop
-  override def arrowLeft = IconCache.arLeft
+  override def edge = new ResourceLocation("advgenerators:blocks/connected/edge")
+  override def arrow = new ResourceLocation("advgenerators:blocks/connected/arrow")
+  override def output = new ResourceLocation("advgenerators:blocks/connected/output")
+  override def disabled = new ResourceLocation("advgenerators:blocks/connected/disabled")
 
   override def btRsOff = Textures.Button16.rsOff
   override def btRsOn = Textures.Button16.rsOn

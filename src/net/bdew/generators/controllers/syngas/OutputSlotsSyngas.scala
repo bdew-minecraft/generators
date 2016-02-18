@@ -9,8 +9,8 @@
 
 package net.bdew.generators.controllers.syngas
 
-import cpw.mods.fml.relauncher.{Side, SideOnly}
 import net.bdew.lib.multiblock.data.SlotSet
+import net.minecraftforge.fml.relauncher.{Side, SideOnly}
 
 object OutputSlotsSyngas extends SlotSet("fluidslots_syngas") {
   val SYNGAS = Slot("SYNGAS", "advgenerators.syngas.output.syngas")

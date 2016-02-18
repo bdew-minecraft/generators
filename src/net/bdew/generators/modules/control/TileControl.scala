@@ -13,7 +13,8 @@ import net.bdew.generators.control._
 import net.bdew.lib.data.DataSlotBoolean
 import net.bdew.lib.data.base.{DataSlot, UpdateKind}
 import net.bdew.lib.multiblock.tile.TileModule
-import net.minecraft.block.Block
+import net.minecraft.block.state.IBlockState
+import net.minecraft.util.BlockPos
 import net.minecraft.world.World
 
 class TileControl extends TileModule with MIControl {
@@ -36,10 +37,10 @@ class TileControl extends TileModule with MIControl {
 
   override def getControlState(a: ControlAction): ControlResult.Value =
     if (action :== a)
-      ControlResult.fromBool(mode :== worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord))
+      ControlResult.fromBool(mode :== (worldObj.isBlockIndirectlyGettingPowered(pos) > 0))
     else
       ControlResult.NEUTRAL
 
-  override def shouldRefresh(oldBlock: Block, newBlock: Block, oldMeta: Int, newMeta: Int, world: World, x: Int, y: Int, z: Int): Boolean =
-    newBlock != BlockControl
+  override def shouldRefresh(world: World, pos: BlockPos, oldState: IBlockState, newSate: IBlockState): Boolean =
+    newSate.getBlock != oldState.getBlock
 }

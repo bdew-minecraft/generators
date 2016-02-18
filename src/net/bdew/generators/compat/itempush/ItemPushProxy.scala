@@ -11,9 +11,9 @@ package net.bdew.generators.compat.itempush
 
 import net.minecraft.item.ItemStack
 import net.minecraft.tileentity.TileEntity
-import net.minecraftforge.common.util.ForgeDirection
+import net.minecraft.util.EnumFacing
 
 trait ItemPushProxy {
-  def pushStack(from: TileEntity, dir: ForgeDirection, stack: ItemStack): ItemStack
-  def isValidTarget(from: TileEntity, dir: ForgeDirection): Boolean
+  def pushStack(from: TileEntity, dir: EnumFacing, stack: ItemStack): ItemStack
+  def isValidTarget(from: TileEntity, dir: EnumFacing): Boolean
 }

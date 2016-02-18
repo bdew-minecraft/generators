@@ -27,7 +27,7 @@ object CapacitorMaterials {
   def init(): Unit = {
     for ((name, cfg) <- Tuning.getSection("CapacitorMaterials").filterType(classOf[ConfigSection])) {
       if (cfg.hasValue("ReqOreDict") && OreDictionary.getOres(cfg.getString("ReqOreDict")).isEmpty) {
-        Generators.logInfo("Capaciror material %s not present - skipping", name)
+        Generators.logInfo("Capacitor material %s not present - skipping", name)
       } else {
         Generators.logInfo("Registering capacitor material: %s", name)
         val material = CapacitorMaterial(name,
@@ -40,7 +40,7 @@ object CapacitorMaterials {
           material.kitItem = Some(Items.regItem(new CapacitorUpgradeKit(material)))
 
         // TE's are shared between all turbines so they don't need to be registered here
-        material.capacitorBlock = Some(Blocks.regSpecial(new BlockPowerCapacitor(material), skipTileEntityReg = true))
+        material.capacitorBlock = Some(Blocks.regBlock(new BlockPowerCapacitor(material), skipTileEntityReg = true))
       }
     }
   }

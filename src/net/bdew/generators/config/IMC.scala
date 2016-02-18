@@ -9,11 +9,11 @@
 
 package net.bdew.generators.config
 
-import cpw.mods.fml.common.event.FMLInterModComms.IMCMessage
 import net.bdew.generators.Generators
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.tileentity.TileEntityFurnace
+import net.minecraftforge.fml.common.event.FMLInterModComms.IMCMessage
 
 object IMC {
   def processMessage(msg: IMCMessage): Unit = {

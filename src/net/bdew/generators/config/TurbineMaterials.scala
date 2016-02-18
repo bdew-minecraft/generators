@@ -50,7 +50,7 @@ object TurbineMaterials {
           material.kitItem = Some(Items.regItem(new TurbineUpgradeKit(material)))
 
         // TE's are shared between all turbines so they don't need to be registered here
-        material.turbineBlock = Some(Blocks.regSpecial(new BlockTurbine(material), skipTileEntityReg = true))
+        material.turbineBlock = Some(Blocks.regBlock(new BlockTurbine(material), skipTileEntityReg = true))
       }
     }
   }

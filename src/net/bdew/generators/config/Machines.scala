@@ -9,14 +9,13 @@
 
 package net.bdew.generators.config
 
-import net.bdew.generators.CreativeTabsGenerators
 import net.bdew.generators.controllers.exchanger.MachineExchanger
 import net.bdew.generators.controllers.steam.MachineSteamTurbine
 import net.bdew.generators.controllers.syngas.MachineSyngas
 import net.bdew.generators.controllers.turbine.MachineTurbine
 import net.bdew.lib.config.{MachineManager, MachineManagerMultiblock}
 
-object Machines extends MachineManager(Tuning.getSection("Machines"), Config.guiHandler, CreativeTabsGenerators.main) with MachineManagerMultiblock {
+object Machines extends MachineManager(Tuning.getSection("Machines"), Config.guiHandler, Blocks) with MachineManagerMultiblock {
   registerMachine(MachineTurbine)
   registerMachine(MachineExchanger)
   registerMachine(MachineSteamTurbine)

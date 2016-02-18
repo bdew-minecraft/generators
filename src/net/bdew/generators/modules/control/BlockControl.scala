@@ -9,70 +9,68 @@
 
 package net.bdew.generators.modules.control
 
-import cpw.mods.fml.relauncher.{Side, SideOnly}
 import net.bdew.generators.Generators
 import net.bdew.generators.config.Config
 import net.bdew.generators.modules.BaseModule
-import net.bdew.lib.Misc
 import net.bdew.lib.gui.GuiProvider
 import net.minecraft.block.Block
-import net.minecraft.client.renderer.texture.IIconRegister
+import net.minecraft.block.properties.PropertyBool
+import net.minecraft.block.state.IBlockState
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
-import net.minecraft.util.{ChatComponentTranslation, IIcon}
+import net.minecraft.util.{BlockPos, ChatComponentTranslation, EnumFacing}
 import net.minecraft.world.{IBlockAccess, World}
+import net.minecraftforge.fml.relauncher.{Side, SideOnly}
 
 object BlockControl extends BaseModule("Control", "Control", classOf[TileControl]) with GuiProvider {
   override def guiId = 6
   override type TEClass = TileControl
 
+  object Properties {
+    val POWERED = PropertyBool.create("powered")
+  }
+
+  override def getProperties = super.getProperties :+ Properties.POWERED
+
+  setDefaultState(getDefaultState.withProperty(Properties.POWERED, Boolean.box(true)))
   Config.guiHandler.register(this)
 
   @SideOnly(Side.CLIENT)
   override def getGui(te: TEClass, player: EntityPlayer) = new GuiControl(te, player)
   override def getContainer(te: TEClass, player: EntityPlayer) = new ContainerControl(te, player)
 
-  override def onBlockActivated(world: World, x: Int, y: Int, z: Int, player: EntityPlayer, meta: Int, xOffs: Float, yOffs: Float, zOffs: Float): Boolean = {
+  override def onBlockActivated(world: World, pos: BlockPos, state: IBlockState, player: EntityPlayer, side: EnumFacing, hitX: Float, hitY: Float, hitZ: Float): Boolean = {
     if (player.isSneaking) return false
     if (world.isRemote) return true
-    val te = getTE(world, x, y, z)
+    val te = getTE(world, pos)
     if (te.getCore.isDefined) {
-      player.openGui(Generators, guiId, world, x, y, z)
+      player.openGui(Generators, guiId, world, pos.getX, pos.getY, pos.getZ)
     } else {
       player.addChatMessage(new ChatComponentTranslation("bdlib.multiblock.notconnected"))
     }
     true
   }
 
-  override def canConnectRedstone(world: IBlockAccess, x: Int, y: Int, z: Int, side: Int): Boolean = true
+  override def canConnectRedstone(world: IBlockAccess, pos: BlockPos, side: EnumFacing): Boolean = true
 
-  override def getIcon(side: Int, meta: Int) =
-    if (meta == 1) onIcon else blockIcon
+  override def getMetaFromState(state: IBlockState): Int =
+    if (state.getValue(Properties.POWERED)) 1 else 0
 
-  override def onNeighborBlockChange(world: World, x: Int, y: Int, z: Int, block: Block) {
-    super.onNeighborBlockChange(world, x, y, z, block)
+  override def getStateFromMeta(meta: Int): IBlockState =
+    getDefaultState.withProperty(Properties.POWERED, Boolean.box(meta > 0))
 
-    val meta = world.getBlockMetadata(x, y, z)
-    val powered = world.isBlockIndirectlyGettingPowered(x, y, z)
-    if (powered && (meta == 0))
-      world.setBlockMetadataWithNotify(x, y, z, 1, 2)
-    else if (!powered && (meta > 0))
-      world.setBlockMetadataWithNotify(x, y, z, 0, 2)
-
-    if (!world.isRemote) getTE(world, x, y, z).notifyChange()
+  override def onNeighborBlockChange(world: World, pos: BlockPos, state: IBlockState, neighborBlock: Block): Unit = {
+    super.onNeighborBlockChange(world, pos, state, neighborBlock)
+    val wasPowered = state.getValue(Properties.POWERED)
+    val powered = world.isBlockIndirectlyGettingPowered(pos)
+    if ((powered > 0) ^ wasPowered)
+      world.setBlockState(pos, state.withProperty(Properties.POWERED, Boolean.box(powered > 0)))
+    if (!world.isRemote) getTE(world, pos).notifyChange()
   }
 
-  override def onBlockPlacedBy(world: World, x: Int, y: Int, z: Int, ent: EntityLivingBase, stack: ItemStack): Unit = {
-    super.onBlockPlacedBy(world, x, y, z, ent, stack)
-    onNeighborBlockChange(world, x, y, z, this)
-  }
-
-  var onIcon: IIcon = null
-
-  @SideOnly(Side.CLIENT) override
-  def registerBlockIcons(reg: IIconRegister): Unit = {
-    blockIcon = reg.registerIcon(Misc.iconName(Generators.modId, name, "off"))
-    onIcon = reg.registerIcon(Misc.iconName(Generators.modId, name, "on"))
+  override def onBlockPlacedBy(world: World, pos: BlockPos, state: IBlockState, placer: EntityLivingBase, stack: ItemStack): Unit = {
+    super.onBlockPlacedBy(world, pos, state, placer, stack)
+    onNeighborBlockChange(world, pos, state, this)
   }
 }

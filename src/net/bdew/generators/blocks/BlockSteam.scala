@@ -9,33 +9,13 @@
 
 package net.bdew.generators.blocks
 
-import cpw.mods.fml.relauncher.{Side, SideOnly}
 import net.bdew.generators.Generators
-import net.bdew.lib.Misc
 import net.minecraft.block.material.{MapColor, MaterialLiquid}
-import net.minecraft.client.renderer.texture.IIconRegister
-import net.minecraft.util.IIcon
 import net.minecraftforge.fluids.{BlockFluidClassic, Fluid}
 
 object MaterialSteam extends MaterialLiquid(MapColor.snowColor)
 
 class BlockSteam(fluid: Fluid) extends BlockFluidClassic(fluid, MaterialSteam) {
-  val ownIcons = fluid.getIcon == null
-
-  setBlockName(Generators.modId + ".steam")
-
-  @SideOnly(Side.CLIENT)
-  override def getIcon(side: Int, meta: Int): IIcon =
-    if (side == 0 || side == 1)
-      fluid.getStillIcon
-    else
-      fluid.getFlowingIcon
-
-  @SideOnly(Side.CLIENT)
-  override def registerBlockIcons(register: IIconRegister) {
-    if (ownIcons) {
-      fluid.setStillIcon(register.registerIcon(Misc.iconName(Generators.modId, "steam", "still")))
-      fluid.setFlowingIcon(register.registerIcon(Misc.iconName(Generators.modId, "steam", "flowing")))
-    }
-  }
+  setRegistryName(Generators.modId, "steam")
+  setUnlocalizedName(Generators.modId + ".steam")
 }

@@ -16,15 +16,15 @@ import net.bdew.lib.multiblock.data.OutputConfigFluidSlots
 import net.bdew.lib.multiblock.interact.CIFluidOutputSelect
 import net.bdew.lib.multiblock.tile.{RSControllableOutput, TileOutput}
 import net.bdew.pressure.api.{IPressureConnectableBlock, IPressureConnection, IPressureInject, PressureAPI}
+import net.minecraft.util.{BlockPos, EnumFacing}
 import net.minecraft.world.IBlockAccess
-import net.minecraftforge.common.util.ForgeDirection
 
 object BlockPressureOutput extends BaseModule("PressureOutputSelect", "FluidOutputSelect", classOf[TilePressureOutput])
-with BlockOutput[TilePressureOutput] with BlockNotifyUpdates with IPressureConnectableBlock {
-  override def canConnectTo(world: IBlockAccess, x: Int, y: Int, z: Int, side: ForgeDirection) =
-    getTE(world, x, y, z).getCore.isDefined
-  override def isTraversable(world: IBlockAccess, x: Int, y: Int, z: Int) = false
-  override def canConnectRedstone(world: IBlockAccess, x: Int, y: Int, z: Int, side: Int) = true
+  with BlockOutput[TilePressureOutput] with BlockNotifyUpdates with IPressureConnectableBlock {
+  override def canConnectTo(world: IBlockAccess, pos: BlockPos, side: EnumFacing) =
+    getTE(world, pos).exists(_.getCore.isDefined)
+  override def isTraversable(world: IBlockAccess, pos: BlockPos) = false
+  override def canConnectRedstone(world: IBlockAccess, pos: BlockPos, side: EnumFacing) = true
 }
 
 class TilePressureOutput extends TileOutput[OutputConfigFluidSlots] with PressureModule with RSControllableOutput with IPressureInject {
@@ -34,18 +34,16 @@ class TilePressureOutput extends TileOutput[OutputConfigFluidSlots] with Pressur
 
   override def getCore = getCoreAs[CIFluidOutputSelect]
 
-  override def canConnectToFace(d: ForgeDirection) = {
-    val t = myPos.neighbour(d)
-    PressureAPI.HELPER.canPipeConnectFrom(worldObj, t.x, t.y, t.z, d.getOpposite)
-  }
+  override def canConnectToFace(d: EnumFacing) =
+    PressureAPI.HELPER.canPipeConnectFrom(worldObj, pos.offset(d), d.getOpposite)
 
-  override def makeCfgObject(face: ForgeDirection) = new OutputConfigFluidSlots(getCore.get.outputSlotsDef)
+  override def makeCfgObject(face: EnumFacing) = new OutputConfigFluidSlots(getCore.get.outputSlotsDef)
 
-  override def invalidateConnection(direction: ForgeDirection) = connections -= direction
+  override def invalidateConnection(direction: EnumFacing) = connections -= direction
 
-  var connections = Map.empty[ForgeDirection, IPressureConnection]
+  var connections = Map.empty[EnumFacing, IPressureConnection]
 
-  override def doOutput(face: ForgeDirection, cfg: OutputConfigFluidSlots) = {
+  override def doOutput(face: EnumFacing, cfg: OutputConfigFluidSlots) = {
     val outputted = if (checkCanOutput(cfg)) {
       if (!connections.isDefinedAt(face))
         connections ++= Option(PressureAPI.HELPER.recalculateConnectionInfo(this, face)) map { cObj => face -> cObj }

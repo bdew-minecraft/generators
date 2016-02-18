@@ -14,25 +14,18 @@ import net.bdew.generators.config.Tuning
 import net.bdew.lib.Misc
 
 object PowerProxy {
-  final val IC2_MOD_ID = "IC2"
-  final val TE_MOD_ID = "CoFHAPI"
+  final val RF_API_ID = "CoFHAPI|energy"
 
-  lazy val EUEnabled = Tuning.getSection("Power").getSection("EU").getBoolean("Enabled")
   lazy val RFEnabled = Tuning.getSection("Power").getSection("RF").getBoolean("Enabled")
 
-  lazy val haveIC2 = Misc.haveModVersion(IC2_MOD_ID)
-  lazy val haveTE = Misc.haveModVersion(TE_MOD_ID)
-  lazy val haveBCFuel = Misc.haveModVersion("BuildCraftAPI|fuels@[2.0,)")
-  lazy val haveMekanismGasApi = Misc.haveModVersion("MekanismAPI|gas@[8.0.0,)")
+  lazy val haveRF = Misc.haveModVersion(RF_API_ID)
 
   def logModVersions() {
-    if (!haveIC2 && !haveTE) {
+    if (!haveRF) {
       Generators.logWarn("No useable energy system detected")
-      Generators.logWarn("This mod requires at least one of the following mods to function properly:")
-      Generators.logWarn("* CoFHCore (or any mod that includes the API)")
-      Generators.logWarn("* IC2 Experimental")
+      Generators.logWarn("This mod requires at least one of the following mods/APIs to function properly:")
+      Generators.logWarn("* Official RF API")
     }
-    Generators.logInfo("IC2 Version: %s", Misc.getModVersionString(IC2_MOD_ID))
-    Generators.logInfo("RF Version: %s", Misc.getModVersionString(TE_MOD_ID))
+    Generators.logInfo("RF Version: %s", Misc.getModVersionString(RF_API_ID))
   }
 }

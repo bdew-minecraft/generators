@@ -1,0 +1,17 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": {
+      "top": "advgenerators:blocks/heatexchanger/main",
+      "bottom": "advgenerators:blocks/heatexchanger/main",
+      "side": "advgenerators:blocks/heatexchanger/main"
+    },
+    "model": "advgenerators:sided_multiblock.extended"
+  },
+  "variants": {
+    "normal": [{}],
+    "inventory": {
+      "transform": "forge:default-block"
+    }
+  }
+}

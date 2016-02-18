@@ -1,0 +1,27 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": {
+      "top": "advgenerators:blocks/control/off",
+      "bottom": "advgenerators:blocks/control/off",
+      "side": "advgenerators:blocks/control/off"
+    },
+    "model": "advgenerators:sided_multiblock.extended"
+  },
+  "variants": {
+    "powered": {
+      "true": {
+        "textures": {
+          "top": "advgenerators:blocks/control/on",
+          "bottom": "advgenerators:blocks/control/on",
+          "side": "advgenerators:blocks/control/on"
+        }
+      },
+      "false": {
+      }
+    },
+    "inventory": {
+      "transform": "forge:default-block"
+    }
+  }
+}

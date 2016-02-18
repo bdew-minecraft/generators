@@ -12,94 +12,68 @@ package net.bdew.generators.blocks
 import java.util
 import java.util.Random
 
-import cpw.mods.fml.relauncher.{Side, SideOnly}
 import net.bdew.generators.{Generators, config}
-import net.bdew.lib.Misc
-import net.bdew.lib.block.{BlockRef, SimpleBlock}
+import net.bdew.lib.PimpVanilla._
+import net.bdew.lib.block.BaseBlock
 import net.minecraft.block.Block
 import net.minecraft.block.material.{MapColor, MaterialLiquid}
-import net.minecraft.client.renderer.texture.IIconRegister
+import net.minecraft.block.state.IBlockState
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.Entity
 import net.minecraft.init.Blocks
-import net.minecraft.item.Item
-import net.minecraft.util.IIcon
+import net.minecraft.item.{Item, ItemStack}
+import net.minecraft.util.{BlockPos, EnumWorldBlockLayer}
 import net.minecraft.world.{Explosion, World}
 import net.minecraftforge.fluids.{BlockFluidClassic, Fluid}
 
 object MaterialSyngas extends MaterialLiquid(MapColor.greenColor)
 
-object BlockSyngasFlaming extends SimpleBlock("syngas_flaming", MaterialSyngas) {
+object BlockSyngasFlaming extends BaseBlock("syngas_flaming", MaterialSyngas) {
   // This is a technical block used to delay chain explosions
 
-  override def getSubBlocks(item: Item, tab: CreativeTabs, list: util.List[_]) = {}
-
-  override def getRenderBlockPass = 1
+  override def getSubBlocks(itemIn: Item, tab: CreativeTabs, list: util.List[ItemStack]): Unit = {}
 
   override def canDropFromExplosion(exp: Explosion) = false
 
-  override def updateTick(w: World, x: Int, y: Int, z: Int, rnd: Random): Unit = {
+  override def getBlockLayer = EnumWorldBlockLayer.TRANSLUCENT
+
+  override def updateTick(w: World, pos: BlockPos, state: IBlockState, rnd: Random): Unit = {
     if (!w.isRemote) {
-      w.setBlockToAir(x, y, z)
-      w.createExplosion(null, x, y, z, 5, true)
+      w.setBlockToAir(pos)
+      w.createExplosion(null, pos.getX, pos.getY, pos.getZ, 5, true)
     }
   }
-
-  override def getIcon(side: Int, meta: Int): IIcon =
-    config.Blocks.syngasFluid.getStillIcon
-
-  @SideOnly(Side.CLIENT) override
-  def registerBlockIcons(reg: IIconRegister): Unit = {}
 }
 
 class BlockSyngas(fluid: Fluid) extends BlockFluidClassic(fluid, MaterialSyngas) {
   val openFlames = Set(Blocks.fire, Blocks.torch, Blocks.lava, Blocks.flowing_lava)
 
-  val ownIcons = fluid.getIcon == null
-
-  setBlockName(Generators.modId + ".syngas")
+  setRegistryName(Generators.modId, "syngas")
+  setUnlocalizedName(Generators.modId + ".syngas")
 
   config.Blocks.regBlock(BlockSyngasFlaming)
 
-  override def onNeighborBlockChange(world: World, x: Int, y: Int, z: Int, block: Block): Unit = {
-    super.onNeighborBlockChange(world, x, y, z, block)
+  override def onNeighborBlockChange(world: World, pos: BlockPos, state: IBlockState, neighborBlock: Block): Unit = {
+    super.onNeighborBlockChange(world, pos, state, neighborBlock)
     if (!world.isRemote) {
-      for {
-        (dir, nRef) <- BlockRef(x, y, z).neighbours
-        nBlock <- nRef.block(world) if openFlames.contains(nBlock)
-      } {
-        world.setBlockToAir(x, y, z)
-        world.createExplosion(null, x, y, z, 5, true)
+      for (nPos <- pos.neighbours.values if openFlames.contains(world.getBlockState(nPos).getBlock)) {
+        world.setBlockToAir(pos)
+        world.createExplosion(null, pos.getX, pos.getY, pos.getZ, 5, true)
       }
     }
   }
 
-  override def onEntityCollidedWithBlock(world: World, x: Int, y: Int, z: Int, ent: Entity) = {
+  override def onEntityCollidedWithBlock(world: World, pos: BlockPos, ent: Entity) = {
     if (ent.isBurning && !world.isRemote) {
-      world.setBlockToAir(x, y, z)
-      world.createExplosion(null, x, y, z, 5, true)
+      world.setBlockToAir(pos)
+      world.createExplosion(null, pos.getX, pos.getY, pos.getZ, 5, true)
     }
   }
 
-  override def onBlockDestroyedByExplosion(world: World, x: Int, y: Int, z: Int, exp: Explosion): Unit = {
+  override def onBlockDestroyedByExplosion(world: World, pos: BlockPos, exp: Explosion): Unit = {
     if (!world.isRemote) {
-      world.scheduleBlockUpdate(x, y, z, BlockSyngasFlaming, world.rand.nextInt(5))
-      world.setBlock(x, y, z, BlockSyngasFlaming, 15, 3)
-    }
-  }
-
-  @SideOnly(Side.CLIENT)
-  override def getIcon(side: Int, meta: Int): IIcon =
-    if (side == 0 || side == 1)
-      fluid.getStillIcon
-    else
-      fluid.getFlowingIcon
-
-  @SideOnly(Side.CLIENT)
-  override def registerBlockIcons(register: IIconRegister) {
-    if (ownIcons) {
-      fluid.setStillIcon(register.registerIcon(Misc.iconName(Generators.modId, "syngas", "still")))
-      fluid.setFlowingIcon(register.registerIcon(Misc.iconName(Generators.modId, "syngas", "flowing")))
+      world.scheduleUpdate(pos, BlockSyngasFlaming, world.rand.nextInt(5))
+      world.setBlockState(pos, BlockSyngasFlaming.getDefaultState, 3)
     }
   }
 }

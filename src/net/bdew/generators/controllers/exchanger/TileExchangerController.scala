@@ -22,9 +22,7 @@ import net.bdew.lib.resource._
 import net.bdew.lib.sensors.multiblock.CIRedstoneSensors
 import net.bdew.lib.tile.inventory.MultipleInventoryAdapter
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.nbt.NBTTagCompound
 import net.minecraftforge.fluids.{Fluid, FluidStack}
-import net.minecraftforge.oredict.OreDictionary
 
 class TileExchangerController extends TileControllerGui with CIFluidInput with CIOutputFaces with CIFluidOutputSelect with CIItemOutput with CIRedstoneSensors with CIControl {
   val cfg = MachineExchanger
@@ -112,7 +110,7 @@ class TileExchangerController extends TileControllerGui with CIFluidInput with C
 
   serverTick.listen(doUpdate)
 
-  override def openGui(player: EntityPlayer) = player.openGui(Generators, cfg.guiId, worldObj, xCoord, yCoord, zCoord)
+  override def openGui(player: EntityPlayer) = player.openGui(Generators, cfg.guiId, worldObj, pos.getX, pos.getY, pos.getZ)
 
   override def inputFluid(resource: FluidStack, doFill: Boolean): Int = {
     val res = Resource.from(resource)
@@ -167,19 +165,6 @@ class TileExchangerController extends TileControllerGui with CIFluidInput with C
   override def getItemOutputInventory = outInventory
 
   override def canOutputItemFromSlot(slot: Int) = true
-
-  override def doLoad(kind: UpdateKind.Value, t: NBTTagCompound) {
-    super.doLoad(kind, t)
-    if (kind == UpdateKind.SAVE) {
-      heaterOut.resource match {
-        case Some(Resource(ItemResource(item, dmg), amt)) if dmg == OreDictionary.WILDCARD_VALUE =>
-          heaterOut.resource = Some(Resource(ItemResource(item, 0), amt))
-          Generators.logInfo("Heat exchanger at %d, %d, %d contains item with wildcard damage in output slot, resetting to 0 - %s",
-            xCoord, yCoord, zCoord, heaterOut.resource)
-        case _ =>
-      }
-    }
-  }
 
   override def redstoneSensorsType = Sensors.exchangerSensors
   override def redstoneSensorSystem = Sensors

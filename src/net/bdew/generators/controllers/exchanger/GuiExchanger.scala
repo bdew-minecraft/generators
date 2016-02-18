@@ -11,7 +11,7 @@ package net.bdew.generators.controllers.exchanger
 
 import net.bdew.generators.gui.{GuiOutputConfig, GuiOutputFaces, WidgetRateInfo, WidgetResourceGauge}
 import net.bdew.generators.network.{NetworkHandler, PktDumpBuffers}
-import net.bdew.generators.{Generators, IconCache, Textures}
+import net.bdew.generators.{Generators, Textures}
 import net.bdew.lib.gui._
 import net.bdew.lib.gui.widgets.{WidgetButtonIcon, WidgetLabel}
 import net.bdew.lib.multiblock.gui.WidgetInfo
@@ -56,7 +56,7 @@ class GuiExchanger(val te: TileExchangerController, player: EntityPlayer) extend
       Misc.toLocal("advgenerators.label.exchanger.heatloss")))
 
     widgets.add(new WidgetRateInfo(Rect(75, 54, 59, 10),
-      te.lastInput map (_.getTexture) getOrElse IconCache.disabled,
+      te.lastInput map (_.getTexture) getOrElse Texture(te.resources.disabled),
       te.lastInput map (_.getColor) getOrElse Color.red,
       formatFlowRate(te.lastInput, te.inputRate.average),
       te.lastInput map (x => Misc.toLocalF("advgenerators.label.exchanger.inrate", x.getLocalizedName))
@@ -64,7 +64,7 @@ class GuiExchanger(val te: TileExchangerController, player: EntityPlayer) extend
     ))
 
     widgets.add(new WidgetRateInfo(Rect(75, 65, 59, 10),
-      te.lastOutput map (_.getTexture) getOrElse IconCache.disabled,
+      te.lastOutput map (_.getTexture) getOrElse Texture(te.resources.disabled),
       te.lastOutput map (_.getColor) getOrElse Color.red,
       formatFlowRate(te.lastOutput, te.outputRate.average),
       te.lastOutput map (x => Misc.toLocalF("advgenerators.label.exchanger.outrate", x.getLocalizedName))

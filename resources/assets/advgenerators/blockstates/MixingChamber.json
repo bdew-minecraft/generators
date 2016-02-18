@@ -1,0 +1,17 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": {
+      "top": "advgenerators:blocks/mixingchamber/main",
+      "bottom": "advgenerators:blocks/mixingchamber/main",
+      "side": "advgenerators:blocks/mixingchamber/main"
+    },
+    "model": "advgenerators:sided_multiblock.extended"
+  },
+  "variants": {
+    "normal": [{}],
+    "inventory": {
+      "transform": "forge:default-block"
+    }
+  }
+}

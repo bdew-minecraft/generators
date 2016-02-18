@@ -9,6 +9,7 @@
 
 package net.bdew.generators.control
 
+import net.bdew.lib.PimpVanilla._
 import net.bdew.lib.multiblock.tile.TileController
 
 trait CIControl extends TileController {
@@ -17,7 +18,7 @@ trait CIControl extends TileController {
   def availableControlActions: List[ControlAction]
 
   def onControlStateChanged(): Unit = {
-    val controlModules = modules.flatMap(_.getTile[MIControl](getWorldObject))
+    val controlModules = getModuleTiles[MIControl]
     val result = for (action <- availableControlActions) yield {
       val results = controlModules.map(_.getControlState(action))
       action -> (

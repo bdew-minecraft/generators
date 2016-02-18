@@ -14,6 +14,7 @@ import net.bdew.lib.multiblock.tile.TileModule
 import net.bdew.lib.tile.inventory.InventoryProxy
 import net.minecraft.inventory.ISidedInventory
 import net.minecraft.item.ItemStack
+import net.minecraft.util.EnumFacing
 
 class TileItemInput extends TileModule with InventoryProxy with ISidedInventory {
   val kind = "ItemInput"
@@ -21,14 +22,14 @@ class TileItemInput extends TileModule with InventoryProxy with ISidedInventory 
   override def getCore = getCoreAs[CIItemInput]
   override def targetInventory = getCore map (_.getItemInputInventory)
 
-  override def getAccessibleSlotsFromSide(side: Int) =
+  override def getSlotsForFace(side: EnumFacing): Array[Int] =
     (for {
       core <- getCore.toList // because for comprehension can't have lists after options... *facepalm*
       slot <- 0 until core.getItemInputInventory.getSizeInventory
       if core.canInputItemToSlot(slot)
     } yield slot).toArray
 
-  override def canExtractItem(slot: Int, item: ItemStack, side: Int) = false
-  override def canInsertItem(slot: Int, item: ItemStack, side: Int) =
+  override def canExtractItem(slot: Int, item: ItemStack, side: EnumFacing) = false
+  override def canInsertItem(slot: Int, item: ItemStack, side: EnumFacing) =
     getCore.exists(c => c.canInputItemToSlot(slot) && c.getItemInputInventory.isItemValidForSlot(slot, item))
 }

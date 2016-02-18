@@ -14,6 +14,7 @@ import net.bdew.generators.gui.{GuiOutputConfig, GuiOutputFaces, WidgetPowerGaug
 import net.bdew.generators.modules.turbine.BlockTurbine
 import net.bdew.generators.network.{NetworkHandler, PktDumpBuffers}
 import net.bdew.generators.{Generators, Textures}
+import net.bdew.lib.PimpVanilla._
 import net.bdew.lib.gui._
 import net.bdew.lib.gui.widgets.{WidgetButtonIcon, WidgetFluidGauge, WidgetLabel}
 import net.bdew.lib.multiblock.gui.{WidgetInfo, WidgetInfoMulti}
@@ -39,7 +40,7 @@ class GuiSteamTurbine(val te: TileSteamTurbineController, player: EntityPlayer) 
       hover = Misc.toLocal("advgenerators.gui.dump")
     })
 
-    val steamTexture = new IconWrapper(Texture.BLOCKS, Blocks.steamFluid.getStillIcon)
+    val steamTexture = Texture(Blocks.steamFluid.getStill)
 
     widgets.add(new WidgetLabel(Misc.toLocal("advgenerators.gui.turbine.steam.title"), 8, 6, Color.darkGray))
     widgets.add(new WidgetLabel(Misc.toLocal("container.inventory"), 8, this.ySize - 96 + 3, Color.darkGray))
@@ -48,7 +49,7 @@ class GuiSteamTurbine(val te: TileSteamTurbineController, player: EntityPlayer) 
       Textures.Icons.turbine,
       te.numTurbines.value.toString,
       List(Misc.toLocal("advgenerators.label.turbine.turbines")) ++
-        te.modules.toList.flatMap(_.getBlock[BlockTurbine](te.getWorldObject))
+        te.getModuleBlocks[BlockTurbine].values
           .groupBy(identity).mapValues(_.size).toList.sortBy(_._2)
           .map(x => "%d x %s".format(x._2, x._1.getLocalizedName))
     ))

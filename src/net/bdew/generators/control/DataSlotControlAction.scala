@@ -13,10 +13,11 @@ import net.bdew.lib.data.base.{DataSlotContainer, DataSlotVal, UpdateKind}
 import net.minecraft.nbt.NBTTagCompound
 
 case class DataSlotControlAction(name: String, parent: DataSlotContainer) extends DataSlotVal[ControlAction] {
-  override var value: ControlAction = ControlActions.disabled
-  override def load(t: NBTTagCompound, kind: UpdateKind.Value): Unit = {
-    value = ControlActions.registry.getOrElse(t.getString(name), ControlActions.disabled)
-  }
+  override def default: ControlAction = ControlActions.disabled
+
+  override def loadValue(t: NBTTagCompound, kind: UpdateKind.Value): ControlAction =
+    ControlActions.registry.getOrElse(t.getString(name), ControlActions.disabled)
+
   override def save(t: NBTTagCompound, kind: UpdateKind.Value): Unit = {
     t.setString(name, value.uid)
   }

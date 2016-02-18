@@ -10,10 +10,11 @@
 package net.bdew.generators.modules.fluidOutputSelect
 
 import net.bdew.lib.Misc
+import net.bdew.lib.PimpVanilla._
 import net.bdew.lib.multiblock.data.OutputConfigFluidSlots
 import net.bdew.lib.multiblock.interact.CIFluidOutputSelect
 import net.bdew.lib.multiblock.tile.{RSControllableOutput, TileOutput}
-import net.minecraftforge.common.util.ForgeDirection
+import net.minecraft.util.EnumFacing
 import net.minecraftforge.fluids.{Fluid, FluidStack, IFluidHandler}
 
 class TileFluidOutputSelect extends TileOutput[OutputConfigFluidSlots] with RSControllableOutput with IFluidHandler {
@@ -22,24 +23,24 @@ class TileFluidOutputSelect extends TileOutput[OutputConfigFluidSlots] with RSCo
   override def getCore = getCoreAs[CIFluidOutputSelect]
   override val outputConfigType = classOf[OutputConfigFluidSlots]
 
-  override def canConnectToFace(d: ForgeDirection) =
+  override def canConnectToFace(d: EnumFacing) =
     getCore exists { core =>
-      myPos.neighbour(d).getTile[IFluidHandler](worldObj).isDefined
+      worldObj.getTileEntity(pos.offset(d)).isInstanceOf[IFluidHandler]
     }
 
-  override def fill(from: ForgeDirection, resource: FluidStack, doFill: Boolean) = 0
-  override def canFill(from: ForgeDirection, fluid: Fluid) = false
+  override def fill(from: EnumFacing, resource: FluidStack, doFill: Boolean) = 0
+  override def canFill(from: EnumFacing, fluid: Fluid) = false
 
-  override def getTankInfo(from: ForgeDirection) =
+  override def getTankInfo(from: EnumFacing) =
     getCore map (_.getTankInfo) getOrElse Array.empty
 
-  override def makeCfgObject(face: ForgeDirection) = new OutputConfigFluidSlots(getCore.get.outputSlotsDef)
+  override def makeCfgObject(face: EnumFacing) = new OutputConfigFluidSlots(getCore.get.outputSlotsDef)
 
-  override def doOutput(face: ForgeDirection, cfg: OutputConfigFluidSlots) {
+  override def doOutput(face: EnumFacing, cfg: OutputConfigFluidSlots) {
     val outputted = if (checkCanOutput(cfg)) {
       for {
         core <- getCore
-        target <- myPos.neighbour(face).getTile[IFluidHandler](worldObj)
+        target <- worldObj.getTileSafe[IFluidHandler](pos.offset(face))
         tSlot <- Misc.asInstanceOpt(cfg.slot, classOf[core.outputSlotsDef.Slot])
         toSend <- Option(core.outputFluid(tSlot, Int.MaxValue, false))
       } yield {
@@ -54,8 +55,8 @@ class TileFluidOutputSelect extends TileOutput[OutputConfigFluidSlots] with RSCo
     cfg.updateAvg(outputted.getOrElse(0).toDouble)
   }
 
-  override def canDrain(from: ForgeDirection, fluid: Fluid) = false
+  override def canDrain(from: EnumFacing, fluid: Fluid) = false
 
-  override def drain(from: ForgeDirection, resource: FluidStack, doDrain: Boolean) = null
-  override def drain(from: ForgeDirection, maxDrain: Int, doDrain: Boolean) = null
+  override def drain(from: EnumFacing, resource: FluidStack, doDrain: Boolean) = null
+  override def drain(from: EnumFacing, maxDrain: Int, doDrain: Boolean) = null
 }

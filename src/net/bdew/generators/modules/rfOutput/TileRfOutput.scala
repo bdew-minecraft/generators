@@ -12,36 +12,33 @@ package net.bdew.generators.modules.rfOutput
 import cofh.api.energy.{IEnergyHandler, IEnergyReceiver}
 import net.bdew.generators.config.Tuning
 import net.bdew.generators.controllers.PoweredController
+import net.bdew.lib.PimpVanilla._
 import net.bdew.lib.multiblock.data.OutputConfigPower
 import net.bdew.lib.multiblock.interact.CIPowerProducer
 import net.bdew.lib.multiblock.tile.{RSControllableOutput, TileOutput}
-import net.minecraftforge.common.util.ForgeDirection
+import net.minecraft.util.EnumFacing
 
 class TileRfOutput extends TileOutput[OutputConfigPower] with RSControllableOutput with IEnergyHandler {
   val kind = "PowerOutput"
 
   override val outputConfigType = classOf[OutputConfigPower]
-  override def makeCfgObject(face: ForgeDirection) = new OutputConfigPower("RF")
+  override def makeCfgObject(face: EnumFacing) = new OutputConfigPower("RF")
 
   val ratio = Tuning.getSection("Power").getFloat("RF_MJ_Ratio")
 
-  override def receiveEnergy(from: ForgeDirection, maxReceive: Int, simulate: Boolean): Int = 0
-  override def extractEnergy(from: ForgeDirection, maxExtract: Int, simulate: Boolean): Int = 0
-  override def canConnectEnergy(p1: ForgeDirection) = true
-  override def getEnergyStored(from: ForgeDirection): Int =
+  override def canConnectEnergy(p1: EnumFacing) = true
+  override def getEnergyStored(from: EnumFacing): Int =
     getCoreAs[PoweredController].map(c => (c.power.stored * ratio).toInt) getOrElse 0
-  override def getMaxEnergyStored(from: ForgeDirection): Int =
+  override def getMaxEnergyStored(from: EnumFacing): Int =
     getCoreAs[PoweredController].map(c => (c.power.capacity * ratio).toInt) getOrElse 0
 
-  override def canConnectToFace(d: ForgeDirection): Boolean = {
-    val tile = myPos.neighbour(d).getTile[IEnergyHandler](worldObj).getOrElse(return false)
-    return tile.canConnectEnergy(d.getOpposite)
-  }
+  override def canConnectToFace(d: EnumFacing): Boolean =
+    worldObj.getTileSafe[IEnergyReceiver](pos.offset(d)).exists(t => t.canConnectEnergy(d.getOpposite))
 
-  override def doOutput(face: ForgeDirection, cfg: OutputConfigPower) {
+  override def doOutput(face: EnumFacing, cfg: OutputConfigPower) {
     getCoreAs[CIPowerProducer] foreach { core =>
       val out = if (checkCanOutput(cfg)) {
-        myPos.neighbour(face).getTile[IEnergyReceiver](worldObj) map { tile =>
+        worldObj.getTileSafe[IEnergyReceiver](pos.offset(face)) map { tile =>
           val canExtract = core.extract(Int.MaxValue, true)
           val injected = tile.receiveEnergy(face.getOpposite, (canExtract * ratio).toInt, false)
           core.extract(injected / ratio, false)

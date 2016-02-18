@@ -9,18 +9,16 @@
 
 package net.bdew.generators.config.loader
 
-import cofh.api.modhelpers.ThermalExpansionHelper
-import cpw.mods.fml.common.event.FMLInterModComms
 import net.bdew.generators.Generators
 import net.bdew.generators.compat.EnderIOXmlEncoder
 import net.bdew.generators.config.{CarbonValueRegistry, ExchangerRegistry, Tuning, TurbineFuel}
-import net.bdew.lib.Misc
 import net.bdew.lib.recipes.gencfg.GenericConfigLoader
 import net.bdew.lib.recipes.{RecipeLoader, RecipeStatement}
 import net.bdew.lib.resource.{FluidResource, ItemResource, Resource}
 import net.minecraft.item.ItemStack
 import net.minecraft.tileentity.TileEntityFurnace
 import net.minecraftforge.fluids.FluidRegistry
+import net.minecraftforge.fml.common.event.FMLInterModComms
 import net.minecraftforge.oredict.OreDictionary
 
 class Loader extends RecipeLoader with GenericConfigLoader {
@@ -126,14 +124,16 @@ class Loader extends RecipeLoader with GenericConfigLoader {
       FMLInterModComms.sendMessage("EnderIO", enderIOXmlEncoder.IDSagMill, xml)
 
     case RsTESmelter(in1, in2, out1, out2, energy, chance) =>
-      if (!Misc.haveModVersion("ThermalExpansion")) error("Trying to register TE recipe without TE loaded")
-      Generators.logDebug("Registering ThermalExpansion smelter recipe: %s, %s -> %s, %s (%d rf)", in1, in2, out1, out2, energy)
-      val in1s = forceNoWildcardDamage(getConcreteStackCount(in1))
-      val in2s = in2.map(x => forceNoWildcardDamage(getConcreteStackCount(x))).orNull
-      val out1s = forceNoWildcardDamage(getConcreteStackCount(out1))
-      val out2s = out2.map(x => forceNoWildcardDamage(getConcreteStackCount(x))).orNull
-      Generators.logDebug("resolved items: %s, %s -> %s, %s", in1s, in2s, out1s, out2s, energy)
-      ThermalExpansionHelper.addSmelterRecipe(energy, in1s, in2s, out1s, out2s, chance)
+      error("TE support is currently unavailable")
+    // FIXME: Reenable when TE is out
+    //      if (!Misc.haveModVersion("ThermalExpansion")) error("Trying to register TE recipe without TE loaded")
+    //      Generators.logDebug("Registering ThermalExpansion smelter recipe: %s, %s -> %s, %s (%d rf)", in1, in2, out1, out2, energy)
+    //      val in1s = forceNoWildcardDamage(getConcreteStackCount(in1))
+    //      val in2s = in2.map(x => forceNoWildcardDamage(getConcreteStackCount(x))).orNull
+    //      val out1s = forceNoWildcardDamage(getConcreteStackCount(out1))
+    //      val out2s = out2.map(x => forceNoWildcardDamage(getConcreteStackCount(x))).orNull
+    //      Generators.logDebug("resolved items: %s, %s -> %s, %s", in1s, in2s, out1s, out2s, energy)
+    //      ThermalExpansionHelper.addSmelterRecipe(energy, in1s, in2s, out1s, out2s, chance)
 
     case _ => super.processRecipeStatement(st)
   }

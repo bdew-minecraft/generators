@@ -9,7 +9,7 @@
 
 package net.bdew.generators.items
 
-import net.bdew.lib.block.BlockRef
+import net.bdew.lib.PimpVanilla._
 import net.bdew.lib.items.ItemUtils
 import net.bdew.lib.multiblock.block.BlockModule
 import net.bdew.lib.multiblock.tile.{TileController, TileModule}
@@ -17,18 +17,20 @@ import net.bdew.lib.nbt.NBT
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.{Item, ItemStack}
 import net.minecraft.nbt.NBTTagCompound
+import net.minecraft.util.{BlockPos, EnumFacing}
 import net.minecraft.world.World
 
 trait UpgradeKit extends Item {
-  def canUpgradeBlock(pos: BlockRef, world: World): Boolean
-  def getNewBlock(pos: BlockRef, world: World): BlockModule[_]
-  def getReturnedItems(pos: BlockRef, world: World): Traversable[ItemStack]
+  def canUpgradeBlock(pos: BlockPos, world: World): Boolean
+  def getNewBlock(pos: BlockPos, world: World): BlockModule[_]
+  def getReturnedItems(pos: BlockPos, world: World): Traversable[ItemStack]
   def saveData(te: TileModule) = NBT.from(te.writeToNBT)
   def restoreData(te: TileModule, data: NBTTagCompound) = te.readFromNBT(data)
 
-  private def getController(pos: BlockRef, world: World) = pos.getTile[TileModule](world) flatMap (_.getCore) orElse pos.getTile[TileController](world)
+  private def getController(pos: BlockPos, world: World) =
+    world.getTileSafe[TileModule](pos) flatMap (_.getCore) orElse world.getTileSafe[TileController](pos)
 
-  private def doUpgrade(pos: BlockRef, world: World, player: EntityPlayer): Unit = {
+  private def doUpgrade(pos: BlockPos, world: World, player: EntityPlayer): Unit = {
     if (!world.isRemote) {
       // If player not in creative, use up kit and give returned item(s)
       if (!player.capabilities.isCreativeMode) {
@@ -36,8 +38,9 @@ trait UpgradeKit extends Item {
         for (item <- getReturnedItems(pos, world))
           ItemUtils.dropItemToPlayer(world, player, item)
       }
+
       // Save old connection info
-      val oldTile = pos.getTile[TileModule](world).get
+      val oldTile = world.getTileSafe[TileModule](pos).get
       val oldConnected = oldTile.connected.value
 
       // Cleanly remove old tile from multiblock (if any)
@@ -48,18 +51,17 @@ trait UpgradeKit extends Item {
       val oldData = saveData(oldTile)
 
       // Place new block and grab new TE
-      world.setBlock(pos.x, pos.y, pos.z, getNewBlock(pos, world), 0, 3)
-      val newTile = pos.getTile[TileModule](world).get
+      world.setBlockState(pos, getNewBlock(pos, world).getDefaultState, 3)
+      val newTile = world.getTileSafe[TileModule](pos).get
 
       // Restore data and re-add to multiblock
       restoreData(newTile, oldData)
-      oldConnected flatMap (_.getTile[TileController](world)) foreach newTile.connect
+      oldConnected flatMap (pos => world.getTileSafe[TileController](pos)) foreach newTile.connect
       getController(pos, world) foreach (_.modulesChanged = true)
     }
   }
 
-  override def onItemUse(stack: ItemStack, player: EntityPlayer, world: World, x: Int, y: Int, z: Int, side: Int, xOff: Float, yOff: Float, zOff: Float): Boolean = {
-    val pos = new BlockRef(x, y, z)
+  override def onItemUse(stack: ItemStack, player: EntityPlayer, world: World, pos: BlockPos, side: EnumFacing, hitX: Float, hitY: Float, hitZ: Float): Boolean = {
     if (canUpgradeBlock(pos, world)) {
       // Clicked on block - upgrade in place
       doUpgrade(pos, world, player)

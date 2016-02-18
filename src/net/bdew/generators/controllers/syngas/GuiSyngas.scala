@@ -17,7 +17,6 @@ import net.bdew.lib.gui.widgets.{WidgetButtonIcon, WidgetFluidGauge, WidgetLabel
 import net.bdew.lib.multiblock.gui.WidgetInfo
 import net.bdew.lib.{Client, DecFormat, Misc}
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.init.Blocks
 import net.minecraft.util.EnumChatFormatting
 
 import scala.collection.mutable
@@ -25,9 +24,9 @@ import scala.collection.mutable
 class GuiSyngas(val te: TileSyngasController, player: EntityPlayer) extends BaseScreen(new ContainerSyngas(te, player), 176, 175) with GuiOutputFaces {
   val background = Texture(Generators.modId, "textures/gui/syngas.png", rect)
 
-  val coalTexture = new IconWrapper(Texture.BLOCKS, Blocks.coal_block.getIcon(0, 0))
-  val steamTexture = new IconWrapper(Texture.BLOCKS, config.Blocks.steamFluid.getStillIcon)
-  val syngasTexture = new IconWrapper(Texture.BLOCKS, config.Blocks.syngasFluid.getStillIcon)
+  val coalTexture = new IconWrapper(Texture.BLOCKS, Client.textureMapBlocks.getTextureExtry("minecraft:blocks/coal_block"))
+  val steamTexture = Texture(config.Blocks.steamFluid.getStill)
+  val syngasTexture = Texture(config.Blocks.syngasFluid.getStill)
 
   def bufferTooltip =
     List(

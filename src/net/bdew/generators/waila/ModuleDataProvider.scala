@@ -10,29 +10,26 @@
 package net.bdew.generators.waila
 
 import mcp.mobius.waila.api.{IWailaConfigHandler, IWailaDataAccessor}
-import net.bdew.lib.Misc
-import net.bdew.lib.block.BlockRef
+import net.bdew.lib.PimpVanilla._
 import net.bdew.lib.data.base.UpdateKind
 import net.bdew.lib.multiblock.tile.{TileController, TileModule}
+import net.bdew.lib.nbt.NBT
 import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
+import net.minecraft.util.BlockPos
 import net.minecraft.world.World
 
 object ModuleDataProvider extends BaseDataProvider(classOf[TileModule]) {
-  override def getNBTTag(player: EntityPlayerMP, te: TileModule, tag: NBTTagCompound, world: World, x: Int, y: Int, z: Int): NBTTagCompound = {
-    val data = new NBTTagCompound
+  override def getNBTTag(player: EntityPlayerMP, te: TileModule, tag: NBTTagCompound, world: World, pos: BlockPos): NBTTagCompound = {
     for {
       core <- te.getCore
       handler <- WailaHandler.handlers.find(_.isValidTE(core))
     } {
-      data.setInteger("coreX", core.xCoord)
-      data.setInteger("coreY", core.yCoord)
-      data.setInteger("coreZ", core.zCoord)
-      data.setTag("coreData", Misc.applyMutator(new NBTTagCompound) {
-        core.doSave(UpdateKind.GUI, _)
-      })
-      tag.setTag("generators_waila_module", data)
+      tag.setTag("generators_waila_module", NBT(
+        "core" -> core.getPos,
+        "data" -> NBT.from(core.doSave(UpdateKind.GUI, _))
+      ))
     }
     tag
   }
@@ -40,19 +37,17 @@ object ModuleDataProvider extends BaseDataProvider(classOf[TileModule]) {
   override def getBodyStrings(target: TileModule, stack: ItemStack, acc: IWailaDataAccessor, cfg: IWailaConfigHandler): Iterable[String] = {
     val coreOpt = if (acc.getNBTData.hasKey("generators_waila_module")) {
       val data = acc.getNBTData.getCompoundTag("generators_waila_module")
-      val bp = BlockRef(data.getInteger("coreX"), data.getInteger("coreY"), data.getInteger("coreZ"))
-      bp.getTile[TileController](acc.getWorld) map { controller =>
-        controller.doLoad(UpdateKind.GUI, data.getCompoundTag("coreData"))
-        controller
+      data.get[BlockPos]("core").flatMap { bp =>
+        acc.getWorld.getTileSafe[TileController](bp).map { controller =>
+          controller.doLoad(UpdateKind.GUI, data.getCompoundTag("data"))
+          controller
+        }
       }
-    } else {
-      target.getCore
-    }
-    (for {
-      core <- coreOpt
-      handler <- WailaHandler.handlers.find(_.isValidTE(core))
-    } yield {
-      handler.getBodyStringsFromTE(core)
-    }).getOrElse(List.empty)
+    } else target.getCore
+    coreOpt flatMap { core =>
+      WailaHandler.handlers.find(_.isValidTE(core)) map { handler =>
+        handler.getBodyStringsFromTE(core)
+      }
+    } getOrElse List.empty
   }
 }

@@ -11,26 +11,28 @@ package net.bdew.generators.modules.pressure
 
 import net.bdew.pressure.api.PressureAPI
 import net.minecraft.block.Block
+import net.minecraft.block.state.IBlockState
+import net.minecraft.entity.EntityLivingBase
+import net.minecraft.util.{BlockPos, EnumFacing}
 import net.minecraft.world.World
-import net.minecraftforge.common.util.ForgeDirection
 
 trait BlockNotifyUpdates extends Block {
-  def notifyPressureSystemUpdate(w: World, x: Int, y: Int, z: Int) =
-    PressureAPI.HELPER.notifyBlockChanged(w, x, y, z)
+  def notifyPressureSystemUpdate(w: World, pos: BlockPos) =
+    PressureAPI.HELPER.notifyBlockChanged(w, pos)
 
-  override def breakBlock(world: World, x: Int, y: Int, z: Int, block: Block, meta: Int) = {
-    notifyPressureSystemUpdate(world, x, y, z)
-    super.breakBlock(world, x, y, z, block, meta)
+  override def breakBlock(world: World, pos: BlockPos, state: IBlockState): Unit = {
+    notifyPressureSystemUpdate(world, pos)
+    super.breakBlock(world, pos, state)
   }
 
-  override def onBlockPlaced(world: World, x: Int, y: Int, z: Int, side: Int, hitX: Float, hitY: Float, hitZ: Float, meta: Int) = {
-    notifyPressureSystemUpdate(world, x, y, z)
-    super.onBlockPlaced(world, x, y, z, side, hitX, hitY, hitZ, meta)
+  override def onBlockPlaced(world: World, pos: BlockPos, facing: EnumFacing, hitX: Float, hitY: Float, hitZ: Float, meta: Int, placer: EntityLivingBase): IBlockState = {
+    notifyPressureSystemUpdate(world, pos)
+    super.onBlockPlaced(world, pos, facing, hitX, hitY, hitZ, meta, placer)
   }
 
-  override def rotateBlock(world: World, x: Int, y: Int, z: Int, axis: ForgeDirection) = {
-    if (super.rotateBlock(world, x, y, z, axis)) {
-      notifyPressureSystemUpdate(world, x, y, z)
+  override def rotateBlock(world: World, pos: BlockPos, axis: EnumFacing) = {
+    if (super.rotateBlock(world, pos, axis)) {
+      notifyPressureSystemUpdate(world, pos)
       true
     } else false
   }

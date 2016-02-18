@@ -12,6 +12,7 @@ package net.bdew.generators.modules.efficiency
 import net.bdew.generators.controllers.turbine.MachineTurbine
 import net.bdew.generators.modules.BaseModule
 import net.bdew.lib.Misc
+import net.bdew.lib.PimpVanilla._
 import net.bdew.lib.block.BlockTooltip
 import net.bdew.lib.multiblock.tile.{TileController, TileModule}
 import net.minecraft.entity.player.EntityPlayer
@@ -30,8 +31,8 @@ class TileEfficiencyUpgradeTier1 extends TileModule {
 
   override def connect(target: TileController): Unit = {
     super.connect(target)
-    (target.modules.set ++ Set(target.myPos)).flatMap(_.neighbours.values)
-      .flatMap(_.getTile[TileEfficiencyUpgradeTier2](worldObj))
+    (target.modules.set ++ Set(target.getPos)).flatMap(_.neighbours.values)
+      .flatMap(pos => worldObj.getTileSafe[TileEfficiencyUpgradeTier2](pos))
       .filter(_.connected.isEmpty)
       .foreach(_.tryConnect())
   }

@@ -10,18 +10,18 @@
 package net.bdew.generators.config
 
 import net.bdew.generators.Generators
-import net.bdew.generators.compat.{BCCompat, PowerProxy}
 import net.minecraftforge.fluids.{Fluid, FluidStack}
 
 object TurbineFuel {
   var map = Map.empty[String, Float]
 
   def init() {
-    val bcCfg = Tuning.getSection("ModSupport").getSection("BuildCraft")
-    if (bcCfg.getBoolean("ImportCombustionEngineFuels") && PowerProxy.haveBCFuel) {
-      val min = bcCfg.getDouble("TurbineMinimumFuelValue")
-      map ++= BCCompat.getCombustionEngineFuels filter (_._2 >= min)
-    }
+    // FIXME: reenable when bc is released
+    //    val bcCfg = Tuning.getSection("ModSupport").getSection("BuildCraft")
+    //    if (bcCfg.getBoolean("ImportCombustionEngineFuels") && PowerProxy.haveBCFuel) {
+    //      val min = bcCfg.getDouble("TurbineMinimumFuelValue")
+    //      map ++= BCCompat.getCombustionEngineFuels filter (_._2 >= min)
+    //    }
   }
 
   def postInit() {

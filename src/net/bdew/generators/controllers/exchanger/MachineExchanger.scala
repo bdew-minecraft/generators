@@ -9,12 +9,12 @@
 
 package net.bdew.generators.controllers.exchanger
 
-import cpw.mods.fml.relauncher.{Side, SideOnly}
 import net.bdew.lib.gui.GuiProvider
 import net.bdew.lib.machine.Machine
 import net.bdew.lib.multiblock.MachineCore
 import net.bdew.lib.multiblock.data.{OutputConfigFluidSlots, OutputConfigManager}
 import net.minecraft.entity.player.EntityPlayer
+import net.minecraftforge.fml.relauncher.{Side, SideOnly}
 
 object MachineExchanger extends Machine("HeatExchangerController", BlockExchangerController) with MachineCore with GuiProvider {
   def guiId: Int = 2

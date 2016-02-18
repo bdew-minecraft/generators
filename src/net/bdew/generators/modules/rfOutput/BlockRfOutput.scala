@@ -9,30 +9,11 @@
 
 package net.bdew.generators.modules.rfOutput
 
-import cpw.mods.fml.relauncher.{Side, SideOnly}
-import net.bdew.generators.Generators
 import net.bdew.generators.modules.BaseModule
-import net.bdew.lib.Misc
 import net.bdew.lib.multiblock.block.BlockOutput
-import net.minecraft.client.renderer.texture.IIconRegister
-import net.minecraft.util.IIcon
+import net.minecraft.util.{BlockPos, EnumFacing}
 import net.minecraft.world.IBlockAccess
-import net.minecraftforge.common.util.ForgeDirection
 
 object BlockRfOutput extends BaseModule("RFOutput", "PowerOutput", classOf[TileRfOutput]) with BlockOutput[TileRfOutput] {
-  var enabledIcon: IIcon = null
-
-  override def getIcon(world: IBlockAccess, x: Int, y: Int, z: Int, side: Int) =
-    if (getTE(world, x, y, z).canConnectToFace(ForgeDirection.values()(side)))
-      enabledIcon
-    else
-      blockIcon
-
-  @SideOnly(Side.CLIENT)
-  override def registerBlockIcons(ir: IIconRegister) {
-    blockIcon = ir.registerIcon(Misc.iconName(Generators.modId, "rfoutput", "disabled"))
-    enabledIcon = ir.registerIcon(Misc.iconName(Generators.modId, "rfoutput", "main"))
-  }
-
-  override def canConnectRedstone(world: IBlockAccess, x: Int, y: Int, z: Int, side: Int) = true
+  override def canConnectRedstone(world: IBlockAccess, pos: BlockPos, side: EnumFacing) = true
 }

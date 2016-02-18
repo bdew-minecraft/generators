@@ -16,11 +16,12 @@ import net.bdew.lib.multiblock.tile.TileController
 import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
+import net.minecraft.util.BlockPos
 import net.minecraft.world.World
 
 abstract class BaseControllerDataProvider[T <: TileController](cls: Class[T]) extends BaseDataProvider(cls) {
 
-  override def getNBTTag(player: EntityPlayerMP, te: T, tag: NBTTagCompound, world: World, x: Int, y: Int, z: Int): NBTTagCompound = {
+  override def getNBTTag(player: EntityPlayerMP, te: T, tag: NBTTagCompound, world: World, pos: BlockPos): NBTTagCompound = {
     tag.setTag("generators_waila_data", Misc.applyMutator(new NBTTagCompound) {
       te.doSave(UpdateKind.GUI, _)
     })

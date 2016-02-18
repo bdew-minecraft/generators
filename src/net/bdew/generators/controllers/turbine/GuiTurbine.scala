@@ -13,7 +13,7 @@ import net.bdew.generators.config.Config
 import net.bdew.generators.gui.{GuiOutputConfig, GuiOutputFaces, WidgetPowerGaugeCustom, WidgetRateInfo}
 import net.bdew.generators.modules.turbine.BlockTurbine
 import net.bdew.generators.network.{NetworkHandler, PktDumpBuffers}
-import net.bdew.generators.{Generators, IconCache, Textures}
+import net.bdew.generators.{Generators, Textures}
 import net.bdew.lib.gui._
 import net.bdew.lib.gui.widgets.{WidgetButtonIcon, WidgetFluidGauge, WidgetLabel}
 import net.bdew.lib.multiblock.gui.{WidgetInfo, WidgetInfoMulti}
@@ -46,10 +46,10 @@ class GuiTurbine(val te: TileTurbineController, player: EntityPlayer) extends Ba
     widgets.add(new WidgetInfoMulti(Rect(75, 21, 59, 10),
       Textures.Icons.turbine,
       te.numTurbines.value.toString,
-      List(Misc.toLocal("advgenerators.label.turbine.turbines"))
-        ++ te.modules.toList.flatMap(_.getBlock[BlockTurbine](te.getWorldObject))
-        .groupBy(identity).mapValues(_.size).toList.sortBy(_._2)
-        .map(x => "%d x %s".format(x._2, x._1.getLocalizedName))
+      List(Misc.toLocal("advgenerators.label.turbine.turbines")) ++
+        te.getModuleBlocks[BlockTurbine].values
+          .groupBy(identity).mapValues(_.size).toList.sortBy(_._2)
+          .map(x => "%d x %s".format(x._2, x._1.getLocalizedName))
     ))
 
     widgets.add(new WidgetInfo(Rect(75, 32, 59, 10),
@@ -74,7 +74,7 @@ class GuiTurbine(val te: TileTurbineController, player: EntityPlayer) extends Ba
     )
 
     widgets.add(new WidgetRateInfo(Rect(75, 65, 59, 10),
-      if (te.fuel.getFluid != null) new IconWrapper(Texture.BLOCKS, te.fuel.getFluid.getFluid.getStillIcon) else IconCache.disabled,
+      if (te.fuel.getFluid != null) Texture(te.fuel.getFluid.getFluid.getStill) else Texture(te.resources.disabled),
       if (te.fuel.getFluid != null) Color.fromInt(te.fuel.getFluid.getFluid.getColor) else Color.red,
       DecFormat.short(te.fuelPerTickAverage.average) + " mB/t",
       Misc.toLocal("advgenerators.label.turbine.fuelaverage")))

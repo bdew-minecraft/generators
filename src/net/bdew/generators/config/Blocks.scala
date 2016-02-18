@@ -9,17 +9,14 @@
 
 package net.bdew.generators.config
 
-import cpw.mods.fml.common.registry.GameRegistry
 import net.bdew.generators.blocks.{BlockSteam, BlockSyngas}
 import net.bdew.generators.compat.PowerProxy
 import net.bdew.generators.modules.control.BlockControl
 import net.bdew.generators.modules.efficiency.{BlockEfficiencyUpgradeTier1, BlockEfficiencyUpgradeTier2}
-import net.bdew.generators.modules.euOutput.{BlockEuOutputEV, BlockEuOutputHV, BlockEuOutputLV, BlockEuOutputMV}
 import net.bdew.generators.modules.exchanger.BlockExchanger
 import net.bdew.generators.modules.fluidInput.BlockFluidInput
 import net.bdew.generators.modules.fluidOutputSelect.BlockFluidOutputSelect
 import net.bdew.generators.modules.fuelTank.BlockFuelTank
-import net.bdew.generators.modules.gasInput.BlockGasInput
 import net.bdew.generators.modules.heatingChamber.BlockHeatingChamber
 import net.bdew.generators.modules.itemInput.BlockItemInput
 import net.bdew.generators.modules.itemOutput.BlockItemOutput
@@ -35,17 +32,12 @@ import net.bdew.lib.config.BlockManager
 import net.bdew.pressure.api.PressureAPI
 import net.minecraft.block.Block
 import net.minecraft.item.EnumRarity
+import net.minecraft.util.ResourceLocation
 import net.minecraftforge.fluids.{Fluid, FluidRegistry}
+import net.minecraftforge.fml.common.registry.GameRegistry
 
 object Blocks extends BlockManager(CreativeTabsGenerators.main) {
-  if (PowerProxy.haveIC2) {
-    regBlock(BlockEuOutputLV)
-    regBlock(BlockEuOutputMV)
-    regBlock(BlockEuOutputHV)
-    regBlock(BlockEuOutputEV)
-  }
-
-  if (PowerProxy.haveTE)
+  if (PowerProxy.haveRF)
     regBlock(BlockRfOutput)
 
   regBlock(BlockFluidInput)
@@ -54,7 +46,7 @@ object Blocks extends BlockManager(CreativeTabsGenerators.main) {
   regBlock(BlockItemInput)
   regBlock(BlockItemOutput)
 
-  GameRegistry.registerTileEntityWithAlternatives(classOf[TileTurbine], "advgenerators.Turbine", "advgenerators.TurbineIron")
+  GameRegistry.registerTileEntity(classOf[TileTurbine], "advgenerators.Turbine")
   GameRegistry.registerTileEntity(classOf[TilePowerCapacitor], "advgenerators.PowerCapacitor")
 
   regBlock(BlockFuelTank)
@@ -68,10 +60,6 @@ object Blocks extends BlockManager(CreativeTabsGenerators.main) {
   regBlock(BlockEfficiencyUpgradeTier1)
   regBlock(BlockEfficiencyUpgradeTier2)
 
-  if (PowerProxy.haveMekanismGasApi) {
-    regBlock(BlockGasInput)
-  }
-
   if (Misc.haveModVersion("pressure") && PressureAPI.HELPER != null) {
     Generators.logInfo("Pressure pipes detected (%s), adding pressure modules", PressureAPI.HELPER)
     regBlock(BlockPressureInput)
@@ -82,7 +70,7 @@ object Blocks extends BlockManager(CreativeTabsGenerators.main) {
     _.setTemperature(1000)
       .setGaseous(true)
       .setLuminosity(0)
-      .setRarity(EnumRarity.common)
+      .setRarity(EnumRarity.COMMON)
       .setDensity(-10)
   }
 
@@ -90,7 +78,7 @@ object Blocks extends BlockManager(CreativeTabsGenerators.main) {
     _.setTemperature(1000)
       .setGaseous(true)
       .setLuminosity(0)
-      .setRarity(EnumRarity.common)
+      .setRarity(EnumRarity.COMMON)
       .setDensity(-10)
   }
 
@@ -101,7 +89,7 @@ object Blocks extends BlockManager(CreativeTabsGenerators.main) {
   def regFluid(name: String, block: (Fluid) => Block)(params: (Fluid) => Unit): Fluid = {
     val fluid = if (!FluidRegistry.isFluidRegistered(name)) {
       Generators.logInfo("Fluid '%s' not registered by any other mod, creating...", name)
-      val newFluid = new Fluid(name)
+      val newFluid = new Fluid(name, new ResourceLocation(Generators.modId, "blocks/" + name + "/still"), new ResourceLocation(Generators.modId, "blocks/" + name + "/flowing"))
       params.apply(newFluid)
       FluidRegistry.registerFluid(newFluid)
       newFluid
@@ -109,7 +97,9 @@ object Blocks extends BlockManager(CreativeTabsGenerators.main) {
 
     if (fluid.getBlock == null) {
       Generators.logInfo("Adding block for fluid '%s'", name)
-      fluid.setBlock(regBlock(block(fluid), name))
+      val newBlock = block(fluid)
+      GameRegistry.registerBlock(newBlock)
+      fluid.setBlock(newBlock)
     }
 
     fluid

@@ -9,11 +9,11 @@
 
 package net.bdew.generators.sensor
 
-import cpw.mods.fml.relauncher.{Side, SideOnly}
 import net.bdew.lib.gui.Texture
 import net.bdew.lib.render.IconPreloader
+import net.minecraftforge.fml.relauncher.{Side, SideOnly}
 
-object Icons extends IconPreloader(1) {
+object Icons extends IconPreloader {
 
   trait Loader {
     def iconName: String

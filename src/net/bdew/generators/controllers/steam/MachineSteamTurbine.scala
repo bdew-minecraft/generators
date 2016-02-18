@@ -9,11 +9,11 @@
 
 package net.bdew.generators.controllers.steam
 
-import cpw.mods.fml.relauncher.{Side, SideOnly}
 import net.bdew.lib.gui.GuiProvider
 import net.bdew.lib.machine.Machine
 import net.bdew.lib.multiblock.MachineCore
 import net.minecraft.entity.player.EntityPlayer
+import net.minecraftforge.fml.relauncher.{Side, SideOnly}
 
 object MachineSteamTurbine extends Machine("SteamTurbineController", BlockSteamTurbineController) with MachineCore with GuiProvider {
   def guiId: Int = 3

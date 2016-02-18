@@ -13,18 +13,13 @@ import net.bdew.lib.multiblock.tile.{TileController, TileModule}
 import net.bdew.pressure.api.{IPressureTile, PressureAPI}
 
 trait PressureModule extends TileModule with IPressureTile {
-  override def getWorld = getWorldObj
-  override def getXCoord = xCoord
-  override def getYCoord = yCoord
-  override def getZCoord = zCoord
-
   override def connect(target: TileController) {
     super.connect(target)
-    PressureAPI.HELPER.notifyBlockChanged(getWorldObj, xCoord, yCoord, zCoord)
+    PressureAPI.HELPER.notifyBlockChanged(getWorld, getPos)
   }
 
   override def coreRemoved() {
-    PressureAPI.HELPER.notifyBlockChanged(getWorldObj, xCoord, yCoord, zCoord)
+    PressureAPI.HELPER.notifyBlockChanged(getWorld, getPos)
     super.coreRemoved()
   }
 }

@@ -9,16 +9,15 @@
 
 package net.bdew.generators.control
 
-import net.bdew.lib.Misc
 import net.bdew.lib.gui._
 import net.bdew.lib.gui.widgets.Widget
-import net.minecraft.init.Blocks
+import net.bdew.lib.{Client, Misc}
 
 import scala.collection.mutable
 
 class WidgetControlMode(val p: Point, state: => Boolean) extends Widget {
-  lazy val rsOn = new IconWrapper(Texture.BLOCKS, Blocks.redstone_torch.getIcon(0, 0))
-  lazy val rsOff = new IconWrapper(Texture.BLOCKS, Blocks.unlit_redstone_torch.getIcon(0, 0))
+  lazy val rsOn = Texture(Texture.BLOCKS, Client.textureMapBlocks.getAtlasSprite("minecraft:blocks/redstone_torch_on"))
+  lazy val rsOff = Texture(Texture.BLOCKS, Client.textureMapBlocks.getAtlasSprite("minecraft:blocks/redstone_torch_off"))
 
   override val rect = new Rect(p, 16, 16)
 

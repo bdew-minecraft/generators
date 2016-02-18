@@ -9,7 +9,6 @@
 
 package net.bdew.generators.sensor
 
-import cpw.mods.fml.relauncher.{Side, SideOnly}
 import net.bdew.generators.controllers.exchanger.{MachineExchanger, TileExchangerController}
 import net.bdew.generators.controllers.steam.{MachineSteamTurbine, TileSteamTurbineController}
 import net.bdew.generators.controllers.syngas.{MachineSyngas, TileSyngasController}
@@ -18,6 +17,7 @@ import net.bdew.generators.sensor.data._
 import net.bdew.lib.DecFormat
 import net.bdew.lib.sensors.RedstoneSensors
 import net.minecraft.tileentity.TileEntity
+import net.minecraftforge.fml.relauncher.{Side, SideOnly}
 
 object Sensors extends RedstoneSensors[TileEntity] {
   @SideOnly(Side.CLIENT)

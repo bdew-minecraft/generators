@@ -11,22 +11,20 @@ package net.bdew.generators
 
 import java.io.File
 
-import cpw.mods.fml.common.Mod
-import cpw.mods.fml.common.Mod.EventHandler
-import cpw.mods.fml.common.event._
-import cpw.mods.fml.common.network.NetworkRegistry
-import cpw.mods.fml.common.registry.GameRegistry
-import cpw.mods.fml.relauncher.Side
 import net.bdew.generators.compat.PowerProxy
 import net.bdew.generators.compat.itempush.ItemPush
 import net.bdew.generators.config._
 import net.bdew.generators.config.loader.TuningLoader
-import net.bdew.generators.gui.{CarbonValueTooltipProvider, FuelTooltipProvider}
 import net.bdew.generators.network.NetworkHandler
 import net.bdew.generators.sensor.Sensors
 import net.bdew.lib.multiblock.data.{OutputConfigItems, OutputConfigManager}
-import net.bdew.lib.tooltip.TooltipHandler
 import net.minecraft.item.Item
+import net.minecraftforge.fml.common.Mod
+import net.minecraftforge.fml.common.Mod.EventHandler
+import net.minecraftforge.fml.common.event._
+import net.minecraftforge.fml.common.network.NetworkRegistry
+import net.minecraftforge.fml.common.registry.GameRegistry
+import net.minecraftforge.fml.relauncher.Side
 import org.apache.logging.log4j.Logger
 
 @Mod(modid = Generators.modId, version = "GENERATORS_VER", name = "Advanced Generators", dependencies = "after:pressure;after:BuildCraft|energy;after:BuildCraft|Silicon;after:IC2;after:CoFHCore;after:ThermalExpansion;after:eng_toolbox;after:minechem;required-after:bdlib", modLanguage = "scala")
@@ -60,12 +58,7 @@ object Generators {
     Machines.load()
 
     if (event.getSide == Side.CLIENT) {
-      Config.load(new File(Generators.configDir, "client.config"))
-      IconCache.init()
-      sensor.Icons.init()
-      control.Icons.init()
-      TooltipHandler.register(FuelTooltipProvider)
-      TooltipHandler.register(CarbonValueTooltipProvider)
+      GeneratorsClient.preInit()
     }
   }
 

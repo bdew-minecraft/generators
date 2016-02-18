@@ -12,11 +12,12 @@ package net.bdew.generators.waila
 import net.bdew.lib.multiblock.tile.TileController
 import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.nbt.NBTTagCompound
+import net.minecraft.util.BlockPos
 import net.minecraft.world.World
 
 case class ControllerHandlerPair[T <: TileController](teClass: Class[T], handler: BaseControllerDataProvider[T]) {
   def isValidTE(x: TileController) = teClass.isInstance(x)
   def getBodyStringsFromTE(te: TileController) = handler.getBodyStringsFromTE(te.asInstanceOf[T])
-  def getNBTTag(player: EntityPlayerMP, te: TileController, tag: NBTTagCompound, world: World, x: Int, y: Int, z: Int) =
-    handler.getNBTTag(player, te.asInstanceOf[T], tag, world, x, y, z)
+  def getNBTTag(player: EntityPlayerMP, te: TileController, tag: NBTTagCompound, world: World, pos: BlockPos) =
+    handler.getNBTTag(player, te.asInstanceOf[T], tag, world, pos)
 }

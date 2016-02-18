@@ -9,16 +9,15 @@
 
 package net.bdew.generators.modules.sensor
 
-import cpw.mods.fml.relauncher.{Side, SideOnly}
 import net.bdew.generators.Generators
 import net.bdew.generators.config.Config
 import net.bdew.generators.modules.BaseModule
 import net.bdew.generators.sensor.Sensors
-import net.bdew.lib.Misc
 import net.bdew.lib.sensors.multiblock.{BlockRedstoneSensorModule, TileRedstoneSensorModule}
-import net.minecraft.client.renderer.texture.IIconRegister
 import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.util.BlockPos
 import net.minecraft.world.World
+import net.minecraftforge.fml.relauncher.{Side, SideOnly}
 
 class TileSensor extends TileRedstoneSensorModule(Sensors, BlockSensor)
 
@@ -28,19 +27,10 @@ object BlockSensor extends BaseModule("Sensor", "Sensor", classOf[TileSensor]) w
 
   Config.guiHandler.register(this)
 
-  override def doOpenGui(world: World, x: Int, y: Int, z: Int, player: EntityPlayer) =
-    player.openGui(Generators, guiId, world, x, y, z)
+  override def doOpenGui(world: World, pos: BlockPos, player: EntityPlayer) =
+    player.openGui(Generators, guiId, world, pos.getX, pos.getY, pos.getZ)
 
   @SideOnly(Side.CLIENT)
   override def getGui(te: TEClass, player: EntityPlayer) = new GuiSensor(te, player)
   override def getContainer(te: TEClass, player: EntityPlayer) = new ContainerSensor(te, player)
-
-  @SideOnly(Side.CLIENT) override
-  def registerBlockIcons(reg: IIconRegister): Unit = {
-    sideIcon = reg.registerIcon(Misc.iconName(Generators.modId, name, "side_off"))
-    frontIcon = reg.registerIcon(Misc.iconName(Generators.modId, name, "front_off"))
-    bottomIcon = reg.registerIcon(Misc.iconName(Generators.modId, name, "back"))
-    frontIconOn = reg.registerIcon(Misc.iconName(Generators.modId, name, "front_on"))
-    sideIconOn = reg.registerIcon(Misc.iconName(Generators.modId, name, "side_on"))
-  }
 }

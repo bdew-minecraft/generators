@@ -9,22 +9,6 @@
 
 package net.bdew.generators.modules.mixingChamber
 
-import cpw.mods.fml.relauncher.{Side, SideOnly}
-import net.bdew.generators.Generators
 import net.bdew.generators.modules.BaseModule
-import net.bdew.lib.Misc
-import net.minecraft.client.renderer.texture.IIconRegister
-import net.minecraft.util.IIcon
-import net.minecraftforge.common.util.ForgeDirection
 
-object BlockMixingChamber extends BaseModule("MixingChamber", "MixingChamber", classOf[TileMixingChamber]) {
-  var topIcon: IIcon = null
-
-  @SideOnly(Side.CLIENT)
-  override def regIcons(ir: IIconRegister) {
-    topIcon = ir.registerIcon(Misc.iconName(Generators.modId, name, "top"))
-  }
-
-  override def getIcon(side: Int, meta: Int) =
-    if (side == ForgeDirection.UP.ordinal() || side == ForgeDirection.DOWN.ordinal()) topIcon else blockIcon
-}
+object BlockMixingChamber extends BaseModule("MixingChamber", "MixingChamber", classOf[TileMixingChamber])

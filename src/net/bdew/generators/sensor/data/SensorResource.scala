@@ -9,17 +9,15 @@
 
 package net.bdew.generators.sensor.data
 
-import cpw.mods.fml.relauncher.{Side, SideOnly}
 import net.bdew.generators.sensor.{CastSensor, Icons}
 import net.bdew.lib.Client
-import net.bdew.lib.gui.{Color, DrawTarget, Rect, Texture}
+import net.bdew.lib.gui.{DrawTarget, Rect}
 import net.bdew.lib.resource.DataSlotResource
 import net.bdew.lib.sensors.GenericSensorParameter
-import net.minecraft.client.renderer.entity.RenderItem
 import net.minecraft.init.{Blocks, Items}
 import net.minecraft.item.ItemStack
 import net.minecraft.tileentity.TileEntity
-import org.lwjgl.opengl.GL11
+import net.minecraftforge.fml.relauncher.{Side, SideOnly}
 
 import scala.reflect.ClassTag
 
@@ -40,13 +38,9 @@ case class SensorResource[T: ClassTag](uid: String, iconName: String, accessor: 
   @SideOnly(Side.CLIENT) override
   def drawParameter(rect: Rect, target: DrawTarget, obj: TileEntity, param: GenericSensorParameter): Unit = param match {
     case ParameterResource.solid =>
-      GL11.glPushAttrib(GL11.GL_ENABLE_BIT)
-      GL11.glEnable(GL11.GL_LIGHTING)
-      GL11.glDisable(GL11.GL_DEPTH_TEST)
-      RenderItem.getInstance().renderItemAndEffectIntoGUI(target.getFontRenderer, Client.textureManager, new ItemStack(Blocks.cobblestone), rect.origin.x.toInt, rect.origin.y.toInt)
-      GL11.glPopAttrib()
+      Client.minecraft.getRenderItem.renderItemAndEffectIntoGUI(new ItemStack(Blocks.cobblestone), rect.origin.x.toInt, rect.origin.y.toInt)
     case ParameterResource.fluid =>
-      target.drawTexture(rect, Texture(Texture.ITEMS, Items.water_bucket.getIconFromDamage(0)), Color.white)
+      Client.minecraft.getRenderItem.renderItemAndEffectIntoGUI(new ItemStack(Items.water_bucket), rect.origin.x.toInt, rect.origin.y.toInt)
     case _ => super.drawParameter(rect, target, obj, param)
   }
 
