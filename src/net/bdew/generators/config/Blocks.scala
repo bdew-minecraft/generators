@@ -60,11 +60,17 @@ object Blocks extends BlockManager(CreativeTabsGenerators.main) {
   regBlock(BlockEfficiencyUpgradeTier1)
   regBlock(BlockEfficiencyUpgradeTier2)
 
-  if (Misc.haveModVersion("pressure") && PressureAPI.HELPER != null) {
-    Generators.logInfo("Pressure pipes detected (%s), adding pressure modules", PressureAPI.HELPER)
-    regBlock(BlockPressureInput)
-    regBlock(BlockPressureOutput)
+  object PressureBlocks {
+    def init() {
+      if (PressureAPI.HELPER != null) {
+        Generators.logInfo("Pressure pipes detected (%s), adding pressure modules", PressureAPI.HELPER)
+        regBlock(BlockPressureInput)
+        regBlock(BlockPressureOutput)
+      }
+    }
   }
+
+  if (Misc.haveModVersion("pressure")) PressureBlocks.init()
 
   regFluid("steam", new BlockSteam(_)) {
     _.setTemperature(1000)
