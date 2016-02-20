@@ -29,11 +29,12 @@ import net.bdew.generators.modules.turbine.TileTurbine
 import net.bdew.generators.{CreativeTabsGenerators, Generators}
 import net.bdew.lib.Misc
 import net.bdew.lib.config.BlockManager
+import net.bdew.lib.render.FluidModelUtils
 import net.bdew.pressure.api.PressureAPI
-import net.minecraft.block.Block
 import net.minecraft.item.EnumRarity
 import net.minecraft.util.ResourceLocation
-import net.minecraftforge.fluids.{Fluid, FluidRegistry}
+import net.minecraftforge.fluids.{BlockFluidBase, Fluid, FluidRegistry}
+import net.minecraftforge.fml.common.FMLCommonHandler
 import net.minecraftforge.fml.common.registry.GameRegistry
 
 object Blocks extends BlockManager(CreativeTabsGenerators.main) {
@@ -92,7 +93,7 @@ object Blocks extends BlockManager(CreativeTabsGenerators.main) {
   def syngasFluid = FluidRegistry.getFluid("syngas")
   def steamFluid = FluidRegistry.getFluid("steam")
 
-  def regFluid(name: String, block: (Fluid) => Block)(params: (Fluid) => Unit): Fluid = {
+  def regFluid(name: String, block: (Fluid) => BlockFluidBase)(params: (Fluid) => Unit): Fluid = {
     val fluid = if (!FluidRegistry.isFluidRegistered(name)) {
       Generators.logInfo("Fluid '%s' not registered by any other mod, creating...", name)
       val newFluid = new Fluid(name, new ResourceLocation(Generators.modId, "blocks/" + name + "/still"), new ResourceLocation(Generators.modId, "blocks/" + name + "/flowing"))
@@ -106,6 +107,9 @@ object Blocks extends BlockManager(CreativeTabsGenerators.main) {
       val newBlock = block(fluid)
       GameRegistry.registerBlock(newBlock)
       fluid.setBlock(newBlock)
+
+      if (FMLCommonHandler.instance().getSide.isClient)
+        FluidModelUtils.registerFluidModel(newBlock, Generators.modId + ":fluids")
     }
 
     fluid
