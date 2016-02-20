@@ -63,11 +63,16 @@ class BlockSyngas(fluid: Fluid) extends BlockFluidClassic(fluid, MaterialSyngas)
     }
   }
 
-  override def onEntityCollidedWithBlock(world: World, pos: BlockPos, ent: Entity) = {
+  override def onEntityCollidedWithBlock(world: World, pos: BlockPos, state: IBlockState, ent: Entity): Unit = {
     if (ent.isBurning && !world.isRemote) {
       world.setBlockToAir(pos)
       world.createExplosion(null, pos.getX, pos.getY, pos.getZ, 5, true)
     }
+  }
+
+  // WhyTF there are 2 versions?
+  override def onEntityCollidedWithBlock(world: World, pos: BlockPos, ent: Entity) = {
+    onEntityCollidedWithBlock(world, pos, world.getBlockState(pos), ent)
   }
 
   override def onBlockDestroyedByExplosion(world: World, pos: BlockPos, exp: Explosion): Unit = {
