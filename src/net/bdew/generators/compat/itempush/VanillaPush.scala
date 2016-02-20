@@ -11,18 +11,23 @@ package net.bdew.generators.compat.itempush
 
 import net.bdew.lib.Misc
 import net.bdew.lib.items.ItemUtils
-import net.minecraft.inventory.IInventory
 import net.minecraft.item.ItemStack
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.EnumFacing
+import net.minecraftforge.common.capabilities.{Capability, CapabilityInject}
+import net.minecraftforge.items.IItemHandler
+
+import scala.annotation.meta.setter
 
 object VanillaPush extends ItemPushProxy {
+  @(CapabilityInject@setter)(classOf[IItemHandler])
+  var CAP: Capability[IItemHandler] = null
+
   override def pushStack(from: TileEntity, dir: EnumFacing, stack: ItemStack) =
-    (for (target <- Misc.getNeighbourTile(from, dir, classOf[IInventory]) if stack != null) yield {
-      val slots = ItemUtils.getAccessibleSlotsFromSide(target, dir.getOpposite)
-      ItemUtils.addStackToSlots(stack, target, slots, true)
-    }) getOrElse stack
+    Misc.getNeighbourTileCapability(from, dir, CAP) map { cap =>
+      ItemUtils.addStackToHandler(stack, cap)
+    } getOrElse stack
 
   override def isValidTarget(from: TileEntity, dir: EnumFacing) =
-    Misc.getNeighbourTile(from, dir, classOf[IInventory]).isDefined
+    Misc.neighbourTileHasCapability(from, dir, CAP)
 }
