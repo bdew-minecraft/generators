@@ -98,7 +98,7 @@ class TileTurbineController extends TileControllerGui with PoweredController wit
     if (fuel.getFluid != null && fuel.getFluidAmount > fuel.getCapacity)
       fuel.getFluid.amount = fuel.getCapacity
 
-    power.capacity = getModuleBlocks[BlockPowerCapacitor].values.map(_.material.mjCapacity).sum.toFloat
+    power.capacity = getModuleBlocks[BlockPowerCapacitor].values.map(_.material.mjCapacity).sum.toFloat + cfg.internalPowerCapacity
 
     if (power.stored > power.capacity)
       power.stored = power.capacity

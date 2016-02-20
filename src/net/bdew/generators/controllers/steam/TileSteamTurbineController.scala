@@ -95,7 +95,7 @@ class TileSteamTurbineController extends TileControllerGui with PoweredControlle
   def extract(v: Float, simulate: Boolean) = power.extract(v, simulate)
 
   override def onModulesChanged() {
-    power.capacity = getModuleBlocks[BlockPowerCapacitor].values.map(_.material.mjCapacity).sum.toFloat
+    power.capacity = getModuleBlocks[BlockPowerCapacitor].values.map(_.material.mjCapacity).sum.toFloat + cfg.internalPowerCapacity
 
     if (power.stored > power.capacity)
       power.stored = power.capacity
