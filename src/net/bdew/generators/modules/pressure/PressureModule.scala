@@ -10,9 +10,9 @@
 package net.bdew.generators.modules.pressure
 
 import net.bdew.lib.multiblock.tile.{TileController, TileModule}
-import net.bdew.pressure.api.{IPressureTile, PressureAPI}
+import net.bdew.pressure.api.{IPressureNode, PressureAPI}
 
-trait PressureModule extends TileModule with IPressureTile {
+trait PressureModule extends TileModule with IPressureNode {
   override def connect(target: TileController) {
     super.connect(target)
     PressureAPI.HELPER.notifyBlockChanged(getWorld, getPos)
@@ -22,4 +22,7 @@ trait PressureModule extends TileModule with IPressureTile {
     PressureAPI.HELPER.notifyBlockChanged(getWorld, getPos)
     super.coreRemoved()
   }
+
+  override def pressureNodePos = getPos
+  override def pressureNodeWorld = getWorld
 }
