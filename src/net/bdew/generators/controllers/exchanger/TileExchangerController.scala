@@ -113,12 +113,14 @@ class TileExchangerController extends TileControllerGui with CIFluidInput with C
   override def openGui(player: EntityPlayer) = player.openGui(Generators, cfg.guiId, worldObj, pos.getX, pos.getY, pos.getZ)
 
   override def inputFluid(resource: FluidStack, doFill: Boolean): Int = {
-    val res = Resource.from(resource)
-    if (ExchangerRegistry.isValidCooler(res.kind))
-      coolerIn.fillFluid(resource, doFill)
-    else if (ExchangerRegistry.isValidHeater(res.kind))
-      heaterIn.fillFluid(resource, doFill)
-    else 0
+    if (resource != null) {
+      val res = Resource.from(resource)
+      if (ExchangerRegistry.isValidCooler(res.kind))
+        coolerIn.fillFluid(resource, doFill)
+      else if (ExchangerRegistry.isValidHeater(res.kind))
+        heaterIn.fillFluid(resource, doFill)
+      else 0
+    } else 0
   }
 
   override def canInputFluid(fluid: Fluid) = ExchangerRegistry.isValidInput(FluidResource(fluid))

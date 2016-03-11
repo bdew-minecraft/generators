@@ -20,7 +20,9 @@ class TileFluidInput extends TileModule with IFluidHandler {
   override def getCore = getCoreAs[CIFluidInput]
 
   def fill(from: EnumFacing, resource: FluidStack, doFill: Boolean): Int =
-    getCore map (_.inputFluid(resource, doFill)) getOrElse 0
+    if (resource != null)
+      getCore map (_.inputFluid(resource, doFill)) getOrElse 0
+    else 0
 
   def canFill(from: EnumFacing, fluid: Fluid): Boolean =
     getCore exists (_.canInputFluid(fluid))

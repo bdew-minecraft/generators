@@ -85,7 +85,7 @@ class TileTurbineController extends TileControllerGui with PoweredController wit
   override def openGui(player: EntityPlayer) = player.openGui(Generators, cfg.guiId, worldObj, pos.getX, pos.getY, pos.getZ)
 
   def inputFluid(resource: FluidStack, doFill: Boolean): Int =
-    if (canInputFluid(resource.getFluid)) fuel.fill(resource, doFill) else 0
+    if (resource != null && canInputFluid(resource.getFluid)) fuel.fill(resource, doFill) else 0
 
   def canInputFluid(fluid: Fluid) = TurbineFuel.isValidFuel(fluid)
   def getTankInfo = Array(fuel.getInfo)

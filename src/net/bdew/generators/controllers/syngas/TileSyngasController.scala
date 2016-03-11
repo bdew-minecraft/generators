@@ -121,7 +121,7 @@ class TileSyngasController extends TileControllerGui with CIFluidInput with CIIt
   override def openGui(player: EntityPlayer) = player.openGui(Generators, cfg.guiId, worldObj, pos.getX, pos.getY, pos.getZ)
 
   def inputFluid(resource: FluidStack, doFill: Boolean): Int =
-    if (canInputFluid(resource.getFluid)) {
+    if (resource != null && canInputFluid(resource.getFluid)) {
       if (resource.getFluid == FluidRegistry.WATER)
         waterTank.fill(resource, doFill)
       else if (resource.getFluid == Blocks.steamFluid)
