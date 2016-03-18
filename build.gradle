@@ -165,11 +165,11 @@ curseforge {
         }
 
         addArtifact(deobfJar) {
-            displayName = "Advanced Generators ${simpleVersion} Source (MC ${config.minecraft.version})"
+            displayName = "Advanced Generators ${simpleVersion} Deobfuscated (MC ${config.minecraft.version})"
         }
 
         addArtifact(sourceJarReal) {
-            displayName = "Advanced Generators ${simpleVersion} Deobfuscated (MC ${config.minecraft.version})"
+            displayName = "Advanced Generators ${simpleVersion} Source (MC ${config.minecraft.version})"
         }
 
         relations {
