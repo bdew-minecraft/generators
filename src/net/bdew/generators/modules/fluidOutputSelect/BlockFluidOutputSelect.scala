@@ -11,9 +11,11 @@ package net.bdew.generators.modules.fluidOutputSelect
 
 import net.bdew.generators.modules.BaseModule
 import net.bdew.lib.multiblock.block.BlockOutput
-import net.minecraft.util.{BlockPos, EnumFacing}
+import net.minecraft.block.state.IBlockState
+import net.minecraft.util.EnumFacing
+import net.minecraft.util.math.BlockPos
 import net.minecraft.world.IBlockAccess
 
 object BlockFluidOutputSelect extends BaseModule("FluidOutputSelect", "FluidOutputSelect", classOf[TileFluidOutputSelect]) with BlockOutput[TileFluidOutputSelect] {
-  override def canConnectRedstone(world: IBlockAccess, pos: BlockPos, side: EnumFacing): Boolean = true
+  override def canConnectRedstone(state: IBlockState, world: IBlockAccess, pos: BlockPos, side: EnumFacing): Boolean = true
 }

@@ -15,15 +15,15 @@ import net.bdew.lib.block.BlockTooltip
 import net.bdew.lib.{DecFormat, Misc}
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
-import net.minecraft.util.EnumChatFormatting
+import net.minecraft.util.text.TextFormatting
 
 class BlockTurbine(val material: TurbineMaterial) extends BaseModule("Turbine" + material.name, "Turbine", classOf[TileTurbine]) with BlockTooltip {
   override def getTooltip(stack: ItemStack, player: EntityPlayer, advanced: Boolean): List[String] = {
     List(
       Misc.toLocalF("advgenerators.tooltip.turbine.produce", "%s%s %s/t".format(
-        EnumChatFormatting.YELLOW, DecFormat.short(material.maxMJPerTick * Config.powerShowMultiplier), Config.powerShowUnits
+        TextFormatting.YELLOW, DecFormat.short(material.maxMJPerTick * Config.powerShowMultiplier), Config.powerShowUnits
       )),
-      Misc.toLocalF("advgenerators.tooltip.turbine.inertia", EnumChatFormatting.YELLOW + "%.0f%%".format(100D * material.inertiaMultiplier))
+      Misc.toLocalF("advgenerators.tooltip.turbine.inertia", TextFormatting.YELLOW + "%.0f%%".format(100D * material.inertiaMultiplier))
     ) ++ super.getTooltip(stack, player, advanced)
   }
 }

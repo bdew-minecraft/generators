@@ -13,7 +13,8 @@ import net.bdew.generators.modules.BaseModule
 import net.bdew.lib.multiblock.interact.CIFluidInput
 import net.bdew.lib.multiblock.tile.TileModule
 import net.bdew.pressure.api.{IPressureConnectableBlock, IPressureEject}
-import net.minecraft.util.{BlockPos, EnumFacing}
+import net.minecraft.util.EnumFacing
+import net.minecraft.util.math.BlockPos
 import net.minecraft.world.IBlockAccess
 import net.minecraftforge.fluids.FluidStack
 

@@ -17,12 +17,13 @@ import net.bdew.lib.block.BlockTooltip
 import net.bdew.lib.multiblock.tile.TileModule
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
-import net.minecraft.util.{BlockPos, EnumChatFormatting}
+import net.minecraft.util.math.BlockPos
+import net.minecraft.util.text.TextFormatting
 
 object BlockEfficiencyUpgradeTier2 extends BaseModule("EfficiencyUpgradeTier2", "EfficiencyUpgradeTier2", classOf[TileEfficiencyUpgradeTier2]) with BlockTooltip {
   override def getTooltip(stack: ItemStack, player: EntityPlayer, advanced: Boolean): List[String] =
     List(
-      Misc.toLocalF("advgenerators.tooltip.efficiency", "%s%.0f%%%s".format(EnumChatFormatting.YELLOW, MachineTurbine.fuelEfficiency.getDouble("Tier2") * 100, EnumChatFormatting.RESET)),
+      Misc.toLocalF("advgenerators.tooltip.efficiency", "%s%.0f%%%s".format(TextFormatting.YELLOW, MachineTurbine.fuelEfficiency.getDouble("Tier2") * 100, TextFormatting.RESET)),
       Misc.toLocal("advgenerators.tooltip.efficiency.req")
     ) ++ super.getTooltip(stack, player, advanced)
 }

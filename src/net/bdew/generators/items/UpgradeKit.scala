@@ -17,7 +17,8 @@ import net.bdew.lib.nbt.NBT
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.{Item, ItemStack}
 import net.minecraft.nbt.NBTTagCompound
-import net.minecraft.util.{BlockPos, EnumFacing}
+import net.minecraft.util.math.BlockPos
+import net.minecraft.util.{EnumActionResult, EnumFacing, EnumHand}
 import net.minecraft.world.World
 
 trait UpgradeKit extends Item {
@@ -61,11 +62,11 @@ trait UpgradeKit extends Item {
     }
   }
 
-  override def onItemUse(stack: ItemStack, player: EntityPlayer, world: World, pos: BlockPos, side: EnumFacing, hitX: Float, hitY: Float, hitZ: Float): Boolean = {
+  override def onItemUse(stack: ItemStack, player: EntityPlayer, world: World, pos: BlockPos, hand: EnumHand, side: EnumFacing, hitX: Float, hitY: Float, hitZ: Float): EnumActionResult = {
     if (canUpgradeBlock(pos, world)) {
       // Clicked on block - upgrade in place
       doUpgrade(pos, world, player)
-      return true
+      return EnumActionResult.SUCCESS
     } else {
       // Otherwise find something in multiblock to upgrade
       for {
@@ -73,10 +74,9 @@ trait UpgradeKit extends Item {
         target <- controller.modules find (canUpgradeBlock(_, world))
       } {
         doUpgrade(target, world, player)
-        return true
+        return EnumActionResult.SUCCESS
       }
     }
-    false
+    return EnumActionResult.FAIL
   }
-
 }

@@ -22,7 +22,8 @@ import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.Entity
 import net.minecraft.init.Blocks
 import net.minecraft.item.{Item, ItemStack}
-import net.minecraft.util.{BlockPos, EnumWorldBlockLayer}
+import net.minecraft.util.BlockRenderLayer
+import net.minecraft.util.math.BlockPos
 import net.minecraft.world.{Explosion, World}
 import net.minecraftforge.fluids.{BlockFluidClassic, Fluid}
 
@@ -35,7 +36,7 @@ object BlockSyngasFlaming extends BaseBlock("syngas_flaming", MaterialSyngas) {
 
   override def canDropFromExplosion(exp: Explosion) = false
 
-  override def getBlockLayer = EnumWorldBlockLayer.TRANSLUCENT
+  override def getBlockLayer = BlockRenderLayer.TRANSLUCENT
 
   override def updateTick(w: World, pos: BlockPos, state: IBlockState, rnd: Random): Unit = {
     if (!w.isRemote) {

@@ -16,7 +16,9 @@ import net.bdew.lib.multiblock.data.OutputConfigFluidSlots
 import net.bdew.lib.multiblock.interact.CIFluidOutputSelect
 import net.bdew.lib.multiblock.tile.{RSControllableOutput, TileOutput}
 import net.bdew.pressure.api.{IPressureConnectableBlock, IPressureConnection, IPressureInject, PressureAPI}
-import net.minecraft.util.{BlockPos, EnumFacing}
+import net.minecraft.block.state.IBlockState
+import net.minecraft.util.EnumFacing
+import net.minecraft.util.math.BlockPos
 import net.minecraft.world.IBlockAccess
 
 object BlockPressureOutput extends BaseModule("PressureOutputSelect", "FluidOutputSelect", classOf[TilePressureOutput])
@@ -24,7 +26,7 @@ object BlockPressureOutput extends BaseModule("PressureOutputSelect", "FluidOutp
   override def canConnectTo(world: IBlockAccess, pos: BlockPos, side: EnumFacing) =
     getTE(world, pos).exists(_.getCore.isDefined)
   override def isTraversable(world: IBlockAccess, pos: BlockPos) = false
-  override def canConnectRedstone(world: IBlockAccess, pos: BlockPos, side: EnumFacing) = true
+  override def canConnectRedstone(state: IBlockState, world: IBlockAccess, pos: BlockPos, side: EnumFacing): Boolean = true
 }
 
 class TilePressureOutput extends TileOutput[OutputConfigFluidSlots] with PressureModule with RSControllableOutput with IPressureInject {

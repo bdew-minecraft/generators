@@ -19,7 +19,7 @@ import net.bdew.lib.gui.widgets.{WidgetButtonIcon, WidgetFluidGauge, WidgetLabel
 import net.bdew.lib.multiblock.gui.{WidgetInfo, WidgetInfoMulti}
 import net.bdew.lib.{Client, DecFormat, Misc}
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.util.EnumChatFormatting
+import net.minecraft.util.text.TextFormatting
 
 class GuiTurbine(val te: TileTurbineController, player: EntityPlayer) extends BaseScreen(new ContainerTurbine(te, player), 176, 175) with GuiOutputFaces {
   val background = Texture(Generators.modId, "textures/gui/turbine.png", rect)
@@ -63,7 +63,7 @@ class GuiTurbine(val te: TileTurbineController, player: EntityPlayer) extends Ba
       DecFormat.short(te.fuelPerTick) + " mB/t",
       List(
         Misc.toLocal("advgenerators.label.turbine.fuel"),
-        Misc.toLocalF("advgenerators.label.turbine.efficiency", "%s%.0f%%%s".format(EnumChatFormatting.YELLOW, te.fuelEfficiency * 100, EnumChatFormatting.RESET))
+        Misc.toLocalF("advgenerators.label.turbine.efficiency", "%s%.0f%%%s".format(TextFormatting.YELLOW, te.fuelEfficiency * 100, TextFormatting.RESET))
       )
     ))
 

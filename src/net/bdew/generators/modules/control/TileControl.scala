@@ -14,7 +14,7 @@ import net.bdew.lib.data.DataSlotBoolean
 import net.bdew.lib.data.base.{DataSlot, UpdateKind}
 import net.bdew.lib.multiblock.tile.TileModule
 import net.minecraft.block.state.IBlockState
-import net.minecraft.util.BlockPos
+import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
 class TileControl extends TileModule with MIControl {

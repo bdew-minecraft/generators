@@ -19,7 +19,7 @@ import net.bdew.lib.items.BaseItem
 import net.bdew.lib.multiblock.block.BlockModule
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
-import net.minecraft.util.BlockPos
+import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
 class TurbineItem(val material: TurbineMaterial, val kind: String) extends BaseItem("Turbine" + kind + material.name)

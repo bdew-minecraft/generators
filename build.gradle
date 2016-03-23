@@ -78,7 +78,7 @@ dependencies {
     compile "net.bdew:pressure:${config.pressure.version}-mc${config.minecraft.version}:api"
 
     deobfCompile "mezz.jei:jei_${config.minecraft.version}:${config.jei.version}"
-    deobfCompile "mcp.mobius.waila:Waila:${config.waila.version}"
+//    deobfCompile "mcp.mobius.waila:Waila:${config.waila.version}"
 
     compile "net.bdew.thirdparty:rfapi:${config.rfapi.version}-mc${config.minecraft.version}:api"
 }

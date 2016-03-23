@@ -11,11 +11,13 @@ package net.bdew.generators.modules.rfOutput
 
 import net.bdew.generators.modules.BaseModule
 import net.bdew.lib.multiblock.block.BlockOutput
-import net.minecraft.util.{BlockPos, EnumFacing}
+import net.minecraft.block.state.IBlockState
+import net.minecraft.util.EnumFacing
+import net.minecraft.util.math.BlockPos
 import net.minecraft.world.{IBlockAccess, World}
 
 object BlockRfOutput extends BaseModule("RFOutput", "PowerOutput", classOf[TileRfOutput]) with BlockOutput[TileRfOutput] {
-  override def canConnectRedstone(world: IBlockAccess, pos: BlockPos, side: EnumFacing) = true
+  override def canConnectRedstone(state: IBlockState, world: IBlockAccess, pos: BlockPos, side: EnumFacing): Boolean = true
 
   override def rotateBlock(world: World, pos: BlockPos, axis: EnumFacing): Boolean = {
     val te = getTE(world, pos)

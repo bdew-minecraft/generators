@@ -15,12 +15,12 @@ import net.bdew.lib.block.BlockTooltip
 import net.bdew.lib.{DecFormat, Misc}
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
-import net.minecraft.util.EnumChatFormatting
+import net.minecraft.util.text.TextFormatting
 
 class BlockPowerCapacitor(val material: CapacitorMaterial) extends BaseModule("PowerCapacitor" + material.name, "PowerCapacitor", classOf[TilePowerCapacitor]) with BlockTooltip {
   override def getTooltip(stack: ItemStack, player: EntityPlayer, advanced: Boolean): List[String] =
     List(Misc.toLocalF("advgenerators.tooltip.capacitor", "%s%s %s".format(
-      EnumChatFormatting.YELLOW, DecFormat.short(material.mjCapacity * Config.powerShowMultiplier), Config.powerShowUnits
+      TextFormatting.YELLOW, DecFormat.short(material.mjCapacity * Config.powerShowMultiplier), Config.powerShowUnits
     )))
 
 }

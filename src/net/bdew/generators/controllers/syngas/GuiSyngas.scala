@@ -17,7 +17,7 @@ import net.bdew.lib.gui.widgets.{WidgetButtonIcon, WidgetFluidGauge, WidgetLabel
 import net.bdew.lib.multiblock.gui.WidgetInfo
 import net.bdew.lib.{Client, DecFormat, Misc}
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.util.EnumChatFormatting
+import net.minecraft.util.text.TextFormatting
 
 import scala.collection.mutable
 
@@ -54,7 +54,7 @@ class GuiSyngas(val te: TileSyngasController, player: EntityPlayer) extends Base
         if (te.heatingChambers > 0)
           super.handleTooltip(p, tip)
         else
-          tip += (EnumChatFormatting.RED + Misc.toLocal("advgenerators.label.syngas.heat.disabled") + EnumChatFormatting.RESET)
+          tip += (TextFormatting.RED + Misc.toLocal("advgenerators.label.syngas.heat.disabled") + TextFormatting.RESET)
       }
       override def draw(mouse: Point): Unit = {
         if (te.heatingChambers > 0)
