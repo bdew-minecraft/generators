@@ -68,7 +68,7 @@ object Generators {
     Sensors.init()
     NetworkRegistry.INSTANCE.registerGuiHandler(this, Config.guiHandler)
     NetworkHandler.init()
-    FMLInterModComms.sendMessage("Waila", "register", "net.bdew.generators.waila.WailaHandler.loadCallback")
+    //    FMLInterModComms.sendMessage("Waila", "register", "net.bdew.generators.waila.WailaHandler.loadCallback")
     TurbineMaterials.init()
     CapacitorMaterials.init()
     TuningLoader.loadDelayed()
