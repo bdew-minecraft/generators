@@ -104,8 +104,7 @@ object Blocks extends BlockManager(CreativeTabsGenerators.main) {
 
     if (fluid.getBlock == null) {
       Generators.logInfo("Adding block for fluid '%s'", name)
-      val newBlock = block(fluid)
-      GameRegistry.registerBlock(newBlock)
+      val newBlock = regBlock(block(fluid))
       fluid.setBlock(newBlock)
 
       if (FMLCommonHandler.instance().getSide.isClient)
