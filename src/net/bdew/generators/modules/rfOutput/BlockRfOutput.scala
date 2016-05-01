@@ -21,7 +21,7 @@ object BlockRfOutput extends BaseModule("RFOutput", "PowerOutput", classOf[TileR
 
   override def rotateBlock(world: World, pos: BlockPos, axis: EnumFacing): Boolean = {
     val te = getTE(world, pos)
-    if (te.getCore.isDefined) {
+    if (!world.isRemote && te.getCore.isDefined) {
       te.forcedSides(axis) := !te.forcedSides(axis)
       te.doRescanFaces()
       true
