@@ -62,8 +62,8 @@ object BlockControl extends BaseModule("Control", "Control", classOf[TileControl
   override def getStateFromMeta(meta: Int): IBlockState =
     getDefaultState.withProperty(Properties.POWERED, Boolean.box(meta > 0))
 
-  override def onNeighborBlockChange(world: World, pos: BlockPos, state: IBlockState, neighborBlock: Block): Unit = {
-    super.onNeighborBlockChange(world, pos, state, neighborBlock)
+  override def neighborChanged(state: IBlockState, world: World, pos: BlockPos, block: Block): Unit = {
+    super.neighborChanged(state, world, pos, block)
     val wasPowered = state.getValue(Properties.POWERED)
     val powered = world.isBlockIndirectlyGettingPowered(pos)
     if ((powered > 0) ^ wasPowered)
@@ -73,6 +73,6 @@ object BlockControl extends BaseModule("Control", "Control", classOf[TileControl
 
   override def onBlockPlacedBy(world: World, pos: BlockPos, state: IBlockState, placer: EntityLivingBase, stack: ItemStack): Unit = {
     super.onBlockPlacedBy(world, pos, state, placer, stack)
-    onNeighborBlockChange(world, pos, state, this)
+    neighborChanged(state, world, pos, this)
   }
 }

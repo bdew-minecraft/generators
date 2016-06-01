@@ -38,9 +38,9 @@ case class SensorResource[T: ClassTag](uid: String, iconName: String, accessor: 
   @SideOnly(Side.CLIENT) override
   def drawParameter(rect: Rect, target: DrawTarget, obj: TileEntity, param: GenericSensorParameter): Unit = param match {
     case ParameterResource.solid =>
-      Client.minecraft.getRenderItem.renderItemAndEffectIntoGUI(new ItemStack(Blocks.cobblestone), rect.origin.x.toInt, rect.origin.y.toInt)
+      Client.minecraft.getRenderItem.renderItemAndEffectIntoGUI(new ItemStack(Blocks.COBBLESTONE), rect.origin.x.toInt, rect.origin.y.toInt)
     case ParameterResource.fluid =>
-      Client.minecraft.getRenderItem.renderItemAndEffectIntoGUI(new ItemStack(Items.water_bucket), rect.origin.x.toInt, rect.origin.y.toInt)
+      Client.minecraft.getRenderItem.renderItemAndEffectIntoGUI(new ItemStack(Items.WATER_BUCKET), rect.origin.x.toInt, rect.origin.y.toInt)
     case _ => super.drawParameter(rect, target, obj, param)
   }
 

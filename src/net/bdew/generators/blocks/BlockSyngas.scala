@@ -27,7 +27,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.{Explosion, World}
 import net.minecraftforge.fluids.{BlockFluidClassic, Fluid}
 
-object MaterialSyngas extends MaterialLiquid(MapColor.greenColor)
+object MaterialSyngas extends MaterialLiquid(MapColor.GREEN)
 
 object BlockSyngasFlaming extends BaseBlock("syngas_flaming", MaterialSyngas) {
   // This is a technical block used to delay chain explosions
@@ -47,15 +47,15 @@ object BlockSyngasFlaming extends BaseBlock("syngas_flaming", MaterialSyngas) {
 }
 
 class BlockSyngas(fluid: Fluid) extends BlockFluidClassic(fluid, MaterialSyngas) {
-  val openFlames = Set(Blocks.fire, Blocks.torch, Blocks.lava, Blocks.flowing_lava)
+  val openFlames = Set(Blocks.FIRE, Blocks.TORCH, Blocks.LAVA, Blocks.FLOWING_LAVA)
 
   setRegistryName(Generators.modId, "syngas")
   setUnlocalizedName(Generators.modId + ".syngas")
 
   config.Blocks.regBlock(BlockSyngasFlaming)
 
-  override def onNeighborBlockChange(world: World, pos: BlockPos, state: IBlockState, neighborBlock: Block): Unit = {
-    super.onNeighborBlockChange(world, pos, state, neighborBlock)
+  override def neighborChanged(state: IBlockState, world: World, pos: BlockPos, neighborBlock: Block): Unit = {
+    super.neighborChanged(state, world, pos, neighborBlock)
     if (!world.isRemote) {
       for (nPos <- pos.neighbours.values if openFlames.contains(world.getBlockState(nPos).getBlock)) {
         world.setBlockToAir(pos)
@@ -69,11 +69,6 @@ class BlockSyngas(fluid: Fluid) extends BlockFluidClassic(fluid, MaterialSyngas)
       world.setBlockToAir(pos)
       world.createExplosion(null, pos.getX, pos.getY, pos.getZ, 5, true)
     }
-  }
-
-  // WhyTF there are 2 versions?
-  override def onEntityCollidedWithBlock(world: World, pos: BlockPos, ent: Entity) = {
-    onEntityCollidedWithBlock(world, pos, world.getBlockState(pos), ent)
   }
 
   override def onBlockDestroyedByExplosion(world: World, pos: BlockPos, exp: Explosion): Unit = {

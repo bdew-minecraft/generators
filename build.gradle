@@ -18,7 +18,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.1-SNAPSHOT'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
         classpath "gradle.plugin.com.matthewprenger:CurseGradle:1.0.7"
     }
 }
@@ -85,7 +85,7 @@ dependencies {
     deobfCompile "mcp.mobius.waila:Waila:${config.waila.version}"
 
     compile "net.bdew.thirdparty:rfapi:${config.rfapi.version}-mc${config.minecraft.version}:api"
-    compile "net.industrial-craft:industrialcraft-2:${config.ic2.version}:api"
+//    compile "net.industrial-craft:industrialcraft-2:${config.ic2.version}:api"
 }
 
 import org.apache.tools.ant.filters.ReplaceTokens

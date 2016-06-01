@@ -13,7 +13,7 @@ import net.bdew.generators.Generators
 import net.minecraft.block.material.{MapColor, MaterialLiquid}
 import net.minecraftforge.fluids.{BlockFluidClassic, Fluid}
 
-object MaterialSteam extends MaterialLiquid(MapColor.snowColor)
+object MaterialSteam extends MaterialLiquid(MapColor.SNOW)
 
 class BlockSteam(fluid: Fluid) extends BlockFluidClassic(fluid, MaterialSteam) {
   setRegistryName(Generators.modId, "steam")

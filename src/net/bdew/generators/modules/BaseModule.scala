@@ -15,7 +15,7 @@ import net.bdew.lib.multiblock.block.BlockModule
 import net.bdew.lib.multiblock.tile.TileModule
 import net.minecraft.block.material.Material
 
-class BaseModule[T <: TileModule](name: String, kind: String, TEClass: Class[T]) extends BlockModule(name, kind, Material.iron, TEClass, Machines) {
+class BaseModule[T <: TileModule](name: String, kind: String, TEClass: Class[T]) extends BlockModule(name, kind, Material.IRON, TEClass, Machines) {
   override def resources = GeneratorsResourceProvider
   setHardness(1)
 }

@@ -14,7 +14,7 @@ import net.bdew.lib.multiblock.block.BlockController
 import net.bdew.lib.multiblock.tile.TileController
 import net.minecraft.block.material.Material
 
-class BaseController[T <: TileController](name: String, TEClass: Class[T]) extends BlockController(name, Material.iron, TEClass) {
+class BaseController[T <: TileController](name: String, TEClass: Class[T]) extends BlockController(name, Material.IRON, TEClass) {
   override def resources = GeneratorsResourceProvider
   setHardness(1)
 }
