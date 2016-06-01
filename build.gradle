@@ -71,6 +71,10 @@ repositories {
         name "JEI"
         url "http://dvs1.progwml6.com/files/maven"
     }
+    maven {
+        name = "ic2"
+        url = "http://maven.ic2.player.to/"
+    }
 }
 
 dependencies {
@@ -81,6 +85,7 @@ dependencies {
     deobfCompile "mcp.mobius.waila:Waila:${config.waila.version}"
 
     compile "net.bdew.thirdparty:rfapi:${config.rfapi.version}-mc${config.minecraft.version}:api"
+    compile "net.industrial-craft:industrialcraft-2:${config.ic2.version}:api"
 }
 
 import org.apache.tools.ant.filters.ReplaceTokens
