@@ -85,7 +85,7 @@ dependencies {
     deobfCompile "mcp.mobius.waila:Waila:${config.waila.version}"
 
     compile "net.bdew.thirdparty:rfapi:${config.rfapi.version}-mc${config.minecraft.version}:api"
-//    compile "net.industrial-craft:industrialcraft-2:${config.ic2.version}:api"
+    compile "net.industrial-craft:industrialcraft-2:${config.ic2.version}:api"
 }
 
 import org.apache.tools.ant.filters.ReplaceTokens
