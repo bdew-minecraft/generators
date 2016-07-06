@@ -1,10 +1,10 @@
 /*
- * Copyright (c) bdew, 2015
+ * Copyright (c) bdew, 2014 - 2016
  * https://github.com/bdew/generators
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
  * License 1.0, or MMPL. Please check the contents of the license located in
- * http://bdew.net/minecraft-mod-public-license
+ * http://bdew.net/minecraft-mod-public-license/
  */
 
 package net.bdew.generators.controllers.steam
@@ -14,7 +14,6 @@ import net.bdew.generators.gui.{GuiOutputConfig, GuiOutputFaces, WidgetPowerGaug
 import net.bdew.generators.modules.turbine.BlockTurbine
 import net.bdew.generators.network.{NetworkHandler, PktDumpBuffers}
 import net.bdew.generators.{Generators, Textures}
-import net.bdew.lib.PimpVanilla._
 import net.bdew.lib.gui._
 import net.bdew.lib.gui.widgets.{WidgetButtonIcon, WidgetFluidGauge, WidgetLabel}
 import net.bdew.lib.multiblock.gui.{WidgetInfo, WidgetInfoMulti}

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) bdew, 2014
+ * Copyright (c) bdew, 2014 - 2016
  * https://github.com/bdew/generators
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
@@ -14,7 +14,7 @@ import net.bdew.lib.gui.widgets.WidgetDynLabel
 import net.bdew.lib.gui.{Color, Point}
 import net.bdew.lib.multiblock.data.OutputConfigFluidSlots
 import net.bdew.lib.multiblock.gui.WidgetRSConfig
-import net.bdew.lib.multiblock.interact.{CIFluidOutputSelect, CIOutputFaces}
+import net.bdew.lib.multiblock.interact.CIOutputFaces
 
 class WidgetFluidSlotsOutput(te: CIOutputFaces, output: Int) extends WidgetOutputDisplay {
   def cfg = te.outputConfig(output).asInstanceOf[OutputConfigFluidSlots]

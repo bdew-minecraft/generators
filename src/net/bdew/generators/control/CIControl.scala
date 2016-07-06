@@ -1,5 +1,5 @@
 /*
- * Copyright (c) bdew, 2015
+ * Copyright (c) bdew, 2014 - 2016
  * https://github.com/bdew/generators
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
@@ -9,7 +9,6 @@
 
 package net.bdew.generators.control
 
-import net.bdew.lib.PimpVanilla._
 import net.bdew.lib.multiblock.tile.TileController
 
 trait CIControl extends TileController {

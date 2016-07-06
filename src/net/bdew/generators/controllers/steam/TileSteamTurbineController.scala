@@ -1,5 +1,5 @@
 /*
- * Copyright (c) bdew, 2015
+ * Copyright (c) bdew, 2014 - 2016
  * https://github.com/bdew/generators
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
@@ -16,7 +16,6 @@ import net.bdew.generators.modules.turbine.BlockTurbine
 import net.bdew.generators.sensor.Sensors
 import net.bdew.generators.{Generators, GeneratorsResourceProvider}
 import net.bdew.lib.Misc
-import net.bdew.lib.PimpVanilla._
 import net.bdew.lib.data.base.UpdateKind
 import net.bdew.lib.data.{DataSlotDouble, DataSlotInt, DataSlotMovingAverage, DataSlotTank}
 import net.bdew.lib.multiblock.interact.{CIFluidInput, CIOutputFaces, CIPowerProducer}
