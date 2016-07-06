@@ -13,6 +13,7 @@ import net.bdew.generators.blocks.{BlockSteam, BlockSyngas}
 import net.bdew.generators.compat.PowerProxy
 import net.bdew.generators.modules.control.BlockControl
 import net.bdew.generators.modules.efficiency.{BlockEfficiencyUpgradeTier1, BlockEfficiencyUpgradeTier2}
+import net.bdew.generators.modules.euOutput.{BlockEuOutputEV, BlockEuOutputHV, BlockEuOutputLV, BlockEuOutputMV}
 import net.bdew.generators.modules.exchanger.BlockExchanger
 import net.bdew.generators.modules.fluidInput.BlockFluidInput
 import net.bdew.generators.modules.fluidOutputSelect.BlockFluidOutputSelect
@@ -41,12 +42,12 @@ object Blocks extends BlockManager(CreativeTabsGenerators.main) {
   if (PowerProxy.haveRF)
     regBlock(BlockRfOutput)
 
-  //  if (PowerProxy.haveIC2) {
-  //    regBlock(BlockEuOutputLV)
-  //    regBlock(BlockEuOutputMV)
-  //    regBlock(BlockEuOutputHV)
-  //    regBlock(BlockEuOutputEV)
-  //  }
+  if (PowerProxy.haveIC2) {
+    regBlock(BlockEuOutputLV)
+    regBlock(BlockEuOutputMV)
+    regBlock(BlockEuOutputHV)
+    regBlock(BlockEuOutputEV)
+  }
 
   regBlock(BlockFluidInput)
   regBlock(BlockFluidOutputSelect)
