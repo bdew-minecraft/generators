@@ -11,52 +11,66 @@ package net.bdew.generators.modules.fluidOutputSelect
 
 import net.bdew.lib.Misc
 import net.bdew.lib.PimpVanilla._
+import net.bdew.lib.capabilities.helpers.{FluidDrainMonitor, FluidHelper, FluidMultiHandler}
+import net.bdew.lib.capabilities.legacy.OldFluidHandlerEmulator
+import net.bdew.lib.capabilities.{Capabilities, CapabilityProvider}
 import net.bdew.lib.multiblock.data.OutputConfigFluidSlots
 import net.bdew.lib.multiblock.interact.CIFluidOutputSelect
 import net.bdew.lib.multiblock.tile.{RSControllableOutput, TileOutput}
 import net.minecraft.util.EnumFacing
-import net.minecraftforge.fluids.{Fluid, FluidStack, IFluidHandler}
+import net.minecraftforge.fluids.FluidStack
 
-class TileFluidOutputSelect extends TileOutput[OutputConfigFluidSlots] with RSControllableOutput with IFluidHandler {
+class TileFluidOutputSelect extends TileOutput[OutputConfigFluidSlots] with RSControllableOutput with CapabilityProvider with OldFluidHandlerEmulator {
   val kind: String = "FluidOutputSelect"
 
   override def getCore = getCoreAs[CIFluidOutputSelect]
   override val outputConfigType = classOf[OutputConfigFluidSlots]
 
-  override def canConnectToFace(d: EnumFacing) =
-    getCore exists { core =>
-      worldObj.getTileEntity(pos.offset(d)).isInstanceOf[IFluidHandler]
+  addCapabilityOption(Capabilities.CAP_FLUID_HANDLER) { side =>
+    for {
+      core <- getCore
+      cfg <- getCfg(side) if checkCanOutput(cfg)
+      slot <- Misc.asInstanceOpt(cfg.slot, classOf[core.outputSlotsDef.Slot])
+    } yield {
+      new FluidDrainMonitor(FluidMultiHandler.wrap(core.getOutputTanksForSlot(slot)), stack => addOutput(side, stack))
     }
+  }
 
-  override def fill(from: EnumFacing, resource: FluidStack, doFill: Boolean) = 0
-  override def canFill(from: EnumFacing, fluid: Fluid) = false
+  def addOutput(side: EnumFacing, res: FluidStack) = {
+    outThisTick += side -> (outThisTick.getOrElse(side, 0F) + res.amount)
+  }
 
-  override def getTankInfo(from: EnumFacing) =
-    getCore map (_.getTankInfo) getOrElse Array.empty
+  var outThisTick = Map.empty[EnumFacing, Float]
+
+  def updateOutput() {
+    for {
+      core <- getCore
+      (side, amt) <- outThisTick
+      cfg <- getCfg(side)
+    } {
+      cfg.updateAvg(amt)
+      core.outputConfig.updated()
+    }
+    outThisTick = Map.empty
+  }
+
+  serverTick.listen(updateOutput)
+
+  override def canConnectToFace(d: EnumFacing) =
+    getCore.isDefined && FluidHelper.hasFluidHandler(worldObj, pos.offset(d), d.getOpposite)
 
   override def makeCfgObject(face: EnumFacing) = new OutputConfigFluidSlots(getCore.get.outputSlotsDef)
 
   override def doOutput(face: EnumFacing, cfg: OutputConfigFluidSlots) {
-    val outputted = if (checkCanOutput(cfg)) {
-      for {
-        core <- getCore
-        target <- worldObj.getTileSafe[IFluidHandler](pos.offset(face))
-        tSlot <- Misc.asInstanceOpt(cfg.slot, classOf[core.outputSlotsDef.Slot])
-        toSend <- Option(core.outputFluid(tSlot, Int.MaxValue, false))
-      } yield {
-        val filled = target.fill(face.getOpposite, toSend, true)
-        if (filled > 0) {
-          core.outputFluid(tSlot, filled, true)
-          core.outputConfig.updated()
-          filled
-        } else 0
+    for {
+      core <- getCore if checkCanOutput(cfg)
+      target <- FluidHelper.getFluidHandler(worldObj, pos.offset(face), face.getOpposite)
+      slot <- Misc.asInstanceOpt(cfg.slot, classOf[core.outputSlotsDef.Slot])
+    } {
+      for (handler <- core.getOutputTanksForSlot(slot)) {
+        val filled = FluidHelper.pushFluid(handler, target)
+        if (filled != null) addOutput(face, filled)
       }
-    } else None
-    cfg.updateAvg(outputted.getOrElse(0).toDouble)
+    }
   }
-
-  override def canDrain(from: EnumFacing, fluid: Fluid) = false
-
-  override def drain(from: EnumFacing, resource: FluidStack, doDrain: Boolean) = null
-  override def drain(from: EnumFacing, maxDrain: Int, doDrain: Boolean) = null
 }

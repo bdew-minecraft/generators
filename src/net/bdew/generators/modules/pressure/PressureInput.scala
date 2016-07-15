@@ -28,8 +28,12 @@ class TilePressureInput extends TileModule with PressureModule with IPressureEje
   val kind: String = "FluidInput"
   override def getCore = getCoreAs[CIFluidInput]
 
-  override def eject(resource: FluidStack, direction: EnumFacing, doEject: Boolean) = getCore map { core =>
-    core.inputFluid(resource, doEject)
-  } getOrElse 0
-
+  override def eject(resource: FluidStack, direction: EnumFacing, doEject: Boolean) =
+    getCore map { core =>
+      val toFill = resource.copy()
+      for (tank <- core.getInputTanks if toFill.amount > 0) {
+        toFill.amount -= tank.fill(toFill.copy(), doEject)
+      }
+      resource.amount - toFill.amount
+    } getOrElse 0
 }

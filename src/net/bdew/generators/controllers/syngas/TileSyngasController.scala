@@ -25,6 +25,7 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.tileentity.TileEntity
 import net.minecraftforge.fluids._
+import net.minecraftforge.fluids.capability.IFluidHandler
 
 class TileSyngasController extends TileControllerGui with CIFluidInput with CIItemInput with CIOutputFaces with CIFluidOutputSelect with CIRedstoneSensors with CIControl {
   override val cfg = MachineSyngas
@@ -38,8 +39,8 @@ class TileSyngasController extends TileControllerGui with CIFluidInput with CIIt
   val carbonBuffer = DataSlotDouble("carbon", this).setUpdate(UpdateKind.GUI, UpdateKind.SAVE)
   val steamBuffer = DataSlotDouble("steam", this).setUpdate(UpdateKind.GUI, UpdateKind.SAVE)
   val heat = DataSlotDouble("heat", this).setUpdate(UpdateKind.GUI, UpdateKind.SAVE)
-  val waterTank = DataSlotTankRestricted("waterTank", this, cfg.internalTankCapacity, FluidRegistry.WATER)
-  val syngasTank = DataSlotTankRestricted("syngasTank", this, cfg.internalTankCapacity, Blocks.syngasFluid)
+  val waterTank = DataSlotTankRestricted("waterTank", this, cfg.internalTankCapacity, FluidRegistry.WATER, canDrainExternal = false)
+  val syngasTank = DataSlotTankRestricted("syngasTank", this, cfg.internalTankCapacity, Blocks.syngasFluid, canDrainExternal = false)
 
   lazy val steamTank = TankEmulator(Blocks.steamFluid, steamBuffer, cfg.internalTankCapacity)
 
@@ -89,7 +90,7 @@ class TileSyngasController extends TileControllerGui with CIFluidInput with CIIt
       ).floor.toInt
       carbonBuffer -= addSyngas * cfg.carbonPerMBSyngas
       steamBuffer -= addSyngas * cfg.steamPerMBSyngas
-      syngasTank.fill(addSyngas, true)
+      syngasTank.fillInternal(addSyngas, true)
       syngasProduced += addSyngas
       carbonUsed += addSyngas * cfg.carbonPerMBSyngas
     }
@@ -120,18 +121,6 @@ class TileSyngasController extends TileControllerGui with CIFluidInput with CIIt
 
   override def openGui(player: EntityPlayer) = player.openGui(Generators, cfg.guiId, worldObj, pos.getX, pos.getY, pos.getZ)
 
-  def inputFluid(resource: FluidStack, doFill: Boolean): Int =
-    if (resource != null && canInputFluid(resource.getFluid)) {
-      if (resource.getFluid == FluidRegistry.WATER)
-        waterTank.fill(resource, doFill)
-      else if (resource.getFluid == Blocks.steamFluid)
-        steamTank.fill(resource, doFill)
-      else 0
-    } else 0
-
-  def canInputFluid(fluid: Fluid) = fluid != null && (fluid == FluidRegistry.WATER || fluid == Blocks.steamFluid)
-  def getTankInfo = Array(waterTank.getInfo, syngasTank.getInfo)
-
   override def onModulesChanged(): Unit = {
     heatingChambers := getNumOfModules("HeatingChamber")
     mixingChambers := getNumOfModules("MixingChamber")
@@ -142,13 +131,9 @@ class TileSyngasController extends TileControllerGui with CIFluidInput with CIIt
   override def canInputItemToSlot(slot: Int) = true
 
   override val outputSlotsDef = OutputSlotsSyngas
-  override def outputFluid(slot: outputSlotsDef.Slot, amount: Int, doDrain: Boolean) = syngasTank.drain(amount, doDrain)
-  override def canOutputFluid(slot: outputSlotsDef.Slot, fluid: Fluid) = fluid == Blocks.syngasFluid
-  override def outputFluid(slot: outputSlotsDef.Slot, resource: FluidStack, doDrain: Boolean) =
-    if (resource.getFluid == Blocks.syngasFluid)
-      syngasTank.drain(resource.amount, doDrain)
-    else
-      null
+
+  override def getInputTanks: List[IFluidHandler] = List(waterTank, steamTank)
+  override def getOutputTanksForSlot(slot: OutputSlotsSyngas.Slot): List[IFluidHandler] = List(syngasTank)
 
   override def redstoneSensorsType: Seq[GenericSensorType[TileEntity, Boolean]] = Sensors.syngasSensors
   override def redstoneSensorSystem: SensorSystem[TileEntity, Boolean] = Sensors

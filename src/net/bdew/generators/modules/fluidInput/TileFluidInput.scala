@@ -9,28 +9,18 @@
 
 package net.bdew.generators.modules.fluidInput
 
+import net.bdew.lib.capabilities.helpers.FluidMultiHandler
+import net.bdew.lib.capabilities.legacy.OldFluidHandlerEmulator
+import net.bdew.lib.capabilities.{Capabilities, CapabilityProvider}
 import net.bdew.lib.multiblock.interact.CIFluidInput
 import net.bdew.lib.multiblock.tile.TileModule
-import net.minecraft.util.EnumFacing
-import net.minecraftforge.fluids.{Fluid, FluidStack, FluidTankInfo, IFluidHandler}
 
-class TileFluidInput extends TileModule with IFluidHandler {
+class TileFluidInput extends TileModule with CapabilityProvider with OldFluidHandlerEmulator {
   val kind: String = "FluidInput"
 
   override def getCore = getCoreAs[CIFluidInput]
 
-  def fill(from: EnumFacing, resource: FluidStack, doFill: Boolean): Int =
-    if (resource != null)
-      getCore map (_.inputFluid(resource, doFill)) getOrElse 0
-    else 0
-
-  def canFill(from: EnumFacing, fluid: Fluid): Boolean =
-    getCore exists (_.canInputFluid(fluid))
-
-  def getTankInfo(from: EnumFacing): Array[FluidTankInfo] =
-    getCore map (_.getTankInfo) getOrElse Array.empty
-
-  def canDrain(from: EnumFacing, fluid: Fluid): Boolean = false
-  def drain(from: EnumFacing, resource: FluidStack, doDrain: Boolean): FluidStack = null
-  def drain(from: EnumFacing, maxDrain: Int, doDrain: Boolean): FluidStack = null
+  addCapabilityOption(Capabilities.CAP_FLUID_HANDLER) { side =>
+    getCore.map(core => FluidMultiHandler.wrap(core.getInputTanks))
+  }
 }

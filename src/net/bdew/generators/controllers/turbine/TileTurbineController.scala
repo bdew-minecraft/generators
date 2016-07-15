@@ -26,14 +26,18 @@ import net.bdew.lib.multiblock.tile.{TileControllerGui, TileModule}
 import net.bdew.lib.power.DataSlotPower
 import net.bdew.lib.sensors.multiblock.CIRedstoneSensors
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraftforge.fluids.{Fluid, FluidStack}
+import net.minecraftforge.fluids.FluidStack
+import net.minecraftforge.fluids.capability.IFluidHandler
 
 class TileTurbineController extends TileControllerGui with PoweredController with CIFluidInput with CIOutputFaces with CIPowerProducer with CIRedstoneSensors with CIControl {
   val cfg = MachineTurbine
 
   val resources = GeneratorsResourceProvider
 
-  val fuel = new DataSlotTank("fuel", this, 0)
+  val fuel = new DataSlotTank("fuel", this, 0, canDrainExternal = false) {
+    override def canFillFluidType(fluid: FluidStack): Boolean = TurbineFuel.isValidFuel(fluid)
+  }
+
   val power = new DataSlotPower("power", this)
 
   val maxMJPerTick = new DataSlotFloat("maxMJPerTick", this).setUpdate(UpdateKind.SAVE, UpdateKind.GUI)
@@ -84,13 +88,9 @@ class TileTurbineController extends TileControllerGui with PoweredController wit
 
   override def openGui(player: EntityPlayer) = player.openGui(Generators, cfg.guiId, worldObj, pos.getX, pos.getY, pos.getZ)
 
-  def inputFluid(resource: FluidStack, doFill: Boolean): Int =
-    if (resource != null && canInputFluid(resource.getFluid)) fuel.fill(resource, doFill) else 0
+  override def getInputTanks: List[IFluidHandler] = List(fuel)
 
-  def canInputFluid(fluid: Fluid) = TurbineFuel.isValidFuel(fluid)
-  def getTankInfo = Array(fuel.getInfo)
-
-  def extract(v: Float, simulate: Boolean) = power.extract(v, simulate)
+  override def extract(v: Float, simulate: Boolean) = power.extract(v, simulate)
 
   override def onModulesChanged() {
     fuel.setCapacity(getNumOfModules("FuelTank") * Modules.FuelTank.capacity + cfg.internalFuelCapacity)

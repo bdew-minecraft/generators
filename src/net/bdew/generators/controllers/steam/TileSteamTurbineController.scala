@@ -9,6 +9,7 @@
 
 package net.bdew.generators.controllers.steam
 
+import net.bdew.generators.config.Blocks
 import net.bdew.generators.control.{CIControl, ControlActions}
 import net.bdew.generators.controllers.PoweredController
 import net.bdew.generators.modules.powerCapacitor.BlockPowerCapacitor
@@ -16,21 +17,21 @@ import net.bdew.generators.modules.turbine.BlockTurbine
 import net.bdew.generators.sensor.Sensors
 import net.bdew.generators.{Generators, GeneratorsResourceProvider}
 import net.bdew.lib.Misc
+import net.bdew.lib.data._
 import net.bdew.lib.data.base.UpdateKind
-import net.bdew.lib.data.{DataSlotDouble, DataSlotInt, DataSlotMovingAverage, DataSlotTank}
 import net.bdew.lib.multiblock.interact.{CIFluidInput, CIOutputFaces, CIPowerProducer}
 import net.bdew.lib.multiblock.tile.TileControllerGui
 import net.bdew.lib.power.DataSlotPower
 import net.bdew.lib.sensors.multiblock.CIRedstoneSensors
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraftforge.fluids.{Fluid, FluidStack}
+import net.minecraftforge.fluids.capability.IFluidHandler
 
 class TileSteamTurbineController extends TileControllerGui with PoweredController with CIFluidInput with CIOutputFaces with CIPowerProducer with CIRedstoneSensors with CIControl {
   val cfg = MachineSteamTurbine
 
   val resources = GeneratorsResourceProvider
 
-  val steam = new DataSlotTank("steam", this, cfg.internalSteamCapacity)
+  val steam = new DataSlotTankRestricted("steam", this, cfg.internalSteamCapacity, Blocks.steamFluid, canDrainExternal = false)
   val power = new DataSlotPower("power", this)
   val speed = new DataSlotDouble("speed", this).setUpdate(UpdateKind.GUI, UpdateKind.SAVE)
   val numTurbines = new DataSlotInt("turbines", this).setUpdate(UpdateKind.GUI)
@@ -85,13 +86,9 @@ class TileSteamTurbineController extends TileControllerGui with PoweredControlle
 
   override def openGui(player: EntityPlayer) = player.openGui(Generators, cfg.guiId, worldObj, pos.getX, pos.getY, pos.getZ)
 
-  def inputFluid(resource: FluidStack, doFill: Boolean): Int =
-    if (resource != null && canInputFluid(resource.getFluid)) steam.fill(resource, doFill) else 0
+  override def getInputTanks: List[IFluidHandler] = List(steam)
 
-  def canInputFluid(fluid: Fluid) = fluid != null && fluid.getName == "steam"
-  def getTankInfo = Array(steam.getInfo)
-
-  def extract(v: Float, simulate: Boolean) = power.extract(v, simulate)
+  override def extract(v: Float, simulate: Boolean) = power.extract(v, simulate)
 
   override def onModulesChanged() {
     power.capacity = getModuleBlocks[BlockPowerCapacitor].values.map(_.material.mjCapacity).sum.toFloat + cfg.internalPowerCapacity

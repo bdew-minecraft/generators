@@ -22,17 +22,17 @@ import net.bdew.lib.resource._
 import net.bdew.lib.sensors.multiblock.CIRedstoneSensors
 import net.bdew.lib.tile.inventory.MultipleInventoryAdapter
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraftforge.fluids.{Fluid, FluidStack}
+import net.minecraftforge.fluids.capability.IFluidHandler
 
 class TileExchangerController extends TileControllerGui with CIFluidInput with CIOutputFaces with CIFluidOutputSelect with CIItemOutput with CIRedstoneSensors with CIControl {
   val cfg = MachineExchanger
 
   val resources = GeneratorsResourceProvider
 
-  val heaterIn = new DataSlotResource("heaterIn", this, cfg.internalTankCapacity)
-  val coolerIn = new DataSlotResource("coolerIn", this, cfg.internalTankCapacity)
-  val heaterOut = new DataSlotResource("heaterOut", this, cfg.internalTankCapacity)
-  val coolerOut = new DataSlotResource("coolerOut", this, cfg.internalTankCapacity)
+  val heaterIn = new DataSlotResource("heaterIn", this, cfg.internalTankCapacity, canDrainExternal = false, canAccept = ExchangerRegistry.isValidHeater)
+  val coolerIn = new DataSlotResource("coolerIn", this, cfg.internalTankCapacity, canDrainExternal = false, canAccept = ExchangerRegistry.isValidCooler)
+  val heaterOut = new DataSlotResource("heaterOut", this, cfg.internalTankCapacity, canFillExternal = false)
+  val coolerOut = new DataSlotResource("coolerOut", this, cfg.internalTankCapacity, canFillExternal = false)
   val heat = new DataSlotDouble("heat", this).setUpdate(UpdateKind.SAVE, UpdateKind.GUI)
   val maxHeatTransfer = new DataSlotDouble("maxHeatTransfer", this).setUpdate(UpdateKind.SAVE, UpdateKind.GUI)
 
@@ -59,11 +59,11 @@ class TileExchangerController extends TileControllerGui with CIFluidInput with C
         cooler <- coolerIn.resource
         rec <- ExchangerRegistry.getCooling(cooler.kind)
       } {
-        val maxFill = coolerOut.rawFill(Resource(rec.out, transfer * rec.outPerHU), false, false)
+        val maxFill = coolerOut.fillInternal(Resource(rec.out, transfer * rec.outPerHU), false, false)
         val toDrain = Misc.min(maxFill / rec.outPerHU * rec.inPerHU, transfer * rec.inPerHU, cooler.amount)
         if (toDrain > 0) {
-          coolerIn.rawDrain(toDrain, false, true)
-          coolerOut.rawFill(Resource(rec.out, toDrain / rec.inPerHU * rec.outPerHU), false, true)
+          coolerIn.drainInternal(toDrain, false, true)
+          coolerOut.fillInternal(Resource(rec.out, toDrain / rec.inPerHU * rec.outPerHU), false, true)
           tickOutput = toDrain / rec.inPerHU * rec.outPerHU
           if (!lastOutput.contains(rec.out)) {
             lastOutput.set(rec.out)
@@ -89,11 +89,11 @@ class TileExchangerController extends TileControllerGui with CIFluidInput with C
         heater <- heaterIn.resource
         rec <- ExchangerRegistry.getHeating(heater.kind)
       } {
-        val maxFill = heaterOut.rawFill(Resource(rec.out, transfer * rec.outPerHU), false, false)
+        val maxFill = heaterOut.fillInternal(Resource(rec.out, transfer * rec.outPerHU), false, false)
         val toDrain = Misc.min(maxFill / rec.outPerHU * rec.inPerHU, transfer * rec.inPerHU, heater.amount)
         if (toDrain > 0) {
-          heaterIn.rawDrain(toDrain, false, true)
-          heaterOut.rawFill(Resource(rec.out, toDrain / rec.inPerHU * rec.outPerHU), false, true)
+          heaterIn.drainInternal(toDrain, false, true)
+          heaterOut.fillInternal(Resource(rec.out, toDrain / rec.inPerHU * rec.outPerHU), false, true)
           tickInput = toDrain
           if (!lastInput.contains(rec.in)) {
             lastInput.set(rec.in)
@@ -112,21 +112,6 @@ class TileExchangerController extends TileControllerGui with CIFluidInput with C
 
   override def openGui(player: EntityPlayer) = player.openGui(Generators, cfg.guiId, worldObj, pos.getX, pos.getY, pos.getZ)
 
-  override def inputFluid(resource: FluidStack, doFill: Boolean): Int = {
-    if (resource != null) {
-      val res = Resource.from(resource)
-      if (ExchangerRegistry.isValidCooler(res.kind))
-        coolerIn.fillFluid(resource, doFill)
-      else if (ExchangerRegistry.isValidHeater(res.kind))
-        heaterIn.fillFluid(resource, doFill)
-      else 0
-    } else 0
-  }
-
-  override def canInputFluid(fluid: Fluid) = ExchangerRegistry.isValidInput(FluidResource(fluid))
-
-  override def getTankInfo = Array(heaterIn.getTankInfo, coolerIn.getTankInfo, heaterOut.getTankInfo, coolerOut.getTankInfo)
-
   override def onModulesChanged() {
     maxHeatTransfer := getNumOfModules("HeatExchanger") * Modules.HeatExchanger.heatTransfer
     super.onModulesChanged()
@@ -134,35 +119,15 @@ class TileExchangerController extends TileControllerGui with CIFluidInput with C
 
   override val outputSlotsDef = OutputSlotsExchanger
 
-  def getTanks(slot: OutputSlotsExchanger.Slot) = slot match {
-    case OutputSlotsExchanger.BOTH => Array(coolerOut, heaterOut)
-    case OutputSlotsExchanger.COLD => Array(heaterOut)
-    case OutputSlotsExchanger.HOT => Array(coolerOut)
-  }
+  override def getInputTanks: List[IFluidHandler] = List(coolerIn.fluidHandler, heaterIn.fluidHandler)
 
-  override def outputFluid(slot: OutputSlotsExchanger.Slot, resource: FluidStack, doDrain: Boolean): FluidStack = {
-    for {
-      tank <- getTanks(slot)
-      res <- tank.resource if res.kind == FluidResource(resource.getFluid)
-      fs <- Option(tank.drainFluid(resource.amount, doDrain))
-    } {
-      return fs
+  override def getOutputTanksForSlot(slot: outputSlotsDef.Slot): List[IFluidHandler] = {
+    slot match {
+      case OutputSlotsExchanger.BOTH => List(coolerOut.fluidHandler, heaterOut.fluidHandler)
+      case OutputSlotsExchanger.COLD => List(heaterOut.fluidHandler)
+      case OutputSlotsExchanger.HOT => List(coolerOut.fluidHandler)
     }
-    return null
   }
-
-  override def outputFluid(slot: OutputSlotsExchanger.Slot, amount: Int, doDrain: Boolean): FluidStack = {
-    for {
-      tank <- getTanks(slot)
-      fs <- Option(tank.drainFluid(amount, doDrain))
-    } {
-      return fs
-    }
-    return null
-  }
-
-  override def canOutputFluid(slot: OutputSlotsExchanger.Slot, fluid: Fluid) =
-    getTanks(slot).exists(t => t.resource.exists(_.kind == FluidResource(fluid)))
 
   override def getItemOutputInventory = outInventory
 

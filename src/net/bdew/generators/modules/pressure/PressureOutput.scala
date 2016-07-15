@@ -45,25 +45,26 @@ class TilePressureOutput extends TileOutput[OutputConfigFluidSlots] with Pressur
 
   var connections = Map.empty[EnumFacing, IPressureConnection]
 
-  override def doOutput(face: EnumFacing, cfg: OutputConfigFluidSlots) = {
-    val outputted = if (checkCanOutput(cfg)) {
-      if (!connections.isDefinedAt(face))
-        connections ++= Option(PressureAPI.HELPER.recalculateConnectionInfo(this, face)) map { cObj => face -> cObj }
+  override def doOutput(face: EnumFacing, cfg: OutputConfigFluidSlots) =
+    if (checkCanOutput(cfg)) {
       for {
         core <- getCore
-        tSlot <- Misc.asInstanceOpt(cfg.slot, classOf[core.outputSlotsDef.Slot])
-        toSend <- Option(core.outputFluid(tSlot, Int.MaxValue, false))
-        conn <- connections.get(face)
-      } yield {
-        val filled = conn.pushFluid(toSend, true)
-        if (filled > 0) {
-          core.outputFluid(tSlot, filled, true)
-          core.outputConfig.updated()
-          filled
-        } else 0
+        slot <- Misc.asInstanceOpt(cfg.slot, classOf[core.outputSlotsDef.Slot])
+      } {
+        if (!connections.isDefinedAt(face))
+          connections ++= Option(PressureAPI.HELPER.recalculateConnectionInfo(this, face)) map { cObj => face -> cObj }
+        connections.get(face) foreach { conn =>
+          for (tank <- core.getOutputTanksForSlot(slot)) {
+            val fs = tank.drain(Int.MaxValue, false)
+            val out = conn.pushFluid(fs, true)
+            if (out > 0) {
+              tank.drain(out, true)
+              cfg.updateAvg(out)
+              core.outputConfig.updated()
+            }
+          }
+        }
       }
-    } else None
-    cfg.updateAvg(outputted.getOrElse(0).toDouble)
-  }
+    }
 }
 
