@@ -40,7 +40,7 @@ class TileSyngasController extends TileControllerGui with CIFluidInput with CIIt
   val steamBuffer = DataSlotDouble("steam", this).setUpdate(UpdateKind.GUI, UpdateKind.SAVE)
   val heat = DataSlotDouble("heat", this).setUpdate(UpdateKind.GUI, UpdateKind.SAVE)
   val waterTank = DataSlotTankRestricted("waterTank", this, cfg.internalTankCapacity, FluidRegistry.WATER, canDrainExternal = false)
-  val syngasTank = DataSlotTankRestricted("syngasTank", this, cfg.internalTankCapacity, Blocks.syngasFluid, canDrainExternal = false)
+  val syngasTank = DataSlotTankRestricted("syngasTank", this, cfg.internalTankCapacity, Blocks.syngasFluid, canFillExternal = false)
 
   lazy val steamTank = TankEmulator(Blocks.steamFluid, steamBuffer, cfg.internalTankCapacity)
 
