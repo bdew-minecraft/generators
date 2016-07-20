@@ -64,7 +64,7 @@ class TileTurbineController extends TileControllerGui with PoweredController wit
       if (burnTime < 5 && fuelPerMj > 0 && maxMJPerTick > 0) {
         val needFuel = Misc.clamp((10 * fuelPerTick).ceil, 0F, fuel.getFluidAmount.toFloat).floor.toInt
         burnTime += needFuel / fuelPerTick
-        fuel.drain(needFuel, true)
+        fuel.drainInternal(needFuel, true)
         fuelPerTickAverage.update(needFuel)
       } else {
         fuelPerTickAverage.update(0)

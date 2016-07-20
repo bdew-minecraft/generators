@@ -77,7 +77,7 @@ class TileSyngasController extends TileControllerGui with CIFluidInput with CIIt
         heatingChambers * cfg.heatingChamberThroughput * (heat / cfg.maxHeat)
       )
       steamBuffer += addSteam
-      waterTank.drain((addSteam / cfg.waterSteamRatio).ceil.toInt, true)
+      waterTank.drainInternal((addSteam / cfg.waterSteamRatio).ceil.toInt, true)
     }
 
     // Consume steam and carbon to make syngas

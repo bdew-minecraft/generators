@@ -69,7 +69,7 @@ class TileSteamTurbineController extends TileControllerGui with PoweredControlle
 
       if (canUseSteam && steam.getFluidAmount > 0) {
         val useSteam = Math.min(steam.getFluidAmount, maxSteamPerTick).ceil.toInt
-        steam.drain(useSteam, true)
+        steam.drainInternal(useSteam, true)
         steamAverage.update(useSteam)
       } else steamAverage.update(0)
 
