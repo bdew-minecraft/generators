@@ -186,6 +186,7 @@ curseforge {
             requiredLibrary 'bdlib'
             optionalLibrary 'waila'
             optionalLibrary 'just-enough-items-jei'
+            optionalLibrary 'tesla'
         }
     }
 }
