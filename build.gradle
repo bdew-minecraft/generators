@@ -61,7 +61,7 @@ repositories {
     mavenCentral()
     maven {
         name = "bdew"
-        url = "http://jenkins.bdew.net/maven"
+        url = "https://jenkins.bdew.net/maven"
     }
     maven {
         name "waila"
@@ -75,6 +75,10 @@ repositories {
         name = "ic2"
         url = "http://maven.ic2.player.to/"
     }
+    maven {
+        name = "tesla"
+        url = "http://maven.epoxide.xyz"
+    }
 }
 
 dependencies {
@@ -86,6 +90,7 @@ dependencies {
 
     compile "net.bdew.thirdparty:rfapi:${config.rfapi.version}-mc${config.minecraft.version}:api"
     compile "net.industrial-craft:industrialcraft-2:${config.ic2.version}:api"
+    compile "net.darkhax.tesla:Tesla:${config.minecraft.version}-${config.tesla.version}"
 }
 
 import org.apache.tools.ant.filters.ReplaceTokens
