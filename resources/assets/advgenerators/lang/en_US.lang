@@ -7,6 +7,7 @@ tile.advgenerators.EuOutputMV.name=MV Emitter
 tile.advgenerators.EuOutputHV.name=HV Emitter
 tile.advgenerators.EuOutputEV.name=EV Emitter
 tile.advgenerators.RFOutput.name=Flux Generator
+tile.advgenerators.TeslaOutput.name=Tesla Generator
 tile.advgenerators.steam.name=Steam
 tile.advgenerators.syngas.name=Syngas
 tile.advgenerators.SteamTurbineController.name=Steam Turbine Controller

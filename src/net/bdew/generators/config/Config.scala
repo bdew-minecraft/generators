@@ -28,7 +28,7 @@ object Config {
     c.load()
 
     try {
-      powerShowUnits = c.get("Display", "PowerShowUnits", "RF", "Units to use when displaying power. Valid values: MJ, EU, RF").getString
+      powerShowUnits = c.get("Display", "PowerShowUnits", "RF", "Units to use when displaying power. Valid values: MJ, EU, RF, T", Array("MJ", "EU", "RF", "T")).getString
       if (powerShowUnits != "MJ") powerShowMultiplier = Tuning.getSection("Power").getFloat(powerShowUnits + "_MJ_Ratio")
 
       alwaysShowFuelTooltip = c.get("Tooltips", "AlwaysShowFuelTooltip", true, "If false will only show tooltip in Turbine GUI").getBoolean

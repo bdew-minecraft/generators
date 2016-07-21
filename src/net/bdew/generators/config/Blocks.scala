@@ -26,6 +26,7 @@ import net.bdew.generators.modules.powerCapacitor.TilePowerCapacitor
 import net.bdew.generators.modules.pressure.{BlockPressureInput, BlockPressureOutput}
 import net.bdew.generators.modules.rfOutput.BlockRfOutput
 import net.bdew.generators.modules.sensor.BlockSensor
+import net.bdew.generators.modules.teslaOutput.BlockTeslaOutput
 import net.bdew.generators.modules.turbine.TileTurbine
 import net.bdew.generators.{CreativeTabsGenerators, Generators}
 import net.bdew.lib.Misc
@@ -39,14 +40,18 @@ import net.minecraftforge.fml.common.FMLCommonHandler
 import net.minecraftforge.fml.common.registry.GameRegistry
 
 object Blocks extends BlockManager(CreativeTabsGenerators.main) {
-  if (PowerProxy.haveRF)
+  if (PowerProxy.haveRF && PowerProxy.RFEnabled)
     regBlock(BlockRfOutput)
 
-  if (PowerProxy.haveIC2) {
+  if (PowerProxy.haveIC2 && PowerProxy.EUEnabled) {
     regBlock(BlockEuOutputLV)
     regBlock(BlockEuOutputMV)
     regBlock(BlockEuOutputHV)
     regBlock(BlockEuOutputEV)
+  }
+
+  if (PowerProxy.haveTesla && PowerProxy.TeslaEnabled) {
+    regBlock(BlockTeslaOutput)
   }
 
   regBlock(BlockFluidInput)
