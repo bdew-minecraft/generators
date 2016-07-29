@@ -12,7 +12,6 @@ package net.bdew.generators
 import java.io.File
 
 import net.bdew.generators.compat.PowerProxy
-import net.bdew.generators.compat.itempush.ItemPush
 import net.bdew.generators.config._
 import net.bdew.generators.config.loader.TuningLoader
 import net.bdew.generators.network.NetworkHandler
@@ -49,7 +48,6 @@ object Generators {
     log = event.getModLog
     configDir = new File(event.getModConfigurationDirectory, "AdvGenerators")
     PowerProxy.logModVersions()
-    ItemPush.init()
     TuningLoader.loadConfigFiles()
     OutputConfigManager.register("items", () => new OutputConfigItems)
 

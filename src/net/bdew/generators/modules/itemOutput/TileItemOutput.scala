@@ -9,8 +9,9 @@
 
 package net.bdew.generators.modules.itemOutput
 
-import net.bdew.generators.compat.itempush.ItemPush
 import net.bdew.generators.config.Tuning
+import net.bdew.lib.capabilities.Capabilities
+import net.bdew.lib.capabilities.helpers.ItemHelper
 import net.bdew.lib.multiblock.data.OutputConfigItems
 import net.bdew.lib.multiblock.interact.CIItemOutput
 import net.bdew.lib.multiblock.tile.{RSControllableOutput, TileOutput}
@@ -29,20 +30,12 @@ class TileItemOutput extends TileOutput[OutputConfigItems] with RSControllableOu
 
   val ratio = Tuning.getSection("Power").getFloat("RF_MJ_Ratio")
 
-  override def canConnectToFace(d: EnumFacing) = ItemPush.isValidTarget(this, d)
+  override def canConnectToFace(d: EnumFacing) = ItemHelper.hasItemHandler(worldObj, pos.offset(d), d.getOpposite)
 
   override def doOutput(face: EnumFacing, cfg: OutputConfigItems): Unit = {
-    for {
-      core <- getCoreAs[CIItemOutput] if checkCanOutput(cfg)
-      slot <- 0 until core.getItemOutputInventory.getSizeInventory
-      orig <- Option(core.getItemOutputInventory.getStackInSlot(slot))
-    } {
-      val stack = orig.copy()
-      val left = ItemPush.pushStack(this, face, stack)
-      if (left == null)
-        core.getItemOutputInventory.decrStackSize(slot, orig.stackSize)
-      else
-        core.getItemOutputInventory.decrStackSize(slot, orig.stackSize - left.stackSize)
+    if (getWorld.getTotalWorldTime % 20 == 0) {
+      for (target <- ItemHelper.getItemHandler(worldObj, pos.offset(face), face.getOpposite))
+        ItemHelper.pushItems(getCapability(Capabilities.CAP_ITEM_HANDLER, face), target)
     }
   }
 

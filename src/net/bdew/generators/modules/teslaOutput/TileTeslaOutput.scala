@@ -35,9 +35,7 @@ class TileTeslaOutput extends TileOutput[OutputConfigPower] with RSControllableO
 
   lazy val ratio = Tuning.getSection("Power").getFloat("T_MJ_Ratio")
 
-  addCapability(Tesla.PRODUCER) {
-    case face => new TeslaProducer(face)
-  }
+  addCachedSidedCapability(Tesla.PRODUCER, new TeslaProducer(_))
 
   class TeslaProducer(side: EnumFacing) extends ITeslaProducer with ITeslaHolder {
     override def getStoredPower: Long =
