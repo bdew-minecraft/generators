@@ -2,10 +2,11 @@ tile.advgenerators.FluidInput.name=Fluid Intake Valve
 tile.advgenerators.FuelTank.name=Fuel Tank
 tile.advgenerators.TurbineController.name=Gas Turbine Controller
 tile.advgenerators.FuelTank.name=Fuel Tank
-tile.advgenerators.EuOutputLV.name=LV Emitter
-tile.advgenerators.EuOutputMV.name=MV Emitter
-tile.advgenerators.EuOutputHV.name=HV Emitter
-tile.advgenerators.EuOutputEV.name=EV Emitter
+tile.advgenerators.EuOutputLV.name=Low Voltage Emitter
+tile.advgenerators.EuOutputMV.name=Medium Voltage Emitter
+tile.advgenerators.EuOutputHV.name=High Voltage Emitter
+tile.advgenerators.EuOutputEV.name=Extreme Voltage Emitter
+tile.advgenerators.EuOutputIV.name=Insane Voltage Emitter
 tile.advgenerators.RFOutput.name=Flux Generator
 tile.advgenerators.TeslaOutput.name=Tesla Generator
 tile.advgenerators.steam.name=Steam
@@ -232,7 +233,7 @@ advgenerators.tooltip.kit=Right click while sneaking to upgrade
 advgenerators.tooltip.efficiency=Increases fuel efficiency to %s
 advgenerators.tooltip.efficiency.req=Requires a Fuel/Air Mixer installed
 
-
+advgenerators.tooltip.eu=Tier %s, Outputs %s EU/t
 
 advgenerators.control.mode.high=Enable on signal
 advgenerators.control.mode.low=Disable on signal

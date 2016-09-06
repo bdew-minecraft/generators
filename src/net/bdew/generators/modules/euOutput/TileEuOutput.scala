@@ -79,10 +79,12 @@ abstract class TileEuOutputBase(val maxOutput: Int, val tier: Int) extends TileO
   }
 }
 
-class TileEuOutputLV extends TileEuOutputBase(128, 1)
+class TileEuOutputLV extends TileEuOutputBase(32, 1)
 
-class TileEuOutputMV extends TileEuOutputBase(512, 2)
+class TileEuOutputMV extends TileEuOutputBase(128, 2)
 
-class TileEuOutputHV extends TileEuOutputBase(2048, 3)
+class TileEuOutputHV extends TileEuOutputBase(512, 3)
 
-class TileEuOutputEV extends TileEuOutputBase(8192, 4)
+class TileEuOutputEV extends TileEuOutputBase(2048, 4)
+
+class TileEuOutputIV extends TileEuOutputBase(8192, 5)

@@ -9,15 +9,19 @@
 
 package net.bdew.generators.modules.euOutput
 
+import com.mojang.realmsclient.gui.ChatFormatting
 import net.bdew.generators.modules.BaseModule
 import net.bdew.lib.multiblock.block.BlockOutput
 import net.bdew.lib.rotate.BlockFacingMeta
+import net.bdew.lib.{DecFormat, Misc}
 import net.minecraft.block.state.IBlockState
+import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.item.ItemStack
 import net.minecraft.util.EnumFacing
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.{IBlockAccess, World}
 
-class BlockEuOutputBase[T <: TileEuOutputBase](name: String, texture: String, TEClass: Class[T]) extends BaseModule(name, "PowerOutput", TEClass) with BlockOutput[T] with BlockFacingMeta {
+class BlockEuOutputBase[T <: TileEuOutputBase](kind: String, tier: Int, maxOutput: Int, TEClass: Class[T]) extends BaseModule("EuOutput" + kind, "PowerOutput", TEClass) with BlockOutput[T] with BlockFacingMeta {
 
   override def getDefaultFacing = EnumFacing.SOUTH
 
@@ -26,13 +30,21 @@ class BlockEuOutputBase[T <: TileEuOutputBase](name: String, texture: String, TE
     getTE(world, pos).tryConnect()
   }
 
+  override def getTooltip(stack: ItemStack, player: EntityPlayer, advanced: Boolean): List[String] =
+    Misc.toLocalF("advgenerators.tooltip.eu",
+      ChatFormatting.YELLOW + tier.toString + ChatFormatting.GRAY,
+      ChatFormatting.YELLOW + DecFormat.short(maxOutput) + ChatFormatting.GRAY
+    ) +: super.getTooltip(stack, player, advanced)
+
   override def canConnectRedstone(state: IBlockState, world: IBlockAccess, pos: BlockPos, side: EnumFacing): Boolean = true
 }
 
-object BlockEuOutputLV extends BlockEuOutputBase("EuOutputLV", "lv", classOf[TileEuOutputLV])
+object BlockEuOutputLV extends BlockEuOutputBase("LV", 1, 32, classOf[TileEuOutputLV])
 
-object BlockEuOutputMV extends BlockEuOutputBase("EuOutputMV", "mv", classOf[TileEuOutputMV])
+object BlockEuOutputMV extends BlockEuOutputBase("MV", 2, 128, classOf[TileEuOutputMV])
 
-object BlockEuOutputHV extends BlockEuOutputBase("EuOutputHV", "hv", classOf[TileEuOutputHV])
+object BlockEuOutputHV extends BlockEuOutputBase("HV", 3, 512, classOf[TileEuOutputHV])
 
-object BlockEuOutputEV extends BlockEuOutputBase("EuOutputEV", "ev", classOf[TileEuOutputEV])
+object BlockEuOutputEV extends BlockEuOutputBase("EV", 4, 2048, classOf[TileEuOutputEV])
+
+object BlockEuOutputIV extends BlockEuOutputBase("IV", 5, 8192, classOf[TileEuOutputIV])
