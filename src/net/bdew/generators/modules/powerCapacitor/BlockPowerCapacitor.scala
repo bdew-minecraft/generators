@@ -21,6 +21,5 @@ class BlockPowerCapacitor(val material: CapacitorMaterial) extends BaseModule("P
   override def getTooltip(stack: ItemStack, player: EntityPlayer, advanced: Boolean): List[String] =
     List(Misc.toLocalF("advgenerators.tooltip.capacitor", "%s%s %s".format(
       TextFormatting.YELLOW, DecFormat.short(material.mjCapacity * Config.powerShowMultiplier), Config.powerShowUnits
-    )))
-
+    ))) ++ super.getTooltip(stack, player, advanced)
 }
