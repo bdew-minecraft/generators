@@ -19,6 +19,7 @@ import net.bdew.generators.modules.fluidInput.BlockFluidInput
 import net.bdew.generators.modules.fluidOutputSelect.BlockFluidOutputSelect
 import net.bdew.generators.modules.forgeOutput.BlockForgeOutput
 import net.bdew.generators.modules.fuelTank.BlockFuelTank
+import net.bdew.generators.modules.gasInput.BlockGasInput
 import net.bdew.generators.modules.heatingChamber.BlockHeatingChamber
 import net.bdew.generators.modules.itemInput.BlockItemInput
 import net.bdew.generators.modules.itemOutput.BlockItemOutput
@@ -58,6 +59,10 @@ object Blocks extends BlockManager(CreativeTabsGenerators.main) {
 
   if (PowerProxy.ForgeEnabled)
     regBlock(BlockForgeOutput)
+
+  if (Misc.haveModVersion("MekanismAPI|gas@[9.0.0,)")) {
+    regBlock(BlockGasInput)
+  }
 
   regBlock(BlockFluidInput)
   regBlock(BlockFluidOutputSelect)
