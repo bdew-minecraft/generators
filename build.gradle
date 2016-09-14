@@ -91,6 +91,8 @@ dependencies {
     compile "net.bdew.thirdparty:rfapi:${config.rfapi.version}-mc${config.minecraft.version}:api"
     compile "net.industrial-craft:industrialcraft-2:${config.ic2.version}:api"
     compile "net.darkhax.tesla:Tesla:${config.minecraft.version}-${config.tesla.version}"
+
+    compile "net.bdew.thirdparty:mekanism:${config.minecraft.version}-${config.mekanism.version}:api"
 }
 
 import org.apache.tools.ant.filters.ReplaceTokens
