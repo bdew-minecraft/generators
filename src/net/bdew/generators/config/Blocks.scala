@@ -17,6 +17,7 @@ import net.bdew.generators.modules.euOutput._
 import net.bdew.generators.modules.exchanger.BlockExchanger
 import net.bdew.generators.modules.fluidInput.BlockFluidInput
 import net.bdew.generators.modules.fluidOutputSelect.BlockFluidOutputSelect
+import net.bdew.generators.modules.forgeOutput.BlockForgeOutput
 import net.bdew.generators.modules.fuelTank.BlockFuelTank
 import net.bdew.generators.modules.heatingChamber.BlockHeatingChamber
 import net.bdew.generators.modules.itemInput.BlockItemInput
@@ -54,6 +55,9 @@ object Blocks extends BlockManager(CreativeTabsGenerators.main) {
   if (PowerProxy.haveTesla && PowerProxy.TeslaEnabled) {
     regBlock(BlockTeslaOutput)
   }
+
+  if (PowerProxy.ForgeEnabled)
+    regBlock(BlockForgeOutput)
 
   regBlock(BlockFluidInput)
   regBlock(BlockFluidOutputSelect)
