@@ -9,7 +9,8 @@
 
 package net.bdew.generators.modules.euOutput
 
-import ic2.api.energy.tile.{IEnergyAcceptor, IEnergySource}
+import ic2.api.energy.EnergyNet
+import ic2.api.energy.tile.{IEnergyAcceptor, IEnergySource, IEnergyTile}
 import net.bdew.generators.compat.Ic2EnetRegister
 import net.bdew.generators.config.Tuning
 import net.bdew.lib.PimpVanilla._
@@ -34,8 +35,11 @@ abstract class TileEuOutputBase(val maxOutput: Int, val tier: Int) extends TileO
 
   override def canConnectToFace(d: EnumFacing): Boolean = {
     if (d != getFacing) return false
-    val tile = worldObj.getTileSafe[IEnergyAcceptor](pos.offset(d)).getOrElse(return false)
-    return tile.acceptsEnergyFrom(this, d.getOpposite)
+    EnergyNet.instance.getSubTile(worldObj, pos.offset(d)) match {
+      case null => false
+      case x: IEnergyAcceptor => x.acceptsEnergyFrom(this, d.getOpposite)
+      case x: IEnergyTile => true
+    }
   }
 
   override def onConnectionsChanged(added: Set[EnumFacing], removed: Set[EnumFacing]) {
