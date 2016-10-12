@@ -28,6 +28,7 @@ tile.advgenerators.GasInput.name=Gas Intake Valve
 tile.advgenerators.Control.name=Redstone Control Module
 tile.advgenerators.EfficiencyUpgradeTier1.name=Fuel/Air Mixer
 tile.advgenerators.EfficiencyUpgradeTier2.name=Gas Mix Compressor
+tile.advgenerators.GeneratorsDataPort.name=Machine Data Port
 
 item.advgenerators.IronFrame.name=Iron Frame
 item.advgenerators.PowerIO.name=Power IO Module
@@ -115,6 +116,7 @@ advgenerators.module.EfficiencyUpgradeTier2.name=Gas Mix Compressor
 advgenerators.module.ItemInput.name=Item Input Port
 advgenerators.module.ItemOutput.name=Item Output Port
 advgenerators.module.FluidOutputSelect.name=Fluid Output Valve
+advgenerators.module.GeneratorsDataPort.name=Machine Data Port
 
 advgenerators.label.turbine.turbines=Connected turbines
 advgenerators.label.turbine.maxprod=Peak production

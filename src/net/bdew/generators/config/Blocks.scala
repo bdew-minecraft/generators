@@ -12,6 +12,7 @@ package net.bdew.generators.config
 import net.bdew.generators.blocks.{BlockSteam, BlockSyngas}
 import net.bdew.generators.compat.PowerProxy
 import net.bdew.generators.modules.control.BlockControl
+import net.bdew.generators.modules.dataport.BlockDataPort
 import net.bdew.generators.modules.efficiency.{BlockEfficiencyUpgradeTier1, BlockEfficiencyUpgradeTier2}
 import net.bdew.generators.modules.euOutput._
 import net.bdew.generators.modules.exchanger.BlockExchanger
@@ -95,6 +96,10 @@ object Blocks extends BlockManager(CreativeTabsGenerators.main) {
   }
 
   if (Misc.haveModVersion("pressure")) PressureBlocks.init()
+
+  if (Misc.haveModVersion("ComputerCraft") || Misc.haveModVersion("OpenComputers")) {
+    regBlock(BlockDataPort)
+  }
 
   regFluid("steam", new BlockSteam(_)) {
     _.setTemperature(1000)

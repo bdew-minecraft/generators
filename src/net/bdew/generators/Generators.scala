@@ -12,10 +12,13 @@ package net.bdew.generators
 import java.io.File
 
 import net.bdew.generators.compat.PowerProxy
+import net.bdew.generators.compat.computercraft.CCBlocks
+import net.bdew.generators.compat.opencomputers.OCBlocks
 import net.bdew.generators.config._
 import net.bdew.generators.config.loader.TuningLoader
 import net.bdew.generators.network.NetworkHandler
 import net.bdew.generators.sensor.Sensors
+import net.bdew.lib.Misc
 import net.bdew.lib.multiblock.data.{OutputConfigItems, OutputConfigManager}
 import net.minecraft.item.Item
 import net.minecraftforge.fml.common.Mod
@@ -83,6 +86,10 @@ object Generators {
   @EventHandler
   def postInit(event: FMLPostInitializationEvent) {
     TurbineFuel.postInit()
+    if (Misc.haveModVersion("OpenComputers"))
+      OCBlocks.init()
+    if (Misc.haveModVersion("ComputerCraft"))
+      CCBlocks.init()
   }
 
   @EventHandler
