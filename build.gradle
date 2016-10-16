@@ -79,6 +79,10 @@ repositories {
         name = "tesla"
         url = "http://maven.epoxide.xyz"
     }
+    maven {
+        name "OpenComputers"
+        url "http://maven.cil.li/"
+    }
 }
 
 dependencies {
@@ -93,6 +97,9 @@ dependencies {
     compile "net.darkhax.tesla:Tesla:${config.minecraft.version}-${config.tesla.version}"
 
     compile "net.bdew.thirdparty:mekanism:${config.minecraft.version}-${config.mekanism.version}:api"
+
+    compile "net.bdew.thirdparty:computercraft:${config.computercraft.version}-mc${config.minecraft.version}:api"
+    compile "li.cil.oc:OpenComputers:MC${config.minecraft.version}-${config.opencomputers.version}:api"
 }
 
 import org.apache.tools.ant.filters.ReplaceTokens
