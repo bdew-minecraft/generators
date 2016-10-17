@@ -73,6 +73,10 @@ object Generators {
     TurbineMaterials.init()
     CapacitorMaterials.init()
     TuningLoader.loadDelayed()
+    if (Misc.haveModVersion("OpenComputers"))
+      OCBlocks.init()
+    if (Misc.haveModVersion("ComputerCraft"))
+      CCBlocks.init()
   }
 
   @EventHandler
@@ -86,10 +90,6 @@ object Generators {
   @EventHandler
   def postInit(event: FMLPostInitializationEvent) {
     TurbineFuel.postInit()
-    if (Misc.haveModVersion("OpenComputers"))
-      OCBlocks.init()
-    if (Misc.haveModVersion("ComputerCraft"))
-      CCBlocks.init()
   }
 
   @EventHandler
