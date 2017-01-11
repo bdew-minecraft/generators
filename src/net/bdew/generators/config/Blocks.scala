@@ -14,7 +14,6 @@ import net.bdew.generators.compat.PowerProxy
 import net.bdew.generators.modules.control.BlockControl
 import net.bdew.generators.modules.dataport.BlockDataPort
 import net.bdew.generators.modules.efficiency.{BlockEfficiencyUpgradeTier1, BlockEfficiencyUpgradeTier2}
-import net.bdew.generators.modules.euOutput._
 import net.bdew.generators.modules.exchanger.BlockExchanger
 import net.bdew.generators.modules.fluidInput.BlockFluidInput
 import net.bdew.generators.modules.fluidOutputSelect.BlockFluidOutputSelect
@@ -45,13 +44,13 @@ object Blocks extends BlockManager(CreativeTabsGenerators.main) {
   if (PowerProxy.haveRF && PowerProxy.RFEnabled)
     regBlock(BlockRfOutput)
 
-  if (PowerProxy.haveIC2 && PowerProxy.EUEnabled) {
-    regBlock(BlockEuOutputLV)
-    regBlock(BlockEuOutputMV)
-    regBlock(BlockEuOutputHV)
-    regBlock(BlockEuOutputEV)
-    regBlock(BlockEuOutputIV)
-  }
+  //  if (PowerProxy.haveIC2 && PowerProxy.EUEnabled) {
+  //    regBlock(BlockEuOutputLV)
+  //    regBlock(BlockEuOutputMV)
+  //    regBlock(BlockEuOutputHV)
+  //    regBlock(BlockEuOutputEV)
+  //    regBlock(BlockEuOutputIV)
+  //  }
 
   if (PowerProxy.haveTesla && PowerProxy.TeslaEnabled) {
     regBlock(BlockTeslaOutput)
