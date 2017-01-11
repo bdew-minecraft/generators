@@ -1,5 +1,5 @@
 /*
- * Copyright (c) bdew, 2014 - 2016
+ * Copyright (c) bdew, 2014 - 2017
  * https://github.com/bdew/generators
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
@@ -37,7 +37,7 @@ class TileControl extends TileModule with MIControl {
 
   override def getControlState(a: ControlAction): ControlResult.Value =
     if (action :== a)
-      ControlResult.fromBool(mode :== (worldObj.isBlockIndirectlyGettingPowered(pos) > 0))
+      ControlResult.fromBool(mode :== (world.isBlockIndirectlyGettingPowered(pos) > 0))
     else
       ControlResult.NEUTRAL
 

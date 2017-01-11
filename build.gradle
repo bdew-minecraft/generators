@@ -90,16 +90,16 @@ dependencies {
     compile "net.bdew:pressure:${config.pressure.version}-mc${config.minecraft.version}:api"
 
     deobfCompile "mezz.jei:jei_${config.minecraft.version}:${config.jei.version}"
-    deobfCompile "mcp.mobius.waila:Waila:${config.waila.version}"
+    // deobfCompile "mcp.mobius.waila:Waila:${config.waila.version}"
 
     compile "net.bdew.thirdparty:rfapi:${config.rfapi.version}-mc${config.minecraft.version}:api"
-    compile "net.industrial-craft:industrialcraft-2:${config.ic2.version}:api"
-    compile "net.darkhax.tesla:Tesla:${config.minecraft.version}-${config.tesla.version}"
+    // compile "net.industrial-craft:industrialcraft-2:${config.ic2.version}:api"
+    // compile "net.darkhax.tesla:Tesla:${config.minecraft.version}-${config.tesla.version}"
 
-    compile "net.bdew.thirdparty:mekanism:${config.minecraft.version}-${config.mekanism.version}:api"
+    // compile "net.bdew.thirdparty:mekanism:${config.minecraft.version}-${config.mekanism.version}:api"
 
-    compile "net.bdew.thirdparty:computercraft:${config.computercraft.version}-mc${config.minecraft.version}:api"
-    compile "li.cil.oc:OpenComputers:MC${config.minecraft.version}-${config.opencomputers.version}:api"
+    // compile "net.bdew.thirdparty:computercraft:${config.computercraft.version}-mc${config.minecraft.version}:api"
+    // compile "li.cil.oc:OpenComputers:MC${config.minecraft.version}-${config.opencomputers.version}:api"
 }
 
 import org.apache.tools.ant.filters.ReplaceTokens

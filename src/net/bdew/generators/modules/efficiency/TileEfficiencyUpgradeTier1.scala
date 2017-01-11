@@ -1,5 +1,5 @@
 /*
- * Copyright (c) bdew, 2014 - 2016
+ * Copyright (c) bdew, 2014 - 2017
  * https://github.com/bdew/generators
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
@@ -32,7 +32,7 @@ class TileEfficiencyUpgradeTier1 extends TileModule {
   override def connect(target: TileController): Unit = {
     super.connect(target)
     (target.modules.set ++ Set(target.getPos)).flatMap(_.neighbours.values)
-      .flatMap(pos => worldObj.getTileSafe[TileEfficiencyUpgradeTier2](pos))
+      .flatMap(pos => world.getTileSafe[TileEfficiencyUpgradeTier2](pos))
       .filter(_.connected.isEmpty)
       .foreach(_.tryConnect())
   }

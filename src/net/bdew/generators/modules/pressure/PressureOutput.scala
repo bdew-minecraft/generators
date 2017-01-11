@@ -1,5 +1,5 @@
 /*
- * Copyright (c) bdew, 2014 - 2016
+ * Copyright (c) bdew, 2014 - 2017
  * https://github.com/bdew/generators
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
@@ -37,7 +37,7 @@ class TilePressureOutput extends TileOutput[OutputConfigFluidSlots] with Pressur
   override def getCore = getCoreAs[CIFluidOutputSelect]
 
   override def canConnectToFace(d: EnumFacing) =
-    PressureAPI.HELPER.canPipeConnectFrom(worldObj, pos.offset(d), d.getOpposite)
+    PressureAPI.HELPER.canPipeConnectFrom(world, pos.offset(d), d.getOpposite)
 
   override def makeCfgObject(face: EnumFacing) = new OutputConfigFluidSlots(getCore.get.outputSlotsDef)
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) bdew, 2014 - 2016
+ * Copyright (c) bdew, 2014 - 2017
  * https://github.com/bdew/generators
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
@@ -30,11 +30,11 @@ class TileItemOutput extends TileOutput[OutputConfigItems] with RSControllableOu
 
   val ratio = Tuning.getSection("Power").getFloat("RF_MJ_Ratio")
 
-  override def canConnectToFace(d: EnumFacing) = ItemHelper.hasItemHandler(worldObj, pos.offset(d), d.getOpposite)
+  override def canConnectToFace(d: EnumFacing) = ItemHelper.hasItemHandler(world, pos.offset(d), d.getOpposite)
 
   override def doOutput(face: EnumFacing, cfg: OutputConfigItems): Unit = {
     if (getWorld.getTotalWorldTime % 20 == 0) {
-      for (target <- ItemHelper.getItemHandler(worldObj, pos.offset(face), face.getOpposite))
+      for (target <- ItemHelper.getItemHandler(world, pos.offset(face), face.getOpposite))
         ItemHelper.pushItems(getCapability(Capabilities.CAP_ITEM_HANDLER, face), target)
     }
   }

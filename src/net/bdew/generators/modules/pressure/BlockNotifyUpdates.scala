@@ -1,5 +1,5 @@
 /*
- * Copyright (c) bdew, 2014 - 2016
+ * Copyright (c) bdew, 2014 - 2017
  * https://github.com/bdew/generators
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
@@ -13,6 +13,7 @@ import net.bdew.pressure.api.PressureAPI
 import net.minecraft.block.Block
 import net.minecraft.block.state.IBlockState
 import net.minecraft.entity.EntityLivingBase
+import net.minecraft.item.ItemStack
 import net.minecraft.util.EnumFacing
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
@@ -26,9 +27,9 @@ trait BlockNotifyUpdates extends Block {
     super.breakBlock(world, pos, state)
   }
 
-  override def onBlockPlaced(world: World, pos: BlockPos, facing: EnumFacing, hitX: Float, hitY: Float, hitZ: Float, meta: Int, placer: EntityLivingBase): IBlockState = {
+  override def onBlockPlacedBy(world: World, pos: BlockPos, state: IBlockState, placer: EntityLivingBase, stack: ItemStack): Unit = {
     notifyPressureSystemUpdate(world, pos)
-    super.onBlockPlaced(world, pos, facing, hitX, hitY, hitZ, meta, placer)
+    super.onBlockPlacedBy(world, pos, state, placer, stack)
   }
 
   override def rotateBlock(world: World, pos: BlockPos, axis: EnumFacing) = {

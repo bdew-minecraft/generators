@@ -1,5 +1,5 @@
 /*
- * Copyright (c) bdew, 2014 - 2016
+ * Copyright (c) bdew, 2014 - 2017
  * https://github.com/bdew/generators
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
@@ -42,14 +42,14 @@ object BlockControl extends BaseModule("Control", "Control", classOf[TileControl
   override def getGui(te: TEClass, player: EntityPlayer) = new GuiControl(te, player)
   override def getContainer(te: TEClass, player: EntityPlayer) = new ContainerControl(te, player)
 
-  override def onBlockActivated(world: World, pos: BlockPos, state: IBlockState, player: EntityPlayer, hand: EnumHand, heldItem: ItemStack, side: EnumFacing, hitX: Float, hitY: Float, hitZ: Float): Boolean = {
+  override def onBlockActivated(world: World, pos: BlockPos, state: IBlockState, player: EntityPlayer, hand: EnumHand, side: EnumFacing, hitX: Float, hitY: Float, hitZ: Float): Boolean = {
     if (player.isSneaking) return false
     if (world.isRemote) return true
     val te = getTE(world, pos)
     if (te.getCore.isDefined) {
       player.openGui(Generators, guiId, world, pos.getX, pos.getY, pos.getZ)
     } else {
-      player.addChatMessage(new TextComponentTranslation("bdlib.multiblock.notconnected"))
+      player.sendMessage(new TextComponentTranslation("bdlib.multiblock.notconnected"))
     }
     true
   }
@@ -62,8 +62,8 @@ object BlockControl extends BaseModule("Control", "Control", classOf[TileControl
   override def getStateFromMeta(meta: Int): IBlockState =
     getDefaultState.withProperty(Properties.POWERED, Boolean.box(meta > 0))
 
-  override def neighborChanged(state: IBlockState, world: World, pos: BlockPos, block: Block): Unit = {
-    super.neighborChanged(state, world, pos, block)
+  override def neighborChanged(state: IBlockState, world: World, pos: BlockPos, block: Block, fromPos: BlockPos): Unit = {
+    super.neighborChanged(state, world, pos, block, fromPos)
     val wasPowered = state.getValue(Properties.POWERED)
     val powered = world.isBlockIndirectlyGettingPowered(pos)
     if ((powered > 0) ^ wasPowered)
@@ -73,6 +73,6 @@ object BlockControl extends BaseModule("Control", "Control", classOf[TileControl
 
   override def onBlockPlacedBy(world: World, pos: BlockPos, state: IBlockState, placer: EntityLivingBase, stack: ItemStack): Unit = {
     super.onBlockPlacedBy(world, pos, state, placer, stack)
-    neighborChanged(state, world, pos, this)
+    neighborChanged(state, world, pos, this, pos)
   }
 }

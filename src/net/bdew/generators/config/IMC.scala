@@ -1,5 +1,5 @@
 /*
- * Copyright (c) bdew, 2014 - 2016
+ * Copyright (c) bdew, 2014 - 2017
  * https://github.com/bdew/generators
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
@@ -31,7 +31,7 @@ object IMC {
   }
 
   def processAddCarbonValue(tag: NBTTagCompound, sender: String): Unit = {
-    val item = ItemStack.loadItemStackFromNBT(tag.getCompoundTag("item"))
+    val item = new ItemStack(tag.getCompoundTag("item"))
     val value = if (tag.getBoolean("useBurnTime")) {
       TileEntityFurnace.getItemBurnTime(item)
     } else {

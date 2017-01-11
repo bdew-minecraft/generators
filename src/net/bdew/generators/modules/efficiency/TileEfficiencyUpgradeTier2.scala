@@ -1,5 +1,5 @@
 /*
- * Copyright (c) bdew, 2014 - 2016
+ * Copyright (c) bdew, 2014 - 2017
  * https://github.com/bdew/generators
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
@@ -32,7 +32,7 @@ class TileEfficiencyUpgradeTier2 extends TileModule {
   val kind: String = "EfficiencyUpgradeTier2"
 
   override def canConnectToCore(br: BlockPos): Boolean =
-    super.canConnectToCore(br) && worldObj.getTileSafe[TileTurbineController](br).exists(controller =>
+    super.canConnectToCore(br) && world.getTileSafe[TileTurbineController](br).exists(controller =>
       controller.getModulePositions(BlockEfficiencyUpgradeTier1).nonEmpty
     )
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) bdew, 2014 - 2016
+ * Copyright (c) bdew, 2014 - 2017
  * https://github.com/bdew/generators
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
@@ -54,12 +54,12 @@ class TileRfOutput extends TileOutput[OutputConfigPower] with RSControllableOutp
   }
 
   override def canConnectToFace(d: EnumFacing): Boolean =
-    forcedSides(d) || worldObj.getTileSafe[IEnergyReceiver](pos.offset(d)).exists(t => t.canConnectEnergy(d.getOpposite))
+    forcedSides(d) || world.getTileSafe[IEnergyReceiver](pos.offset(d)).exists(t => t.canConnectEnergy(d.getOpposite))
 
   override def doOutput(face: EnumFacing, cfg: OutputConfigPower) {
     for {
       core <- getCoreAs[CIPowerProducer] if checkCanOutput(cfg)
-      tile <- worldObj.getTileSafe[IEnergyReceiver](pos.offset(face))
+      tile <- world.getTileSafe[IEnergyReceiver](pos.offset(face))
     } {
       val canExtract = core.extract(Int.MaxValue, true)
       val injected = tile.receiveEnergy(face.getOpposite, (canExtract * ratio).toInt, false)

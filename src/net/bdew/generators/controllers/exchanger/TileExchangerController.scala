@@ -1,5 +1,5 @@
 /*
- * Copyright (c) bdew, 2014 - 2016
+ * Copyright (c) bdew, 2014 - 2017
  * https://github.com/bdew/generators
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
@@ -110,7 +110,7 @@ class TileExchangerController extends TileControllerGui with CIFluidInput with C
 
   serverTick.listen(doUpdate)
 
-  override def openGui(player: EntityPlayer) = player.openGui(Generators, cfg.guiId, worldObj, pos.getX, pos.getY, pos.getZ)
+  override def openGui(player: EntityPlayer) = player.openGui(Generators, cfg.guiId, world, pos.getX, pos.getY, pos.getZ)
 
   override def onModulesChanged() {
     maxHeatTransfer := getNumOfModules("HeatExchanger") * Modules.HeatExchanger.heatTransfer

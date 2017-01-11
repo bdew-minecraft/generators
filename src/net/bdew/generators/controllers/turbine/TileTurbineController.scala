@@ -1,5 +1,5 @@
 /*
- * Copyright (c) bdew, 2014 - 2016
+ * Copyright (c) bdew, 2014 - 2017
  * https://github.com/bdew/generators
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
@@ -74,7 +74,7 @@ class TileTurbineController extends TileControllerGui with PoweredController wit
         burnTime -= 1
         power.stored += maxMJPerTick
         outputAverage.update(maxMJPerTick.toDouble)
-        lastChange = worldObj.getTotalWorldTime
+        lastChange = world.getTotalWorldTime
       } else {
         outputAverage.update(0)
       }
@@ -86,7 +86,7 @@ class TileTurbineController extends TileControllerGui with PoweredController wit
 
   serverTick.listen(doUpdate)
 
-  override def openGui(player: EntityPlayer) = player.openGui(Generators, cfg.guiId, worldObj, pos.getX, pos.getY, pos.getZ)
+  override def openGui(player: EntityPlayer) = player.openGui(Generators, cfg.guiId, world, pos.getX, pos.getY, pos.getZ)
 
   override def getInputTanks: List[IFluidHandler] = List(fuel)
 
@@ -113,7 +113,7 @@ class TileTurbineController extends TileControllerGui with PoweredController wit
       if (hasT1Upgrade) {
         MachineTurbine.fuelEfficiency.getFloat("Tier2")
       } else {
-        worldObj.getTileSafe[TileModule](t2) foreach { tile =>
+        world.getTileSafe[TileModule](t2) foreach { tile =>
           tile.coreRemoved()
           moduleRemoved(tile)
         }
