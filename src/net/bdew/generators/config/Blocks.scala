@@ -27,7 +27,6 @@ import net.bdew.generators.modules.powerCapacitor.TilePowerCapacitor
 import net.bdew.generators.modules.pressure.{BlockPressureInput, BlockPressureOutput}
 import net.bdew.generators.modules.rfOutput.BlockRfOutput
 import net.bdew.generators.modules.sensor.BlockSensor
-import net.bdew.generators.modules.teslaOutput.BlockTeslaOutput
 import net.bdew.generators.modules.turbine.TileTurbine
 import net.bdew.generators.{CreativeTabsGenerators, Generators}
 import net.bdew.lib.Misc
@@ -52,9 +51,9 @@ object Blocks extends BlockManager(CreativeTabsGenerators.main) {
   //    regBlock(BlockEuOutputIV)
   //  }
 
-  if (PowerProxy.haveTesla && PowerProxy.TeslaEnabled) {
-    regBlock(BlockTeslaOutput)
-  }
+  //  if (PowerProxy.haveTesla && PowerProxy.TeslaEnabled) {
+  //    regBlock(BlockTeslaOutput)
+  //  }
 
   if (PowerProxy.ForgeEnabled)
     regBlock(BlockForgeOutput)
