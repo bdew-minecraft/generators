@@ -17,7 +17,7 @@ import net.minecraft.inventory.{ClickType, IInventory, Slot}
 
 class SlotControlAction(inv: IInventory, index: Int, x: Int, y: Int, ds: DataSlotControlAction, types: => Seq[ControlAction]) extends Slot(inv, index, x, y) with SlotClickable {
   override def onClick(clickType: ClickType, button: Int, player: EntityPlayer) = {
-    if (clickType == ClickType.PICKUP && (button == 0 || button == 1) && types.nonEmpty && player.inventory.getItemStack == null) {
+    if (clickType == ClickType.PICKUP && (button == 0 || button == 1) && types.nonEmpty && player.inventory.getItemStack.isEmpty) {
       if (button == 0)
         ds := Misc.nextInSeq(types, ds.value)
       else
@@ -29,7 +29,7 @@ class SlotControlAction(inv: IInventory, index: Int, x: Int, y: Int, ds: DataSlo
 
 class SlotControlMode(inv: IInventory, index: Int, x: Int, y: Int, ds: DataSlotBoolean) extends Slot(inv, index, x, y) with SlotClickable {
   override def onClick(clickType: ClickType, button: Int, player: EntityPlayer) = {
-    if (clickType == ClickType.PICKUP && button == 0 && player.inventory.getItemStack == null) {
+    if (clickType == ClickType.PICKUP && button == 0 && player.inventory.getItemStack.isEmpty) {
       ds := !ds
     }
     player.inventory.getItemStack
