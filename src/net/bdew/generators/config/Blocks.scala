@@ -28,8 +28,9 @@ import net.bdew.generators.modules.pressure.{BlockPressureInput, BlockPressureOu
 import net.bdew.generators.modules.rfOutput.BlockRfOutput
 import net.bdew.generators.modules.sensor.BlockSensor
 import net.bdew.generators.modules.turbine.TileTurbine
-import net.bdew.generators.{CreativeTabsGenerators, Generators}
+import net.bdew.generators.{CreativeTabsGenerators, Generators, OldNames}
 import net.bdew.lib.Misc
+import net.bdew.lib.block.HasTE
 import net.bdew.lib.config.BlockManager
 import net.bdew.lib.render.FluidModelUtils
 import net.bdew.pressure.api.PressureAPI
@@ -137,5 +138,14 @@ object Blocks extends BlockManager(CreativeTabsGenerators.main) {
     }
 
     fluid
+  }
+
+  def registerOldTeNames(): Unit = {
+    for ((oldName, obj) <- OldNames.map) {
+      obj match {
+        case x: HasTE[_] => registerLegacyTileEntity(Generators.modId + "." + oldName, x.TEClass)
+        case _ => //nothing
+      }
+    }
   }
 }

@@ -85,6 +85,7 @@ object Generators {
   @EventHandler
   def postInit(event: FMLPostInitializationEvent) {
     TurbineFuel.postInit()
+    Blocks.registerOldTeNames()
   }
 
   @EventHandler

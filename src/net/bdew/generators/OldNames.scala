@@ -43,7 +43,7 @@ object OldNames {
     (for ((name, mat) <- TurbineMaterials.registry) yield
       combineOpts(
         mat.bladeItem map (s"TurbineBlade$name" -> _),
-        mat.rotorItem map ("TurbineRotor$name" -> _),
+        mat.rotorItem map (s"TurbineRotor$name" -> _),
         mat.kitItem map (s"TurbineKit$name" -> _),
         mat.turbineBlock map (s"Turbine$name" -> _))
       ).flatten.toMap
