@@ -1,87 +1,87 @@
-tile.advgenerators.FluidInput.name=Valve d'entrée de fluide
-tile.advgenerators.FuelTank.name=Réservoir de carburant
-tile.advgenerators.TurbineController.name=Contrôleur de la turbine à gaz
-tile.advgenerators.FuelTank.name=Réservoir de carburant
-tile.advgenerators.EuOutputLV.name=Émetteur BT
-tile.advgenerators.EuOutputMV.name=Émetteur MT
-tile.advgenerators.EuOutputHV.name=Émetteur HT
-tile.advgenerators.RFOutput.name=Générateur de Flux
+tile.advgenerators.fluid_input.name=Valve d'entrée de fluide
+tile.advgenerators.fuel_tank.name=Réservoir de carburant
+tile.advgenerators.turbine_controller.name=Contrôleur de la turbine à gaz
+tile.advgenerators.fuel_tank.name=Réservoir de carburant
+tile.advgenerators.eu_output_lv.name=Émetteur BT
+tile.advgenerators.eu_output_mv.name=Émetteur MT
+tile.advgenerators.eu_output_hv.name=Émetteur HT
+tile.advgenerators.rf_output.name=Générateur de Flux
 tile.advgenerators.steam.name=Vapeur
 tile.advgenerators.syngas.name=Gaz de synthèse
-tile.advgenerators.SteamTurbineController.name=Contrôleur de la turbine à vapeur
-tile.advgenerators.ExchangerController.name=Contrôleur de l'échangeur thermique
-tile.advgenerators.FluidOutputSelect.name=Valve de sortie de fluide
-tile.advgenerators.ItemOutput.name=Port de sortie d'élément
-tile.advgenerators.ItemInput.name=Port d'entrée d'élément
-tile.advgenerators.PressureOutputSelect.name=Valve de sortie pressurisée
-tile.advgenerators.PressureInput.name=Valve d'entrée pressurisée
-tile.advgenerators.HeatExchanger.name=Échangeur thermique
-tile.advgenerators.SyngasController.name=Contrôleur de producteur de gaz de synthèse
-tile.advgenerators.HeatingChamber.name=Corps de chauffe
-tile.advgenerators.MixingChamber.name=Chambre de mélange
-tile.advgenerators.Sensor.name=Module de capteur
-tile.advgenerators.GasInput.name=Valve d'entrée de gaz
-tile.advgenerators.Control.name=Module de contrôle redstone
-tile.advgenerators.EfficiencyUpgradeTier1.name=Mélangeur carburant/air
-tile.advgenerators.EfficiencyUpgradeTier2.name=Compresseur de mélange gaz
+tile.advgenerators.steam_turbine_controller.name=Contrôleur de la turbine à vapeur
+tile.advgenerators.exchanger_controller.name=Contrôleur de l'échangeur thermique
+tile.advgenerators.fluid_output_select.name=Valve de sortie de fluide
+tile.advgenerators.item_output.name=Port de sortie d'élément
+tile.advgenerators.item_input.name=Port d'entrée d'élément
+tile.advgenerators.pressure_output_select.name=Valve de sortie pressurisée
+tile.advgenerators.pressure_input.name=Valve d'entrée pressurisée
+tile.advgenerators.heat_exchanger.name=Échangeur thermique
+tile.advgenerators.syngas_controller.name=Contrôleur de producteur de gaz de synthèse
+tile.advgenerators.heating_chamber.name=Corps de chauffe
+tile.advgenerators.mixing_chamber.name=Chambre de mélange
+tile.advgenerators.sensor.name=Module de capteur
+tile.advgenerators.gas_input.name=Valve d'entrée de gaz
+tile.advgenerators.control.name=Module de contrôle redstone
+tile.advgenerators.efficiency_upgrade_tier1.name=Mélangeur carburant/air
+tile.advgenerators.efficiency_upgrade_tier2.name=Compresseur de mélange gaz
 
-item.advgenerators.IronFrame.name=Cadre de fer
-item.advgenerators.PowerIO.name=Module d'E/S énergétique
-item.advgenerators.IronTubing.name=Tuyau de fer
-item.advgenerators.IronWiring.name=Câblage redstone-fer
-item.advgenerators.Controller.name=Circuit de contrôle
-item.advgenerators.PressureValve.name=Valve pressurisée
-item.advgenerators.AdvancedPressureValve.name=Valve pressurisée avancée
-item.advgenerators.UpgradeKit.name=Kit d'amélioration
+item.advgenerators.iron_frame.name=Cadre de fer
+item.advgenerators.power_io.name=Module d'E/S énergétique
+item.advgenerators.iron_tubing.name=Tuyau de fer
+item.advgenerators.iron_wiring.name=Câblage redstone-fer
+item.advgenerators.controller.name=Circuit de contrôle
+item.advgenerators.pressure_valve.name=Valve pressurisée
+item.advgenerators.advanced_pressure_valve.name=Valve pressurisée avancée
+item.advgenerators.upgrade_kit.name=Kit d'amélioration
 
 // === Turbine Materials
 
-item.advgenerators.TurbineBladeIron.name=Lame de turbine en fer
-item.advgenerators.TurbineRotorIron.name=Rotor de turbine en fer
-tile.advgenerators.TurbineIron.name=Turbine en fer
+item.advgenerators.turbine_blade_iron.name=Lame de turbine en fer
+item.advgenerators.turbine_rotor_iron.name=Rotor de turbine en fer
+tile.advgenerators.turbine_iron.name=Turbine en fer
 
-item.advgenerators.TurbineRotorGold.name=Lame de turbine en plaque dorée
-item.advgenerators.TurbineKitGold.name=Kit d'amélioration de turbine en plaque dorée
-tile.advgenerators.TurbineGold.name=Turbine en plaque dorée
+item.advgenerators.turbine_rotor_gold.name=Lame de turbine en plaque dorée
+item.advgenerators.turbine_kit_gold.name=Kit d'amélioration de turbine en plaque dorée
+tile.advgenerators.turbine_gold.name=Turbine en plaque dorée
 
-item.advgenerators.TurbineBladeSteel.name=Lame de turbine en acier
-item.advgenerators.TurbineRotorSteel.name=Rotor de turbine en acier
-item.advgenerators.TurbineKitSteel.name=Kit d'amélioration de turbine en acier
-tile.advgenerators.TurbineSteel.name=Turbine en acier
+item.advgenerators.turbine_blade_steel.name=Lame de turbine en acier
+item.advgenerators.turbine_rotor_steel.name=Rotor de turbine en acier
+item.advgenerators.turbine_kit_steel.name=Kit d'amélioration de turbine en acier
+tile.advgenerators.turbine_steel.name=Turbine en acier
 
-item.advgenerators.TurbineBladeBronze.name=Lame de turbine en bronze
-item.advgenerators.TurbineRotorBronze.name=Rotor de turbine en bronze
-item.advgenerators.TurbineKitBronze.name=Kit d'amélioration de turbine en bronze
-tile.advgenerators.TurbineBronze.name=Turbine en bronze
+item.advgenerators.turbine_blade_bronze.name=Lame de turbine en bronze
+item.advgenerators.turbine_rotor_bronze.name=Rotor de turbine en bronze
+item.advgenerators.turbine_kit_bronze.name=Kit d'amélioration de turbine en bronze
+tile.advgenerators.turbine_bronze.name=Turbine en bronze
 
-item.advgenerators.TurbineBladeEnderium.name=Lame de turbine en enderium
-item.advgenerators.TurbineRotorEnderium.name=Rotor de turbine en enderium
-item.advgenerators.TurbineKitEnderium.name=Kit d'amélioration de turbine en enderium
-tile.advgenerators.TurbineEnderium.name=Turbine en enderium
+item.advgenerators.turbine_blade_enderium.name=Lame de turbine en enderium
+item.advgenerators.turbine_rotor_enderium.name=Rotor de turbine en enderium
+item.advgenerators.turbine_kit_enderium.name=Kit d'amélioration de turbine en enderium
+tile.advgenerators.turbine_enderium.name=Turbine en enderium
 
-item.advgenerators.TurbineBladeVibrant.name=Lame de turbine en vibrant
-item.advgenerators.TurbineRotorVibrant.name=Rotor de turbine en vibrant
-item.advgenerators.TurbineKitVibrant.name=Kit d'amélioration de turbine en vibrant
-tile.advgenerators.TurbineVibrant.name=Turbine en vibrant
+item.advgenerators.turbine_blade_vibrant.name=Lame de turbine en vibrant
+item.advgenerators.turbine_rotor_vibrant.name=Rotor de turbine en vibrant
+item.advgenerators.turbine_kit_vibrant.name=Kit d'amélioration de turbine en vibrant
+tile.advgenerators.turbine_vibrant.name=Turbine en vibrant
 
-item.advgenerators.TurbineBladeManyullyn.name=Lame de turbine en manyullyn
-item.advgenerators.TurbineRotorManyullyn.name=Rotor de turbine en manyullyn
-item.advgenerators.TurbineKitManyullyn.name=Kit d'amélioration de turbine en manyullyn
-tile.advgenerators.TurbineManyullyn.name=Turbine en manyullyn
+item.advgenerators.turbine_blade_manyullyn.name=Lame de turbine en manyullyn
+item.advgenerators.turbine_rotor_manyullyn.name=Rotor de turbine en manyullyn
+item.advgenerators.turbine_kit_manyullyn.name=Kit d'amélioration de turbine en manyullyn
+tile.advgenerators.turbine_manyullyn.name=Turbine en manyullyn
 
-item.advgenerators.TurbineBladeAdvAlloy.name=Lame de turbine en alliage avancé
-item.advgenerators.TurbineRotorAdvAlloy.name=Rotor de turbine en alliage avancé
-item.advgenerators.TurbineKitAdvAlloy.name=Kit d'amélioration de turbine en alliage avancé
-tile.advgenerators.TurbineAdvAlloy.name=Turbine en alliage avancé
+item.advgenerators.turbine_blade_adv_alloy.name=Lame de turbine en alliage avancé
+item.advgenerators.turbine_rotor_adv_alloy.name=Rotor de turbine en alliage avancé
+item.advgenerators.turbine_kit_adv_alloy.name=Kit d'amélioration de turbine en alliage avancé
+tile.advgenerators.turbine_adv_alloy.name=Turbine en alliage avancé
 
 // === Capacitors
 
-tile.advgenerators.PowerCapacitorRedstone.name=Condensateur de puissance de base
-tile.advgenerators.PowerCapacitorAdvanced.name=Condensateur de puissance avancé
-tile.advgenerators.PowerCapacitorDense.name=Condensateur de puissance haute densité
+tile.advgenerators.power_capacitor_redstone.name=Condensateur de puissance de base
+tile.advgenerators.power_capacitor_advanced.name=Condensateur de puissance avancé
+tile.advgenerators.power_capacitor_dense.name=Condensateur de puissance haute densité
 
-item.advgenerators.CapacitorKitAdvanced.name=Kit d'amélioration de condensateur de puissance avancé
-item.advgenerators.CapacitorKitDense.name=Kit d'amélioration de condensateur haute densité
+item.advgenerators.capacitor_kit_advanced.name=Kit d'amélioration de condensateur de puissance avancé
+item.advgenerators.capacitor_kit_dense.name=Kit d'amélioration de condensateur haute densité
 
 
 // ======

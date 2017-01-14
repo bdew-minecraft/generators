@@ -10,6 +10,7 @@
 package net.bdew.generators.items
 
 import java.util
+import java.util.Locale
 
 import net.bdew.generators.config.CapacitorMaterial
 import net.bdew.generators.modules.powerCapacitor.BlockPowerCapacitor
@@ -22,7 +23,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
-class CapacitorUpgradeKit(val material: CapacitorMaterial) extends BaseItem("CapacitorKit" + material.name) with UpgradeKit {
+class CapacitorUpgradeKit(val material: CapacitorMaterial) extends BaseItem("capacitor_kit_" + material.name.toLowerCase(Locale.US)) with UpgradeKit {
   override def getNewBlock(pos: BlockPos, world: World): BlockModule[_] = material.capacitorBlock.get
 
   override def getReturnedItems(pos: BlockPos, world: World): List[ItemStack] = List.empty

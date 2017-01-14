@@ -18,7 +18,7 @@ import net.bdew.generators.modules.BaseModule
 import net.bdew.lib.computers.ModuleSelector
 import net.bdew.lib.multiblock.tile.{TileController, TileModule}
 
-object BlockDataPort extends BaseModule("GeneratorsDataPort", "GeneratorsDataPort", classOf[TileDataPort]) {
+object BlockDataPort extends BaseModule("generators_data_port", "GeneratorsDataPort", classOf[TileDataPort]) {
   val selectors = List(
     ModuleSelector("ag_gas_turbine", classOf[TileTurbineController], GasTurbineCommands),
     ModuleSelector("ag_steam_turbine", classOf[TileSteamTurbineController], SteamTurbineCommands),

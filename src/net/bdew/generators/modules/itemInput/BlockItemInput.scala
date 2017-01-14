@@ -11,4 +11,4 @@ package net.bdew.generators.modules.itemInput
 
 import net.bdew.generators.modules.BaseModule
 
-object BlockItemInput extends BaseModule("ItemInput", "ItemInput", classOf[TileItemInput])
+object BlockItemInput extends BaseModule("item_input", "ItemInput", classOf[TileItemInput])

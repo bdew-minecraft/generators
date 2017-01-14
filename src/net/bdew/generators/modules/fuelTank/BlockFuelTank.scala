@@ -11,4 +11,4 @@ package net.bdew.generators.modules.fuelTank
 
 import net.bdew.generators.modules.BaseModule
 
-object BlockFuelTank extends BaseModule("FuelTank", "FuelTank", classOf[TileFuelTank])
+object BlockFuelTank extends BaseModule("fuel_tank", "FuelTank", classOf[TileFuelTank])

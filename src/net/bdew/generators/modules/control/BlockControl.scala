@@ -25,7 +25,7 @@ import net.minecraft.util.{EnumFacing, EnumHand}
 import net.minecraft.world.{IBlockAccess, World}
 import net.minecraftforge.fml.relauncher.{Side, SideOnly}
 
-object BlockControl extends BaseModule("Control", "Control", classOf[TileControl]) with GuiProvider {
+object BlockControl extends BaseModule("control", "Control", classOf[TileControl]) with GuiProvider {
   override def guiId = 6
   override type TEClass = TileControl
 

@@ -16,7 +16,7 @@ import net.minecraft.util.EnumFacing
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.{IBlockAccess, World}
 
-object BlockRfOutput extends BaseModule("RFOutput", "PowerOutput", classOf[TileRfOutput]) with BlockOutput[TileRfOutput] {
+object BlockRfOutput extends BaseModule("rf_output", "PowerOutput", classOf[TileRfOutput]) with BlockOutput[TileRfOutput] {
   override def canConnectRedstone(state: IBlockState, world: IBlockAccess, pos: BlockPos, side: EnumFacing): Boolean = true
 
   override def rotateBlock(world: World, pos: BlockPos, axis: EnumFacing): Boolean = {

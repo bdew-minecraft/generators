@@ -21,7 +21,7 @@ import net.minecraft.util.EnumFacing
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.IBlockAccess
 
-object BlockPressureOutput extends BaseModule("PressureOutputSelect", "FluidOutputSelect", classOf[TilePressureOutput])
+object BlockPressureOutput extends BaseModule("pressure_output_select", "FluidOutputSelect", classOf[TilePressureOutput])
   with BlockOutput[TilePressureOutput] with BlockNotifyUpdates with IPressureConnectableBlock {
   override def canConnectTo(world: IBlockAccess, pos: BlockPos, side: EnumFacing) =
     getTE(world, pos).exists(_.getCore.isDefined)

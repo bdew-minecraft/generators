@@ -2,14 +2,16 @@
   "forge_marker": 1,
   "defaults": {
     "textures": {
-      "top": "advgenerators:blocks/fluidinput/main",
-      "bottom": "advgenerators:blocks/fluidinput/main",
-      "side": "advgenerators:blocks/fluidinput/main"
+      "top": "advgenerators:blocks/iteminput/main",
+      "bottom": "advgenerators:blocks/iteminput/main",
+      "side": "advgenerators:blocks/iteminput/main"
     },
     "model": "advgenerators:sided_multiblock.extended"
   },
   "variants": {
-    "normal": [{}],
+    "normal": [
+      {}
+    ],
     "inventory": {
       "transform": "forge:default-block"
     }

@@ -13,12 +13,12 @@ import net.bdew.generators.CreativeTabsGenerators
 import net.bdew.lib.config.ItemManager
 
 object Items extends ItemManager(CreativeTabsGenerators.main) {
-  regSimpleItem("IronFrame")
-  regSimpleItem("PowerIO")
-  regSimpleItem("IronTubing")
-  regSimpleItem("IronWiring")
-  regSimpleItem("Controller")
-  regSimpleItem("PressureValve")
-  regSimpleItem("AdvancedPressureValve")
-  regSimpleItem("UpgradeKit")
+  val ironFrame = regSimpleItem("iron_frame")
+  val powerIO = regSimpleItem("power_io")
+  val ironTubing = regSimpleItem("iron_tubing")
+  val ironWiring = regSimpleItem("iron_wiring")
+  val controller = regSimpleItem("controller")
+  val pressureValve = regSimpleItem("pressure_valve")
+  val advancedPressureValve = regSimpleItem("advanced_pressure_valve")
+  val upgradeKit = regSimpleItem("upgrade_kit")
 }

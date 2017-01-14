@@ -20,7 +20,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.text.TextFormatting
 
-object BlockEfficiencyUpgradeTier2 extends BaseModule("EfficiencyUpgradeTier2", "EfficiencyUpgradeTier2", classOf[TileEfficiencyUpgradeTier2]) with BlockTooltip {
+object BlockEfficiencyUpgradeTier2 extends BaseModule("efficiency_upgrade_tier2", "EfficiencyUpgradeTier2", classOf[TileEfficiencyUpgradeTier2]) with BlockTooltip {
   override def getTooltip(stack: ItemStack, player: EntityPlayer, advanced: Boolean): List[String] =
     List(
       Misc.toLocalF("advgenerators.tooltip.efficiency", "%s%.0f%%%s".format(TextFormatting.YELLOW, MachineTurbine.fuelEfficiency.getDouble("Tier2") * 100, TextFormatting.RESET)),

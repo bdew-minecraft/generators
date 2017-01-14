@@ -2,14 +2,16 @@
   "forge_marker": 1,
   "defaults": {
     "textures": {
-      "top": "advgenerators:blocks/turbinecontroller/top",
-      "bottom": "advgenerators:blocks/turbinecontroller/bottom",
-      "side": "advgenerators:blocks/turbinecontroller/main"
+      "top": "advgenerators:blocks/fueltank/main",
+      "bottom": "advgenerators:blocks/fueltank/main",
+      "side": "advgenerators:blocks/fueltank/main"
     },
     "model": "advgenerators:sided_multiblock.extended"
   },
   "variants": {
-    "normal": [{}],
+    "normal": [
+      {}
+    ],
     "inventory": {
       "transform": "forge:default-block"
     }

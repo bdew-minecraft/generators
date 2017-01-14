@@ -2,14 +2,16 @@
   "forge_marker": 1,
   "defaults": {
     "textures": {
-      "top": "advgenerators:blocks/mixingchamber/main",
-      "bottom": "advgenerators:blocks/mixingchamber/main",
-      "side": "advgenerators:blocks/mixingchamber/main"
+      "top": "advgenerators:blocks/teslaoutput/main",
+      "bottom": "advgenerators:blocks/teslaoutput/main",
+      "side": "advgenerators:blocks/teslaoutput/main"
     },
     "model": "advgenerators:sided_multiblock.extended"
   },
   "variants": {
-    "normal": [{}],
+    "normal": [
+      {}
+    ],
     "inventory": {
       "transform": "forge:default-block"
     }

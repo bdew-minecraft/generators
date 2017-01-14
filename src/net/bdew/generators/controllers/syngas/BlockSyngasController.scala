@@ -11,4 +11,4 @@ package net.bdew.generators.controllers.syngas
 
 import net.bdew.generators.modules.BaseController
 
-object BlockSyngasController extends BaseController("SyngasController", classOf[TileSyngasController])
+object BlockSyngasController extends BaseController("syngas_controller", classOf[TileSyngasController])

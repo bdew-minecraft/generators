@@ -11,4 +11,4 @@ package net.bdew.generators.modules.mixingChamber
 
 import net.bdew.generators.modules.BaseModule
 
-object BlockMixingChamber extends BaseModule("MixingChamber", "MixingChamber", classOf[TileMixingChamber])
+object BlockMixingChamber extends BaseModule("mixing_chamber", "MixingChamber", classOf[TileMixingChamber])

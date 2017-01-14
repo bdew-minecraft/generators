@@ -10,6 +10,7 @@
 package net.bdew.generators.items
 
 import java.util
+import java.util.Locale
 
 import net.bdew.generators.config.TurbineMaterial
 import net.bdew.generators.modules.turbine.BlockTurbine
@@ -22,7 +23,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
-class TurbineItem(val material: TurbineMaterial, val kind: String) extends BaseItem("Turbine" + kind + material.name)
+class TurbineItem(val material: TurbineMaterial, val kind: String) extends BaseItem(s"turbine_${ kind.toLowerCase(Locale.US) }_${ material.name.toLowerCase(Locale.US) }")
 
 class TurbineUpgradeKit(material: TurbineMaterial) extends TurbineItem(material, "Kit") with UpgradeKit {
   override def canUpgradeBlock(pos: BlockPos, world: World): Boolean =

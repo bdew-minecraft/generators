@@ -11,4 +11,4 @@ package net.bdew.generators.controllers.exchanger
 
 import net.bdew.generators.modules.BaseController
 
-object BlockExchangerController extends BaseController("ExchangerController", classOf[TileExchangerController])
+object BlockExchangerController extends BaseController("exchanger_controller", classOf[TileExchangerController])

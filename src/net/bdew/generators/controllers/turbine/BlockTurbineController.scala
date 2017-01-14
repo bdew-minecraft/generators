@@ -11,4 +11,4 @@ package net.bdew.generators.controllers.turbine
 
 import net.bdew.generators.modules.BaseController
 
-object BlockTurbineController extends BaseController("TurbineController", classOf[TileTurbineController])
+object BlockTurbineController extends BaseController("turbine_controller", classOf[TileTurbineController])

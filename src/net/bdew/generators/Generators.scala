@@ -17,12 +17,10 @@ import net.bdew.generators.config.loader.TuningLoader
 import net.bdew.generators.network.NetworkHandler
 import net.bdew.generators.sensor.Sensors
 import net.bdew.lib.multiblock.data.{OutputConfigItems, OutputConfigManager}
-import net.minecraft.item.Item
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.Mod.EventHandler
 import net.minecraftforge.fml.common.event._
 import net.minecraftforge.fml.common.network.NetworkRegistry
-import net.minecraftforge.fml.common.registry.GameRegistry
 import net.minecraftforge.fml.relauncher.Side
 import org.apache.logging.log4j.Logger
 
@@ -92,23 +90,6 @@ object Generators {
   @EventHandler
   def missingMappings(event: FMLMissingMappingsEvent): Unit = {
     import scala.collection.JavaConversions._
-    for (missing <- event.getAll) {
-      (missing.name, missing.`type`) match {
-        case ("advgenerators:Turbine", GameRegistry.Type.BLOCK) =>
-          missing.remap(TurbineMaterials.registry("Iron").turbineBlock.get)
-        case ("advgenerators:Turbine", GameRegistry.Type.ITEM) =>
-          missing.remap(Item.getItemFromBlock(TurbineMaterials.registry("Iron").turbineBlock.get))
-        case ("advgenerators:TurbineRotor", GameRegistry.Type.ITEM) =>
-          missing.remap(TurbineMaterials.registry("Iron").rotorItem.get)
-        case ("advgenerators:TurbineBlade", GameRegistry.Type.ITEM) =>
-          missing.remap(TurbineMaterials.registry("Iron").bladeItem.get)
-        case ("advgenerators:PowerCapacitor", GameRegistry.Type.BLOCK) =>
-          missing.remap(CapacitorMaterials.registry("Redstone").capacitorBlock.get)
-        case ("advgenerators:PowerCapacitor", GameRegistry.Type.ITEM) =>
-          missing.remap(Item.getItemFromBlock(CapacitorMaterials.registry("Redstone").capacitorBlock.get))
-        case _ => // do nothing
-      }
-    }
+    event.getAll.foreach(OldNames.checkRemap)
   }
-
 }

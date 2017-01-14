@@ -9,6 +9,8 @@
 
 package net.bdew.generators.modules.turbine
 
+import java.util.Locale
+
 import net.bdew.generators.config.{Config, TurbineMaterial}
 import net.bdew.generators.modules.BaseModule
 import net.bdew.lib.block.BlockTooltip
@@ -17,7 +19,7 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.util.text.TextFormatting
 
-class BlockTurbine(val material: TurbineMaterial) extends BaseModule("Turbine" + material.name, "Turbine", classOf[TileTurbine]) with BlockTooltip {
+class BlockTurbine(val material: TurbineMaterial) extends BaseModule("turbine_" + material.name.toLowerCase(Locale.US), "Turbine", classOf[TileTurbine]) with BlockTooltip {
   override def getTooltip(stack: ItemStack, player: EntityPlayer, advanced: Boolean): List[String] = {
     List(
       Misc.toLocalF("advgenerators.tooltip.turbine.produce", "%s%s %s/t".format(

@@ -2,14 +2,16 @@
   "forge_marker": 1,
   "defaults": {
     "textures": {
-      "top": "advgenerators:blocks/rfoutput/main",
-      "bottom": "advgenerators:blocks/rfoutput/main",
-      "side": "advgenerators:blocks/rfoutput/main"
+      "top": "advgenerators:blocks/heatexchanger/main",
+      "bottom": "advgenerators:blocks/heatexchanger/main",
+      "side": "advgenerators:blocks/heatexchanger/main"
     },
     "model": "advgenerators:sided_multiblock.extended"
   },
   "variants": {
-    "normal": [{}],
+    "normal": [
+      {}
+    ],
     "inventory": {
       "transform": "forge:default-block"
     }

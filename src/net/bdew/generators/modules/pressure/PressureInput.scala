@@ -18,7 +18,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.IBlockAccess
 import net.minecraftforge.fluids.FluidStack
 
-object BlockPressureInput extends BaseModule("PressureInput", "FluidInput", classOf[TilePressureInput]) with BlockNotifyUpdates with IPressureConnectableBlock {
+object BlockPressureInput extends BaseModule("pressure_input", "FluidInput", classOf[TilePressureInput]) with BlockNotifyUpdates with IPressureConnectableBlock {
   override def canConnectTo(world: IBlockAccess, pos: BlockPos, side: EnumFacing) =
     getTE(world, pos).exists(_.getCore.isDefined)
   override def isTraversable(world: IBlockAccess, pos: BlockPos) = false

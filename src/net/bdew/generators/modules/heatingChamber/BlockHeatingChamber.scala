@@ -11,4 +11,4 @@ package net.bdew.generators.modules.heatingChamber
 
 import net.bdew.generators.modules.BaseModule
 
-object BlockHeatingChamber extends BaseModule("HeatingChamber", "HeatingChamber", classOf[TileHeatingChamber])
+object BlockHeatingChamber extends BaseModule("heating_chamber", "HeatingChamber", classOf[TileHeatingChamber])

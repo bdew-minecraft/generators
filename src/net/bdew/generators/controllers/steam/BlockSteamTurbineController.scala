@@ -11,4 +11,4 @@ package net.bdew.generators.controllers.steam
 
 import net.bdew.generators.modules.BaseController
 
-object BlockSteamTurbineController extends BaseController("SteamTurbineController", classOf[TileSteamTurbineController])
+object BlockSteamTurbineController extends BaseController("steam_turbine_controller", classOf[TileSteamTurbineController])

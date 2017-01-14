@@ -11,4 +11,4 @@ package net.bdew.generators.modules.exchanger
 
 import net.bdew.generators.modules.BaseModule
 
-object BlockExchanger extends BaseModule("HeatExchanger", "HeatExchanger", classOf[TileExchanger])
+object BlockExchanger extends BaseModule("heat_exchanger", "HeatExchanger", classOf[TileExchanger])

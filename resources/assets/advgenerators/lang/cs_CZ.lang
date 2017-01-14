@@ -1,22 +1,22 @@
-tile.advgenerators.FluidInput.name=Kapalinový vtokový ventil
-tile.advgenerators.FuelTank.name=Palivová nádrž
+tile.advgenerators.fluid_input.name=Kapalinový vtokový ventil
+tile.advgenerators.fuel_tank.name=Palivová nádrž
 tile.advgenerators.MJOutput.name=Emitor pneumatické síly
 tile.advgenerators.PowerCapacitor.name=Kondenzátor
 tile.advgenerators.Turbine.name=Turbína
-tile.advgenerators.TurbineController.name=Ovladač turbíny
-tile.advgenerators.FuelTank.name=Palivová nádrž
-tile.advgenerators.EuOutputLV.name=LV emitor
-tile.advgenerators.EuOutputMV.name=MV emitor
-tile.advgenerators.EuOutputHV.name=HV emitor
-tile.advgenerators.RFOutput.name=Generátor proudění
+tile.advgenerators.turbine_controller.name=Ovladač turbíny
+tile.advgenerators.fuel_tank.name=Palivová nádrž
+tile.advgenerators.eu_output_lv.name=LV emitor
+tile.advgenerators.eu_output_mv.name=MV emitor
+tile.advgenerators.eu_output_hv.name=HV emitor
+tile.advgenerators.rf_output.name=Generátor proudění
 
 item.advgenerators.TurbineBlade.name=Čepel turbíny
 item.advgenerators.TurbineRotor.name=Rotor turbíny
-item.advgenerators.IronFrame.name=Železný rám
-item.advgenerators.PowerIO.name=IO modul napájení
-item.advgenerators.IronTubing.name=Železná trubka
-item.advgenerators.IronWiring.name=Rudito-železné vedení
-item.advgenerators.Controller.name=Ovládací obvod
+item.advgenerators.iron_frame.name=Železný rám
+item.advgenerators.power_io.name=IO modul napájení
+item.advgenerators.iron_tubing.name=Železná trubka
+item.advgenerators.iron_wiring.name=Rudito-železné vedení
+item.advgenerators.controller.name=Ovládací obvod
 
 advgenerators.gui.turbine.title=Ovládání turbogenerátoru
 

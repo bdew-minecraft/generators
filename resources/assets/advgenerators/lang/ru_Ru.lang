@@ -1,22 +1,22 @@
-tile.advgenerators.FluidInput.name=Жидкостный клапан
-tile.advgenerators.FuelTank.name=Топливный бак
+tile.advgenerators.fluid_input.name=Жидкостный клапан
+tile.advgenerators.fuel_tank.name=Топливный бак
 tile.advgenerators.MJOutput.name=Излучатель MJ
 tile.advgenerators.PowerCapacitor.name=Накопитель энергии
 tile.advgenerators.Turbine.name=Турбина
-tile.advgenerators.TurbineController.name=Контроллер турбины
-tile.advgenerators.FuelTank.name=Топливный бак
-tile.advgenerators.EuOutputLV.name=Излучатель НН
-tile.advgenerators.EuOutputMV.name=Излучатель СН
-tile.advgenerators.EuOutputHV.name=Излучатель ВН
-tile.advgenerators.RFOutput.name=Излучатель RF
+tile.advgenerators.turbine_controller.name=Контроллер турбины
+tile.advgenerators.fuel_tank.name=Топливный бак
+tile.advgenerators.eu_output_lv.name=Излучатель НН
+tile.advgenerators.eu_output_mv.name=Излучатель СН
+tile.advgenerators.eu_output_hv.name=Излучатель ВН
+tile.advgenerators.rf_output.name=Излучатель RF
 
 item.advgenerators.TurbineBlade.name=Лопатка турбины
 item.advgenerators.TurbineRotor.name=Ротор турбины
-item.advgenerators.IronFrame.name=Железная рамка
-item.advgenerators.PowerIO.name=Модуль управления
-item.advgenerators.IronTubing.name=Железная проводка
-item.advgenerators.IronWiring.name=Редстоун проводка
-item.advgenerators.Controller.name=Контрольная схема
+item.advgenerators.iron_frame.name=Железная рамка
+item.advgenerators.power_io.name=Модуль управления
+item.advgenerators.iron_tubing.name=Железная проводка
+item.advgenerators.iron_wiring.name=Редстоун проводка
+item.advgenerators.controller.name=Контрольная схема
 
 advgenerators.gui.turbine.title=Управление турбиновым генератором
 

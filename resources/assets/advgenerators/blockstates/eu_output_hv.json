@@ -3,19 +3,29 @@
   "defaults": {
     "textures": {
       "side": "advgenerators:blocks/euoutput/main",
-      "front": "advgenerators:blocks/euoutput/front_ev",
+      "front": "advgenerators:blocks/euoutput/front_hv",
       "back": "advgenerators:blocks/euoutput/main"
     },
     "model": "advgenerators:sided_multiblock_rotated.extended"
   },
   "variants": {
     "facing": {
-      "down": {"x": 90},
-      "up": {"x": 270},
+      "down": {
+        "x": 90
+      },
+      "up": {
+        "x": 270
+      },
       "north": {},
-      "south": {"y": 180},
-      "west": {"y": 270},
-      "east": {"y": 90}
+      "south": {
+        "y": 180
+      },
+      "west": {
+        "y": 270
+      },
+      "east": {
+        "y": 90
+      }
     },
     "inventory": {
       "transform": "forge:default-block"

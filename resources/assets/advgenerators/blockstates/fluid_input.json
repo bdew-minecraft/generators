@@ -2,14 +2,16 @@
   "forge_marker": 1,
   "defaults": {
     "textures": {
-      "top": "advgenerators:blocks/heatingchamber/main",
-      "bottom": "advgenerators:blocks/heatingchamber/main",
-      "side": "advgenerators:blocks/heatingchamber/main"
+      "top": "advgenerators:blocks/fluidinput/main",
+      "bottom": "advgenerators:blocks/fluidinput/main",
+      "side": "advgenerators:blocks/fluidinput/main"
     },
     "model": "advgenerators:sided_multiblock.extended"
   },
   "variants": {
-    "normal": [{}],
+    "normal": [
+      {}
+    ],
     "inventory": {
       "transform": "forge:default-block"
     }

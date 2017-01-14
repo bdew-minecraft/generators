@@ -11,4 +11,4 @@ package net.bdew.generators.modules.fluidInput
 
 import net.bdew.generators.modules.BaseModule
 
-object BlockFluidInput extends BaseModule("FluidInput", "FluidInput", classOf[TileFluidInput])
+object BlockFluidInput extends BaseModule("fluid_input", "FluidInput", classOf[TileFluidInput])

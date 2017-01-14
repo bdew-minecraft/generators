@@ -1,22 +1,22 @@
-tile.advgenerators.FluidInput.name=액체 주입 밸브
-tile.advgenerators.FuelTank.name=연료 탱크
+tile.advgenerators.fluid_input.name=액체 주입 밸브
+tile.advgenerators.fuel_tank.name=연료 탱크
 tile.advgenerators.MJOutput.name=마인크래프트 쥴 방출블럭
 tile.advgenerators.PowerCapacitor.name=축전기
 tile.advgenerators.Turbine.name=터빈
-tile.advgenerators.TurbineController.name=터빈 조작기
-tile.advgenerators.FuelTank.name=연료 탱크
-tile.advgenerators.EuOutputLV.name=LV 방출블럭
-tile.advgenerators.EuOutputMV.name=MV 방출블럭
-tile.advgenerators.EuOutputHV.name=HV 방출블럭
-tile.advgenerators.RFOutput.name=플럭스 발전기
+tile.advgenerators.turbine_controller.name=터빈 조작기
+tile.advgenerators.fuel_tank.name=연료 탱크
+tile.advgenerators.eu_output_lv.name=LV 방출블럭
+tile.advgenerators.eu_output_mv.name=MV 방출블럭
+tile.advgenerators.eu_output_hv.name=HV 방출블럭
+tile.advgenerators.rf_output.name=플럭스 발전기
 
 item.advgenerators.TurbineBlade.name=터빈 날
 item.advgenerators.TurbineRotor.name=터빈 로터
-item.advgenerators.IronFrame.name=철 프레임
-item.advgenerators.PowerIO.name=파워 IO 모듈
-item.advgenerators.IronTubing.name=철 배관
-item.advgenerators.IronWiring.name=레드스톤-철 와이어
-item.advgenerators.Controller.name=조작 회로
+item.advgenerators.iron_frame.name=철 프레임
+item.advgenerators.power_io.name=파워 IO 모듈
+item.advgenerators.iron_tubing.name=철 배관
+item.advgenerators.iron_wiring.name=레드스톤-철 와이어
+item.advgenerators.controller.name=조작 회로
 
 advgenerators.gui.turbine.title=터빈 조작기
 
