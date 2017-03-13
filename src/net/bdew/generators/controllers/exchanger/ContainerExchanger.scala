@@ -20,8 +20,6 @@ class ContainerExchanger(val te: TileExchangerController, player: EntityPlayer) 
 
   bindPlayerInventory(player.inventory, 8, 94, 152)
 
-  def canInteractWith(entityPlayer: EntityPlayer) = true
-
   override def dumpBuffers(): Unit = {
     te.heaterIn.drainInternal(Double.MaxValue, false, true)
     te.coolerIn.drainInternal(Double.MaxValue, false, true)
