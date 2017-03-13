@@ -20,8 +20,6 @@ class ContainerTurbine(val te: TileTurbineController, player: EntityPlayer) exte
 
   bindPlayerInventory(player.inventory, 8, 94, 152)
 
-  def canInteractWith(entityPlayer: EntityPlayer) = true
-
   override def dumpBuffers(): Unit = {
     te.fuel.setFluid(null)
   }
