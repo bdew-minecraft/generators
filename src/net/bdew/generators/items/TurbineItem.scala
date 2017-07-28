@@ -18,7 +18,7 @@ import net.bdew.lib.Misc
 import net.bdew.lib.PimpVanilla._
 import net.bdew.lib.items.BaseItem
 import net.bdew.lib.multiblock.block.BlockModule
-import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.client.util.ITooltipFlag
 import net.minecraft.item.ItemStack
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
@@ -35,8 +35,8 @@ class TurbineUpgradeKit(material: TurbineMaterial) extends TurbineItem(material,
   override def getReturnedItems(pos: BlockPos, world: World): List[ItemStack] =
     List(new ItemStack((world.getBlockSafe[BlockTurbine](pos) flatMap { block => block.material.rotorItem }).get))
 
-  override def addInformation(stack: ItemStack, player: EntityPlayer, tooltip: util.List[String], advanced: Boolean): Unit = {
+  override def addInformation(stack: ItemStack, world: World, tooltip: util.List[String], flagIn: ITooltipFlag): Unit = {
     tooltip.add(Misc.toLocal("advgenerators.tooltip.kit"))
-    super.addInformation(stack, player, tooltip, advanced)
+    super.addInformation(stack, world, tooltip, flagIn)
   }
 }

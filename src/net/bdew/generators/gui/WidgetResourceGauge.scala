@@ -24,7 +24,7 @@ class WidgetResourceGauge(val rect: Rect, overlay: Texture, dSlot: DataSlotResou
     } getOrElse List(Misc.toLocal("bdlib.label.empty")))
   }
 
-  override def draw(mouse: Point) {
+  override def draw(mouse: Point, partial: Float) {
     GL11.glEnable(GL11.GL_BLEND)
     GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
 

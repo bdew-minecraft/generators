@@ -18,7 +18,7 @@ import net.bdew.lib.Misc
 import net.bdew.lib.PimpVanilla._
 import net.bdew.lib.items.BaseItem
 import net.bdew.lib.multiblock.block.BlockModule
-import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.client.util.ITooltipFlag
 import net.minecraft.item.ItemStack
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
@@ -31,8 +31,8 @@ class CapacitorUpgradeKit(val material: CapacitorMaterial) extends BaseItem("cap
   override def canUpgradeBlock(pos: BlockPos, world: World): Boolean =
     world.getBlockSafe[BlockPowerCapacitor](pos).exists(_.material.tier < material.tier)
 
-  override def addInformation(stack: ItemStack, player: EntityPlayer, tooltip: util.List[String], advanced: Boolean): Unit = {
+  override def addInformation(stack: ItemStack, world: World, tooltip: util.List[String], flagIn: ITooltipFlag): Unit = {
     tooltip.add(Misc.toLocal("advgenerators.tooltip.kit"))
-    super.addInformation(stack, player, tooltip, advanced)
+    super.addInformation(stack, world, tooltip, flagIn)
   }
 }

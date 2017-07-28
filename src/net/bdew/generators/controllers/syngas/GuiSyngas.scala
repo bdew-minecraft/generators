@@ -56,9 +56,9 @@ class GuiSyngas(val te: TileSyngasController, player: EntityPlayer) extends Base
         else
           tip += (TextFormatting.RED + Misc.toLocal("advgenerators.label.syngas.heat.disabled") + TextFormatting.RESET)
       }
-      override def draw(mouse: Point): Unit = {
+      override def draw(mouse: Point, partial: Float): Unit = {
         if (te.heatingChambers > 0)
-          super.draw(mouse)
+          super.draw(mouse, partial)
         else
           parent.drawTexture(rect, Textures.Button16.disabled)
       }

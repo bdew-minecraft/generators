@@ -15,13 +15,14 @@ import net.bdew.generators.config.{CapacitorMaterial, Config}
 import net.bdew.generators.modules.BaseModule
 import net.bdew.lib.block.BlockTooltip
 import net.bdew.lib.{DecFormat, Misc}
-import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.client.util.ITooltipFlag
 import net.minecraft.item.ItemStack
 import net.minecraft.util.text.TextFormatting
+import net.minecraft.world.World
 
 class BlockPowerCapacitor(val material: CapacitorMaterial) extends BaseModule("power_capacitor_" + material.name.toLowerCase(Locale.US), "PowerCapacitor", classOf[TilePowerCapacitor]) with BlockTooltip {
-  override def getTooltip(stack: ItemStack, player: EntityPlayer, advanced: Boolean): List[String] =
+  override def getTooltip(stack: ItemStack, world: World, flags: ITooltipFlag): List[String] =
     List(Misc.toLocalF("advgenerators.tooltip.capacitor", "%s%s %s".format(
       TextFormatting.YELLOW, DecFormat.short(material.mjCapacity * Config.powerShowMultiplier), Config.powerShowUnits
-    ))) ++ super.getTooltip(stack, player, advanced)
+    ))) ++ super.getTooltip(stack, world, flags)
 }

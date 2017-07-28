@@ -55,6 +55,9 @@ object Generators {
     Blocks.load()
     Machines.load()
 
+    TurbineMaterials.init()
+    CapacitorMaterials.init()
+
     if (event.getSide == Side.CLIENT) {
       GeneratorsClient.preInit()
     }
@@ -67,8 +70,6 @@ object Generators {
     NetworkRegistry.INSTANCE.registerGuiHandler(this, Config.guiHandler)
     NetworkHandler.init()
     FMLInterModComms.sendMessage("waila", "register", "net.bdew.generators.waila.WailaHandler.loadCallback")
-    TurbineMaterials.init()
-    CapacitorMaterials.init()
     TuningLoader.loadDelayed()
     if (Misc.haveModVersion("opencomputers"))
       OCBlocks.init()
@@ -85,12 +86,5 @@ object Generators {
   @EventHandler
   def postInit(event: FMLPostInitializationEvent) {
     TurbineFuel.postInit()
-    Blocks.registerOldTeNames()
-  }
-
-  @EventHandler
-  def missingMappings(event: FMLMissingMappingsEvent): Unit = {
-    import scala.collection.JavaConversions._
-    event.getAll.foreach(OldNames.checkRemap)
   }
 }

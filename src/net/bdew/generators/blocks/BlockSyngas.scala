@@ -20,7 +20,7 @@ import net.minecraft.block.state.IBlockState
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.Entity
 import net.minecraft.init.Blocks
-import net.minecraft.item.{Item, ItemStack}
+import net.minecraft.item.ItemStack
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.{BlockRenderLayer, NonNullList}
 import net.minecraft.world.{Explosion, World}
@@ -31,7 +31,7 @@ object MaterialSyngas extends MaterialLiquid(MapColor.GREEN)
 object BlockSyngasFlaming extends BaseBlock("syngas_flaming", MaterialSyngas) {
   // This is a technical block used to delay chain explosions
 
-  override def getSubBlocks(itemIn: Item, tab: CreativeTabs, list: NonNullList[ItemStack]): Unit = {}
+  override def getSubBlocks(itemIn: CreativeTabs, items: NonNullList[ItemStack]): Unit = {}
 
   override def canDropFromExplosion(exp: Explosion) = false
 

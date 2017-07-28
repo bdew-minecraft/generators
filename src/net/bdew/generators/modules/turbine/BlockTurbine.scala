@@ -15,17 +15,17 @@ import net.bdew.generators.config.{Config, TurbineMaterial}
 import net.bdew.generators.modules.BaseModule
 import net.bdew.lib.block.BlockTooltip
 import net.bdew.lib.{DecFormat, Misc}
-import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.client.util.ITooltipFlag
 import net.minecraft.item.ItemStack
 import net.minecraft.util.text.TextFormatting
+import net.minecraft.world.World
 
 class BlockTurbine(val material: TurbineMaterial) extends BaseModule("turbine_" + material.name.toLowerCase(Locale.US), "Turbine", classOf[TileTurbine]) with BlockTooltip {
-  override def getTooltip(stack: ItemStack, player: EntityPlayer, advanced: Boolean): List[String] = {
+  override def getTooltip(stack: ItemStack, world: World, flags: ITooltipFlag): List[String] =
     List(
       Misc.toLocalF("advgenerators.tooltip.turbine.produce", "%s%s %s/t".format(
         TextFormatting.YELLOW, DecFormat.short(material.maxMJPerTick * Config.powerShowMultiplier), Config.powerShowUnits
       )),
       Misc.toLocalF("advgenerators.tooltip.turbine.inertia", TextFormatting.YELLOW + "%.0f%%".format(100D * material.inertiaMultiplier))
-    ) ++ super.getTooltip(stack, player, advanced)
-  }
+    ) ++ super.getTooltip(stack, world, flags)
 }

@@ -26,11 +26,11 @@ class WidgetSlotConfig(te: CIOutputFaces, output: Int, p: Point) extends WidgetS
     if (cfg.slotsDef.slotMap.size > 1)
       super.handleTooltip(p, tip)
 
-  override def draw(mouse: Point) {
+  override def draw(mouse: Point, partial: Float) {
     if (cfg.slotsDef.slotMap.size > 1) {
       bt.icon = cfg.slot.texture
       bt.hover = Misc.toLocal(cfg.slot.name)
-      super.draw(mouse)
+      super.draw(mouse, partial)
     }
   }
 

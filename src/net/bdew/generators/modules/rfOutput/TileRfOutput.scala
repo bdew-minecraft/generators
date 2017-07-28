@@ -9,7 +9,7 @@
 
 package net.bdew.generators.modules.rfOutput
 
-import cofh.api.energy.{IEnergyProvider, IEnergyReceiver}
+import cofh.redstoneflux.api.{IEnergyProvider, IEnergyReceiver}
 import net.bdew.generators.config.Tuning
 import net.bdew.generators.controllers.PoweredController
 import net.bdew.lib.Misc

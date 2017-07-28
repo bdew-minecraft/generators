@@ -15,7 +15,7 @@ import net.bdew.lib.multiblock.block.BlockOutput
 import net.bdew.lib.rotate.BlockFacingMeta
 import net.bdew.lib.{DecFormat, Misc}
 import net.minecraft.block.state.IBlockState
-import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.client.util.ITooltipFlag
 import net.minecraft.item.ItemStack
 import net.minecraft.util.EnumFacing
 import net.minecraft.util.math.BlockPos
@@ -30,11 +30,11 @@ class BlockEuOutputBase[T <: TileEuOutputBase](kind: String, tier: Int, maxOutpu
     getTE(world, pos).tryConnect()
   }
 
-  override def getTooltip(stack: ItemStack, player: EntityPlayer, advanced: Boolean): List[String] =
+  override def getTooltip(stack: ItemStack, world: World, flags: ITooltipFlag): List[String] =
     Misc.toLocalF("advgenerators.tooltip.eu",
       ChatFormatting.YELLOW + tier.toString + ChatFormatting.GRAY,
       ChatFormatting.YELLOW + DecFormat.short(maxOutput) + ChatFormatting.GRAY
-    ) +: super.getTooltip(stack, player, advanced)
+    ) +: super.getTooltip(stack, world, flags)
 
   override def canConnectRedstone(state: IBlockState, world: IBlockAccess, pos: BlockPos, side: EnumFacing): Boolean = true
 }

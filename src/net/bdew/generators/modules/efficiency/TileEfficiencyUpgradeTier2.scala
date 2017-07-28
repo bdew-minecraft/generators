@@ -15,17 +15,18 @@ import net.bdew.lib.Misc
 import net.bdew.lib.PimpVanilla._
 import net.bdew.lib.block.BlockTooltip
 import net.bdew.lib.multiblock.tile.TileModule
-import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.client.util.ITooltipFlag
 import net.minecraft.item.ItemStack
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.text.TextFormatting
+import net.minecraft.world.World
 
 object BlockEfficiencyUpgradeTier2 extends BaseModule("efficiency_upgrade_tier2", "EfficiencyUpgradeTier2", classOf[TileEfficiencyUpgradeTier2]) with BlockTooltip {
-  override def getTooltip(stack: ItemStack, player: EntityPlayer, advanced: Boolean): List[String] =
+  override def getTooltip(stack: ItemStack, world: World, flags: ITooltipFlag): List[String] =
     List(
       Misc.toLocalF("advgenerators.tooltip.efficiency", "%s%.0f%%%s".format(TextFormatting.YELLOW, MachineTurbine.fuelEfficiency.getDouble("Tier2") * 100, TextFormatting.RESET)),
       Misc.toLocal("advgenerators.tooltip.efficiency.req")
-    ) ++ super.getTooltip(stack, player, advanced)
+    ) ++ super.getTooltip(stack, world, flags)
 }
 
 class TileEfficiencyUpgradeTier2 extends TileModule {

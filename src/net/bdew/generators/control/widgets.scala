@@ -27,7 +27,7 @@ class WidgetControlMode(val p: Point, state: => Boolean) extends Widget {
     else
       tip += Misc.toLocal("advgenerators.control.mode.low")
 
-  override def draw(mouse: Point) =
+  override def draw(mouse: Point, partial: Float) =
     if (state)
       parent.drawTexture(rect, rsOn)
     else
@@ -40,6 +40,6 @@ class WidgetControlAction(val p: Point, action: => ControlAction) extends Widget
   override def handleTooltip(p: Point, tip: mutable.MutableList[String]) =
     tip += Misc.toLocal("advgenerators.control.action." + action.uid)
 
-  override def draw(mouse: Point) =
+  override def draw(mouse: Point, partial: Float) =
     parent.drawTexture(rect, action.texture)
 }
