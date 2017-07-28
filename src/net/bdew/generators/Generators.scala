@@ -12,10 +12,12 @@ package net.bdew.generators
 import java.io.File
 
 import net.bdew.generators.compat.PowerProxy
+import net.bdew.generators.compat.opencomputers.OCBlocks
 import net.bdew.generators.config._
 import net.bdew.generators.config.loader.TuningLoader
 import net.bdew.generators.network.NetworkHandler
 import net.bdew.generators.sensor.Sensors
+import net.bdew.lib.Misc
 import net.bdew.lib.multiblock.data.{OutputConfigItems, OutputConfigManager}
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.Mod.EventHandler
@@ -64,14 +66,12 @@ object Generators {
     Sensors.init()
     NetworkRegistry.INSTANCE.registerGuiHandler(this, Config.guiHandler)
     NetworkHandler.init()
-    //    FMLInterModComms.sendMessage("Waila", "register", "net.bdew.generators.waila.WailaHandler.loadCallback")
+    FMLInterModComms.sendMessage("waila", "register", "net.bdew.generators.waila.WailaHandler.loadCallback")
     TurbineMaterials.init()
     CapacitorMaterials.init()
     TuningLoader.loadDelayed()
-    //    if (Misc.haveModVersion("OpenComputers"))
-    //      OCBlocks.init()
-    //    if (Misc.haveModVersion("ComputerCraft"))
-    //      CCBlocks.init()
+    if (Misc.haveModVersion("opencomputers"))
+      OCBlocks.init()
   }
 
   @EventHandler

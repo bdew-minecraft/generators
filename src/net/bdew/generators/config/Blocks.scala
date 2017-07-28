@@ -14,11 +14,13 @@ import net.bdew.generators.compat.PowerProxy
 import net.bdew.generators.modules.control.BlockControl
 import net.bdew.generators.modules.dataport.BlockDataPort
 import net.bdew.generators.modules.efficiency.{BlockEfficiencyUpgradeTier1, BlockEfficiencyUpgradeTier2}
+import net.bdew.generators.modules.euOutput._
 import net.bdew.generators.modules.exchanger.BlockExchanger
 import net.bdew.generators.modules.fluidInput.BlockFluidInput
 import net.bdew.generators.modules.fluidOutputSelect.BlockFluidOutputSelect
 import net.bdew.generators.modules.forgeOutput.BlockForgeOutput
 import net.bdew.generators.modules.fuelTank.BlockFuelTank
+import net.bdew.generators.modules.gasInput.BlockGasInput
 import net.bdew.generators.modules.heatingChamber.BlockHeatingChamber
 import net.bdew.generators.modules.itemInput.BlockItemInput
 import net.bdew.generators.modules.itemOutput.BlockItemOutput
@@ -27,6 +29,7 @@ import net.bdew.generators.modules.powerCapacitor.TilePowerCapacitor
 import net.bdew.generators.modules.pressure.{BlockPressureInput, BlockPressureOutput}
 import net.bdew.generators.modules.rfOutput.BlockRfOutput
 import net.bdew.generators.modules.sensor.BlockSensor
+import net.bdew.generators.modules.teslaOutput.BlockTeslaOutput
 import net.bdew.generators.modules.turbine.TileTurbine
 import net.bdew.generators.{CreativeTabsGenerators, Generators, OldNames}
 import net.bdew.lib.Misc
@@ -44,24 +47,24 @@ object Blocks extends BlockManager(CreativeTabsGenerators.main) {
   if (PowerProxy.haveRF && PowerProxy.RFEnabled)
     regBlock(BlockRfOutput)
 
-  //  if (PowerProxy.haveIC2 && PowerProxy.EUEnabled) {
-  //    regBlock(BlockEuOutputLV)
-  //    regBlock(BlockEuOutputMV)
-  //    regBlock(BlockEuOutputHV)
-  //    regBlock(BlockEuOutputEV)
-  //    regBlock(BlockEuOutputIV)
-  //  }
+  if (PowerProxy.haveIC2 && PowerProxy.EUEnabled) {
+    regBlock(BlockEuOutputLV)
+    regBlock(BlockEuOutputMV)
+    regBlock(BlockEuOutputHV)
+    regBlock(BlockEuOutputEV)
+    regBlock(BlockEuOutputIV)
+  }
 
-  //  if (PowerProxy.haveTesla && PowerProxy.TeslaEnabled) {
-  //    regBlock(BlockTeslaOutput)
-  //  }
+  if (PowerProxy.haveTesla && PowerProxy.TeslaEnabled) {
+    regBlock(BlockTeslaOutput)
+  }
 
   if (PowerProxy.ForgeEnabled)
     regBlock(BlockForgeOutput)
 
-  //  if (Misc.haveModVersion("MekanismAPI|gas@[9.0.0,)")) {
-  //    regBlock(BlockGasInput)
-  //  }
+  if (Misc.haveModVersion("MekanismAPI|gas@[9.0.0,)")) {
+    regBlock(BlockGasInput)
+  }
 
   regBlock(BlockFluidInput)
   regBlock(BlockFluidOutputSelect)
@@ -95,7 +98,7 @@ object Blocks extends BlockManager(CreativeTabsGenerators.main) {
 
   if (Misc.haveModVersion("pressure")) PressureBlocks.init()
 
-  if (Misc.haveModVersion("ComputerCraft") || Misc.haveModVersion("OpenComputers")) {
+  if (Misc.haveModVersion("ComputerCraft") || Misc.haveModVersion("opencomputers")) {
     regBlock(BlockDataPort)
   }
 

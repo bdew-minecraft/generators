@@ -15,7 +15,7 @@ import net.bdew.lib.Misc
 
 object PowerProxy {
   final val RF_API_ID = "CoFHAPI|energy"
-  final val IC2_MOD_ID = "IC2"
+  final val IC2_MOD_ID = "ic2"
   final val TESLA_MOD_ID = "tesla"
 
   lazy val RFEnabled = Tuning.getSection("Power").getSection("RF").getBoolean("Enabled")
