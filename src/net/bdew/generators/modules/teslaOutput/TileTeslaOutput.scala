@@ -15,18 +15,15 @@ import net.bdew.lib.Misc
 import net.bdew.lib.PimpVanilla._
 import net.bdew.lib.block.BlockFace
 import net.bdew.lib.capabilities.CapabilityProvider
-import net.bdew.lib.data.DataSlotBoolean
-import net.bdew.lib.data.base.UpdateKind
 import net.bdew.lib.multiblock.data.OutputConfigPower
 import net.bdew.lib.multiblock.interact.CIPowerProducer
+import net.bdew.lib.multiblock.misc.TileForcedOutput
 import net.bdew.lib.multiblock.tile.{RSControllableOutput, TileOutput}
 import net.darkhax.tesla.api.{ITeslaHolder, ITeslaProducer}
 import net.minecraft.util.EnumFacing
 
-class TileTeslaOutput extends TileOutput[OutputConfigPower] with RSControllableOutput with CapabilityProvider {
+class TileTeslaOutput extends TileOutput[OutputConfigPower] with RSControllableOutput with CapabilityProvider with TileForcedOutput {
   val kind = "PowerOutput"
-
-  val forcedSides = EnumFacing.values().map(f => f -> DataSlotBoolean("forced_" + f.name(), this, false).setUpdate(UpdateKind.WORLD, UpdateKind.SAVE)).toMap
 
   var outThisTick = Map.empty[EnumFacing, Float].withDefaultValue(0f)
 
@@ -72,11 +69,6 @@ class TileTeslaOutput extends TileOutput[OutputConfigPower] with RSControllableO
       core.extract(injected / ratio, false)
       outThisTick += face -> (outThisTick(face) + injected)
     }
-  }
-
-  override def coreRemoved(): Unit = {
-    super.coreRemoved()
-    forcedSides.values.foreach(_ := false)
   }
 
   serverTick.listen(() => {

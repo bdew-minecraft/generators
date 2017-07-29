@@ -15,11 +15,12 @@ import net.bdew.lib.capabilities.helpers.{FluidDrainMonitor, FluidHelper, FluidM
 import net.bdew.lib.capabilities.{Capabilities, CapabilityProvider}
 import net.bdew.lib.multiblock.data.OutputConfigFluidSlots
 import net.bdew.lib.multiblock.interact.CIFluidOutputSelect
+import net.bdew.lib.multiblock.misc.TileForcedOutput
 import net.bdew.lib.multiblock.tile.{RSControllableOutput, TileOutput}
 import net.minecraft.util.EnumFacing
 import net.minecraftforge.fluids.FluidStack
 
-class TileFluidOutputSelect extends TileOutput[OutputConfigFluidSlots] with RSControllableOutput with CapabilityProvider {
+class TileFluidOutputSelect extends TileOutput[OutputConfigFluidSlots] with TileForcedOutput with RSControllableOutput with CapabilityProvider {
   val kind: String = "FluidOutputSelect"
 
   override def getCore = getCoreAs[CIFluidOutputSelect]
@@ -56,7 +57,7 @@ class TileFluidOutputSelect extends TileOutput[OutputConfigFluidSlots] with RSCo
   serverTick.listen(updateOutput)
 
   override def canConnectToFace(d: EnumFacing) =
-    getCore.isDefined && FluidHelper.hasFluidHandler(world, pos.offset(d), d.getOpposite)
+    getCore.isDefined && (forcedSides(d) || FluidHelper.hasFluidHandler(world, pos.offset(d), d.getOpposite))
 
   override def makeCfgObject(face: EnumFacing) = new OutputConfigFluidSlots(getCore.get.outputSlotsDef)
 
