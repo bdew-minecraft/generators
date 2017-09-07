@@ -26,7 +26,7 @@ import net.minecraftforge.fml.common.network.NetworkRegistry
 import net.minecraftforge.fml.relauncher.Side
 import org.apache.logging.log4j.Logger
 
-@Mod(modid = Generators.modId, version = "GENERATORS_VER", name = "Advanced Generators", dependencies = "after:pressure;after:tconstruct;after:ic2;after:thermalexpansion;after:thermalfoundation;after:eng_toolbox;after:minechem;required-after:bdlib", modLanguage = "scala")
+@Mod(modid = Generators.modId, version = "GENERATORS_VER", name = "Advanced Generators", dependencies = "after:pressure;after:tconstruct;after:ic2;after:thermalexpansion;after:thermalfoundation;after:eng_toolbox;after:minechem;required-after:bdlib", modLanguage = "scala", acceptedMinecraftVersions = "[1.12,1.12.1]")
 object Generators {
   var log: Logger = null
   var instance = this
