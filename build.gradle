@@ -96,11 +96,11 @@ dependencies {
     deobfCompile "mezz.jei:jei_${config.minecraft.version}:${config.jei.version}"
     deobfCompile "mcp.mobius.waila:Hwyla:${config.hwyla.version}"
 
-    deobfCompile "cofh:RedstoneFlux:${config.minecraft.version}-${config.rfapi.version}:universal"
+    deobfCompile "cofh:RedstoneFlux:${config.rfapi.version}:universal"
     compile "net.industrial-craft:industrialcraft-2:${config.ic2.version}:api"
-    compile "net.darkhax.tesla:Tesla-${config.minecraft.version}:${config.tesla.version}"
+    compile "net.darkhax.tesla:Tesla-${config.tesla.version}"
 
-//    compile "net.bdew.thirdparty:mekanism:${config.minecraft.version}-${config.mekanism.version}:api"
+    compile "net.bdew.thirdparty:mekanism:${config.minecraft.version}-${config.mekanism.version}:api"
 
     // compile "net.bdew.thirdparty:computercraft:${config.computercraft.version}-mc${config.minecraft.version}:api"
     compile "li.cil.oc:OpenComputers:MC${config.minecraft.version}-${config.opencomputers.version}:api"
@@ -182,6 +182,7 @@ curseforge {
         changelog = project.hasProperty("changelog") ? project.changelog : "No changelog available"
 
         addGameVersion config.minecraft.version
+        addGameVersion "1.12"
 
         mainArtifact(jar) {
             displayName = "Advanced Generators ${simpleVersion} (MC ${config.minecraft.version})"
