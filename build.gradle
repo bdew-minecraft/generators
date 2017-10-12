@@ -100,10 +100,10 @@ dependencies {
     compile "net.industrial-craft:industrialcraft-2:${config.ic2.version}:api"
     compile "net.darkhax.tesla:Tesla-${config.tesla.version}"
 
-    compile "net.bdew.thirdparty:mekanism:${config.minecraft.version}-${config.mekanism.version}:api"
+    compile "net.bdew.thirdparty:mekanism:${config.mekanism.version}:api"
 
     // compile "net.bdew.thirdparty:computercraft:${config.computercraft.version}-mc${config.minecraft.version}:api"
-    compile "li.cil.oc:OpenComputers:MC${config.minecraft.version}-${config.opencomputers.version}:api"
+    compile "li.cil.oc:OpenComputers:${config.opencomputers.version}:api"
 }
 
 import org.apache.tools.ant.filters.ReplaceTokens
@@ -183,6 +183,7 @@ curseforge {
 
         addGameVersion config.minecraft.version
         addGameVersion "1.12"
+        addGameVersion "1.12.1"
 
         mainArtifact(jar) {
             displayName = "Advanced Generators ${simpleVersion} (MC ${config.minecraft.version})"
