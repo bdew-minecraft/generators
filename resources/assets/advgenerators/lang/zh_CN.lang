@@ -28,7 +28,7 @@ tile.advgenerators.gas_input.name=燃气输入阀门
 tile.advgenerators.control.name=红石控制模块
 tile.advgenerators.efficiency_upgrade_tier1.name=燃料/空气混合器
 tile.advgenerators.efficiency_upgrade_tier2.name=燃气混合加压室
-tile.advgenerators.generators_data_port.name=机器数据接口
+tile.advgenerators.generators_data_port.name=机器数据端口
 
 item.advgenerators.iron_frame.name=铁质框架
 item.advgenerators.power_io.name=能量接口组件
@@ -116,7 +116,7 @@ advgenerators.module.EfficiencyUpgradeTier2.name=燃气混合加压室
 advgenerators.module.ItemInput.name=物品输入端口
 advgenerators.module.ItemOutput.name=物品输出端口
 advgenerators.module.FluidOutputSelect.name=液体输出阀门
-advgenerators.module.GeneratorsDataPort.name=Machine Data Port
+advgenerators.module.GeneratorsDataPort.name=机器数据端口
 
 advgenerators.label.turbine.turbines=已连接涡轮机
 advgenerators.label.turbine.maxprod=输出峰值
