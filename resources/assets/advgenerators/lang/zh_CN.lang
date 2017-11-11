@@ -116,6 +116,7 @@ advgenerators.module.EfficiencyUpgradeTier2.name=燃气混合加压室
 advgenerators.module.ItemInput.name=物品输入端口
 advgenerators.module.ItemOutput.name=物品输出端口
 advgenerators.module.FluidOutputSelect.name=液体输出阀门
+advgenerators.module.GeneratorsDataPort.name=机器数据端口
 
 advgenerators.label.turbine.turbines=已连接涡轮机
 advgenerators.label.turbine.maxprod=输出峰值
