@@ -6,7 +6,10 @@ tile.advgenerators.EuOutputLV.name=LV输出端
 tile.advgenerators.EuOutputMV.name=MV输出端
 tile.advgenerators.EuOutputHV.name=HV输出端
 tile.advgenerators.EuOutputEV.name=EV输出端
+tile.advgenerators.EuOutputIV.name=IV输出端
 tile.advgenerators.RFOutput.name=RF输出端
+tile.advgenerators.TeslaOutput.name=Tesla输出端
+tile.advgenerators.ForgeOutput.name=FE输出端
 tile.advgenerators.steam.name=蒸汽
 tile.advgenerators.syngas.name=合成气
 tile.advgenerators.SteamTurbineController.name=蒸汽涡轮机控制端
@@ -25,6 +28,7 @@ tile.advgenerators.GasInput.name=燃气输入阀门
 tile.advgenerators.Control.name=红石控制模块
 tile.advgenerators.EfficiencyUpgradeTier1.name=燃料/空气混合器
 tile.advgenerators.EfficiencyUpgradeTier2.name=燃气混合加压室
+tile.advgenerators.GeneratorsDataPort.name=机器数据端口
 
 item.advgenerators.IronFrame.name=铁质框架
 item.advgenerators.PowerIO.name=能量接口组件
@@ -231,7 +235,7 @@ advgenerators.tooltip.kit=shift+右键完成升级
 advgenerators.tooltip.efficiency=燃料效率提升至 %s
 advgenerators.tooltip.efficiency.req=需要一个已连接的燃料/空气混合器
 
-
+advgenerators.tooltip.eu=第%s级, 输出 %s EU/t
 
 advgenerators.control.mode.high=未接受到信号时
 advgenerators.control.mode.low=接受到信号时
