@@ -200,7 +200,7 @@ curseforge {
         relations {
             requiredLibrary 'bdlib'
             optionalLibrary 'waila'
-            optionalLibrary 'just-enough-items-jei'
+            optionalLibrary 'jei'
             optionalLibrary 'tesla'
         }
     }
