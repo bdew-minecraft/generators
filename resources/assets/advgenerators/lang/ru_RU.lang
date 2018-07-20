@@ -1,35 +1,155 @@
-tile.advgenerators.fluid_input.name=Жидкостный клапан
+tile.advgenerators.fluid_input.name=Жидкостный впускной клапан
 tile.advgenerators.fuel_tank.name=Топливный бак
-tile.advgenerators.MJOutput.name=Излучатель MJ
-tile.advgenerators.PowerCapacitor.name=Накопитель энергии
-tile.advgenerators.Turbine.name=Турбина
-tile.advgenerators.turbine_controller.name=Контроллер турбины
+tile.advgenerators.turbine_controller.name=Контроллер газовой турбины
 tile.advgenerators.fuel_tank.name=Топливный бак
 tile.advgenerators.eu_output_lv.name=Излучатель НН
 tile.advgenerators.eu_output_mv.name=Излучатель СН
 tile.advgenerators.eu_output_hv.name=Излучатель ВН
+tile.advgenerators.eu_output_ev.name=Излучатель СВН
+tile.advgenerators.eu_output_iv.name=Излучатель безумного напряжения
 tile.advgenerators.rf_output.name=Излучатель RF
+tile.advgenerators.tesla_output.name=Излучатель Tesla
+tile.advgenerators.forge_output.name=Излучатель FE
+tile.advgenerators.steam.name=Пар
+tile.advgenerators.syngas.name=Синтез-газ
+tile.advgenerators.steam_turbine_controller.name=Контроллер паровой турбины
+tile.advgenerators.exchanger_controller.name=Контроллер теплообменника
+tile.advgenerators.fluid_output_select.name=Жидкостный выпускной клапан
+tile.advgenerators.item_output.name=Предметный исходящий порт
+tile.advgenerators.item_input.name=Предметный входящий порт
+tile.advgenerators.pressure_output_select.name=Герметичный выпускной клапан
+tile.advgenerators.pressure_input.name=Герметичный впускной клапан
+tile.advgenerators.heat_exchanger.name=Теплообменник
+tile.advgenerators.syngas_controller.name=Контроллер генератора синтез-газа
+tile.advgenerators.heating_chamber.name=Отопительная камера
+tile.advgenerators.mixing_chamber.name=Смесительная камера
+tile.advgenerators.sensor.name=Сенсорный модуль
+tile.advgenerators.gas_input.name=Газовый впускной клапан
+tile.advgenerators.control.name=Модуль контроля редстоун сигнала
+tile.advgenerators.efficiency_upgrade_tier1.name=Воздушно-топливный смеситель
+tile.advgenerators.efficiency_upgrade_tier2.name=Компрессор смешанного газа
+tile.advgenerators.generators_data_port.name=Порт машинных данных
 
-item.advgenerators.TurbineBlade.name=Лопатка турбины
-item.advgenerators.TurbineRotor.name=Ротор турбины
-item.advgenerators.iron_frame.name=Железная рамка
-item.advgenerators.power_io.name=Модуль управления
+item.advgenerators.iron_frame.name=Железная рама
+item.advgenerators.power_io.name=Модуль управления энергией
 item.advgenerators.iron_tubing.name=Железная проводка
-item.advgenerators.iron_wiring.name=Редстоун проводка
-item.advgenerators.controller.name=Контрольная схема
+item.advgenerators.iron_wiring.name=Редстоун-железная проводка
+item.advgenerators.controller.name=Схема управления
+item.advgenerators.pressure_valve.name=Клапан давления
+item.advgenerators.advanced_pressure_valve.name=Продвинутый клапан давления
+item.advgenerators.upgrade_kit.name=Набор улучшения
 
-advgenerators.gui.turbine.title=Управление турбиновым генератором
+// === Turbine Materials
+
+item.advgenerators.turbine_blade_iron.name=Лопасть железной турбины
+item.advgenerators.turbine_rotor_iron.name=Ротор железной турбины
+tile.advgenerators.turbine_iron.name=Железная турбина
+
+item.advgenerators.turbine_rotor_gold.name=Ротор золотой турбины
+item.advgenerators.turbine_kit_gold.name=Набор улучшения золотой турбины
+tile.advgenerators.turbine_gold.name=Золотая турбина
+
+item.advgenerators.turbine_blade_steel.name=Лопасть стальной турбины
+item.advgenerators.turbine_rotor_steel.name=Ротор стальной турбины
+item.advgenerators.turbine_kit_steel.name=Набор улучшения стальной турбины
+tile.advgenerators.turbine_steel.name=Стальная турбина
+
+item.advgenerators.turbine_blade_bronze.name=Лопасть бронзовой турбины
+item.advgenerators.turbine_rotor_bronze.name=Ротор бронзовой турбины
+item.advgenerators.turbine_kit_bronze.name=Набор улучшения бронзовой турбины
+tile.advgenerators.turbine_bronze.name=Бронзовая турбина
+
+item.advgenerators.turbine_blade_enderium.name=Лопасть эндериевой турбины
+item.advgenerators.turbine_rotor_enderium.name=Ротор эндериевой турбины
+item.advgenerators.turbine_kit_enderium.name=Набор улучшения эндериевой турбины
+tile.advgenerators.turbine_enderium.name=Эндериевая турбина
+
+item.advgenerators.turbine_blade_vibrant.name=Лопасть резонирующей турбины
+item.advgenerators.turbine_rotor_vibrant.name=Ротор резонирующей турбины
+item.advgenerators.turbine_kit_vibrant.name=Набор улучшения резонирующей турбины
+tile.advgenerators.turbine_vibrant.name=Резонирующая турбина
+
+item.advgenerators.turbine_blade_manyullyn.name=Лопасть маньюлиновой турбины
+item.advgenerators.turbine_rotor_manyullyn.name=Ротор маньюлиновой турбины
+item.advgenerators.turbine_kit_manyullyn.name=Набор улучшения маньюлиновой турбины
+tile.advgenerators.turbine_manyullyn.name=Манулиновая турбина
+
+item.advgenerators.turbine_blade_adv_alloy.name=Лопасть укреплённой турбины
+item.advgenerators.turbine_rotor_adv_alloy.name=Ротор укреплённой турбины
+item.advgenerators.turbine_kit_adv_alloy.name=Набор улучшения укреплённой турбины
+tile.advgenerators.turbine_adv_alloy.name=Укреплённая турбина
+
+// === Capacitors
+
+tile.advgenerators.power_capacitor_redstone.name=Базовый накопитель энергии
+tile.advgenerators.power_capacitor_advanced.name=Продвинутый накопитель энергии
+tile.advgenerators.power_capacitor_dense.name=Накопитель энергии высокой плотности
+
+item.advgenerators.capacitor_kit_advanced.name=Набор улучшения продвинутого накопителя
+item.advgenerators.capacitor_kit_dense.name=Набор улучшения накопителя высокой плотности
+
+
+// ======
+
+advgenerators.gui.turbine.title=Управление газовой турбиной
+advgenerators.gui.turbine.steam.title=Управление паровой турбиной
+advgenerators.gui.exchanger.title=Управление теплообменником
+advgenerators.gui.syngas.title=Управление генератором синтез-газа
+advgenerators.gui.output.title=Настройка выходов
+advgenerators.gui.sensor.title=Настройка сенсорного модуля
+advgenerators.gui.control.title=Настройка управляющего модуля
+
+advgenerators.gui.dump=Очистить внутренние резервуары
 
 advgenerators.module.PowerOutput.name=Модуль вывода энергии
 advgenerators.module.Turbine.name=Турбина
-advgenerators.module.FluidInput.name=Жидкостный клапан
+advgenerators.module.FluidInput.name=Жидкостный впускной клапан
 advgenerators.module.FuelTank.name=Топливный бак
 advgenerators.module.PowerCapacitor.name=Накопитель энергии
+advgenerators.module.HeatExchanger.name=Теплообменник
+advgenerators.module.HeatingChamber.name=Отопительная камера
+advgenerators.module.MixingChamber.name=Смесительная камера
+advgenerators.module.Control.name=Модуль управления редстоун сигналом
+advgenerators.module.Sensor.name=Сенсорный модуль
+advgenerators.module.EfficiencyUpgradeTier1.name=Воздушно-топливный смеситель
+advgenerators.module.EfficiencyUpgradeTier2.name=Компрессор смешанного газа
+advgenerators.module.ItemInput.name=Предметный входящий порт
+advgenerators.module.ItemOutput.name=Предметный исходящий порт
+advgenerators.module.FluidOutputSelect.name=Топливный выпускной клапан
+advgenerators.module.GeneratorsDataPort.name=Порт машинных данных
 
 advgenerators.label.turbine.turbines=Подключенные турбины
-advgenerators.label.turbine.maxprod=Пик.продукция
-advgenerators.label.turbine.fuel=Пик.расход топлива
-advgenerators.label.turbine.prod=Текущ.продукция
+advgenerators.label.turbine.maxprod=Макс. генерация
+advgenerators.label.turbine.fuel=Макс. расход топлива
+advgenerators.label.turbine.efficiency=Эффектив. расхода топлива: %s
+advgenerators.label.turbine.prod=Текущ. генерация
+advgenerators.label.turbine.fuelaverage=Текущ. расход топлива
+advgenerators.label.turbine.rpm=Скорость
+advgenerators.label.turbine.steamaverage=Расход пара
+
+advgenerators.label.exchanger.heat=Текущ. тепло
+advgenerators.label.exchanger.maxtransfer=Макс. теплопередача
+advgenerators.label.exchanger.inrate=Расход %s
+advgenerators.label.exchanger.noinput=Нет входа
+advgenerators.label.exchanger.outrate=Генерация %s
+advgenerators.label.exchanger.nooutput=Нет выхода
+advgenerators.label.exchanger.heatloss=Теплопотеря
+
+advgenerators.label.syngas.steam=Пар: %s
+advgenerators.label.syngas.carbon=Углерод: %s
+advgenerators.label.syngas.heat=Тепло: %s / %s HU
+advgenerators.label.syngas.heat.disabled=Не установлена Отопительная камера
+advgenerators.label.syngas.produced=Генерация синтез-газа (в тик)
+advgenerators.label.syngas.consumed=Расход углерода (в тик)
+advgenerators.label.syngas.heat.delta=Тепла получено/потеряно
+
+advgenerators.waila.turbine.nofuel=Нет топлива
+advgenerators.waila.turbine.nosteam=Нет пара
+advgenerators.waila.turbine.consuming=Расход %s %s/тик
+advgenerators.waila.turbine.producing=Генерация %s %s/тик
+
+advgenerators.flow.fluid=%s мВ/тик
+advgenerators.flow.other=%s/тик
 
 advgenerators.output.0=Красный выход
 advgenerators.output.1=Зеленый выход
@@ -38,6 +158,93 @@ advgenerators.output.3=Жёлтый выход
 advgenerators.output.4=Голубой выход
 advgenerators.output.5=Фиолетовый выход
 
-advgenerators.tooltip.turbine.fuel=%s %s/mB в Турбиновом генераторе
+advgenerators.tooltip.turbine.fuel=%s %s/мВ в турбиновом генераторе
+advgenerators.tooltip.carbon=Количество углерода: %s
 
-itemGroup.bdew.generators=Продвинутые генераторы
+advgenerators.exchanger.output.hot=Горячая жидкость
+advgenerators.exchanger.output.cold=Холодная жидкость
+advgenerators.exchanger.output.both=Обе жидкости
+
+itemGroup.bdew.generators=Advanced Generators
+
+resource.item.format=%s / %s
+resource.fluid.format=%s / %s мВ
+
+fluid.steam=Пар
+fluid.syngas=Синтез-газ
+
+
+advgenerators.sensor.on=Сигнал ВКЛ
+advgenerators.sensor.off=Сигнал ВЫКЛ
+
+advgenerators.sensor.disabled=Отключено
+advgenerators.sensor.param.disabled=Отключено
+
+advgenerators.sensor.power=Накопитель энергии
+advgenerators.sensor.turbine.fuel=Топливный бак
+advgenerators.sensor.turbine.steam=Паровой бак
+
+advgenerators.sensor.exchanger.hot.input=Бак с горячим входом
+advgenerators.sensor.exchanger.hot.output=Бак с горячим выходом
+advgenerators.sensor.exchanger.cold.input=Бак с холодным входом
+advgenerators.sensor.exchanger.cold.output=Бак с холодным выходом
+advgenerators.sensor.param.resource.solid=Содержит твёрдые предметы
+advgenerators.sensor.param.resource.fluid=Содержит жидкость
+
+advgenerators.sensor.exchanger.heat=Внутреннее тепло
+advgenerators.sensor.param.heat.exchanger.cold=Нет тепла
+advgenerators.sensor.param.heat.exchanger.low=Нагревание ( < %s HU)
+advgenerators.sensor.param.heat.exchanger.medium=Может производить теплообмен ( > %s HU)
+advgenerators.sensor.param.heat.exchanger.high=Максимальный нагрев (%s HU)
+
+advgenerators.sensor.turbine.speed=Скорость турбины
+advgenerators.sensor.param.turbine.speed.stop=Остановлена
+advgenerators.sensor.param.turbine.speed.low=Раскручивается
+advgenerators.sensor.param.turbine.speed.medium=>= %s об/мин
+advgenerators.sensor.param.turbine.speed.high=%s об/мин (Максимум)
+
+advgenerators.sensor.turbine.generation=Генератор энергии
+advgenerators.sensor.param.turbine.generation.stop=Остановлен
+advgenerators.sensor.param.turbine.generation.low=Генерация (> %s %s/тик)
+advgenerators.sensor.param.turbine.generation.medium=Больше половины мощности (> %s %s/тик)
+advgenerators.sensor.param.turbine.generation.high=Максимальная мощность (%s %s/тик)
+
+advgenerators.sensor.syngas.water=Водяной бак
+advgenerators.sensor.syngas.steam=Резервуар с паром
+advgenerators.sensor.syngas.carbon=Резервуар с углеродом
+advgenerators.sensor.syngas.syngas=Бак для синтез-газа
+advgenerators.sensor.syngas.heat=Внутреннее тепло
+advgenerators.sensor.param.heat.syngas.cold=Нет тепла
+advgenerators.sensor.param.heat.syngas.low=Нагревание ( < %s HU)
+advgenerators.sensor.param.heat.syngas.medium=Может производить пар ( > %s HU)
+advgenerators.sensor.param.heat.syngas.high=Максимальный нагрев (%s HU)
+
+advgenerators.sensor.param.fill.empty=Пустой
+advgenerators.sensor.param.fill.not.empty=Непустой
+advgenerators.sensor.param.fill.gt5=Заполнен на 5%
+advgenerators.sensor.param.fill.gt25=Заполнен на 25%
+advgenerators.sensor.param.fill.gt50=Заполнен на 50%
+advgenerators.sensor.param.fill.gt75=Заполнен на 75%
+advgenerators.sensor.param.fill.gt95=Заполнен на 95%
+advgenerators.sensor.param.fill.full=Полный
+advgenerators.sensor.param.fill.not.full=Неполный
+
+advgenerators.tooltip.turbine.produce=Производит до %s
+advgenerators.tooltip.turbine.inertia=Инерция: %s
+advgenerators.tooltip.capacitor=Ёмкость: %s
+advgenerators.tooltip.kit=Для установки улучшения нажмите shift и правую клавишу мыши
+advgenerators.tooltip.efficiency=Повышает эффективность расхода топлива до %s
+advgenerators.tooltip.efficiency.req=Требуется установить Воздушно-топливный смеситель
+
+advgenerators.tooltip.eu=Уровень %s, генерирует %s EU/тик
+
+advgenerators.control.mode.high=Включить при наличии сигнала
+advgenerators.control.mode.low=Выключить при наличии сигнала
+
+advgenerators.control.action.disabled=Отключено
+advgenerators.control.action.useSteam=Использование пара
+advgenerators.control.action.useFuel=Использование топлива
+advgenerators.control.action.generateEnergy=Генерация энергии
+advgenerators.control.action.exchangeHeat=Теплообмен
+advgenerators.control.action.mix=Смешивание пара/углерода
+advgenerators.control.action.heatWater=Нагревание воды
