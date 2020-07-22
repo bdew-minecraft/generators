@@ -64,9 +64,8 @@ repositories {
         url = "https://jenkins.bdew.net/maven"
     }
     maven {
-        name "HWYLA"
-        url "http://tehnut.info/maven"
-    }
+	name = "HWYLA"
+	url "http://maven.tehnut.info/"}
     maven {
         name "JEI"
         url "http://dvs1.progwml6.com/files/maven"
@@ -77,7 +76,7 @@ repositories {
     }
     maven {
         name = "tesla"
-        url = "http://maven.epoxide.xyz"
+        url = "http://maven.mcmoddev.com"
     }
     maven {
         name "OpenComputers"
@@ -94,7 +93,7 @@ dependencies {
     compile "net.bdew:pressure:${config.pressure.version}-mc${config.minecraft.version}:api"
 
     deobfCompile "mezz.jei:jei_${config.minecraft.version}:${config.jei.version}"
-    deobfCompile "mcp.mobius.waila:Hwyla:${config.hwyla.version}"
+    deobfCompile "mcp.mobius.waila:Hwyla:${config.hwyla.version}:api"
 
     deobfCompile "cofh:RedstoneFlux:${config.rfapi.version}:universal"
     compile "net.industrial-craft:industrialcraft-2:${config.ic2.version}:api"
