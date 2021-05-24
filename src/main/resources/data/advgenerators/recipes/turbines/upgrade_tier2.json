@@ -1,0 +1,6 @@
+{
+  "type": "advgenerators:upgrade_kit",
+  "from": "advgenerators:turbine_tier1",
+  "to": "advgenerators:turbine_tier2",
+  "item": "advgenerators:turbine_kit_tier2"
+}

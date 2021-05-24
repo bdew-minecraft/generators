@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "IRI",
+    "RQR",
+    "IRI"
+  ],
+  "key": {
+    "I": {
+      "tag": "forge:ingots/iron"
+    },
+    "R": {
+      "tag": "forge:dusts/redstone"
+    },
+    "Q": {
+      "tag": "forge:gems/quartz"
+    }
+  },
+  "result": {
+    "item": "advgenerators:controller"
+  }
+}

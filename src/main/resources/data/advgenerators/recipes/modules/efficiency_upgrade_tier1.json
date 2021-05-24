@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "FPF",
+    "VBW",
+    "FPF"
+  ],
+  "key": {
+    "F": {
+      "item": "advgenerators:iron_frame"
+    },
+    "W": {
+      "item": "advgenerators:iron_tubing"
+    },
+    "V": {
+      "item": "advgenerators:pressure_valve"
+    },
+    "P": {
+      "item": "minecraft:piston"
+    },
+    "B": {
+      "item": "minecraft:iron_bars"
+    }
+  },
+  "result": {
+    "item": "advgenerators:efficiency_upgrade_tier1"
+  }
+}

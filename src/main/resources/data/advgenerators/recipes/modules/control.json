@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "FQF",
+    "RRR",
+    "FQF"
+  ],
+  "key": {
+    "F": {
+      "item": "advgenerators:iron_frame"
+    },
+    "R": {
+      "tag": "forge:dusts/redstone"
+    },
+    "Q": {
+      "tag": "forge:gems/quartz"
+    }
+  },
+  "result": {
+    "item": "advgenerators:control"
+  }
+}

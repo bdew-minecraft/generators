@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "FWF",
+    "WWW",
+    "FWF"
+  ],
+  "key": {
+    "F": {
+      "item": "advgenerators:iron_frame"
+    },
+    "W": {
+      "item": "advgenerators:iron_tubing"
+    }
+  },
+  "result": {
+    "item": "advgenerators:heat_exchanger"
+  }
+}

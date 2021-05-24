@@ -1,0 +1,13 @@
+{
+  "type": "advgenerators:liquid_fuel",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "thermal"
+    }
+  ],
+  "fuel": {
+    "fluid": "thermal:refined_fuel"
+  },
+  "fePerMb": 1500
+}

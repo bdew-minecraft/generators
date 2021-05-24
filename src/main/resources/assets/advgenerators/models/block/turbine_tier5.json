@@ -1,0 +1,8 @@
+{
+  "loader": "advgenerators:multiblock_model",
+  "parent": "minecraft:block/cube_top",
+  "textures": {
+    "side": "advgenerators:blocks/turbine/tier5/main",
+    "up": "advgenerators:blocks/turbine/tier5/top"
+  }
+}

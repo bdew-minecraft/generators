@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "AVA"
+  ],
+  "key": {
+    "A": {
+      "tag": "forge:ingots/netherite"
+    },
+    "V": {
+      "item": "advgenerators:pressure_valve"
+    }
+  },
+  "result": {
+    "item": "advgenerators:advanced_pressure_valve"
+  }
+}

@@ -1,9 +1,0 @@
-# List of internal config files to load
-
-generators.cfg
-recipes.cfg
-turbine.cfg
-exchanger.cfg
-syngas.cfg
-turbine-materials.cfg
-capacitor-materials.cfg

@@ -1,6 +1,10 @@
-Advanced Generators
-===================
+[![](http://cf.way2muchnoise.eu/full_advanced-generators_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/advanced-generators)
+[![](http://cf.way2muchnoise.eu/versions/advanced-generators.svg)](https://www.curseforge.com/minecraft/mc-mods/advanced-generators)
 
-### [Official Website](http://bdew.net/generators)
-### [Forum thread](http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/2189255-advanced-generators-v0-9-freeform-multiblock)
-### [Jenkins](http://jenkins.bdew.net/)
+# Advanced Generators
+
+Free Form, Multi Block, Modular Power Generators
+
+Curseforge: https://www.curseforge.com/minecraft/mc-mods/advanced-generators
+
+Jenkins: https://jenkins.bdew.net/

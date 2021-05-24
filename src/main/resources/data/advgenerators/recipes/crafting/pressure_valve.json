@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " I ",
+    "WWW",
+    " I "
+  ],
+  "key": {
+    "I": {
+      "tag": "forge:ingots/iron"
+    },
+    "W": {
+      "item": "advgenerators:iron_tubing"
+    }
+  },
+  "result": {
+    "item": "advgenerators:pressure_valve"
+  }
+}

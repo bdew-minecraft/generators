@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "FVF",
+    "PCP",
+    "FWF"
+  ],
+  "key": {
+    "F": {
+      "item": "advgenerators:iron_frame"
+    },
+    "P": {
+      "item": "advgenerators:iron_tubing"
+    },
+    "W": {
+      "item": "advgenerators:iron_wiring"
+    },
+    "C": {
+      "item": "advgenerators:controller"
+    },
+    "V": {
+      "item": "advgenerators:pressure_valve"
+    }
+  },
+  "result": {
+    "item": "advgenerators:syngas_controller"
+  }
+}

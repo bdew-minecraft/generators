@@ -1,0 +1,34 @@
+{
+  "type": "thermal:smelter",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "thermal_expansion"
+    }
+  ],
+  "input": [
+    {
+      "value": [
+        {
+          "item": "advgenerators:pressure_valve"
+        }
+      ],
+      "count": 1
+    },
+    {
+      "value": [
+        {
+          "tag": "forge:ingots/enderium"
+        }
+      ],
+      "count": 4
+    }
+  ],
+  "result": [
+    {
+      "item": "advgenerators:advanced_pressure_valve",
+      "count": 1
+    }
+  ],
+  "energy": 64000
+}

@@ -1,0 +1,36 @@
+modLoader = "kotori_scala"
+loaderVersion = "[2.13.3,2.14.0)"
+issueTrackerURL = "https://github.com/bdew-minecraft/generators/issues"
+license = "MIT"
+
+[[mods]]
+modId = "advgenerators"
+version = "${file.jarVersion}"
+displayName = "Advanced Generators"
+displayURL = "https://www.curseforge.com/minecraft/mc-mods/advanced-generators"
+authors = "bdew"
+description = '''
+Free Form, Multi Block, Modular Power Generators
+'''
+
+[[dependencies.advgenerators]]
+modId = "forge"
+mandatory = true
+versionRange = "[36,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.advgenerators]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.16.5,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.advgenerators]]
+modId = "bdlib"
+mandatory = true
+versionRange = "[1.15.0,)"
+ordering = "NONE"
+side = "BOTH"
+

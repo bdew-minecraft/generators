@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "I I",
+    "FWF",
+    " W "
+  ],
+  "key": {
+    "I": {
+      "tag": "forge:ingots/iron"
+    },
+    "F": {
+      "item": "advgenerators:iron_frame"
+    },
+    "W": {
+      "item": "advgenerators:iron_tubing"
+    }
+  },
+  "result": {
+    "item": "advgenerators:fluid_output_select"
+  }
+}

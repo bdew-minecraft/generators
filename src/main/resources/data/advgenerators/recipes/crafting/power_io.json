@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ITI",
+    "IRI",
+    "ITI"
+  ],
+  "key": {
+    "I": {
+      "tag": "forge:ingots/iron"
+    },
+    "R": {
+      "tag": "forge:dusts/redstone"
+    },
+    "T": {
+      "item": "minecraft:piston"
+    }
+  },
+  "result": {
+    "item": "advgenerators:power_io"
+  }
+}

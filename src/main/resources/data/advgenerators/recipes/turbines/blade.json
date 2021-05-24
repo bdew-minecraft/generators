@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " II",
+    " II",
+    "  I"
+  ],
+  "key": {
+    "I": {
+      "tag": "forge:ingots/iron"
+    }
+  },
+  "result": {
+    "item": "advgenerators:turbine_blade",
+    "count": 4
+  }
+}

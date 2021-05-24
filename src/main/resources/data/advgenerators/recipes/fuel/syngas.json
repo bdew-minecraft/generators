@@ -1,0 +1,7 @@
+{
+  "type": "advgenerators:liquid_fuel",
+  "fuel": {
+    "fluid": "advgenerators:syngas"
+  },
+  "fePerMb": 1000
+}

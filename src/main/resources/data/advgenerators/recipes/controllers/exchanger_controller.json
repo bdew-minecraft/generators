@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "FWF",
+    "PCP",
+    "FPF"
+  ],
+  "key": {
+    "F": {
+      "item": "advgenerators:iron_frame"
+    },
+    "P": {
+      "item": "advgenerators:iron_tubing"
+    },
+    "W": {
+      "item": "advgenerators:iron_wiring"
+    },
+    "C": {
+      "item": "advgenerators:controller"
+    }
+  },
+  "result": {
+    "item": "advgenerators:exchanger_controller"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "forge:tag_empty",
+        "tag": "forge:ingots/enderium"
+      }
+    }
+  ],
+  "pattern": [
+    "XXX",
+    "XRX",
+    "XXX"
+  ],
+  "key": {
+    "X": {
+      "tag": "forge:ingots/enderium"
+    },
+    "R": {
+      "item": "advgenerators:turbine_rotor_tier4"
+    }
+  },
+  "result": {
+    "item": "advgenerators:turbine_rotor_tier5",
+    "count": 1
+  }
+}

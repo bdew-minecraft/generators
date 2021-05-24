@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "forge:tag_empty",
+        "tag": "forge:ingots/invar"
+      }
+    }
+  ],
+  "pattern": [
+    "XXX",
+    "XRX",
+    "XXX"
+  ],
+  "key": {
+    "X": {
+      "tag": "forge:ingots/invar"
+    },
+    "R": {
+      "item": "advgenerators:turbine_rotor_tier3"
+    }
+  },
+  "result": {
+    "item": "advgenerators:turbine_rotor_tier4",
+    "count": 1
+  }
+}

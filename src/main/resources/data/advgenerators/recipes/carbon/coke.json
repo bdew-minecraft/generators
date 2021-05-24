@@ -1,0 +1,18 @@
+{
+  "type": "advgenerators:carbon_source",
+  "conditions": [
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "forge:tag_empty",
+        "tag": "forge:coal_coke"
+      }
+    }
+  ],
+  "items": [
+    {
+      "tag": "forge:coal_coke"
+    }
+  ],
+  "carbonValue": 3200
+}

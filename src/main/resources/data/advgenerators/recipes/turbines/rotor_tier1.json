@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "BBB",
+    "BIB",
+    "BBB"
+  ],
+  "key": {
+    "I": {
+      "tag": "forge:ingots/iron"
+    },
+    "B": {
+      "item": "advgenerators:turbine_blade"
+    }
+  },
+  "result": {
+    "item": "advgenerators:turbine_rotor_tier1",
+    "count": 1
+  }
+}

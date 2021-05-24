@@ -1,0 +1,6 @@
+{
+  "type": "advgenerators:upgrade_kit",
+  "from": "advgenerators:power_capacitor_tier1",
+  "to": "advgenerators:power_capacitor_tier2",
+  "item": "advgenerators:capacitor_kit_tier2"
+}

@@ -1,0 +1,9 @@
+{
+  "type": "advgenerators:carbon_source",
+  "items": [
+    {
+      "tag": "minecraft:planks"
+    }
+  ],
+  "carbonValue": 400
+}

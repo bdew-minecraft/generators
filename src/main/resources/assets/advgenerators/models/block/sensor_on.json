@@ -1,0 +1,10 @@
+{
+  "loader": "advgenerators:multiblock_model",
+  "parent": "advgenerators:block/rotated",
+  "textures": {
+    "front": "advgenerators:blocks/sensor/front_on",
+    "side": "advgenerators:blocks/sensor/side_on",
+    "back": "advgenerators:blocks/sensor/back",
+    "particle": "advgenerators:blocks/sensor/back"
+  }
+}

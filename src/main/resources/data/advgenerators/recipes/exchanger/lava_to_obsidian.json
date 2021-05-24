@@ -1,0 +1,14 @@
+{
+  "type": "advgenerators:exchanger_cooling",
+  "input": {
+    "fluids": {
+      "fluid": "minecraft:lava"
+    },
+    "amount": 1
+  },
+  "output": {
+    "item": "minecraft:obsidian",
+    "amount": 0.001
+  },
+  "heat": 30
+}

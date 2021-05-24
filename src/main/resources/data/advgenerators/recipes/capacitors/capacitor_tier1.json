@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "FWF",
+    "WRW",
+    "FWF"
+  ],
+  "key": {
+    "F": {
+      "item": "advgenerators:iron_frame"
+    },
+    "W": {
+      "item": "advgenerators:iron_wiring"
+    },
+    "R": {
+      "tag": "forge:storage_blocks/redstone"
+    }
+  },
+  "result": {
+    "item": "advgenerators:power_capacitor_tier1"
+  }
+}

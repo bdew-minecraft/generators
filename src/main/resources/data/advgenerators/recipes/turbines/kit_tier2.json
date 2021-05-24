@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XXX",
+    "XRX",
+    "XXX"
+  ],
+  "key": {
+    "X": {
+      "tag": "forge:nuggets/gold"
+    },
+    "R": {
+      "item": "advgenerators:upgrade_kit"
+    }
+  },
+  "result": {
+    "item": "advgenerators:turbine_kit_tier2",
+    "count": 1
+  }
+}

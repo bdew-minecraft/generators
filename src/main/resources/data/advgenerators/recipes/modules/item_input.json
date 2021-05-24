@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "F F",
+    "I I",
+    "FIF"
+  ],
+  "key": {
+    "I": {
+      "tag": "forge:ingots/iron"
+    },
+    "F": {
+      "item": "advgenerators:iron_frame"
+    }
+  },
+  "result": {
+    "item": "advgenerators:item_input"
+  }
+}

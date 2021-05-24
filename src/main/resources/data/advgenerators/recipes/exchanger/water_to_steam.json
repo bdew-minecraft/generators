@@ -1,0 +1,14 @@
+{
+  "type": "advgenerators:exchanger_heating",
+  "input": {
+    "fluids": {
+      "fluid": "minecraft:water"
+    },
+    "amount": 5
+  },
+  "output": {
+    "fluid": "advgenerators:steam",
+    "amount": 15
+  },
+  "heat": 3
+}

@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "forge:tag_empty",
+        "tag": "forge:alloys/elite"
+      }
+    }
+  ],
+  "pattern": [
+    "AAA",
+    "AVA",
+    "AAA"
+  ],
+  "key": {
+    "A": {
+      "tag": "forge:alloys/elite"
+    },
+    "V": {
+      "item": "advgenerators:pressure_valve"
+    }
+  },
+  "result": {
+    "item": "advgenerators:advanced_pressure_valve"
+  }
+}

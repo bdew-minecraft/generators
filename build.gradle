@@ -1,31 +1,21 @@
 buildscript {
-    configurations.all {
-        resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
-    }
     repositories {
+        maven { url = 'https://files.minecraftforge.net/maven' }
         mavenCentral()
-        maven {
-            name = "forge"
-            url = "http://files.minecraftforge.net/maven"
-        }
-        maven {
-            name = "sonatype"
-            url = "https://oss.sonatype.org/content/repositories/snapshots/"
-        }
-        maven {
-            name = "gradle plugins"
-            url = "https://plugins.gradle.org/m2/"
-        }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
-        classpath "gradle.plugin.com.matthewprenger:CurseGradle:1.0.9"
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '4.1.+', changing: true
     }
 }
 
+plugins {
+    id "com.matthewprenger.cursegradle" version "1.4.0"
+}
+
 apply plugin: 'scala'
-apply plugin: 'net.minecraftforge.gradle.forge'
-apply plugin: 'com.matthewprenger.cursegradle'
+apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'eclipse'
+apply plugin: 'maven-publish'
 
 file "build.properties" withReader {
     def prop = new Properties()
@@ -33,137 +23,118 @@ file "build.properties" withReader {
     ext.config = new ConfigSlurper().parse prop
 }
 
-if (project.hasProperty('forgeOverride')) {
-    config.forge.version = forgeOverride
-}
-
 if (project.hasProperty('buildnum')) {
-    ext.simpleVersion = "${config.generators.version}.${project.buildnum}"
+    ext.simpleVersion = "${config.mod.version}.${project.buildnum}"
 } else {
-    ext.simpleVersion = "${config.generators.version}-DEV"
+    ext.simpleVersion = "${config.mod.version}-DEV"
 }
 
 version = simpleVersion + '-mc' + config.minecraft.version
 
-group = "net.bdew"
-archivesBaseName = "generators"
+group = 'net.bdew'
+archivesBaseName = config.mod.id
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(8)
 
 minecraft {
-    version = "${config.minecraft.version}-${config.forge.version}"
-    mappings = "${config.minecraft.mappings}"
-    useDepAts = true
-    makeObfSourceJar = false
-    replace("BDLIB_VER", config.bdlib.version)
-    replace("GENERATORS_VER", simpleVersion.toString())
+    mappings channel: 'official', version: config.minecraft.version
+    runs {
+        client {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+            mods {
+                register(config.mod.id) {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        server {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+            mods {
+                register(config.mod.id) {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        data {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+            args '--mod', config.mod.id, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+            mods {
+                register(config.mod.id) {
+                    source sourceSets.main
+                }
+            }
+        }
+    }
+}
+
+sourceSets.main.resources {
+    srcDir 'src/generated/resources'
+    exclude '**/*.psd'
 }
 
 repositories {
-    mavenCentral()
     maven {
         name = "bdew"
         url = "https://jenkins.bdew.net/maven"
     }
     maven {
-        name "HWYLA"
-        url "http://tehnut.info/maven"
+        name = "Azure-SLP"
+        url = uri("https://pkgs.dev.azure.com/Kotori316/minecraft/_packaging/mods/maven/v1")
+        content {
+            includeModule("com.kotori316", "ScalableCatsForce".toLowerCase())
+        }
     }
     maven {
-        name "JEI"
-        url "http://dvs1.progwml6.com/files/maven"
+        name = "ModMaven"
+        url = "https://modmaven.dev"
     }
-    maven {
-        name = "ic2"
-        url = "http://maven.ic2.player.to/"
-    }
-    maven {
-        name = "tesla"
-        url = "http://maven.epoxide.xyz"
-    }
-    maven {
-        name "OpenComputers"
-        url "http://maven.cil.li/"
-    }
-    maven {
-        name = "CoFH Maven"
-        url = "http://maven.covers1624.net"
+    repositories.stream().filter { it instanceof MavenArtifactRepository }.forEach { repo ->
+        repo.content {
+            excludeVersionByRegex(".*", ".*", ".*_mapped_snapshot_.*")
+        }
     }
 }
 
 dependencies {
-    compile "net.bdew:bdlib:${config.bdlib.version}-mc${config.minecraft.version}:dev"
-    compile "net.bdew:pressure:${config.pressure.version}-mc${config.minecraft.version}:api"
+    minecraft(group: 'net.minecraftforge', name: 'forge', version: "${config.minecraft.version}-${config.forge.version}")
 
-    deobfCompile "mezz.jei:jei_${config.minecraft.version}:${config.jei.version}"
-    deobfCompile "mcp.mobius.waila:Hwyla:${config.hwyla.version}"
+    implementation(group: 'org.scala-lang', name: 'scala-library', version: config.scala.version)
+    implementation(group: 'com.kotori316', name: 'ScalableCatsForce'.toLowerCase(Locale.ROOT), version: config.slp.version, classifier: 'dev')
 
-    deobfCompile "cofh:RedstoneFlux:${config.rfapi.version}:universal"
-    compile "net.industrial-craft:industrialcraft-2:${config.ic2.version}:api"
-    compile "net.darkhax.tesla:Tesla-${config.tesla.version}"
+    compileOnly fg.deobf("net.bdew:bdlib:${config.bdlib.version}-mc${config.minecraft.version}")
 
-    compile "net.bdew.thirdparty:mekanism:${config.mekanism.version}:api"
-
-    // compile "net.bdew.thirdparty:computercraft:${config.computercraft.version}-mc${config.minecraft.version}:api"
-    compile "li.cil.oc:OpenComputers:${config.opencomputers.version}:api"
+    compileOnly fg.deobf("mezz.jei:jei-${config.minecraft.version}:${config.jei.version}:api")
+    compileOnly "mekanism:Mekanism:${config.mekanism.version}:api"
 }
-
-import org.apache.tools.ant.filters.ReplaceTokens
-
-sourceSets {
-    main {
-        scala {
-            srcDir 'src'
-        }
-        resources {
-            srcDir 'resources'
-        }
-    }
-}
-
-processResources {
-    inputs.property "tokens", minecraft.replacements
-    from(sourceSets.main.resources.srcDirs) {
-        include 'mcmod.info'
-        filter(ReplaceTokens, tokens: minecraft.replacements)
-    }
-
-    from(sourceSets.main.resources.srcDirs) {
-        exclude 'mcmod.info'
-    }
-}
-
-task sourceJarReal(type: Jar) {
-    classifier "sources"
-}
-
-task deobfJar(type: Jar) {
-    from sourceSets.main.output
-    classifier "dev"
-    exclude "**/*.psd"
-    duplicatesStrategy "exclude"
-}
-
 
 jar {
-    exclude "**/*.psd"
+    manifest {
+        attributes([
+                "Specification-Title"     : config.mod.id,
+                "Specification-Vendor"    : "bdew",
+                "Specification-Version"   : "1",
+                "Implementation-Title"    : project.name,
+                "Implementation-Version"  : simpleVersion,
+                "Implementation-Vendor"   : "bdew",
+                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+        ])
+    }
 }
 
-afterEvaluate { project ->
-    // Fudge the inputs of api/source jars so we get the version after replacements
-    tasks.getByPath(":sourceJarReal").from(tasks.getByPath(":sourceMainScala").outputs.files)
-}
-
-artifacts {
-    archives sourceJarReal
-    archives deobfJar
-}
-
-apply plugin: 'maven-publish'
+jar.finalizedBy('reobfJar')
 
 publishing {
     publications {
         maven(MavenPublication) {
-            artifact deobfJar
-            artifact sourceJarReal
+            artifact jar
         }
     }
     repositories {
@@ -182,26 +153,17 @@ curseforge {
         changelog = project.hasProperty("changelog") ? project.changelog : "No changelog available"
 
         addGameVersion config.minecraft.version
-        addGameVersion "1.12"
-        addGameVersion "1.12.1"
 
         mainArtifact(jar) {
             displayName = "Advanced Generators ${simpleVersion} (MC ${config.minecraft.version})"
         }
 
-        addArtifact(deobfJar) {
-            displayName = "Advanced Generators ${simpleVersion} Deobfuscated (MC ${config.minecraft.version})"
-        }
-
-        addArtifact(sourceJarReal) {
-            displayName = "Advanced Generators ${simpleVersion} Source (MC ${config.minecraft.version})"
-        }
-
         relations {
-            requiredLibrary 'bdlib'
-            optionalLibrary 'waila'
-            optionalLibrary 'jei'
-            optionalLibrary 'tesla'
+            requiredDependency 'scalable-cats-force'
+            requiredDependency 'bdlib'
+            optionalDependency 'jei'
+            optionalDependency 'mekanism'
+            optionalDependency 'thermal-expansion'
         }
     }
 }

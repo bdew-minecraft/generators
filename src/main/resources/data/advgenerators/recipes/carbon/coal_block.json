@@ -1,0 +1,12 @@
+{
+  "type": "advgenerators:carbon_source",
+  "items": [
+    {
+      "tag": "forge:storage_blocks/charcoal"
+    },
+    {
+      "tag": "forge:storage_blocks/coal"
+    }
+  ],
+  "carbonValue": 14400
+}

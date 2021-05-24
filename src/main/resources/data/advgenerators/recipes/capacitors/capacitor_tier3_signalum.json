@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "forge:tag_empty",
+        "tag": "forge:ingots/signalum"
+      }
+    }
+  ],
+  "pattern": [
+    "IDI",
+    "IXI",
+    "IDI"
+  ],
+  "key": {
+    "X": {
+      "item": "advgenerators:power_capacitor_tier2"
+    },
+    "I": {
+      "tag": "forge:ingots/signalum"
+    },
+    "D": {
+      "tag": "forge:gems/diamond"
+    }
+  },
+  "result": {
+    "item": "advgenerators:power_capacitor_tier3"
+  }
+}
