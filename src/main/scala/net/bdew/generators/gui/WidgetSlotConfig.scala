@@ -6,7 +6,7 @@ import net.bdew.lib.gui._
 import net.bdew.lib.gui.widgets.{WidgetButtonIcon, WidgetSubContainer}
 import net.bdew.lib.multiblock.data.OutputConfigSlots
 import net.bdew.lib.multiblock.interact.CIOutputFaces
-import net.bdew.lib.multiblock.network.{MsgOutputCfg, MsgOutputCfgSlot, MultiblockNetHandler}
+import net.bdew.lib.multiblock.network.{MsgOutputCfgSlot, MultiblockNetHandler}
 import net.minecraft.util.text.ITextComponent
 
 import scala.collection.mutable.ArrayBuffer
@@ -37,6 +37,6 @@ class WidgetSlotConfig(te: CIOutputFaces, output: Int, p: Point) extends WidgetS
 
   def clicked(b: WidgetButtonIcon): Unit = {
     if (cfg.slotsDef.slotMap.size > 1)
-      MultiblockNetHandler.sendToServer(MsgOutputCfg(output, MsgOutputCfgSlot(cfg.slot.next.id)))
+      MultiblockNetHandler.sendToServer(MsgOutputCfgSlot(output, cfg.slot.next.id))
   }
 }
