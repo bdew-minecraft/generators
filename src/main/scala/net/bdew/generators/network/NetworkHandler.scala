@@ -1,9 +1,10 @@
 package net.bdew.generators.network
 
+import net.bdew.generators.Generators
 import net.bdew.lib.network.NetChannel
 import net.minecraft.network.PacketBuffer
 
-object NetworkHandler extends NetChannel("generators", "2") {
+object NetworkHandler extends NetChannel(Generators.ModId, "generators", "2") {
   regServerContainerHandler(1, CodecDumpBuffers, classOf[ContainerCanDumpBuffers]) { (_, c, _) =>
     c.dumpBuffers()
   }
