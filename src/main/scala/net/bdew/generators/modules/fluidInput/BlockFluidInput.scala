@@ -17,7 +17,7 @@ class BlockFluidInput extends BaseModule[TileFluidInput](Modules.fluidInput) {
     if (!world.isClientSide) {
       val item = player.getItemInHand(hand)
       if (!item.isEmpty) {
-        val didSomething = item.getCapability(Capabilities.CAP_FLUID_HANDLER_ITEM).map[Boolean](cap => {
+        val didSomething = item.copy().getCapability(Capabilities.CAP_FLUID_HANDLER_ITEM).map[Boolean](cap => {
           val fluid = cap.drain(Int.MaxValue, FluidAction.SIMULATE)
           if (!fluid.isEmpty) {
             val moved = getTE(world, pos).getCapability(Capabilities.CAP_FLUID_HANDLER).map[FluidStack](ourCap => {
@@ -27,7 +27,8 @@ class BlockFluidInput extends BaseModule[TileFluidInput](Modules.fluidInput) {
               false
             } else {
               world.playSound(null, pos, SoundEvents.BUCKET_EMPTY, player.getSoundSource, 1, 1)
-              player.setItemInHand(hand, cap.getContainer)
+              if (!player.isCreative)
+                player.setItemInHand(hand, cap.getContainer)
               true
             }
           } else false

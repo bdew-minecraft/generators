@@ -20,5 +20,5 @@ object Generators {
   Containers.init()
   NetworkHandler.init()
 
-  FMLJavaModLoadingContext.get().getModEventBus.addListener(DataGeneration.foo)
+  FMLJavaModLoadingContext.get().getModEventBus.addListener(DataGeneration.onGatherData)
 }
