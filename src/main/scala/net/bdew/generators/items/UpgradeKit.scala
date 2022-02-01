@@ -5,16 +5,18 @@ import net.bdew.generators.recipes.UpgradeRecipe
 import net.bdew.generators.registries.{Items, Recipes}
 import net.bdew.lib.PimpVanilla.pimpBlockReader
 import net.bdew.lib.multiblock.tile.TileController
-import net.minecraft.item.{Item, ItemStack, ItemUseContext}
-import net.minecraft.util.math.BlockPos
-import net.minecraft.util.{ActionResultType, SoundEvents}
-import net.minecraft.world.World
+import net.minecraft.core.BlockPos
+import net.minecraft.sounds.SoundEvents
+import net.minecraft.world.InteractionResult
+import net.minecraft.world.item.{Item, ItemStack}
+import net.minecraft.world.item.context.UseOnContext
+import net.minecraft.world.level.Level
 import org.apache.logging.log4j.{LogManager, Logger}
 
 class UpgradeKit extends Item(Items.upgradeKitProps) {
   val log: Logger = LogManager.getLogger
 
-  def findCore(pos: BlockPos, world: World): Option[TileController] = {
+  def findCore(pos: BlockPos, world: Level): Option[TileController] = {
     world.getBlockState(pos).getBlock match {
       case x: BaseModule[_] => x.getTE(world, pos).getCore
       case x: BaseController[_] => Some(x.getTE(world, pos))
@@ -22,7 +24,7 @@ class UpgradeKit extends Item(Items.upgradeKitProps) {
     }
   }
 
-  def findBlockToUpgrade(pos: BlockPos, world: World, recipe: UpgradeRecipe): Option[BlockPos] = {
+  def findBlockToUpgrade(pos: BlockPos, world: Level, recipe: UpgradeRecipe): Option[BlockPos] = {
     if (world.getBlockState(pos).getBlock == recipe.from)
       Some(pos)
     else
@@ -30,20 +32,20 @@ class UpgradeKit extends Item(Items.upgradeKitProps) {
   }
 
 
-  override def onItemUseFirst(stack: ItemStack, ctx: ItemUseContext): ActionResultType = {
+  override def onItemUseFirst(stack: ItemStack, ctx: UseOnContext): InteractionResult = {
     val pos = ctx.getClickedPos
     val world = ctx.getLevel
 
-    if (ctx.getPlayer.isCrouching) return ActionResultType.PASS
+    if (ctx.getPlayer.isCrouching) return InteractionResult.PASS
 
     val recipe = Recipes.upgradeType.getAllRecipes(world.getRecipeManager).find(_.item == this).getOrElse({
       log.warn(s"No upgrade recipe found for $getRegistryName")
-      return ActionResultType.FAIL
+      return InteractionResult.FAIL
     })
 
-    val target = findBlockToUpgrade(pos, world, recipe).getOrElse(return ActionResultType.PASS)
+    val target = findBlockToUpgrade(pos, world, recipe).getOrElse(return InteractionResult.PASS)
 
-    if (world.isClientSide) return ActionResultType.SUCCESS
+    if (world.isClientSide) return InteractionResult.SUCCESS
 
     val oldTile = recipe.from.getTE(world, target)
     val oldConnected = oldTile.connected.value
@@ -61,10 +63,10 @@ class UpgradeKit extends Item(Items.upgradeKitProps) {
 
     world.playSound(null, pos, SoundEvents.METAL_PLACE, ctx.getPlayer.getSoundSource, 1, 1)
 
-    if (!ctx.getPlayer.abilities.instabuild) {
+    if (!ctx.getPlayer.getAbilities.instabuild) {
       stack.shrink(1)
     }
 
-    ActionResultType.CONSUME
+    InteractionResult.CONSUME
   }
 }

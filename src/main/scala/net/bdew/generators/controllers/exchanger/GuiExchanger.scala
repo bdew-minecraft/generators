@@ -8,10 +8,10 @@ import net.bdew.lib.gui.widgets.{WidgetButtonIcon, WidgetLabel}
 import net.bdew.lib.multiblock.gui.WidgetInfo
 import net.bdew.lib.resource.{FluidResource, ResourceKind}
 import net.bdew.lib.{Client, Text}
-import net.minecraft.entity.player.PlayerInventory
-import net.minecraft.util.text.ITextComponent
+import net.minecraft.network.chat.Component
+import net.minecraft.world.entity.player.Inventory
 
-class GuiExchanger(container: ContainerExchanger, playerInv: PlayerInventory) extends BaseScreen(container, playerInv, container.te.getDisplayName) {
+class GuiExchanger(container: ContainerExchanger, playerInv: Inventory) extends BaseScreen(container, playerInv, container.te.getDisplayName) {
   val te: TileExchangerController = container.te
   val background: Texture = Texture(Generators.ModId, "textures/gui/exchanger.png", Rect(0, 0, 176, 175))
 
@@ -24,12 +24,12 @@ class GuiExchanger(container: ContainerExchanger, playerInv: PlayerInventory) ex
 
     widgets.add(new WidgetButtonIcon(Point(153, 19), openCfg, Textures.Button16.base, Textures.Button16.hover) {
       override val icon: Texture = Textures.Button16.wrench
-      override val hover: ITextComponent = Text.translate("advgenerators.gui.output.title")
+      override val hover: Component = Text.translate("advgenerators.gui.output.title")
     })
 
     widgets.add(new WidgetButtonIcon(Point(153, 61), _ => NetworkHandler.sendToServer(PktDumpBuffers()), Textures.Button16.base, Textures.Button16.red) {
       override val icon: Texture = Textures.Button16.disabled
-      override val hover: ITextComponent = Text.translate("advgenerators.gui.dump")
+      override val hover: Component = Text.translate("advgenerators.gui.dump")
     })
 
     widgets.add(new WidgetLabel(title, 8, 6, Color.darkGray))
@@ -64,7 +64,7 @@ class GuiExchanger(container: ContainerExchanger, playerInv: PlayerInventory) ex
     ))
   }
 
-  def formatFlowRate(r: Option[ResourceKind], v: Double): ITextComponent = r match {
+  def formatFlowRate(r: Option[ResourceKind], v: Double): Component = r match {
     case Some(FluidResource(_)) =>
       Text.fluidPerTick(v)
     case Some(_) =>

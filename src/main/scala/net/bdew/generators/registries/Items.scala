@@ -2,10 +2,10 @@ package net.bdew.generators.registries
 
 import net.bdew.generators.items.UpgradeKit
 import net.bdew.lib.managers.ItemManager
-import net.minecraft.item.{Item, ItemGroup, ItemStack}
-import net.minecraftforge.fml.RegistryObject
+import net.minecraft.world.item.{CreativeModeTab, Item, ItemStack}
+import net.minecraftforge.registries.RegistryObject
 
-object CreativeTab extends ItemGroup("bdew.generators") {
+object CreativeTab extends CreativeModeTab("bdew.generators") {
   override def makeIcon(): ItemStack = new ItemStack(Machines.controllerFuelTurbine.item.get())
 }
 

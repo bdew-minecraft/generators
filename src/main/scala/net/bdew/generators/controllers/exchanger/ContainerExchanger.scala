@@ -5,9 +5,9 @@ import net.bdew.generators.registries.Containers
 import net.bdew.lib.container.NoInvContainer
 import net.bdew.lib.data.base.ContainerDataSlots
 import net.bdew.lib.multiblock.interact.ContainerOutputFaces
-import net.minecraft.entity.player.PlayerInventory
+import net.minecraft.world.entity.player.Inventory
 
-class ContainerExchanger(val te: TileExchangerController, playerInventory: PlayerInventory, id: Int)
+class ContainerExchanger(val te: TileExchangerController, playerInventory: Inventory, id: Int)
   extends NoInvContainer(Containers.exchanger.get(), id) with ContainerDataSlots with ContainerOutputFaces with ContainerCanDumpBuffers {
   lazy val dataSource: TileExchangerController = te
 

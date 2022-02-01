@@ -7,13 +7,13 @@ import net.bdew.lib.gui._
 import net.bdew.lib.gui.widgets.WidgetLabel
 import net.bdew.lib.multiblock.interact.CIOutputFaces
 import net.bdew.lib.{Client, Text}
-import net.minecraft.entity.player.{PlayerEntity, PlayerInventory}
+import net.minecraft.world.entity.player.{Inventory, Player}
 
 class ContainerOutputConfig extends NoInvContainer(Containers.outputConfig.get(), -1) {
-  override def stillValid(player: PlayerEntity): Boolean = true
+  override def stillValid(player: Player): Boolean = true
 }
 
-class GuiOutputConfig(parent: BaseScreen[_], te: CIOutputFaces, pi: PlayerInventory) extends BaseScreen(new ContainerOutputConfig, pi, Text.translate("advgenerators.gui.output.title")) {
+class GuiOutputConfig(parent: BaseScreen[_], te: CIOutputFaces, pi: Inventory) extends BaseScreen(new ContainerOutputConfig, pi, Text.translate("advgenerators.gui.output.title")) {
   override val background: Sprite = Texture(Generators.ModId, "textures/gui/outputs.png", Rect(0, 0, 124, 138))
 
   override def init(): Unit = {

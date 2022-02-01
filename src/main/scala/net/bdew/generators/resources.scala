@@ -3,8 +3,8 @@ package net.bdew.generators
 import net.bdew.lib.Text
 import net.bdew.lib.gui.{Color, ScaledResourceLocation, Sprite, Texture}
 import net.bdew.lib.multiblock.ResourceProvider
-import net.minecraft.util.ResourceLocation
-import net.minecraft.util.text.IFormattableTextComponent
+import net.minecraft.network.chat.MutableComponent
+import net.minecraft.resources.ResourceLocation
 
 object Textures {
   val sheet = new ScaledResourceLocation(Generators.ModId, "textures/gui/widgets.png")
@@ -65,6 +65,6 @@ object GeneratorsResourceProvider extends ResourceProvider {
   )
   override val unlocalizedOutputName: Map[Int, String] = (outputColors.keys map (n => n -> "advgenerators.output.%d".format(n))).toMap
 
-  override def getModuleName(s: String): IFormattableTextComponent = Text.translate("advgenerators.module." + s + ".name")
-  override def getMachineName(s: String): IFormattableTextComponent = Text.translate("block.advgenerators." + s)
+  override def getModuleName(s: String): MutableComponent = Text.translate("advgenerators.module." + s + ".name")
+  override def getMachineName(s: String): MutableComponent = Text.translate("block.advgenerators." + s)
 }

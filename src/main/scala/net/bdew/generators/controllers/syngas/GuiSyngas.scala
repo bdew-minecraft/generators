@@ -1,6 +1,6 @@
 package net.bdew.generators.controllers.syngas
 
-import com.mojang.blaze3d.matrix.MatrixStack
+import com.mojang.blaze3d.vertex.PoseStack
 import net.bdew.generators.gui.{GuiOutputConfig, WidgetFillDataSlotTooltip}
 import net.bdew.generators.network.{NetworkHandler, PktDumpBuffers}
 import net.bdew.generators.registries.Fluids
@@ -10,12 +10,12 @@ import net.bdew.lib.gui._
 import net.bdew.lib.gui.widgets.{WidgetButtonIcon, WidgetFluidGauge, WidgetLabel}
 import net.bdew.lib.multiblock.gui.WidgetInfo
 import net.bdew.lib.{Client, DecFormat, Text}
-import net.minecraft.entity.player.PlayerInventory
-import net.minecraft.util.text.ITextComponent
+import net.minecraft.network.chat.Component
+import net.minecraft.world.entity.player.Inventory
 
 import scala.collection.mutable.ArrayBuffer
 
-class GuiSyngas(container: ContainerSyngas, playerInv: PlayerInventory) extends BaseScreen(container, playerInv, container.te.getDisplayName) {
+class GuiSyngas(container: ContainerSyngas, playerInv: Inventory) extends BaseScreen(container, playerInv, container.te.getDisplayName) {
   val te: TileSyngasController = container.te
 
   val background: Texture = Texture(Generators.ModId, "textures/gui/syngas.png", Rect(0, 0, 176, 175))
@@ -46,14 +46,14 @@ class GuiSyngas(container: ContainerSyngas, playerInv: PlayerInventory) extends 
       Rect(9, 62, 14, 14), Textures.Icons.fire, Direction.UP, te.heat, te.cfg.maxHeat(),
       List(Text.translate("advgenerators.label.syngas.heat", DecFormat.round(te.heat), DecFormat.round(te.cfg.maxHeat())))
     ) {
-      override def handleTooltip(p: Point, tip: ArrayBuffer[ITextComponent]): Unit = {
+      override def handleTooltip(p: Point, tip: ArrayBuffer[Component]): Unit = {
         if (te.heatingChambers > 0)
           super.handleTooltip(p, tip)
         else
           tip += Text.translate("advgenerators.label.syngas.heat.disabled").setColor(Text.Color.RED)
       }
 
-      override def draw(m: MatrixStack, mouse: Point, partial: Float): Unit = {
+      override def draw(m: PoseStack, mouse: Point, partial: Float): Unit = {
         if (te.heatingChambers > 0)
           super.draw(m, mouse, partial)
         else
@@ -63,13 +63,13 @@ class GuiSyngas(container: ContainerSyngas, playerInv: PlayerInventory) extends 
 
     widgets.add(new WidgetButtonIcon(Point(153, 19), openCfg, Textures.Button16.base, Textures.Button16.hover) {
       override val icon: Texture = Textures.Button16.wrench
-      override val hover: ITextComponent = Text.translate("advgenerators.gui.output.title")
+      override val hover: Component = Text.translate("advgenerators.gui.output.title")
     })
 
     widgets.add(new WidgetButtonIcon(Point(153, 61), _ => NetworkHandler.sendToServer(PktDumpBuffers()),
       Textures.Button16.base, Textures.Button16.red) {
       override val icon: Texture = Textures.Button16.disabled
-      override val hover: ITextComponent = Text.translate("advgenerators.gui.dump")
+      override val hover: Component = Text.translate("advgenerators.gui.dump")
     })
 
     widgets.add(new WidgetLabel(title, 8, 6, Color.darkGray))

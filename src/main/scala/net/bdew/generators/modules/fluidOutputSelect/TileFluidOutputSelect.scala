@@ -10,13 +10,14 @@ import net.bdew.lib.multiblock.data.OutputConfigFluidSlots
 import net.bdew.lib.multiblock.interact.CIFluidOutputSelect
 import net.bdew.lib.multiblock.misc.TileForcedOutput
 import net.bdew.lib.multiblock.tile.{RSControllableOutput, TileOutput, TileOutputTracker}
-import net.minecraft.tileentity.TileEntityType
-import net.minecraft.util.Direction
+import net.minecraft.core.{BlockPos, Direction}
+import net.minecraft.world.level.block.entity.BlockEntityType
+import net.minecraft.world.level.block.state.BlockState
 import net.minecraftforge.common.capabilities.Capability
 import net.minecraftforge.common.util.LazyOptional
 import net.minecraftforge.fluids.capability.IFluidHandler
 
-class TileFluidOutputSelect(teType: TileEntityType[_]) extends TileOutput[OutputConfigFluidSlots](teType) with TileForcedOutput with RSControllableOutput {
+class TileFluidOutputSelect(teType: BlockEntityType[_], pos: BlockPos, state: BlockState) extends TileOutput[OutputConfigFluidSlots](teType, pos, state) with TileForcedOutput with RSControllableOutput {
   override val kind: ModuleType = Modules.fluidOutput
 
   override def getCore: Option[CIFluidOutputSelect] = getCoreAs[CIFluidOutputSelect]

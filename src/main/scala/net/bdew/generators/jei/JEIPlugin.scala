@@ -7,9 +7,9 @@ import net.bdew.generators.Generators
 import net.bdew.generators.registries.{Items, Machines}
 import net.bdew.lib.Client
 import net.bdew.lib.gui.{DrawTarget, SimpleDrawTarget}
-import net.minecraft.client.gui.FontRenderer
-import net.minecraft.item.ItemStack
-import net.minecraft.util.ResourceLocation
+import net.minecraft.client.gui.Font
+import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.item.ItemStack
 
 
 @JeiPlugin
@@ -52,6 +52,6 @@ object JEIPlugin {
   def guiHelper: IGuiHelper = helpers.getGuiHelper
   val drawTarget: DrawTarget = new SimpleDrawTarget {
     override def getZLevel: Float = 0
-    override def getFontRenderer: FontRenderer = Client.fontRenderer
+    override def getFontRenderer: Font = Client.fontRenderer
   }
 }

@@ -4,14 +4,14 @@ import net.bdew.generators.controllers.turbine.TileFuelTurbineController
 import net.bdew.generators.sensor.{CastSensor, Icons, Sensors}
 import net.bdew.lib.Text
 import net.bdew.lib.sensors.GenericSensorParameter
-import net.minecraft.tileentity.TileEntity
-import net.minecraft.util.text.ITextComponent
+import net.minecraft.network.chat.Component
+import net.minecraft.world.level.block.entity.BlockEntity
 
 object SensorGeneration extends CastSensor[TileFuelTurbineController] with Icons.Loader {
   override def iconName = "turbine"
   override def uid = "turbine.generation"
 
-  case class GenerationParameter(uid: String, iconName: String, test: Double => Boolean, display: TileFuelTurbineController => ITextComponent) extends Sensors.SimpleParameter with Icons.Loader
+  case class GenerationParameter(uid: String, iconName: String, test: Double => Boolean, display: TileFuelTurbineController => Component) extends Sensors.SimpleParameter with Icons.Loader
 
   override val parameters = Vector(
     GenerationParameter("turbine.generation.stop", "turbineStop", _ <= 0, x => Text.energyPerTick(0)),
@@ -26,7 +26,7 @@ object SensorGeneration extends CastSensor[TileFuelTurbineController] with Icons
     case _ => false
   }
 
-  override def getParamTooltip(obj: TileEntity, param: GenericSensorParameter): List[ITextComponent] = (obj, param) match {
+  override def getParamTooltip(obj: BlockEntity, param: GenericSensorParameter): List[Component] = (obj, param) match {
     case (te: TileFuelTurbineController, x: GenerationParameter) =>
       List(Text.translate("advgenerators.sensor.param." + param.uid, x.display(te)))
     case _ => super.getParamTooltip(obj, param)

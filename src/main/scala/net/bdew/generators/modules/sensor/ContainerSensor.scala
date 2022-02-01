@@ -6,9 +6,9 @@ import net.bdew.lib.container.NoInvContainer
 import net.bdew.lib.data.base.{ContainerDataSlots, TileDataSlots}
 import net.bdew.lib.inventory.SimpleInventory
 import net.bdew.lib.sensors._
-import net.minecraft.entity.player.PlayerInventory
+import net.minecraft.world.entity.player.Inventory
 
-class ContainerSensor(val te: TileSensor, playerInventory: PlayerInventory, id: Int)
+class ContainerSensor(val te: TileSensor, playerInventory: Inventory, id: Int)
   extends NoInvContainer(Containers.sensor.get(), id) with ContainerDataSlots {
 
   lazy val dataSource: TileDataSlots = te

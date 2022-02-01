@@ -8,43 +8,43 @@ import net.bdew.generators.gui.ContainerOutputConfig
 import net.bdew.generators.modules.control.{ContainerControl, GuiControl}
 import net.bdew.generators.modules.sensor.{ContainerSensor, GuiSensor}
 import net.bdew.lib.managers.ContainerManager
-import net.minecraft.inventory.container.ContainerType
+import net.minecraft.world.inventory.MenuType
 import net.minecraftforge.api.distmarker.{Dist, OnlyIn}
-import net.minecraftforge.fml.RegistryObject
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent
+import net.minecraftforge.registries.RegistryObject
 
 object Containers extends ContainerManager {
-  val fuelTurbine: RegistryObject[ContainerType[ContainerFuelTurbine]] =
+  val fuelTurbine: RegistryObject[MenuType[ContainerFuelTurbine]] =
     registerPositional("fuel_turbine", Machines.controllerFuelTurbine.teType) {
       (id, inv, te) => new ContainerFuelTurbine(te, inv, id)
     }
 
-  val steamTurbine: RegistryObject[ContainerType[ContainerSteamTurbine]] =
+  val steamTurbine: RegistryObject[MenuType[ContainerSteamTurbine]] =
     registerPositional("steam_trubine", Machines.controllerSteamTurbine.teType) {
       (id, inv, te) => new ContainerSteamTurbine(te, inv, id)
     }
 
-  val syngas: RegistryObject[ContainerType[ContainerSyngas]] =
+  val syngas: RegistryObject[MenuType[ContainerSyngas]] =
     registerPositional("syngas", Machines.controllerSyngas.teType) {
       (id, inv, te) => new ContainerSyngas(te, inv, id)
     }
 
-  val exchanger: RegistryObject[ContainerType[ContainerExchanger]] =
+  val exchanger: RegistryObject[MenuType[ContainerExchanger]] =
     registerPositional("exchanger", Machines.controllerExchanger.teType) {
       (id, inv, te) => new ContainerExchanger(te, inv, id)
     }
 
-  val control: RegistryObject[ContainerType[ContainerControl]] =
+  val control: RegistryObject[MenuType[ContainerControl]] =
     registerPositional("control", Machines.moduleControl.teType) {
       (id, inv, te) => new ContainerControl(te, inv, id)
     }
 
-  val sensor: RegistryObject[ContainerType[ContainerSensor]] =
+  val sensor: RegistryObject[MenuType[ContainerSensor]] =
     registerPositional("sensor", Machines.moduleSensor.teType) {
       (id, inv, te) => new ContainerSensor(te, inv, id)
     }
 
-  val outputConfig: RegistryObject[ContainerType[ContainerOutputConfig]] =
+  val outputConfig: RegistryObject[MenuType[ContainerOutputConfig]] =
     registerSimple("output_config") { (_, _, _) => new ContainerOutputConfig() }
 
   @OnlyIn(Dist.CLIENT)

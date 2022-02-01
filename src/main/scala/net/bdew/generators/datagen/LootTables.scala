@@ -4,8 +4,8 @@ import net.bdew.generators.Generators
 import net.bdew.generators.registries.Blocks
 import net.bdew.lib.datagen.LootTableGenerator
 import net.minecraft.data.DataGenerator
-import net.minecraft.loot.LootTable
-import net.minecraft.util.ResourceLocation
+import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.level.storage.loot.LootTable
 
 class LootTables(gen: DataGenerator) extends LootTableGenerator(gen, Generators.ModId) {
   override def makeTables(): Map[ResourceLocation, LootTable] = {

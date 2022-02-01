@@ -2,8 +2,8 @@ package net.bdew.generators
 
 import net.bdew.generators.registries.{Blocks, Fluids}
 import net.bdew.lib.multiblock.render.MultiblockRenderHelper
-import net.minecraft.client.renderer.{RenderType, RenderTypeLookup}
-import net.minecraft.util.ResourceLocation
+import net.minecraft.client.renderer.{ItemBlockRenderTypes, RenderType}
+import net.minecraft.resources.ResourceLocation
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.client.event.ModelRegistryEvent
 import net.minecraftforge.client.model.ModelLoaderRegistry
@@ -27,8 +27,8 @@ object ClientHandler {
     ev.enqueueWork(new Runnable {
       override def run(): Unit = {
         MultiblockRenderHelper.setup(Blocks.all.map(_.get()), GeneratorsResourceProvider)
-        RenderTypeLookup.setRenderLayer(Fluids.syngas.source.get(), RenderType.translucent())
-        RenderTypeLookup.setRenderLayer(Fluids.syngas.flowing.get(), RenderType.translucent())
+        ItemBlockRenderTypes.setRenderLayer(Fluids.syngas.source.get(), RenderType.translucent())
+        ItemBlockRenderTypes.setRenderLayer(Fluids.syngas.flowing.get(), RenderType.translucent())
       }
     })
   }

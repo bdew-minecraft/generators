@@ -3,8 +3,7 @@ package net.bdew.generators.registries
 import net.bdew.generators.recipes._
 import net.bdew.lib.managers.RegistryManager
 import net.bdew.lib.recipes.MachineRecipeType
-import net.minecraftforge.fml.RegistryObject
-import net.minecraftforge.registries.ForgeRegistries
+import net.minecraftforge.registries.{ForgeRegistries, RegistryObject}
 
 object Recipes extends RegistryManager(ForgeRegistries.RECIPE_SERIALIZERS) {
   val liquidFuelSerializer: RegistryObject[LiquidFuelRecipeSerializer] = register("liquid_fuel", () => new LiquidFuelRecipeSerializer)

@@ -3,8 +3,8 @@ package net.bdew.generators.config
 import net.bdew.generators.recipes.LiquidFuelRecipe
 import net.bdew.generators.registries.Recipes
 import net.bdew.lib.recipes.RecipeReloadListener
-import net.minecraft.fluid.Fluid
-import net.minecraft.item.crafting.RecipeManager
+import net.minecraft.world.item.crafting.RecipeManager
+import net.minecraft.world.level.material.Fluid
 import net.minecraftforge.fluids.FluidStack
 
 object TurbineFuelRegistry {

@@ -1,6 +1,6 @@
 package net.bdew.generators.jei
 
-import com.mojang.blaze3d.matrix.MatrixStack
+import com.mojang.blaze3d.vertex.PoseStack
 import mezz.jei.api.constants.VanillaTypes
 import mezz.jei.api.gui.IRecipeLayout
 import mezz.jei.api.gui.drawable.{IDrawable, IDrawableStatic}
@@ -13,9 +13,9 @@ import net.bdew.generators.recipes.CarbonSourceRecipe
 import net.bdew.generators.registries.{Fluids, Machines, Recipes}
 import net.bdew.lib.Text
 import net.bdew.lib.recipes.RecipeReloadListener
-import net.minecraft.item.ItemStack
-import net.minecraft.util.ResourceLocation
-import net.minecraft.util.text.ITextComponent
+import net.minecraft.network.chat.Component
+import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.item.ItemStack
 import net.minecraftforge.fluids.FluidStack
 
 import java.util
@@ -38,8 +38,7 @@ object SyngasRecipeCategory extends IRecipeCategory[CarbonSourceRecipe] {
 
   override def getRecipeClass: Class[_ <: CarbonSourceRecipe] = classOf[CarbonSourceRecipe]
 
-  override def getTitle: String = null
-  override def getTitleAsTextComponent: ITextComponent = Text.translate("advgenerators.recipe.syngas_conversion")
+  override def getTitle: Component = Text.translate("advgenerators.recipe.syngas_conversion")
 
   override def getBackground: IDrawable =
     JEIPlugin.guiHelper.createDrawable(
@@ -47,8 +46,8 @@ object SyngasRecipeCategory extends IRecipeCategory[CarbonSourceRecipe] {
       0, 0, 164, 56
     )
 
-  override def getIcon: IDrawable =
-    JEIPlugin.guiHelper.createDrawableIngredient(new ItemStack(Machines.controllerSyngas.item.get()))
+  override def getIcon: IDrawable = JEIPlugin.guiHelper.createDrawableIngredient(
+    VanillaTypes.ITEM, new ItemStack(Machines.controllerSyngas.item.get()))
 
   override def setIngredients(recipe: CarbonSourceRecipe, ingredients: IIngredients): Unit = {
     ingredients.setInputLists[ItemStack](VanillaTypes.ITEM,
@@ -64,7 +63,7 @@ object SyngasRecipeCategory extends IRecipeCategory[CarbonSourceRecipe] {
     recipeLayout.getFluidStacks.set(ingredients)
   }
 
-  override def draw(recipe: CarbonSourceRecipe, matrixStack: MatrixStack, mouseX: Double, mouseY: Double): Unit = {
+  override def draw(recipe: CarbonSourceRecipe, matrixStack: PoseStack, mouseX: Double, mouseY: Double): Unit = {
     super.draw(recipe, matrixStack, mouseX, mouseY)
     val fullHeight = 35
     var fillHeight = (fullHeight * recipe.carbonValue / maxCarbon).ceil.toInt
@@ -82,7 +81,7 @@ object SyngasRecipeCategory extends IRecipeCategory[CarbonSourceRecipe] {
     fluidOverlay.draw(matrixStack, 77, 11)
   }
 
-  override def getTooltipStrings(recipe: CarbonSourceRecipe, mouseX: Double, mouseY: Double): util.List[ITextComponent] = {
+  override def getTooltipStrings(recipe: CarbonSourceRecipe, mouseX: Double, mouseY: Double): util.List[Component] = {
     if (mouseX >= 77 && mouseX <= 87 && mouseY >= 11 && mouseY <= 46)
       util.Collections.singletonList(Text.amount(recipe.carbonValue, "carbon"))
     else

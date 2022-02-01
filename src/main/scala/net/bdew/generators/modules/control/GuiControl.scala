@@ -5,9 +5,9 @@ import net.bdew.generators.control.{WidgetControlAction, WidgetControlMode}
 import net.bdew.lib.Text
 import net.bdew.lib.gui._
 import net.bdew.lib.gui.widgets.WidgetLabel
-import net.minecraft.entity.player.PlayerInventory
+import net.minecraft.world.entity.player.Inventory
 
-class GuiControl(container: ContainerControl, playerInv: PlayerInventory)
+class GuiControl(container: ContainerControl, playerInv: Inventory)
   extends BaseScreen(container, playerInv, Text.translate("advgenerators.gui.control.title")) {
   val te: TileControl = container.te
   val background: Sprite = Texture(Generators.ModId, "textures/gui/control.png", Rect(0, 0, 176, 175))

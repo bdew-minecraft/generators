@@ -1,6 +1,6 @@
 package net.bdew.generators.jei
 
-import com.mojang.blaze3d.matrix.MatrixStack
+import com.mojang.blaze3d.vertex.PoseStack
 import mezz.jei.api.constants.VanillaTypes
 import mezz.jei.api.gui.IRecipeLayout
 import mezz.jei.api.gui.drawable.{IDrawable, IDrawableStatic}
@@ -13,9 +13,9 @@ import net.bdew.generators.registries.{Machines, Recipes}
 import net.bdew.lib.gui.Color
 import net.bdew.lib.recipes.{MixedIngredient, RecipeReloadListener, ResourceOutput}
 import net.bdew.lib.{Client, Text}
-import net.minecraft.item.ItemStack
-import net.minecraft.util.ResourceLocation
-import net.minecraft.util.text.ITextComponent
+import net.minecraft.network.chat.Component
+import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.item.ItemStack
 import net.minecraftforge.fluids.FluidStack
 
 import scala.jdk.CollectionConverters._
@@ -30,8 +30,7 @@ object ExchangerHeatingRecipeCategory extends IRecipeCategory[ExchangerRecipeHea
 
   override def getRecipeClass: Class[_ <: ExchangerRecipeHeating] = classOf[ExchangerRecipeHeating]
 
-  override def getTitle: String = null
-  override def getTitleAsTextComponent: ITextComponent = Text.translate("advgenerators.recipe.exchanger.heating")
+  override def getTitle: Component = Text.translate("advgenerators.recipe.exchanger.heating")
 
   override def getBackground: IDrawable =
     JEIPlugin.guiHelper.drawableBuilder(
@@ -39,7 +38,8 @@ object ExchangerHeatingRecipeCategory extends IRecipeCategory[ExchangerRecipeHea
       7, 17, 65, 62
     ).addPadding(0, 0, 50, 50).build()
 
-  override def getIcon: IDrawable = JEIPlugin.guiHelper.createDrawableIngredient(new ItemStack(Machines.controllerExchanger.item.get()))
+  override def getIcon: IDrawable = JEIPlugin.guiHelper.createDrawableIngredient(
+    VanillaTypes.ITEM, new ItemStack(Machines.controllerExchanger.item.get()))
 
   override def setIngredients(recipe: ExchangerRecipeHeating, ingredients: IIngredients): Unit = {
     val inAmt = recipe.input match {
@@ -88,7 +88,7 @@ object ExchangerHeatingRecipeCategory extends IRecipeCategory[ExchangerRecipeHea
     recipeLayout.getItemStacks.set(ingredients)
   }
 
-  override def draw(recipe: ExchangerRecipeHeating, matrixStack: MatrixStack, mouseX: Double, mouseY: Double): Unit = {
+  override def draw(recipe: ExchangerRecipeHeating, matrixStack: PoseStack, mouseX: Double, mouseY: Double): Unit = {
     super.draw(recipe, matrixStack, mouseX, mouseY)
     Client.fontRenderer.draw(matrixStack, Text.amount(1000 / recipe.inPerHU, "hu"), 118, 50, Color.darkGray.asRGB)
   }

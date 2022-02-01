@@ -4,9 +4,9 @@ import com.google.gson.{JsonObject, JsonSyntaxException}
 import net.bdew.generators.registries.Recipes
 import net.bdew.lib.recipes.{BaseMachineRecipe, BaseMachineRecipeSerializer, MixedIngredient, ResourceOutput}
 import net.bdew.lib.{JSDouble, JSObj}
-import net.minecraft.item.crafting.{IRecipeSerializer, IRecipeType}
-import net.minecraft.network.PacketBuffer
-import net.minecraft.util.ResourceLocation
+import net.minecraft.network.FriendlyByteBuf
+import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.item.crafting.{RecipeSerializer, RecipeType}
 
 abstract class ExchangerRecipeSerializer[T <: ExchangerRecipe] extends BaseMachineRecipeSerializer[T] {
   def recipeFactory(id: ResourceLocation, input: MixedIngredient, output: ResourceOutput, inPerHU: Double, outPerHU: Double): T
@@ -24,7 +24,7 @@ abstract class ExchangerRecipeSerializer[T <: ExchangerRecipe] extends BaseMachi
     }
   }
 
-  override def fromNetwork(recipeId: ResourceLocation, buff: PacketBuffer): T = {
+  override def fromNetwork(recipeId: ResourceLocation, buff: FriendlyByteBuf): T = {
     recipeFactory(recipeId,
       MixedIngredient.fromPacket(buff),
       ResourceOutput.fromPacket(buff),
@@ -33,7 +33,7 @@ abstract class ExchangerRecipeSerializer[T <: ExchangerRecipe] extends BaseMachi
     )
   }
 
-  override def toNetwork(buffer: PacketBuffer, recipe: T): Unit = {
+  override def toNetwork(buffer: FriendlyByteBuf, recipe: T): Unit = {
     recipe.input.toPacket(buffer)
     recipe.output.toPacket(buffer)
     buffer.writeDouble(recipe.inPerHU)
@@ -54,11 +54,11 @@ class ExchangerCoolingRecipeSerializer extends ExchangerRecipeSerializer[Exchang
 abstract class ExchangerRecipe(id: ResourceLocation, val input: MixedIngredient, val output: ResourceOutput, val inPerHU: Double, val outPerHU: Double) extends BaseMachineRecipe(id)
 
 class ExchangerRecipeHeating(id: ResourceLocation, input: MixedIngredient, output: ResourceOutput, inPerHU: Double, outPerHU: Double) extends ExchangerRecipe(id, input, output, inPerHU, outPerHU) {
-  override def getSerializer: IRecipeSerializer[_] = Recipes.exchangerHeatingSerializer.get()
-  override def getType: IRecipeType[_] = Recipes.exchangerHeatingType
+  override def getSerializer: RecipeSerializer[_] = Recipes.exchangerHeatingSerializer.get()
+  override def getType: RecipeType[_] = Recipes.exchangerHeatingType
 }
 
 class ExchangerRecipeCooling(id: ResourceLocation, input: MixedIngredient, output: ResourceOutput, inPerHU: Double, outPerHU: Double) extends ExchangerRecipe(id, input, output, inPerHU, outPerHU) {
-  override def getSerializer: IRecipeSerializer[_] = Recipes.exchangerCoolingSerializer.get()
-  override def getType: IRecipeType[_] = Recipes.exchangerCoolingType
+  override def getSerializer: RecipeSerializer[_] = Recipes.exchangerCoolingSerializer.get()
+  override def getType: RecipeType[_] = Recipes.exchangerCoolingType
 }

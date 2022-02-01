@@ -16,20 +16,22 @@ import net.bdew.lib.sensors.multiblock.CIRedstoneSensors
 import net.bdew.lib.sensors.{GenericSensorType, SensorSystem}
 import net.bdew.lib.tile.{TankEmulator, TileExtended}
 import net.bdew.lib.{Misc, Text}
-import net.minecraft.entity.player.{PlayerEntity, PlayerInventory}
-import net.minecraft.fluid.{Fluids => VanillaFluids}
-import net.minecraft.inventory.container.Container
-import net.minecraft.item.ItemStack
+import net.minecraft.core.BlockPos
+import net.minecraft.network.chat.Component
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.FluidTags
-import net.minecraft.tileentity.{TileEntity, TileEntityType}
-import net.minecraft.util.ResourceLocation
-import net.minecraft.util.text.ITextComponent
+import net.minecraft.world.entity.player.{Inventory, Player}
+import net.minecraft.world.inventory.AbstractContainerMenu
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.block.entity.{BlockEntity, BlockEntityType}
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.material.{Fluids => VanillaFluids}
 import net.minecraftforge.fluids.FluidStack
 import net.minecraftforge.fluids.capability.IFluidHandler
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction
 import net.minecraftforge.items.IItemHandler
 
-class TileSyngasController(teType: TileEntityType[_]) extends TileExtended(teType)
+class TileSyngasController(teType: BlockEntityType[_], pos: BlockPos, state: BlockState) extends TileExtended(teType, pos, state)
   with TileControllerGui with CIFluidInput with CIItemInput with CIOutputFaces with CIFluidOutputSelect with CIRedstoneSensors with CIControl {
 
   override val cfg: ConfigSyngas = Config.SyngasProducer
@@ -131,8 +133,8 @@ class TileSyngasController(teType: TileEntityType[_]) extends TileExtended(teTyp
     super.onModulesChanged()
   }
 
-  override def getDisplayName: ITextComponent = Text.translate("advgenerators.gui.syngas.title")
-  override def createMenu(id: Int, playerInventory: PlayerInventory, player: PlayerEntity): Container =
+  override def getDisplayName: Component = Text.translate("advgenerators.gui.syngas.title")
+  override def createMenu(id: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu =
     new ContainerSyngas(this, playerInventory, id)
 
   override val itemInput: IItemHandler = new InventoryItemHandler(inventory, _ => false, (_, _) => true)
@@ -141,8 +143,8 @@ class TileSyngasController(teType: TileEntityType[_]) extends TileExtended(teTyp
   override val outputSlotsDef: OutputSlotsSyngas.type = OutputSlotsSyngas
   override def fluidOutputForSlot(slot: OutputSlotsSyngas.Slot): IFluidHandler = RestrictedFluidHandler.drainOnly(syngasTank)
 
-  override def redstoneSensorsType: Seq[GenericSensorType[TileEntity, Boolean]] = Sensors.syngasSensors
-  override def redstoneSensorSystem: SensorSystem[TileEntity, Boolean] = Sensors
+  override def redstoneSensorsType: Seq[GenericSensorType[BlockEntity, Boolean]] = Sensors.syngasSensors
+  override def redstoneSensorSystem: SensorSystem[BlockEntity, Boolean] = Sensors
 
   override def availableControlActions = List(ControlActions.disabled, ControlActions.heatWater, ControlActions.mix)
 

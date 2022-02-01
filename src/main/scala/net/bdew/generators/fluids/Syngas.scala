@@ -1,7 +1,7 @@
 package net.bdew.generators.fluids
 
 import net.bdew.generators.Generators
-import net.minecraft.util.ResourceLocation
+import net.minecraft.resources.ResourceLocation
 import net.minecraftforge.fluids.FluidAttributes
 
 object Syngas {

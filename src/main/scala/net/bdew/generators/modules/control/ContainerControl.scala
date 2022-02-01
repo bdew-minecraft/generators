@@ -5,9 +5,9 @@ import net.bdew.generators.registries.Containers
 import net.bdew.lib.container.NoInvContainer
 import net.bdew.lib.data.base.ContainerDataSlots
 import net.bdew.lib.inventory.SimpleInventory
-import net.minecraft.entity.player.PlayerInventory
+import net.minecraft.world.entity.player.Inventory
 
-class ContainerControl(val te: TileControl, playerInventory: PlayerInventory, id: Int)
+class ContainerControl(val te: TileControl, playerInventory: Inventory, id: Int)
   extends NoInvContainer(Containers.control.get(), id) with ContainerDataSlots {
 
   lazy val dataSource: TileControl = te

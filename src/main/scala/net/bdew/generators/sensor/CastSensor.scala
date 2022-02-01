@@ -1,7 +1,7 @@
 package net.bdew.generators.sensor
 
 import net.bdew.lib.sensors.GenericSensorParameter
-import net.minecraft.tileentity.TileEntity
+import net.minecraft.world.level.block.entity.BlockEntity
 
 import scala.reflect.ClassTag
 
@@ -10,6 +10,6 @@ abstract class CastSensor[T: ClassTag] extends Sensors.SimpleSensor {
 
   def getResultTyped(param: GenericSensorParameter, te: T): Boolean
 
-  override def getResult(param: GenericSensorParameter, te: TileEntity): Boolean =
+  override def getResult(param: GenericSensorParameter, te: BlockEntity): Boolean =
     if (teClass.isInstance(te)) getResultTyped(param, te.asInstanceOf[T]) else false
 }

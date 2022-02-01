@@ -19,17 +19,19 @@ import net.bdew.lib.sensors.multiblock.CIRedstoneSensors
 import net.bdew.lib.sensors.{GenericSensorType, SensorSystem}
 import net.bdew.lib.tile.TileExtended
 import net.bdew.lib.{Misc, Text}
-import net.minecraft.entity.player.{PlayerEntity, PlayerInventory}
-import net.minecraft.inventory.container.Container
+import net.minecraft.core.BlockPos
+import net.minecraft.network.chat.Component
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.FluidTags
-import net.minecraft.tileentity.{TileEntity, TileEntityType}
-import net.minecraft.util.ResourceLocation
-import net.minecraft.util.text.ITextComponent
+import net.minecraft.world.entity.player.{Inventory, Player}
+import net.minecraft.world.inventory.AbstractContainerMenu
+import net.minecraft.world.level.block.entity.{BlockEntity, BlockEntityType}
+import net.minecraft.world.level.block.state.BlockState
 import net.minecraftforge.energy.IEnergyStorage
 import net.minecraftforge.fluids.capability.IFluidHandler
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction
 
-class TileSteamTurbineController(teType: TileEntityType[_]) extends TileExtended(teType)
+class TileSteamTurbineController(teType: BlockEntityType[_], pos: BlockPos, state: BlockState) extends TileExtended(teType, pos, state)
   with TileControllerGui with CIPowerOutput with CIFluidInput with CIOutputFaces with CIRedstoneSensors with CIControl {
 
   val cfg: ConfigSteamTurbine = Config.SteamTurbine
@@ -52,8 +54,8 @@ class TileSteamTurbineController(teType: TileEntityType[_]) extends TileExtended
 
   lazy val maxOutputs = 6
 
-  override val redstoneSensorsType: Seq[GenericSensorType[TileEntity, Boolean]] = Sensors.steamTurbineSensors
-  override val redstoneSensorSystem: SensorSystem[TileEntity, Boolean] = Sensors
+  override val redstoneSensorsType: Seq[GenericSensorType[BlockEntity, Boolean]] = Sensors.steamTurbineSensors
+  override val redstoneSensorSystem: SensorSystem[BlockEntity, Boolean] = Sensors
 
   serverTick.listen(() => {
     if (maxFEPerTick > 0) {
@@ -91,8 +93,8 @@ class TileSteamTurbineController(teType: TileEntityType[_]) extends TileExtended
     } else speed := 0
   })
 
-  override def getDisplayName: ITextComponent = Text.translate("advgenerators.gui.turbine.steam.title")
-  override def createMenu(id: Int, playerInventory: PlayerInventory, player: PlayerEntity): Container =
+  override def getDisplayName: Component = Text.translate("advgenerators.gui.turbine.steam.title")
+  override def createMenu(id: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu =
     new ContainerSteamTurbine(this, playerInventory, id)
 
   override val powerOutput: IEnergyStorage = new PowerEnergyHandler(power, false, true)

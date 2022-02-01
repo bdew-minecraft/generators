@@ -1,6 +1,6 @@
 package net.bdew.generators.datagen
 
-import net.minecraftforge.fml.event.lifecycle.GatherDataEvent
+import net.minecraftforge.forge.event.lifecycle.GatherDataEvent
 
 object DataGeneration {
   def onGatherData(ev: GatherDataEvent): Unit = {

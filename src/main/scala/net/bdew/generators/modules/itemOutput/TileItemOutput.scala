@@ -9,13 +9,14 @@ import net.bdew.lib.multiblock.data.OutputConfigItems
 import net.bdew.lib.multiblock.interact.CIItemOutput
 import net.bdew.lib.multiblock.misc.TileForcedOutput
 import net.bdew.lib.multiblock.tile.{RSControllableOutput, TileOutput}
-import net.minecraft.tileentity.TileEntityType
-import net.minecraft.util.Direction
+import net.minecraft.core.{BlockPos, Direction}
+import net.minecraft.world.level.block.entity.BlockEntityType
+import net.minecraft.world.level.block.state.BlockState
 import net.minecraftforge.common.capabilities.Capability
 import net.minecraftforge.common.util.LazyOptional
 import net.minecraftforge.items.IItemHandler
 
-class TileItemOutput(teType: TileEntityType[_]) extends TileOutput[OutputConfigItems](teType) with RSControllableOutput with TileForcedOutput {
+class TileItemOutput(teType: BlockEntityType[_], pos: BlockPos, state: BlockState) extends TileOutput[OutputConfigItems](teType, pos, state) with RSControllableOutput with TileForcedOutput {
   val kind: ModuleType = Modules.itemOutput
 
   override val outputConfigType: Class[OutputConfigItems] = classOf[OutputConfigItems]

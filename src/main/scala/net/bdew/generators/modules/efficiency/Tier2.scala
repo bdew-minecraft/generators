@@ -11,23 +11,23 @@ import net.bdew.lib.multiblock.ModuleType
 import net.bdew.lib.multiblock.item.ModuleBlockItem
 import net.bdew.lib.multiblock.tile.TileModule
 import net.bdew.lib.tile.TileExtended
-import net.minecraft.client.util.ITooltipFlag
-import net.minecraft.item.ItemStack
-import net.minecraft.tileentity.TileEntityType
-import net.minecraft.util.math.BlockPos
-import net.minecraft.util.text.ITextComponent
-import net.minecraft.world.World
+import net.minecraft.core.BlockPos
+import net.minecraft.network.chat.Component
+import net.minecraft.world.item.{ItemStack, TooltipFlag}
+import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.entity.BlockEntityType
+import net.minecraft.world.level.block.state.BlockState
 
 class BlockEfficiencyUpgradeTier2 extends BaseModule[TileEfficiencyUpgradeTier2](Modules.efficiencyUpgradeTier2)
 
 class BlockItemEfficiencyUpgradeTier2(block: BlockEfficiencyUpgradeTier2) extends ModuleBlockItem(block, Blocks.defaultItemProps, Machines) {
-  override def getTooltip(stack: ItemStack, world: World, flags: ITooltipFlag): List[ITextComponent] =
+  override def getTooltip(stack: ItemStack, world: Level, flags: TooltipFlag): List[Component] =
     Text.translate("advgenerators.tooltip.efficiency", Text.string("%.0f%%".format(Config.FuelTurbine.fuelEfficiencyTier2() * 100)).setColor(Text.Color.YELLOW)) +:
       Text.translate("advgenerators.tooltip.efficiency.req") +:
       super.getTooltip(stack, world, flags)
 }
 
-class TileEfficiencyUpgradeTier2(teType: TileEntityType[_]) extends TileExtended(teType) with TileModule {
+class TileEfficiencyUpgradeTier2(teType: BlockEntityType[_], pos: BlockPos, state: BlockState) extends TileExtended(teType, pos, state) with TileModule {
   val kind: ModuleType = Modules.efficiencyUpgradeTier2
 
   override def canConnectToCore(br: BlockPos): Boolean =

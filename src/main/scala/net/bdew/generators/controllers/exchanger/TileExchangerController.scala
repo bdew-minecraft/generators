@@ -17,14 +17,16 @@ import net.bdew.lib.sensors.SensorSystem
 import net.bdew.lib.sensors.multiblock.CIRedstoneSensors
 import net.bdew.lib.tile.TileExtended
 import net.bdew.lib.{Misc, Text}
-import net.minecraft.entity.player.{PlayerEntity, PlayerInventory}
-import net.minecraft.inventory.container.Container
-import net.minecraft.tileentity.{TileEntity, TileEntityType}
-import net.minecraft.util.text.ITextComponent
+import net.minecraft.core.BlockPos
+import net.minecraft.network.chat.Component
+import net.minecraft.world.entity.player.{Inventory, Player}
+import net.minecraft.world.inventory.AbstractContainerMenu
+import net.minecraft.world.level.block.entity.{BlockEntity, BlockEntityType}
+import net.minecraft.world.level.block.state.BlockState
 import net.minecraftforge.fluids.capability.IFluidHandler
 import net.minecraftforge.items.IItemHandler
 
-class TileExchangerController(teType: TileEntityType[_]) extends TileExtended(teType)
+class TileExchangerController(teType: BlockEntityType[_], pos: BlockPos, state: BlockState) extends TileExtended(teType, pos, state)
   with TileControllerGui with CIFluidInput with CIOutputFaces with CIFluidOutputSelect with CIItemOutput with CIItemInput with CIRedstoneSensors with CIControl {
 
   val cfg: ConfigExchanger = Config.HeatExchanger
@@ -110,8 +112,8 @@ class TileExchangerController(teType: TileEntityType[_]) extends TileExtended(te
     super.onModulesChanged()
   }
 
-  override def getDisplayName: ITextComponent = Text.translate("advgenerators.gui.exchanger.title")
-  override def createMenu(id: Int, playerInventory: PlayerInventory, player: PlayerEntity): Container =
+  override def getDisplayName: Component = Text.translate("advgenerators.gui.exchanger.title")
+  override def createMenu(id: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu =
     new ContainerExchanger(this, playerInventory, id)
 
   override val itemInput: IItemHandler = RestrictedItemHandler.insertOnly(
@@ -149,7 +151,7 @@ class TileExchangerController(teType: TileEntityType[_]) extends TileExtended(te
   }
 
   override def redstoneSensorsType: List[Sensors.SimpleSensor] = Sensors.exchangerSensors
-  override def redstoneSensorSystem: SensorSystem[TileEntity, Boolean] = Sensors
+  override def redstoneSensorSystem: SensorSystem[BlockEntity, Boolean] = Sensors
 
   override def availableControlActions = List(ControlActions.disabled, ControlActions.exchangeHeat)
 }

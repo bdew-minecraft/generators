@@ -1,6 +1,6 @@
 package net.bdew.generators.jei
 
-import com.mojang.blaze3d.matrix.MatrixStack
+import com.mojang.blaze3d.vertex.PoseStack
 import mezz.jei.api.constants.VanillaTypes
 import mezz.jei.api.gui.IRecipeLayout
 import mezz.jei.api.gui.drawable.{IDrawable, IDrawableStatic}
@@ -12,9 +12,9 @@ import net.bdew.generators.recipes.LiquidFuelRecipe
 import net.bdew.generators.registries.{Machines, Recipes}
 import net.bdew.lib.Text
 import net.bdew.lib.recipes.RecipeReloadListener
-import net.minecraft.item.ItemStack
-import net.minecraft.util.ResourceLocation
-import net.minecraft.util.text.ITextComponent
+import net.minecraft.network.chat.Component
+import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.item.ItemStack
 import net.minecraftforge.fluids.FluidStack
 
 import java.util
@@ -37,8 +37,7 @@ object TurbineFuelRecipeCategory extends IRecipeCategory[LiquidFuelRecipe] {
 
   override def getRecipeClass: Class[_ <: LiquidFuelRecipe] = classOf[LiquidFuelRecipe]
 
-  override def getTitle: String = null
-  override def getTitleAsTextComponent: ITextComponent = Text.translate("advgenerators.recipe.turbine_fuels")
+  override def getTitle: Component = Text.translate("advgenerators.recipe.turbine_fuels")
 
   override def getBackground: IDrawable =
     JEIPlugin.guiHelper.drawableBuilder(
@@ -46,7 +45,8 @@ object TurbineFuelRecipeCategory extends IRecipeCategory[LiquidFuelRecipe] {
       7, 17, 65, 62
     ).addPadding(0, 0, 50, 50).build()
 
-  override def getIcon: IDrawable = JEIPlugin.guiHelper.createDrawableIngredient(new ItemStack(Machines.controllerFuelTurbine.item.get()))
+  override def getIcon: IDrawable = JEIPlugin.guiHelper.createDrawableIngredient(
+    VanillaTypes.ITEM, new ItemStack(Machines.controllerFuelTurbine.item.get()))
 
   override def setIngredients(recipe: LiquidFuelRecipe, ingredients: IIngredients): Unit = {
     ingredients.setInputLists[FluidStack](VanillaTypes.FLUID, util.Collections.singletonList(
@@ -59,12 +59,12 @@ object TurbineFuelRecipeCategory extends IRecipeCategory[LiquidFuelRecipe] {
     recipeLayout.getFluidStacks.set(ingredients)
   }
 
-  override def draw(recipe: LiquidFuelRecipe, matrixStack: MatrixStack, mouseX: Double, mouseY: Double): Unit = {
+  override def draw(recipe: LiquidFuelRecipe, matrixStack: PoseStack, mouseX: Double, mouseY: Double): Unit = {
     super.draw(recipe, matrixStack, mouseX, mouseY)
     powerFill.draw(matrixStack, 104, 2, ((1 - (recipe.fePerMb * 1000 / maxPower)) * 58).floor.toInt, 0, 0, 0)
   }
 
-  override def getTooltipStrings(recipe: LiquidFuelRecipe, mouseX: Double, mouseY: Double): util.List[ITextComponent] = {
+  override def getTooltipStrings(recipe: LiquidFuelRecipe, mouseX: Double, mouseY: Double): util.List[Component] = {
     if (mouseX >= 104 && mouseX <= 113 && mouseY >= 2 && mouseY <= 60)
       util.Collections.singletonList(Text.energy(recipe.fePerMb * 1000))
     else

@@ -7,13 +7,14 @@ import net.bdew.lib.multiblock.ModuleType
 import net.bdew.lib.multiblock.interact.CIItemInput
 import net.bdew.lib.multiblock.tile.TileModule
 import net.bdew.lib.tile.TileExtended
-import net.minecraft.tileentity.TileEntityType
-import net.minecraft.util.Direction
+import net.minecraft.core.{BlockPos, Direction}
+import net.minecraft.world.level.block.entity.BlockEntityType
+import net.minecraft.world.level.block.state.BlockState
 import net.minecraftforge.common.capabilities.Capability
 import net.minecraftforge.common.util.LazyOptional
 import net.minecraftforge.items.IItemHandler
 
-class TileItemInput(teType: TileEntityType[_]) extends TileExtended(teType) with TileModule {
+class TileItemInput(teType: BlockEntityType[_], pos: BlockPos, state: BlockState) extends TileExtended(teType, pos, state) with TileModule {
   val kind: ModuleType = Modules.itemInput
 
   override def getCore: Option[CIItemInput] = getCoreAs[CIItemInput]

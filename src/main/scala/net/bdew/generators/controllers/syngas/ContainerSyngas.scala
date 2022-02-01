@@ -5,10 +5,10 @@ import net.bdew.generators.registries.Containers
 import net.bdew.lib.container.{BaseContainer, SlotValidating}
 import net.bdew.lib.data.base.ContainerDataSlots
 import net.bdew.lib.multiblock.interact.ContainerOutputFaces
-import net.minecraft.entity.player.PlayerInventory
+import net.minecraft.world.entity.player.Inventory
 import net.minecraftforge.fluids.FluidStack
 
-class ContainerSyngas(val te: TileSyngasController, playerInventory: PlayerInventory, id: Int)
+class ContainerSyngas(val te: TileSyngasController, playerInventory: Inventory, id: Int)
   extends BaseContainer(te.inventory, Containers.syngas.get(), id) with ContainerDataSlots with ContainerOutputFaces with ContainerCanDumpBuffers {
   lazy val dataSource: TileSyngasController = te
 

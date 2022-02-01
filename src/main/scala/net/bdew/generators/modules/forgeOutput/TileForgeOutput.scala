@@ -9,13 +9,14 @@ import net.bdew.lib.multiblock.data.OutputConfigPower
 import net.bdew.lib.multiblock.interact.CIPowerOutput
 import net.bdew.lib.multiblock.misc.TileForcedOutput
 import net.bdew.lib.multiblock.tile.{RSControllableOutput, TileOutput, TileOutputTracker}
-import net.minecraft.tileentity.TileEntityType
-import net.minecraft.util.Direction
+import net.minecraft.core.{BlockPos, Direction}
+import net.minecraft.world.level.block.entity.BlockEntityType
+import net.minecraft.world.level.block.state.BlockState
 import net.minecraftforge.common.capabilities.Capability
 import net.minecraftforge.common.util.LazyOptional
 import net.minecraftforge.energy.IEnergyStorage
 
-class TileForgeOutput(teType: TileEntityType[_]) extends TileOutput[OutputConfigPower](teType) with RSControllableOutput with TileForcedOutput {
+class TileForgeOutput(teType: BlockEntityType[_], pos: BlockPos, state: BlockState) extends TileOutput[OutputConfigPower](teType, pos, state) with RSControllableOutput with TileForcedOutput {
   val kind: ModuleType = Modules.powerOutput
 
   override def getCore: Option[CIPowerOutput] = getCoreAs[CIPowerOutput]

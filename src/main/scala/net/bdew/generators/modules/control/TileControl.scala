@@ -8,12 +8,15 @@ import net.bdew.lib.data.base.{DataSlot, UpdateKind}
 import net.bdew.lib.multiblock.ModuleType
 import net.bdew.lib.multiblock.tile.TileModule
 import net.bdew.lib.tile.TileExtended
-import net.minecraft.entity.player.{PlayerEntity, PlayerInventory}
-import net.minecraft.inventory.container.{Container, INamedContainerProvider}
-import net.minecraft.tileentity.TileEntityType
-import net.minecraft.util.text.ITextComponent
+import net.minecraft.core.BlockPos
+import net.minecraft.network.chat.Component
+import net.minecraft.world.MenuProvider
+import net.minecraft.world.entity.player.{Inventory, Player}
+import net.minecraft.world.inventory.AbstractContainerMenu
+import net.minecraft.world.level.block.entity.BlockEntityType
+import net.minecraft.world.level.block.state.BlockState
 
-class TileControl(teType: TileEntityType[_]) extends TileExtended(teType) with TileModule with MIControl with INamedContainerProvider {
+class TileControl(teType: BlockEntityType[_], pos: BlockPos, state: BlockState) extends TileExtended(teType, pos, state) with TileModule with MIControl with MenuProvider {
   override val kind: ModuleType = Modules.control
   override def getCore: Option[CIControl] = getCoreAs[CIControl]
 
@@ -31,8 +34,8 @@ class TileControl(teType: TileEntityType[_]) extends TileExtended(teType) with T
     super.dataSlotChanged(slot)
   }
 
-  override def getDisplayName: ITextComponent = Text.translate("advgenerators.gui.control.title")
-  override def createMenu(id: Int, playerInventory: PlayerInventory, player: PlayerEntity): Container =
+  override def getDisplayName: Component = Text.translate("advgenerators.gui.control.title")
+  override def createMenu(id: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu =
     new ContainerControl(this, playerInventory, id)
 
   override def getControlState(a: ControlAction): ControlResult.Value =

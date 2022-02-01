@@ -4,8 +4,10 @@ import net.bdew.generators.registries.Modules
 import net.bdew.lib.multiblock.ModuleType
 import net.bdew.lib.multiblock.tile.TileModule
 import net.bdew.lib.tile.TileExtended
-import net.minecraft.tileentity.TileEntityType
+import net.minecraft.core.BlockPos
+import net.minecraft.world.level.block.entity.BlockEntityType
+import net.minecraft.world.level.block.state.BlockState
 
-class TileMixingChamber(teType: TileEntityType[_]) extends TileExtended(teType) with TileModule {
+class TileMixingChamber(teType: BlockEntityType[_], pos: BlockPos, state: BlockState) extends TileExtended(teType, pos, state) with TileModule {
   val kind: ModuleType = Modules.mixingChamber
 }

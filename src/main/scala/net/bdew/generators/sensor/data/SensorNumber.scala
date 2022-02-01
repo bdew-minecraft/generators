@@ -3,8 +3,8 @@ package net.bdew.generators.sensor.data
 import net.bdew.generators.sensor.{CastSensor, Icons, Sensors}
 import net.bdew.lib.Text
 import net.bdew.lib.sensors.GenericSensorParameter
-import net.minecraft.tileentity.TileEntity
-import net.minecraft.util.text.ITextComponent
+import net.minecraft.network.chat.Component
+import net.minecraft.world.level.block.entity.BlockEntity
 
 import scala.reflect.ClassTag
 
@@ -16,9 +16,8 @@ case class SensorNumber[T: ClassTag, N: Numeric](uid: String, iconName: String, 
       x.test(accessor(y))
     case _ => false
   }
-  override def getParamTooltip(obj: TileEntity, param: GenericSensorParameter): List[ITextComponent] = param match {
+  override def getParamTooltip(obj: BlockEntity, param: GenericSensorParameter): List[Component] = param match {
     case x: ParameterNumber[_] => List(Text.translate(Sensors.localizationPrefix + ".param." + x.uid, x.format))
     case _ => super.getParamTooltip(obj, param)
   }
-
 }

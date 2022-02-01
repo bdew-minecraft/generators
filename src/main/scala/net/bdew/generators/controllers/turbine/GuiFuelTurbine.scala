@@ -10,10 +10,10 @@ import net.bdew.lib.gui.widgets.{WidgetButtonIcon, WidgetFluidGauge, WidgetLabel
 import net.bdew.lib.multiblock.gui.{WidgetInfo, WidgetInfoMulti}
 import net.bdew.lib.power.WidgetPowerGauge
 import net.bdew.lib.{Client, Text}
-import net.minecraft.entity.player.PlayerInventory
-import net.minecraft.util.text.ITextComponent
+import net.minecraft.network.chat.Component
+import net.minecraft.world.entity.player.Inventory
 
-class GuiFuelTurbine(container: ContainerFuelTurbine, playerInv: PlayerInventory) extends BaseScreen(container, playerInv, container.te.getDisplayName) {
+class GuiFuelTurbine(container: ContainerFuelTurbine, playerInv: Inventory) extends BaseScreen(container, playerInv, container.te.getDisplayName) {
   val te: TileFuelTurbineController = container.te
   val background: Texture = Texture(Generators.ModId, "textures/gui/turbine.png", Rect(0, 0, 176, 175))
 
@@ -24,12 +24,12 @@ class GuiFuelTurbine(container: ContainerFuelTurbine, playerInv: PlayerInventory
 
     widgets.add(new WidgetButtonIcon(Point(153, 19), openCfg, Textures.Button16.base, Textures.Button16.hover) {
       override val icon: Texture = Textures.Button16.wrench
-      override val hover: ITextComponent = Text.translate("advgenerators.gui.output.title")
+      override val hover: Component = Text.translate("advgenerators.gui.output.title")
     })
 
     widgets.add(new WidgetButtonIcon(Point(153, 61), _ => NetworkHandler.sendToServer(PktDumpBuffers()), Textures.Button16.base, Textures.Button16.red) {
       override val icon: Texture = Textures.Button16.disabled
-      override val hover: ITextComponent = Text.translate("advgenerators.gui.dump")
+      override val hover: Component = Text.translate("advgenerators.gui.dump")
     })
 
     widgets.add(new WidgetLabel(title, 8, 6, Color.darkGray))

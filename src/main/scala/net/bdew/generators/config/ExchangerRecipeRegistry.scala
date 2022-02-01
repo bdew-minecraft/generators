@@ -4,7 +4,7 @@ import net.bdew.generators.recipes.ExchangerRecipe
 import net.bdew.generators.registries.Recipes
 import net.bdew.lib.recipes.RecipeReloadListener
 import net.bdew.lib.resource.Resource
-import net.minecraft.item.crafting.RecipeManager
+import net.minecraft.world.item.crafting.RecipeManager
 
 object ExchangerRecipeRegistry {
   var coolers = Set.empty[ExchangerRecipe]

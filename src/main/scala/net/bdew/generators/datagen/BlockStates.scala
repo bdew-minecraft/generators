@@ -5,9 +5,9 @@ import net.bdew.generators.modules.control.BlockControl
 import net.bdew.generators.registries.Blocks
 import net.bdew.lib.datagen.BlockStateGenerator
 import net.bdew.lib.sensors.multiblock.BlockRedstoneSensorModule
+import net.minecraft.core.Direction
 import net.minecraft.data.DataGenerator
-import net.minecraft.state.properties.BlockStateProperties
-import net.minecraft.util.Direction
+import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraftforge.client.model.generators.ConfiguredModel
 import net.minecraftforge.common.data.ExistingFileHelper
 

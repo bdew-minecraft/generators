@@ -6,9 +6,9 @@ import net.bdew.lib.Text
 import net.bdew.lib.gui._
 import net.bdew.lib.gui.widgets.WidgetLabel
 import net.bdew.lib.sensors.widgets.{WidgetSensorParam, WidgetSensorResult, WidgetSensorType}
-import net.minecraft.entity.player.PlayerInventory
+import net.minecraft.world.entity.player.Inventory
 
-class GuiSensor(container: ContainerSensor, playerInv: PlayerInventory)
+class GuiSensor(container: ContainerSensor, playerInv: Inventory)
   extends BaseScreen(container, playerInv, Text.translate("advgenerators.gui.sensor.title")) {
   val te: TileSensor = container.te
   val background: Sprite = Texture(Generators.ModId, "textures/gui/sensor.png", Rect(0, 0, 176, 175))
