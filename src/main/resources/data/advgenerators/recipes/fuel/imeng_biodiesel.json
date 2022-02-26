@@ -1,0 +1,13 @@
+{
+  "type": "advgenerators:liquid_fuel",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "immersiveengineering"
+    }
+  ],
+  "fuel": {
+    "fluid": "immersiveengineering:biodiesel"
+  },
+  "fePerMb": 1024
+}
