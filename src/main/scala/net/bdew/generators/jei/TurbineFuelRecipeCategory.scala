@@ -2,10 +2,11 @@ package net.bdew.generators.jei
 
 import com.mojang.blaze3d.vertex.PoseStack
 import mezz.jei.api.constants.VanillaTypes
-import mezz.jei.api.gui.IRecipeLayout
+import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.drawable.{IDrawable, IDrawableStatic}
-import mezz.jei.api.ingredients.IIngredients
+import mezz.jei.api.gui.ingredient.IRecipeSlotsView
 import mezz.jei.api.recipe.category.IRecipeCategory
+import mezz.jei.api.recipe.{IFocusGroup, RecipeIngredientRole, RecipeType}
 import mezz.jei.api.registration.IRecipeRegistration
 import net.bdew.generators.Generators
 import net.bdew.generators.recipes.LiquidFuelRecipe
@@ -18,10 +19,15 @@ import net.minecraft.world.item.ItemStack
 import net.minecraftforge.fluids.FluidStack
 
 import java.util
+import java.util.Collections
 import scala.jdk.CollectionConverters._
 
 object TurbineFuelRecipeCategory extends IRecipeCategory[LiquidFuelRecipe] {
-  override def getUid: ResourceLocation = new ResourceLocation(Generators.ModId, "turbine_fuels")
+  override val getRecipeType: RecipeType[LiquidFuelRecipe] =
+    RecipeType.create(Generators.ModId, "turbine_fuels", classOf[LiquidFuelRecipe])
+
+  @Deprecated override def getUid: ResourceLocation = getRecipeType.getUid
+  @Deprecated override def getRecipeClass: Class[_ <: LiquidFuelRecipe] = getRecipeType.getRecipeClass
 
   var maxPower = 1000000f
 
@@ -35,8 +41,6 @@ object TurbineFuelRecipeCategory extends IRecipeCategory[LiquidFuelRecipe] {
     0, 0, 9, 58
   )
 
-  override def getRecipeClass: Class[_ <: LiquidFuelRecipe] = classOf[LiquidFuelRecipe]
-
   override def getTitle: Component = Text.translate("advgenerators.recipe.turbine_fuels")
 
   override def getBackground: IDrawable =
@@ -48,32 +52,27 @@ object TurbineFuelRecipeCategory extends IRecipeCategory[LiquidFuelRecipe] {
   override def getIcon: IDrawable = JEIPlugin.guiHelper.createDrawableIngredient(
     VanillaTypes.ITEM, new ItemStack(Machines.controllerFuelTurbine.item.get()))
 
-  override def setIngredients(recipe: LiquidFuelRecipe, ingredients: IIngredients): Unit = {
-    ingredients.setInputLists[FluidStack](VanillaTypes.FLUID, util.Collections.singletonList(
-      recipe.input.fluids.toList.map(x => new FluidStack(x, 1000)).asJava
-    ))
+  override def setRecipe(builder: IRecipeLayoutBuilder, recipe: LiquidFuelRecipe, focuses: IFocusGroup): Unit = {
+    builder.addSlot(RecipeIngredientRole.INPUT, 52, 2)
+      .addIngredients(VanillaTypes.FLUID, recipe.input.fluids.toList.map(x => new FluidStack(x, 1000)).asJava)
+      .setFluidRenderer(1000, false, 9, 58)
+      .setOverlay(fluidOverlay, 0, 0)
   }
 
-  override def setRecipe(recipeLayout: IRecipeLayout, recipe: LiquidFuelRecipe, ingredients: IIngredients): Unit = {
-    recipeLayout.getFluidStacks.init(0, true, 52, 2, 9, 58, 1000, false, fluidOverlay)
-    recipeLayout.getFluidStacks.set(ingredients)
+  override def draw(recipe: LiquidFuelRecipe, recipeSlotsView: IRecipeSlotsView, stack: PoseStack, mouseX: Double, mouseY: Double): Unit = {
+    powerFill.draw(stack, 104, 2, ((1 - (recipe.fePerMb * 1000 / maxPower)) * 58).floor.toInt, 0, 0, 0)
   }
 
-  override def draw(recipe: LiquidFuelRecipe, matrixStack: PoseStack, mouseX: Double, mouseY: Double): Unit = {
-    super.draw(recipe, matrixStack, mouseX, mouseY)
-    powerFill.draw(matrixStack, 104, 2, ((1 - (recipe.fePerMb * 1000 / maxPower)) * 58).floor.toInt, 0, 0, 0)
-  }
-
-  override def getTooltipStrings(recipe: LiquidFuelRecipe, mouseX: Double, mouseY: Double): util.List[Component] = {
+  override def getTooltipStrings(recipe: LiquidFuelRecipe, recipeSlotsView: IRecipeSlotsView, mouseX: Double, mouseY: Double): util.List[Component] = {
     if (mouseX >= 104 && mouseX <= 113 && mouseY >= 2 && mouseY <= 60)
       util.Collections.singletonList(Text.energy(recipe.fePerMb * 1000))
     else
-      super.getTooltipStrings(recipe, mouseX, mouseY)
+      Collections.emptyList
   }
 
   def initRecipes(reg: IRecipeRegistration): Unit = {
     val allRecipes = Recipes.liquidFuel.from(RecipeReloadListener.clientRecipeManager)
-    reg.addRecipes(allRecipes.asJava, getUid)
+    reg.addRecipes(getRecipeType, allRecipes.asJava)
     maxPower = allRecipes.map(_.fePerMb * 1000).max
   }
 }

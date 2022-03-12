@@ -2,10 +2,11 @@ package net.bdew.generators.jei
 
 import com.mojang.blaze3d.vertex.PoseStack
 import mezz.jei.api.constants.VanillaTypes
-import mezz.jei.api.gui.IRecipeLayout
+import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.drawable.IDrawable
-import mezz.jei.api.ingredients.IIngredients
+import mezz.jei.api.gui.ingredient.IRecipeSlotsView
 import mezz.jei.api.recipe.category.IRecipeCategory
+import mezz.jei.api.recipe.{IFocusGroup, RecipeIngredientRole, RecipeType}
 import mezz.jei.api.registration.IRecipeRegistration
 import net.bdew.generators.Generators
 import net.bdew.generators.recipes.ExchangerRecipeCooling
@@ -21,9 +22,11 @@ import net.minecraftforge.fluids.FluidStack
 import scala.jdk.CollectionConverters._
 
 object ExchangerCoolingRecipeCategory extends IRecipeCategory[ExchangerRecipeCooling] {
-  override def getUid: ResourceLocation = new ResourceLocation(Generators.ModId, "exchanger_cooling")
+  override val getRecipeType: RecipeType[ExchangerRecipeCooling] =
+    RecipeType.create(Generators.ModId, "exchanger_cooling", classOf[ExchangerRecipeCooling])
 
-  override def getRecipeClass: Class[_ <: ExchangerRecipeCooling] = classOf[ExchangerRecipeCooling]
+  @Deprecated override def getUid: ResourceLocation = getRecipeType.getUid
+  @Deprecated override def getRecipeClass: Class[_ <: ExchangerRecipeCooling] = getRecipeType.getRecipeClass
 
   override def getTitle: Component = Text.translate("advgenerators.recipe.exchanger.cooling")
 
@@ -36,60 +39,45 @@ object ExchangerCoolingRecipeCategory extends IRecipeCategory[ExchangerRecipeCoo
   override def getIcon: IDrawable = JEIPlugin.guiHelper.createDrawableIngredient(
     VanillaTypes.ITEM, new ItemStack(Machines.controllerExchanger.item.get()))
 
-  override def setIngredients(recipe: ExchangerRecipeCooling, ingredients: IIngredients): Unit = {
-    val inAmt = recipe.input match {
-      case x: MixedIngredient.Item =>
-        ingredients.setInputLists(VanillaTypes.ITEM, java.util.Collections.singletonList(
-          x.ingredient.getItems.toList.asJava
-        ))
-        1D
-      case x: MixedIngredient.Fluid =>
-        ingredients.setInputLists(VanillaTypes.FLUID, java.util.Collections.singletonList(
-          x.ingredient.fluids.map(x => new FluidStack(x, 1000)).toList.asJava
-        ))
-        1000D
-    }
-
-    val outAmt = inAmt / recipe.inPerHU * recipe.outPerHU
-
-    recipe.output match {
-      case x: ResourceOutput.ItemOutput =>
-        ingredients.setOutput(VanillaTypes.ITEM, new ItemStack(x.item))
-      case x: ResourceOutput.FluidOutput =>
-        ingredients.setOutput(VanillaTypes.FLUID, new FluidStack(x.fluid, outAmt.toInt))
+  def inputAmount(recipe: ExchangerRecipeCooling): Double = {
+    recipe.input match {
+      case MixedIngredient.Fluid(_) => 1000D
+      case MixedIngredient.Item(_) => 1D
     }
   }
 
-  override def setRecipe(recipeLayout: IRecipeLayout, recipe: ExchangerRecipeCooling, ingredients: IIngredients): Unit = {
-    val inAmt = recipe.input match {
-      case x: MixedIngredient.Fluid =>
-        recipeLayout.getFluidStacks.init(0, true, 64, 2, 37, 16, 1000, false, null)
-        1000D
-      case x: MixedIngredient.Item =>
-        recipeLayout.getItemStacks.init(0, true, new ResourceItemRenderer(37, 16, 1, null), 64, 2, 37, 16, 0, 0)
-        1D
+  override def setRecipe(builder: IRecipeLayoutBuilder, recipe: ExchangerRecipeCooling, focuses: IFocusGroup): Unit = {
+    recipe.input match {
+      case MixedIngredient.Fluid(ingredient) =>
+        builder.addSlot(RecipeIngredientRole.INPUT, 64, 2)
+          .addIngredients(VanillaTypes.FLUID, ingredient.fluids.map(f => new FluidStack(f, 1000)).toList.asJava)
+          .setFluidRenderer(1000, false, 37, 16)
+      case MixedIngredient.Item(ingredient) =>
+        builder.addSlot(RecipeIngredientRole.INPUT, 64, 2)
+          .addIngredients(ingredient)
+          .setCustomRenderer(VanillaTypes.ITEM, new ResourceItemRenderer(37, 16, 1, null))
     }
 
-    val outAmt = inAmt / recipe.inPerHU * recipe.outPerHU
+    val outAmt = inputAmount(recipe) / recipe.inPerHU * recipe.outPerHU
 
     recipe.output match {
-      case x: ResourceOutput.FluidOutput =>
-        recipeLayout.getFluidStacks.init(1, false, 64, 44, 37, 16, outAmt.toInt, false, null)
-      case x: ResourceOutput.ItemOutput =>
-        recipeLayout.getItemStacks.init(1, false, new ResourceItemRenderer(37, 16, outAmt, null), 64, 44, 37, 16, 0, 0)
+      case ResourceOutput.FluidOutput(fluid) =>
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 64, 44)
+          .addIngredient(VanillaTypes.FLUID, new FluidStack(fluid, outAmt.toInt))
+          .setFluidRenderer(1000, false, 37, 16)
+      case ResourceOutput.ItemOutput(item) =>
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 64, 44)
+          .addItemStack(new ItemStack(item))
+          .setCustomRenderer(VanillaTypes.ITEM, new ResourceItemRenderer(37, 16, outAmt, null))
     }
-
-    recipeLayout.getFluidStacks.set(ingredients)
-    recipeLayout.getItemStacks.set(ingredients)
   }
 
-  override def draw(recipe: ExchangerRecipeCooling, matrixStack: PoseStack, mouseX: Double, mouseY: Double): Unit = {
-    super.draw(recipe, matrixStack, mouseX, mouseY)
-    Client.fontRenderer.draw(matrixStack, Text.amount(1000 / recipe.inPerHU, "hu"), 118, 50, Color.darkGray.asRGB)
+  override def draw(recipe: ExchangerRecipeCooling, recipeSlotsView: IRecipeSlotsView, stack: PoseStack, mouseX: Double, mouseY: Double): Unit = {
+    Client.fontRenderer.draw(stack, Text.amount(1000 / recipe.inPerHU, "hu"), 118, 50, Color.darkGray.asRGB)
   }
 
   def initRecipes(reg: IRecipeRegistration): Unit = {
     val allRecipes = Recipes.exchangerCooling.from(RecipeReloadListener.clientRecipeManager)
-    reg.addRecipes(allRecipes.asJava, getUid)
+    reg.addRecipes(getRecipeType, allRecipes.asJava)
   }
 }

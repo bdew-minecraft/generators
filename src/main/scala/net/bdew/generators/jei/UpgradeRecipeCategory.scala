@@ -1,10 +1,10 @@
 package net.bdew.generators.jei
 
 import mezz.jei.api.constants.VanillaTypes
-import mezz.jei.api.gui.IRecipeLayout
+import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.drawable.IDrawable
-import mezz.jei.api.ingredients.IIngredients
 import mezz.jei.api.recipe.category.IRecipeCategory
+import mezz.jei.api.recipe.{IFocusGroup, RecipeIngredientRole, RecipeType}
 import mezz.jei.api.registration.IRecipeRegistration
 import net.bdew.generators.Generators
 import net.bdew.generators.recipes.UpgradeRecipe
@@ -18,9 +18,11 @@ import net.minecraft.world.item.ItemStack
 import scala.jdk.CollectionConverters._
 
 object UpgradeRecipeCategory extends IRecipeCategory[UpgradeRecipe] {
-  override def getUid: ResourceLocation = new ResourceLocation(Generators.ModId, "upgrade")
+  override val getRecipeType: RecipeType[UpgradeRecipe] =
+    RecipeType.create(Generators.ModId, "upgrade", classOf[UpgradeRecipe])
 
-  override def getRecipeClass: Class[_ <: UpgradeRecipe] = classOf[UpgradeRecipe]
+  @Deprecated override def getUid: ResourceLocation = getRecipeType.getUid
+  @Deprecated override def getRecipeClass: Class[_ <: UpgradeRecipe] = getRecipeType.getRecipeClass
 
   override def getTitle: Component = Text.translate("advgenerators.recipe.upgrade")
 
@@ -33,21 +35,18 @@ object UpgradeRecipeCategory extends IRecipeCategory[UpgradeRecipe] {
   override def getIcon: IDrawable = JEIPlugin.guiHelper.createDrawableIngredient(
     VanillaTypes.ITEM, new ItemStack(Items.upgradeKit.get()))
 
-  override def setIngredients(recipe: UpgradeRecipe, ingredients: IIngredients): Unit = {
-    ingredients.setInputs[ItemStack](VanillaTypes.ITEM, List(new ItemStack(recipe.from), new ItemStack(recipe.item)).asJava)
-    ingredients.setOutput[ItemStack](VanillaTypes.ITEM, new ItemStack(recipe.to))
-  }
 
-  override def setRecipe(recipeLayout: IRecipeLayout, recipe: UpgradeRecipe, ingredients: IIngredients): Unit = {
-    recipeLayout.getItemStacks.init(0, true, 10, 10)
-    recipeLayout.getItemStacks.init(1, true, 59, 10)
-    recipeLayout.getItemStacks.init(2, false, 117, 10)
-    recipeLayout.getItemStacks.set(ingredients)
+  override def setRecipe(builder: IRecipeLayoutBuilder, recipe: UpgradeRecipe, focuses: IFocusGroup): Unit = {
+    builder.addSlot(RecipeIngredientRole.INPUT, 11, 11)
+      .addItemStack(new ItemStack(recipe.from))
+    builder.addSlot(RecipeIngredientRole.INPUT, 60, 11)
+      .addItemStack(new ItemStack(recipe.item))
+    builder.addSlot(RecipeIngredientRole.OUTPUT, 118, 11)
+      .addItemStack(new ItemStack(recipe.to))
   }
-
 
   def initRecipes(reg: IRecipeRegistration): Unit = {
     val allRecipes = Recipes.upgrade.from(RecipeReloadListener.clientRecipeManager)
-    reg.addRecipes(allRecipes.asJava, getUid)
+    reg.addRecipes(getRecipeType, allRecipes.asJava)
   }
 }

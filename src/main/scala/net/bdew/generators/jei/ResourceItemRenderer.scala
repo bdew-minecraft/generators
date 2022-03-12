@@ -11,14 +11,17 @@ import net.minecraft.world.item.{ItemStack, TooltipFlag}
 import java.util
 
 class ResourceItemRenderer(width: Int, height: Int, amount: Double, overlay: IDrawable) extends IIngredientRenderer[ItemStack] {
-  override def render(matrixStack: PoseStack, xPosition: Int, yPosition: Int, ingredient: ItemStack): Unit = {
+  override def getWidth: Int = width
+  override def getHeight: Int = height
+
+  override def render(stack: PoseStack, ingredient: ItemStack): Unit = {
     JEIPlugin.drawTarget.drawTextureTiled(
-      matrixStack, Rect(xPosition, yPosition, width, height),
+      stack, Rect(0, 0, width, height),
       Texture.block(Client.minecraft.getItemRenderer.getItemModelShaper.getItemModel(ingredient).getParticleIcon),
       16, 16, Color.fromInt(Client.minecraft.getItemColors.getColor(ingredient, 0))
     )
     if (overlay != null)
-      overlay.draw(matrixStack, xPosition, yPosition)
+      overlay.draw(stack, 0, 0)
   }
 
   override def getTooltip(ingredient: ItemStack, flag: TooltipFlag): util.List[Component] = {

@@ -2,12 +2,11 @@ package net.bdew.generators.jei
 
 import com.mojang.blaze3d.vertex.PoseStack
 import mezz.jei.api.constants.VanillaTypes
-import mezz.jei.api.gui.IRecipeLayout
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.drawable.{IDrawable, IDrawableStatic}
-import mezz.jei.api.ingredients.IIngredients
-import mezz.jei.api.recipe.{IFocusGroup, RecipeType}
+import mezz.jei.api.gui.ingredient.IRecipeSlotsView
 import mezz.jei.api.recipe.category.IRecipeCategory
+import mezz.jei.api.recipe.{IFocusGroup, RecipeIngredientRole, RecipeType}
 import mezz.jei.api.registration.IRecipeRegistration
 import net.bdew.generators.Generators
 import net.bdew.generators.config.Config
@@ -21,16 +20,17 @@ import net.minecraft.world.level.material.Fluid
 import net.minecraftforge.fluids.FluidStack
 
 import java.util
+import java.util.Collections
 import scala.jdk.CollectionConverters._
 
 case class TurbineSteamRecipe(fe: Double)
 
 object TurbineSteamRecipeCategory extends IRecipeCategory[TurbineSteamRecipe] {
-  override def getUid: ResourceLocation = getRecipeType.getUid
-  override def getRecipeClass: Class[_ <: TurbineSteamRecipe] = getRecipeType.getRecipeClass
-
-  override def getRecipeType: RecipeType[TurbineSteamRecipe] =
+  override val getRecipeType: RecipeType[TurbineSteamRecipe] =
     RecipeType.create(Generators.ModId, "turbine_steam", classOf[TurbineSteamRecipe])
+
+  @Deprecated override def getUid: ResourceLocation = getRecipeType.getUid
+  @Deprecated override def getRecipeClass: Class[_ <: TurbineSteamRecipe] = getRecipeType.getRecipeClass
 
   val fluidOverlay: IDrawableStatic = JEIPlugin.guiHelper.createDrawable(
     new ResourceLocation(Generators.ModId, "textures/gui/widgets.png"),
@@ -53,33 +53,27 @@ object TurbineSteamRecipeCategory extends IRecipeCategory[TurbineSteamRecipe] {
   override def getIcon: IDrawable = JEIPlugin.guiHelper.createDrawableIngredient(
     VanillaTypes.ITEM, new ItemStack(Machines.controllerSteamTurbine.item.get()))
 
+  override def setRecipe(builder: IRecipeLayoutBuilder, recipe: TurbineSteamRecipe, focuses: IFocusGroup): Unit = {
+    builder.addSlot(RecipeIngredientRole.INPUT, 52, 2)
+      .addIngredients(VanillaTypes.FLUID, Taggable[Fluid].resolve(Fluids.steamTag).toList.map(x => new FluidStack(x, 1000)).asJava)
+      .setFluidRenderer(1000, false, 9, 58)
+      .setOverlay(fluidOverlay, 0, 0)
 
-  override def setIngredients(recipe: TurbineSteamRecipe, ingredients: IIngredients): Unit = {
-    ingredients.setInputLists[FluidStack](VanillaTypes.FLUID,
-      util.Collections.singletonList(
-        Taggable[Fluid].resolve(Fluids.steamTag).toList.map(f => new FluidStack(f, 1000)).asJava
-      )
-    )
+    super.setRecipe(builder, recipe, focuses)
   }
 
-  override def setRecipe(recipeLayout: IRecipeLayout, recipe: TurbineSteamRecipe, ingredients: IIngredients): Unit = {
-    recipeLayout.getFluidStacks.init(0, true, 52, 2, 9, 58, 1000, false, fluidOverlay)
-    recipeLayout.getFluidStacks.set(ingredients)
+  override def draw(recipe: TurbineSteamRecipe, recipeSlotsView: IRecipeSlotsView, stack: PoseStack, mouseX: Double, mouseY: Double): Unit = {
+    powerFill.draw(stack, 104, 2)
   }
 
-  override def draw(recipe: TurbineSteamRecipe, matrixStack: PoseStack, mouseX: Double, mouseY: Double): Unit = {
-    super.draw(recipe, matrixStack, mouseX, mouseY)
-    powerFill.draw(matrixStack, 104, 2)
-  }
-
-  override def getTooltipStrings(recipe: TurbineSteamRecipe, mouseX: Double, mouseY: Double): util.List[Component] = {
+  override def getTooltipStrings(recipe: TurbineSteamRecipe, recipeSlotsView: IRecipeSlotsView, mouseX: Double, mouseY: Double): util.List[Component] = {
     if (mouseX >= 104 && mouseX <= 113 && mouseY >= 2 && mouseY <= 60)
       util.Collections.singletonList(Text.energy(recipe.fe))
     else
-      super.getTooltipStrings(recipe, mouseX, mouseY)
+      Collections.emptyList
   }
 
   def initRecipes(reg: IRecipeRegistration): Unit = {
-    reg.addRecipes(util.Collections.singletonList(TurbineSteamRecipe(Config.SteamTurbine.steamEnergyDensity() * 1000)), getUid)
+    reg.addRecipes(getRecipeType, Collections.singletonList(TurbineSteamRecipe(Config.SteamTurbine.steamEnergyDensity() * 1000)))
   }
 }

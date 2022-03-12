@@ -38,12 +38,12 @@ class JEIPlugin extends IModPlugin {
   }
 
   override def registerRecipeCatalysts(registration: IRecipeCatalystRegistration): Unit = {
-    registration.addRecipeCatalyst(new ItemStack(Machines.controllerFuelTurbine.item.get()), TurbineFuelRecipeCategory.getUid)
-    registration.addRecipeCatalyst(new ItemStack(Machines.controllerSteamTurbine.item.get()), TurbineSteamRecipeCategory.getUid)
-    registration.addRecipeCatalyst(new ItemStack(Machines.controllerSyngas.item.get()), SyngasRecipeCategory.getUid)
-    registration.addRecipeCatalyst(new ItemStack(Items.upgradeKit.get()), UpgradeRecipeCategory.getUid)
-    registration.addRecipeCatalyst(new ItemStack(Machines.controllerExchanger.item.get()), ExchangerHeatingRecipeCategory.getUid)
-    registration.addRecipeCatalyst(new ItemStack(Machines.controllerExchanger.item.get()), ExchangerCoolingRecipeCategory.getUid)
+    registration.addRecipeCatalyst(new ItemStack(Machines.controllerFuelTurbine.item.get()), TurbineFuelRecipeCategory.getRecipeType)
+    registration.addRecipeCatalyst(new ItemStack(Machines.controllerSteamTurbine.item.get()), TurbineSteamRecipeCategory.getRecipeType)
+    registration.addRecipeCatalyst(new ItemStack(Machines.controllerSyngas.item.get()), SyngasRecipeCategory.getRecipeType)
+    registration.addRecipeCatalyst(new ItemStack(Items.upgradeKit.get()), UpgradeRecipeCategory.getRecipeType)
+    registration.addRecipeCatalyst(new ItemStack(Machines.controllerExchanger.item.get()), ExchangerHeatingRecipeCategory.getRecipeType)
+    registration.addRecipeCatalyst(new ItemStack(Machines.controllerExchanger.item.get()), ExchangerCoolingRecipeCategory.getRecipeType)
   }
 }
 
