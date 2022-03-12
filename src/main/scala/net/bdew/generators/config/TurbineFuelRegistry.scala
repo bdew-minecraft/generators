@@ -11,7 +11,7 @@ object TurbineFuelRegistry {
   var recipes = Set.empty[LiquidFuelRecipe]
 
   def refreshRecipes(manager: RecipeManager): Unit = {
-    recipes = Recipes.liquidFuelType.getAllRecipes(manager).toSet
+    recipes = Recipes.liquidFuel.from(manager).toSet
   }
 
   def init(): Unit = {

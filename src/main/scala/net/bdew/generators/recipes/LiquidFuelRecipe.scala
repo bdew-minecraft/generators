@@ -27,6 +27,6 @@ class LiquidFuelRecipeSerializer extends BaseMachineRecipeSerializer[LiquidFuelR
 }
 
 class LiquidFuelRecipe(id: ResourceLocation, val input: FluidIngredient, val fePerMb: Float) extends BaseMachineRecipe(id) {
-  override def getSerializer: RecipeSerializer[_] = Recipes.liquidFuelSerializer.get()
-  override def getType: RecipeType[_] = Recipes.liquidFuelType
+  override def getSerializer: RecipeSerializer[_] = Recipes.liquidFuel.serializer
+  override def getType: RecipeType[_] = Recipes.liquidFuel.recipeType
 }

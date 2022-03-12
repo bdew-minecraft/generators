@@ -27,6 +27,6 @@ class CarbonSourceRecipeSerializer extends BaseMachineRecipeSerializer[CarbonSou
 }
 
 class CarbonSourceRecipe(id: ResourceLocation, val ingredient: Ingredient, val carbonValue: Float) extends BaseMachineRecipe(id) {
-  override def getSerializer: RecipeSerializer[_] = Recipes.carbonSourceSerializer.get()
-  override def getType: RecipeType[_] = Recipes.carbonSourceType
+  override def getSerializer: RecipeSerializer[_] = Recipes.carbonSource.serializer
+  override def getType: RecipeType[_] = Recipes.carbonSource.recipeType
 }

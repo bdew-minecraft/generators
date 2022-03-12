@@ -89,7 +89,7 @@ object ExchangerCoolingRecipeCategory extends IRecipeCategory[ExchangerRecipeCoo
   }
 
   def initRecipes(reg: IRecipeRegistration): Unit = {
-    val allRecipes = Recipes.exchangerCoolingType.getAllRecipes(RecipeReloadListener.clientRecipeManager)
+    val allRecipes = Recipes.exchangerCooling.from(RecipeReloadListener.clientRecipeManager)
     reg.addRecipes(allRecipes.asJava, getUid)
   }
 }

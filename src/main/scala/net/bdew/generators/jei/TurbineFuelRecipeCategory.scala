@@ -72,7 +72,7 @@ object TurbineFuelRecipeCategory extends IRecipeCategory[LiquidFuelRecipe] {
   }
 
   def initRecipes(reg: IRecipeRegistration): Unit = {
-    val allRecipes = Recipes.liquidFuelType.getAllRecipes(RecipeReloadListener.clientRecipeManager)
+    val allRecipes = Recipes.liquidFuel.from(RecipeReloadListener.clientRecipeManager)
     reg.addRecipes(allRecipes.asJava, getUid)
     maxPower = allRecipes.map(_.fePerMb * 1000).max
   }

@@ -11,8 +11,8 @@ object ExchangerRecipeRegistry {
   var heaters = Set.empty[ExchangerRecipe]
 
   def refreshRecipes(manager: RecipeManager): Unit = {
-    coolers = Recipes.exchangerHeatingType.getAllRecipes(manager).toSet
-    heaters = Recipes.exchangerCoolingType.getAllRecipes(manager).toSet
+    coolers = Recipes.exchangerHeating.from(manager).toSet
+    heaters = Recipes.exchangerCooling.from(manager).toSet
   }
 
   def init(): Unit = {

@@ -35,6 +35,6 @@ class UpgradeRecipeSerializer extends BaseMachineRecipeSerializer[UpgradeRecipe]
 }
 
 class UpgradeRecipe(id: ResourceLocation, val item: Item, val from: BlockModule[_ <: TileModule], val to: BlockModule[_ <: TileModule]) extends BaseMachineRecipe(id) {
-  override def getSerializer: RecipeSerializer[_] = Recipes.upgradeSerializer.get()
-  override def getType: RecipeType[_] = Recipes.upgradeType
+  override def getSerializer: RecipeSerializer[_] = Recipes.upgrade.serializer
+  override def getType: RecipeType[_] = Recipes.upgrade.recipeType
 }

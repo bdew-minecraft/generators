@@ -47,7 +47,7 @@ object UpgradeRecipeCategory extends IRecipeCategory[UpgradeRecipe] {
 
 
   def initRecipes(reg: IRecipeRegistration): Unit = {
-    val allRecipes = Recipes.upgradeType.getAllRecipes(RecipeReloadListener.clientRecipeManager)
+    val allRecipes = Recipes.upgrade.from(RecipeReloadListener.clientRecipeManager)
     reg.addRecipes(allRecipes.asJava, getUid)
   }
 }

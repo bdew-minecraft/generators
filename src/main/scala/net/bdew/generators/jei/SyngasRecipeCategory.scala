@@ -89,7 +89,7 @@ object SyngasRecipeCategory extends IRecipeCategory[CarbonSourceRecipe] {
   }
 
   def initRecipes(reg: IRecipeRegistration): Unit = {
-    val allRecipes = Recipes.carbonSourceType.getAllRecipes(RecipeReloadListener.clientRecipeManager)
+    val allRecipes = Recipes.carbonSource.from(RecipeReloadListener.clientRecipeManager)
     reg.addRecipes(allRecipes.asJava, getUid)
     maxCarbon = allRecipes.map(_.carbonValue).max
     maxSyngas = (maxCarbon / Config.SyngasProducer.carbonPerMBSyngas()).toInt

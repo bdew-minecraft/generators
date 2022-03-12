@@ -102,7 +102,7 @@ class TileSteamTurbineController(teType: BlockEntityType[_], pos: BlockPos, stat
   override val fluidInput: IFluidHandler =
     RestrictedFluidHandler.fillOnly(
       new ConvertingFluidHandler(steam,
-        FluidTags.getAllTags.getTag(new ResourceLocation("forge:steam")),
+        Fluids.steamTag,
         Fluids.steam.source.get()
       )
     )

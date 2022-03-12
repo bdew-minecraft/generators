@@ -50,7 +50,7 @@ class TileSyngasController(teType: BlockEntityType[_], pos: BlockPos, state: Blo
 
   val steamTank = new ConvertingFluidHandler(
     TankEmulator(Fluids.steam.source.get(), steamBuffer, cfg.internalTankCapacity()),
-    FluidTags.getAllTags.getTag(new ResourceLocation("forge:steam")),
+    Fluids.steamTag,
     Fluids.steam.source.get()
   )
 

@@ -2,6 +2,9 @@ package net.bdew.generators.registries
 
 import net.bdew.generators.fluids._
 import net.bdew.lib.managers.FluidManager
+import net.minecraft.resources.ResourceLocation
+import net.minecraft.tags.{FluidTags, TagKey}
+import net.minecraft.world.level.material.Fluid
 import net.minecraftforge.fluids.ForgeFlowingFluid
 
 object Fluids extends FluidManager(Blocks, Items) {
@@ -16,4 +19,6 @@ object Fluids extends FluidManager(Blocks, Items) {
       new ForgeFlowingFluid.Source(_),
       new ForgeFlowingFluid.Flowing(_),
     )
+
+  val steamTag: TagKey[Fluid] = FluidTags.create(new ResourceLocation("forge:steam"))
 }

@@ -1,25 +1,22 @@
 package net.bdew.generators.registries
 
 import net.bdew.generators.recipes._
-import net.bdew.lib.managers.RegistryManager
+import net.bdew.lib.managers.{MachineRecipeDef, RecipeDef, RecipeManager}
 import net.bdew.lib.recipes.MachineRecipeType
-import net.minecraftforge.registries.{ForgeRegistries, RegistryObject}
 
-object Recipes extends RegistryManager(ForgeRegistries.RECIPE_SERIALIZERS) {
-  val liquidFuelSerializer: RegistryObject[LiquidFuelRecipeSerializer] = register("liquid_fuel", () => new LiquidFuelRecipeSerializer)
-  val liquidFuelType: MachineRecipeType[LiquidFuelRecipe] = new MachineRecipeType(liquidFuelSerializer)
+object Recipes extends RecipeManager {
+  val liquidFuel: MachineRecipeDef[LiquidFuelRecipe, LiquidFuelRecipeSerializer] =
+    registerMachine("liquid_fuel", () => new LiquidFuelRecipeSerializer)
 
-  val carbonSourceSerializer: RegistryObject[CarbonSourceRecipeSerializer] = register("carbon_source", () => new CarbonSourceRecipeSerializer)
-  val carbonSourceType: MachineRecipeType[CarbonSourceRecipe] = new MachineRecipeType(carbonSourceSerializer)
+  val carbonSource: MachineRecipeDef[CarbonSourceRecipe, CarbonSourceRecipeSerializer] =
+    registerMachine("carbon_source", () => new CarbonSourceRecipeSerializer)
 
-  val upgradeSerializer: RegistryObject[UpgradeRecipeSerializer] = register("upgrade_kit", () => new UpgradeRecipeSerializer)
-  val upgradeType: MachineRecipeType[UpgradeRecipe] = new MachineRecipeType(upgradeSerializer)
+  val upgrade: MachineRecipeDef[UpgradeRecipe, UpgradeRecipeSerializer] =
+    registerMachine("upgrade_kit", () => new UpgradeRecipeSerializer)
 
-  val exchangerHeatingSerializer: RegistryObject[ExchangerHeatingRecipeSerializer] =
-    register("exchanger_heating", () => new ExchangerHeatingRecipeSerializer)
-  val exchangerHeatingType: MachineRecipeType[ExchangerRecipeHeating] = new MachineRecipeType(exchangerHeatingSerializer)
+  val exchangerHeating: MachineRecipeDef[ExchangerRecipeHeating, ExchangerHeatingRecipeSerializer] =
+    registerMachine("exchanger_heating", () => new ExchangerHeatingRecipeSerializer)
 
-  val exchangerCoolingSerializer: RegistryObject[ExchangerCoolingRecipeSerializer] =
-    register("exchanger_cooling", () => new ExchangerCoolingRecipeSerializer)
-  val exchangerCoolingType: MachineRecipeType[ExchangerRecipeCooling] = new MachineRecipeType(exchangerCoolingSerializer)
+  val exchangerCooling: MachineRecipeDef[ExchangerRecipeCooling, ExchangerCoolingRecipeSerializer] =
+    registerMachine("exchanger_cooling", () => new ExchangerCoolingRecipeSerializer)
 }

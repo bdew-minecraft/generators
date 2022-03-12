@@ -38,7 +38,7 @@ class UpgradeKit extends Item(Items.upgradeKitProps) {
 
     if (ctx.getPlayer.isCrouching) return InteractionResult.PASS
 
-    val recipe = Recipes.upgradeType.getAllRecipes(world.getRecipeManager).find(_.item == this).getOrElse({
+    val recipe = Recipes.upgrade.from(world.getRecipeManager).find(_.item == this).getOrElse({
       log.warn(s"No upgrade recipe found for $getRegistryName")
       return InteractionResult.FAIL
     })

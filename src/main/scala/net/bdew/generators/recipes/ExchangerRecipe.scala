@@ -54,11 +54,11 @@ class ExchangerCoolingRecipeSerializer extends ExchangerRecipeSerializer[Exchang
 abstract class ExchangerRecipe(id: ResourceLocation, val input: MixedIngredient, val output: ResourceOutput, val inPerHU: Double, val outPerHU: Double) extends BaseMachineRecipe(id)
 
 class ExchangerRecipeHeating(id: ResourceLocation, input: MixedIngredient, output: ResourceOutput, inPerHU: Double, outPerHU: Double) extends ExchangerRecipe(id, input, output, inPerHU, outPerHU) {
-  override def getSerializer: RecipeSerializer[_] = Recipes.exchangerHeatingSerializer.get()
-  override def getType: RecipeType[_] = Recipes.exchangerHeatingType
+  override def getSerializer: RecipeSerializer[_] = Recipes.exchangerHeating.serializer
+  override def getType: RecipeType[_] = Recipes.exchangerHeating.recipeType
 }
 
 class ExchangerRecipeCooling(id: ResourceLocation, input: MixedIngredient, output: ResourceOutput, inPerHU: Double, outPerHU: Double) extends ExchangerRecipe(id, input, output, inPerHU, outPerHU) {
-  override def getSerializer: RecipeSerializer[_] = Recipes.exchangerCoolingSerializer.get()
-  override def getType: RecipeType[_] = Recipes.exchangerCoolingType
+  override def getSerializer: RecipeSerializer[_] = Recipes.exchangerCooling.serializer
+  override def getType: RecipeType[_] = Recipes.exchangerCooling.recipeType
 }

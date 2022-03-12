@@ -10,7 +10,7 @@ object CarbonValueRegistry {
   var recipes = Set.empty[CarbonSourceRecipe]
 
   def refreshRecipes(manager: RecipeManager): Unit = {
-    recipes = Recipes.carbonSourceType.getAllRecipes(manager).toSet
+    recipes = Recipes.carbonSource.from(manager).toSet
   }
 
   def init(): Unit = {
