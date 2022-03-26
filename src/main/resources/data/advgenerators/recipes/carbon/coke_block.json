@@ -1,14 +1,5 @@
 {
   "type": "advgenerators:carbon_source",
-  "conditions": [
-    {
-      "type": "forge:not",
-      "value": {
-        "type": "forge:tag_empty",
-        "tag": "forge:storage_blocks/coal_coke"
-      }
-    }
-  ],
   "items": [
     {
       "tag": "forge:storage_blocks/coal_coke"
