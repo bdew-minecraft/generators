@@ -30,7 +30,7 @@ side = "BOTH"
 [[dependencies.advgenerators]]
 modId = "bdlib"
 mandatory = true
-versionRange = "[1.19.1,)"
+versionRange = "[1.19.3,)"
 ordering = "NONE"
 side = "BOTH"
 
