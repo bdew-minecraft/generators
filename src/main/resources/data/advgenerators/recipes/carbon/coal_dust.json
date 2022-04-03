@@ -1,0 +1,9 @@
+{
+  "type": "advgenerators:carbon_source",
+  "items": [
+    {
+      "tag": "forge:dusts/coal"
+    }
+  ],
+  "carbonValue": 1600
+}
