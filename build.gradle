@@ -121,7 +121,8 @@ dependencies {
         implementation fg.deobf("net.bdew:bdlib:${config.bdlib.version}-mc${config.minecraft.version}")
     }
 
-    compileOnly fg.deobf("mezz.jei:jei-${config.minecraft.version}:${config.jei.version}:api")
+    compileOnly fg.deobf("mezz.jei:jei-${config.minecraft.version}-common-api:${config.jei.version}")
+    compileOnly fg.deobf("mezz.jei:jei-${config.minecraft.version}-forge-api:${config.jei.version}")
     //compileOnly "mekanism:Mekanism:${config.mekanism.version}:api"
 }
 

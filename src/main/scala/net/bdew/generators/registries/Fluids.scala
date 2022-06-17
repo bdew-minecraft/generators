@@ -1,21 +1,23 @@
 package net.bdew.generators.registries
 
-import net.bdew.generators.fluids._
 import net.bdew.lib.managers.FluidManager
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.{FluidTags, TagKey}
 import net.minecraft.world.level.material.Fluid
-import net.minecraftforge.fluids.ForgeFlowingFluid
+import net.minecraftforge.fluids.{FluidType, ForgeFlowingFluid}
 
 object Fluids extends FluidManager(Blocks, Items) {
-  val syngas: FluidDef[ForgeFlowingFluid.Source, ForgeFlowingFluid.Flowing] =
-    define("syngas", Syngas.attributes,
+  def gasProps: FluidType.Properties = FluidType.Properties.create()
+    .density(-10)
+
+  val syngas: Fluids.FluidDef[FluidType, ForgeFlowingFluid.Source, ForgeFlowingFluid.Flowing] =
+    define("syngas", () => new FluidType(gasProps.descriptionId("block.advgenerators.syngas")),
       new ForgeFlowingFluid.Source(_),
       new ForgeFlowingFluid.Flowing(_),
     )
 
-  val steam: FluidDef[ForgeFlowingFluid.Source, ForgeFlowingFluid.Flowing] =
-    define("steam", Steam.attributes,
+  val steam: Fluids.FluidDef[FluidType, ForgeFlowingFluid.Source, ForgeFlowingFluid.Flowing] =
+    define("steam", () => new FluidType(gasProps.descriptionId("block.advgenerators.steam")),
       new ForgeFlowingFluid.Source(_),
       new ForgeFlowingFluid.Flowing(_),
     )

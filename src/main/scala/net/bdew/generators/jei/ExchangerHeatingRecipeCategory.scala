@@ -2,6 +2,7 @@ package net.bdew.generators.jei
 
 import com.mojang.blaze3d.vertex.PoseStack
 import mezz.jei.api.constants.VanillaTypes
+import mezz.jei.api.forge.ForgeTypes
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.drawable.{IDrawable, IDrawableStatic}
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView
@@ -25,9 +26,6 @@ object ExchangerHeatingRecipeCategory extends IRecipeCategory[ExchangerRecipeHea
   override val getRecipeType: RecipeType[ExchangerRecipeHeating] =
     RecipeType.create(Generators.ModId, "exchanger_heating", classOf[ExchangerRecipeHeating])
 
-  @Deprecated override def getUid: ResourceLocation = getRecipeType.getUid
-  @Deprecated override def getRecipeClass: Class[_ <: ExchangerRecipeHeating] = getRecipeType.getRecipeClass
-
   val fluidOverlay: IDrawableStatic = JEIPlugin.guiHelper.createDrawable(
     new ResourceLocation(Generators.ModId, "textures/gui/widgets.png"),
     10, 0, 9, 58
@@ -42,7 +40,7 @@ object ExchangerHeatingRecipeCategory extends IRecipeCategory[ExchangerRecipeHea
     ).addPadding(0, 0, 50, 50).build()
 
   override def getIcon: IDrawable = JEIPlugin.guiHelper.createDrawableIngredient(
-    VanillaTypes.ITEM, new ItemStack(Machines.controllerExchanger.item.get()))
+    VanillaTypes.ITEM_STACK, new ItemStack(Machines.controllerExchanger.item.get()))
 
   def inputAmount(recipe: ExchangerRecipeHeating): Double = {
     recipe.input match {
@@ -55,13 +53,13 @@ object ExchangerHeatingRecipeCategory extends IRecipeCategory[ExchangerRecipeHea
     recipe.input match {
       case MixedIngredient.Fluid(ingredient) =>
         builder.addSlot(RecipeIngredientRole.INPUT, 52, 2)
-          .addIngredients(VanillaTypes.FLUID, ingredient.fluids.map(f => new FluidStack(f, 1000)).toList.asJava)
+          .addIngredients(ForgeTypes.FLUID_STACK, ingredient.fluids.map(f => new FluidStack(f, 1000)).toList.asJava)
           .setFluidRenderer(1000, false, 9, 58)
           .setOverlay(fluidOverlay, 0, 0)
       case MixedIngredient.Item(ingredient) =>
         builder.addSlot(RecipeIngredientRole.INPUT, 52, 2)
           .addIngredients(ingredient)
-          .setCustomRenderer(VanillaTypes.ITEM, new ResourceItemRenderer(9, 58, 1, null))
+          .setCustomRenderer(VanillaTypes.ITEM_STACK, new ResourceItemRenderer(9, 58, 1, null))
           .setOverlay(fluidOverlay, 0, 0)
     }
 
@@ -70,13 +68,13 @@ object ExchangerHeatingRecipeCategory extends IRecipeCategory[ExchangerRecipeHea
     recipe.output match {
       case ResourceOutput.FluidOutput(fluid) =>
         builder.addSlot(RecipeIngredientRole.OUTPUT, 104, 2)
-          .addIngredient(VanillaTypes.FLUID, new FluidStack(fluid, outAmt.toInt))
+          .addIngredient(ForgeTypes.FLUID_STACK, new FluidStack(fluid, outAmt.toInt))
           .setFluidRenderer(1000, false, 9, 58)
           .setOverlay(fluidOverlay, 0, 0)
       case ResourceOutput.ItemOutput(item) =>
         builder.addSlot(RecipeIngredientRole.OUTPUT, 104, 2)
           .addItemStack(new ItemStack(item))
-          .setCustomRenderer(VanillaTypes.ITEM, new ResourceItemRenderer(9, 58, outAmt, null))
+          .setCustomRenderer(VanillaTypes.ITEM_STACK, new ResourceItemRenderer(9, 58, outAmt, null))
           .setOverlay(fluidOverlay, 0, 0)
     }
   }

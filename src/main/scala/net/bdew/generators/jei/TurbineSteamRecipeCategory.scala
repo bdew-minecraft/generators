@@ -2,6 +2,7 @@ package net.bdew.generators.jei
 
 import com.mojang.blaze3d.vertex.PoseStack
 import mezz.jei.api.constants.VanillaTypes
+import mezz.jei.api.forge.ForgeTypes
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.drawable.{IDrawable, IDrawableStatic}
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView
@@ -29,9 +30,6 @@ object TurbineSteamRecipeCategory extends IRecipeCategory[TurbineSteamRecipe] {
   override val getRecipeType: RecipeType[TurbineSteamRecipe] =
     RecipeType.create(Generators.ModId, "turbine_steam", classOf[TurbineSteamRecipe])
 
-  @Deprecated override def getUid: ResourceLocation = getRecipeType.getUid
-  @Deprecated override def getRecipeClass: Class[_ <: TurbineSteamRecipe] = getRecipeType.getRecipeClass
-
   val fluidOverlay: IDrawableStatic = JEIPlugin.guiHelper.createDrawable(
     new ResourceLocation(Generators.ModId, "textures/gui/widgets.png"),
     10, 0, 9, 58
@@ -51,15 +49,13 @@ object TurbineSteamRecipeCategory extends IRecipeCategory[TurbineSteamRecipe] {
     ).addPadding(0, 0, 50, 50).build()
 
   override def getIcon: IDrawable = JEIPlugin.guiHelper.createDrawableIngredient(
-    VanillaTypes.ITEM, new ItemStack(Machines.controllerSteamTurbine.item.get()))
+    VanillaTypes.ITEM_STACK, new ItemStack(Machines.controllerSteamTurbine.item.get()))
 
   override def setRecipe(builder: IRecipeLayoutBuilder, recipe: TurbineSteamRecipe, focuses: IFocusGroup): Unit = {
     builder.addSlot(RecipeIngredientRole.INPUT, 52, 2)
-      .addIngredients(VanillaTypes.FLUID, Taggable[Fluid].resolve(Fluids.steamTag).toList.map(x => new FluidStack(x, 1000)).asJava)
+      .addIngredients(ForgeTypes.FLUID_STACK, Taggable[Fluid].resolve(Fluids.steamTag).toList.map(x => new FluidStack(x, 1000)).asJava)
       .setFluidRenderer(1000, false, 9, 58)
       .setOverlay(fluidOverlay, 0, 0)
-
-    super.setRecipe(builder, recipe, focuses)
   }
 
   override def draw(recipe: TurbineSteamRecipe, recipeSlotsView: IRecipeSlotsView, stack: PoseStack, mouseX: Double, mouseY: Double): Unit = {

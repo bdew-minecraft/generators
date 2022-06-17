@@ -2,6 +2,7 @@ package net.bdew.generators.jei
 
 import com.mojang.blaze3d.vertex.PoseStack
 import mezz.jei.api.constants.VanillaTypes
+import mezz.jei.api.forge.ForgeTypes
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.drawable.IDrawable
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView
@@ -25,9 +26,6 @@ object ExchangerCoolingRecipeCategory extends IRecipeCategory[ExchangerRecipeCoo
   override val getRecipeType: RecipeType[ExchangerRecipeCooling] =
     RecipeType.create(Generators.ModId, "exchanger_cooling", classOf[ExchangerRecipeCooling])
 
-  @Deprecated override def getUid: ResourceLocation = getRecipeType.getUid
-  @Deprecated override def getRecipeClass: Class[_ <: ExchangerRecipeCooling] = getRecipeType.getRecipeClass
-
   override def getTitle: Component = Text.translate("advgenerators.recipe.exchanger.cooling")
 
   override def getBackground: IDrawable =
@@ -37,7 +35,7 @@ object ExchangerCoolingRecipeCategory extends IRecipeCategory[ExchangerRecipeCoo
     ).addPadding(0, 0, 50, 50).build()
 
   override def getIcon: IDrawable = JEIPlugin.guiHelper.createDrawableIngredient(
-    VanillaTypes.ITEM, new ItemStack(Machines.controllerExchanger.item.get()))
+    VanillaTypes.ITEM_STACK, new ItemStack(Machines.controllerExchanger.item.get()))
 
   def inputAmount(recipe: ExchangerRecipeCooling): Double = {
     recipe.input match {
@@ -50,12 +48,12 @@ object ExchangerCoolingRecipeCategory extends IRecipeCategory[ExchangerRecipeCoo
     recipe.input match {
       case MixedIngredient.Fluid(ingredient) =>
         builder.addSlot(RecipeIngredientRole.INPUT, 64, 2)
-          .addIngredients(VanillaTypes.FLUID, ingredient.fluids.map(f => new FluidStack(f, 1000)).toList.asJava)
+          .addIngredients(ForgeTypes.FLUID_STACK, ingredient.fluids.map(f => new FluidStack(f, 1000)).toList.asJava)
           .setFluidRenderer(1000, false, 37, 16)
       case MixedIngredient.Item(ingredient) =>
         builder.addSlot(RecipeIngredientRole.INPUT, 64, 2)
           .addIngredients(ingredient)
-          .setCustomRenderer(VanillaTypes.ITEM, new ResourceItemRenderer(37, 16, 1, null))
+          .setCustomRenderer(VanillaTypes.ITEM_STACK, new ResourceItemRenderer(37, 16, 1, null))
     }
 
     val outAmt = inputAmount(recipe) / recipe.inPerHU * recipe.outPerHU
@@ -63,12 +61,12 @@ object ExchangerCoolingRecipeCategory extends IRecipeCategory[ExchangerRecipeCoo
     recipe.output match {
       case ResourceOutput.FluidOutput(fluid) =>
         builder.addSlot(RecipeIngredientRole.OUTPUT, 64, 44)
-          .addIngredient(VanillaTypes.FLUID, new FluidStack(fluid, outAmt.toInt))
+          .addIngredient(ForgeTypes.FLUID_STACK, new FluidStack(fluid, outAmt.toInt))
           .setFluidRenderer(1000, false, 37, 16)
       case ResourceOutput.ItemOutput(item) =>
         builder.addSlot(RecipeIngredientRole.OUTPUT, 64, 44)
           .addItemStack(new ItemStack(item))
-          .setCustomRenderer(VanillaTypes.ITEM, new ResourceItemRenderer(37, 16, outAmt, null))
+          .setCustomRenderer(VanillaTypes.ITEM_STACK, new ResourceItemRenderer(37, 16, outAmt, null))
     }
   }
 

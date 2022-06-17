@@ -21,9 +21,6 @@ object UpgradeRecipeCategory extends IRecipeCategory[UpgradeRecipe] {
   override val getRecipeType: RecipeType[UpgradeRecipe] =
     RecipeType.create(Generators.ModId, "upgrade", classOf[UpgradeRecipe])
 
-  @Deprecated override def getUid: ResourceLocation = getRecipeType.getUid
-  @Deprecated override def getRecipeClass: Class[_ <: UpgradeRecipe] = getRecipeType.getRecipeClass
-
   override def getTitle: Component = Text.translate("advgenerators.recipe.upgrade")
 
   override def getBackground: IDrawable =
@@ -33,7 +30,7 @@ object UpgradeRecipeCategory extends IRecipeCategory[UpgradeRecipe] {
     ).addPadding(10, 10, 10, 10).build()
 
   override def getIcon: IDrawable = JEIPlugin.guiHelper.createDrawableIngredient(
-    VanillaTypes.ITEM, new ItemStack(Items.upgradeKit.get()))
+    VanillaTypes.ITEM_STACK, new ItemStack(Items.upgradeKit.get()))
 
 
   override def setRecipe(builder: IRecipeLayoutBuilder, recipe: UpgradeRecipe, focuses: IFocusGroup): Unit = {

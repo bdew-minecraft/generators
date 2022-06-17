@@ -2,6 +2,7 @@ package net.bdew.generators.jei
 
 import com.mojang.blaze3d.vertex.PoseStack
 import mezz.jei.api.constants.VanillaTypes
+import mezz.jei.api.forge.ForgeTypes
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.drawable.{IDrawable, IDrawableStatic}
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView
@@ -26,9 +27,6 @@ object TurbineFuelRecipeCategory extends IRecipeCategory[LiquidFuelRecipe] {
   override val getRecipeType: RecipeType[LiquidFuelRecipe] =
     RecipeType.create(Generators.ModId, "turbine_fuels", classOf[LiquidFuelRecipe])
 
-  @Deprecated override def getUid: ResourceLocation = getRecipeType.getUid
-  @Deprecated override def getRecipeClass: Class[_ <: LiquidFuelRecipe] = getRecipeType.getRecipeClass
-
   var maxPower = 1000000f
 
   val fluidOverlay: IDrawableStatic = JEIPlugin.guiHelper.createDrawable(
@@ -50,11 +48,11 @@ object TurbineFuelRecipeCategory extends IRecipeCategory[LiquidFuelRecipe] {
     ).addPadding(0, 0, 50, 50).build()
 
   override def getIcon: IDrawable = JEIPlugin.guiHelper.createDrawableIngredient(
-    VanillaTypes.ITEM, new ItemStack(Machines.controllerFuelTurbine.item.get()))
+    VanillaTypes.ITEM_STACK, new ItemStack(Machines.controllerFuelTurbine.item.get()))
 
   override def setRecipe(builder: IRecipeLayoutBuilder, recipe: LiquidFuelRecipe, focuses: IFocusGroup): Unit = {
     builder.addSlot(RecipeIngredientRole.INPUT, 52, 2)
-      .addIngredients(VanillaTypes.FLUID, recipe.input.fluids.toList.map(x => new FluidStack(x, 1000)).asJava)
+      .addIngredients(ForgeTypes.FLUID_STACK, recipe.input.fluids.toList.map(x => new FluidStack(x, 1000)).asJava)
       .setFluidRenderer(1000, false, 9, 58)
       .setOverlay(fluidOverlay, 0, 0)
   }

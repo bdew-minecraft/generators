@@ -2,6 +2,7 @@ package net.bdew.generators.jei
 
 import com.mojang.blaze3d.vertex.PoseStack
 import mezz.jei.api.constants.VanillaTypes
+import mezz.jei.api.forge.ForgeTypes
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.drawable.{IDrawable, IDrawableStatic}
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView
@@ -27,9 +28,6 @@ object SyngasRecipeCategory extends IRecipeCategory[CarbonSourceRecipe] {
   override val getRecipeType: RecipeType[CarbonSourceRecipe] =
     RecipeType.create(Generators.ModId, "syngas_conversion", classOf[CarbonSourceRecipe])
 
-  @Deprecated override def getUid: ResourceLocation = getRecipeType.getUid
-  @Deprecated override def getRecipeClass: Class[_ <: CarbonSourceRecipe] = getRecipeType.getRecipeClass
-
   var maxCarbon = 1000f
   var maxSyngas = 1000
 
@@ -52,13 +50,13 @@ object SyngasRecipeCategory extends IRecipeCategory[CarbonSourceRecipe] {
     )
 
   override def getIcon: IDrawable = JEIPlugin.guiHelper.createDrawableIngredient(
-    VanillaTypes.ITEM, new ItemStack(Machines.controllerSyngas.item.get()))
+    VanillaTypes.ITEM_STACK, new ItemStack(Machines.controllerSyngas.item.get()))
 
   override def setRecipe(builder: IRecipeLayoutBuilder, recipe: CarbonSourceRecipe, focuses: IFocusGroup): Unit = {
     builder.addSlot(RecipeIngredientRole.INPUT, 20, 20)
       .addIngredients(recipe.ingredient)
     builder.addSlot(RecipeIngredientRole.OUTPUT, 131, 11)
-      .addIngredient(VanillaTypes.FLUID, new FluidStack(Fluids.syngas.source.get(), (recipe.carbonValue / Config.SyngasProducer.carbonPerMBSyngas()).toInt))
+      .addIngredient(ForgeTypes.FLUID_STACK, new FluidStack(Fluids.syngas.source.get(), (recipe.carbonValue / Config.SyngasProducer.carbonPerMBSyngas()).toInt))
       .setFluidRenderer(maxSyngas, false, 10, 35)
       .setOverlay(fluidOverlay, 0, 0)
   }

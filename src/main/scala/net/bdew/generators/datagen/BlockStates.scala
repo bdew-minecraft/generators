@@ -10,13 +10,14 @@ import net.minecraft.data.DataGenerator
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraftforge.client.model.generators.ConfiguredModel
 import net.minecraftforge.common.data.ExistingFileHelper
+import net.minecraftforge.registries.ForgeRegistries
 
 class BlockStates(gen: DataGenerator, efh: ExistingFileHelper) extends BlockStateGenerator(gen, Generators.ModId, efh) {
   override def registerStatesAndModels(): Unit = {
     Blocks.all.foreach(_.get() match {
       case block: BlockControl =>
-        val modelOff = uncheckedModel("block/" + block.getRegistryName.getPath + "_off")
-        val modelOn = uncheckedModel("block/" + block.getRegistryName.getPath + "_on")
+        val modelOff = uncheckedModel("block/" + ForgeRegistries.BLOCKS.getKey(block).getPath + "_off")
+        val modelOn = uncheckedModel("block/" + ForgeRegistries.BLOCKS.getKey(block).getPath + "_on")
         getVariantBuilder(block)
           .forAllStates(state => {
             val powered = state.getValue(BlockStateProperties.POWERED)
@@ -26,8 +27,8 @@ class BlockStates(gen: DataGenerator, efh: ExistingFileHelper) extends BlockStat
           })
         makeBlockItem(block, modelOff)
       case block: BlockRedstoneSensorModule[_] =>
-        val modelOff = uncheckedModel("block/" + block.getRegistryName.getPath + "_off")
-        val modelOn = uncheckedModel("block/" + block.getRegistryName.getPath + "_on")
+        val modelOff = uncheckedModel("block/" + ForgeRegistries.BLOCKS.getKey(block).getPath + "_off")
+        val modelOn = uncheckedModel("block/" + ForgeRegistries.BLOCKS.getKey(block).getPath + "_on")
         getVariantBuilder(block)
           .forAllStates(state => {
             val facing = state.getValue(BlockStateProperties.FACING)

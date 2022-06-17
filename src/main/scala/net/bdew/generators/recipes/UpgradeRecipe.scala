@@ -28,9 +28,9 @@ class UpgradeRecipeSerializer extends BaseMachineRecipeSerializer[UpgradeRecipe]
   }
 
   override def toNetwork(buffer: FriendlyByteBuf, recipe: UpgradeRecipe): Unit = {
-    buffer.writeRegistryId(recipe.item)
-    buffer.writeRegistryId[Block](recipe.from)
-    buffer.writeRegistryId[Block](recipe.to)
+    buffer.writeRegistryId(ForgeRegistries.ITEMS, recipe.item)
+    buffer.writeRegistryId(ForgeRegistries.BLOCKS, recipe.from)
+    buffer.writeRegistryId(ForgeRegistries.BLOCKS, recipe.to)
   }
 }
 

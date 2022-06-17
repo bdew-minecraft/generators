@@ -12,6 +12,7 @@ import net.bdew.lib.multiblock.gui.WidgetInfo
 import net.bdew.lib.{Client, DecFormat, Text}
 import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.player.Inventory
+import net.minecraftforge.client.RenderProperties
 
 import scala.collection.mutable.ArrayBuffer
 
@@ -21,8 +22,8 @@ class GuiSyngas(container: ContainerSyngas, playerInv: Inventory) extends BaseSc
   val background: Texture = Texture(Generators.ModId, "textures/gui/syngas.png", Rect(0, 0, 176, 175))
 
   val coalTexture: IconWrapper = Texture.block("minecraft:block/coal_block")
-  val steamTexture: Sprite = Texture(Fluids.steam.source.get().getAttributes.getStillTexture)
-  val syngasTexture: Sprite = Texture(Fluids.syngas.source.get().getAttributes.getStillTexture)
+  val steamTexture: Sprite = Texture(RenderProperties.get(Fluids.steam.source.get()).getStillTexture)
+  val syngasTexture: Sprite = Texture(RenderProperties.get(Fluids.syngas.source.get()).getStillTexture)
 
   def bufferTooltip =
     List(

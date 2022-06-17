@@ -6,7 +6,7 @@ object DataGeneration {
   def onGatherData(ev: GatherDataEvent): Unit = {
     val dataGenerator = ev.getGenerator
     val efh = ev.getExistingFileHelper
-    dataGenerator.addProvider(new LootTables(dataGenerator))
-    dataGenerator.addProvider(new BlockStates(dataGenerator, efh))
+    dataGenerator.addProvider(true, new LootTables(dataGenerator))
+    dataGenerator.addProvider(true, new BlockStates(dataGenerator, efh))
   }
 }
