@@ -12,13 +12,13 @@ import net.bdew.lib.power.WidgetPowerGauge
 import net.bdew.lib.{Client, Text}
 import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.player.Inventory
-import net.minecraftforge.client.RenderProperties
+import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions
 
 class GuiSteamTurbine(container: ContainerSteamTurbine, playerInv: Inventory) extends BaseScreen(container, playerInv, container.te.getDisplayName) {
   val te: TileSteamTurbineController = container.te
   val background: Sprite = Texture(Generators.ModId, "textures/gui/turbine.png", Rect(0, 0, 176, 175))
 
-  val steamTexture: Sprite = Texture(RenderProperties.get(Fluids.steam.source.get()).getStillTexture)
+  val steamTexture: Sprite = Texture(IClientFluidTypeExtensions.of(Fluids.steam.source.get()).getStillTexture)
 
   override def init(): Unit = {
     initGui(176, 175)

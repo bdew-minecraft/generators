@@ -12,7 +12,7 @@ import net.bdew.lib.power.WidgetPowerGauge
 import net.bdew.lib.{Client, Text}
 import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.player.Inventory
-import net.minecraftforge.client.RenderProperties
+import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions
 
 class GuiFuelTurbine(container: ContainerFuelTurbine, playerInv: Inventory) extends BaseScreen(container, playerInv, container.te.getDisplayName) {
   val te: TileFuelTurbineController = container.te
@@ -69,8 +69,8 @@ class GuiFuelTurbine(container: ContainerFuelTurbine, playerInv: Inventory) exte
     )
 
     widgets.add(new WidgetRateInfo(Rect(75, 65, 59, 10),
-      if (!te.fuel.getFluid.isEmpty) Texture(RenderProperties.get(te.fuel.getFluid.getFluid).getStillTexture(te.fuel.getFluid)) else Texture(te.resources.disabled),
-      if (!te.fuel.getFluid.isEmpty) Color.fromInt(RenderProperties.get(te.fuel.getFluid.getFluid).getColorTint(te.fuel.getFluid)) else Color.red,
+      if (!te.fuel.getFluid.isEmpty) Texture(IClientFluidTypeExtensions.of(te.fuel.getFluid.getFluid).getStillTexture(te.fuel.getFluid)) else Texture(te.resources.disabled),
+      if (!te.fuel.getFluid.isEmpty) Color.fromInt(IClientFluidTypeExtensions.of(te.fuel.getFluid.getFluid).getTintColor(te.fuel.getFluid)) else Color.red,
       Text.fluidPerTick(te.fuelPerTickAverage.average),
       Text.translate("advgenerators.label.turbine.fuelaverage")))
   }

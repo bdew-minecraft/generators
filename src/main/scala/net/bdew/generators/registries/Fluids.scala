@@ -5,7 +5,7 @@ import net.bdew.lib.managers.FluidManager
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.{FluidTags, TagKey}
 import net.minecraft.world.level.material.Fluid
-import net.minecraftforge.client.IFluidTypeRenderProperties
+import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions
 import net.minecraftforge.fluids.{FluidType, ForgeFlowingFluid}
 
 import java.util.function.Consumer
@@ -16,8 +16,9 @@ object Fluids extends FluidManager(Blocks, Items) {
 
   val syngas: Fluids.FluidDef[FluidType, ForgeFlowingFluid.Source, ForgeFlowingFluid.Flowing] =
     define("syngas", () => new FluidType(gasProps.descriptionId("block.advgenerators.syngas")) {
-      override def initializeClient(consumer: Consumer[IFluidTypeRenderProperties]): Unit = {
-        consumer.accept(new IFluidTypeRenderProperties() {
+
+      override def initializeClient(consumer: Consumer[IClientFluidTypeExtensions]): Unit = {
+        consumer.accept(new IClientFluidTypeExtensions() {
           private val MILK_STILL = new ResourceLocation(Generators.ModId, "blocks/syngas/still")
           private val MILK_FLOW = new ResourceLocation(Generators.ModId, "blocks/syngas/flowing")
           override def getStillTexture: ResourceLocation = MILK_STILL
@@ -31,12 +32,12 @@ object Fluids extends FluidManager(Blocks, Items) {
 
   val steam: Fluids.FluidDef[FluidType, ForgeFlowingFluid.Source, ForgeFlowingFluid.Flowing] =
     define("steam", () => new FluidType(gasProps.descriptionId("block.advgenerators.steam")) {
-      override def initializeClient(consumer: Consumer[IFluidTypeRenderProperties]): Unit = {
-        consumer.accept(new IFluidTypeRenderProperties() {
-          private val MILK_STILL = new ResourceLocation(Generators.ModId, "blocks/steam/still")
-          private val MILK_FLOW = new ResourceLocation(Generators.ModId, "blocks/steam/flowing")
-          override def getStillTexture: ResourceLocation = MILK_STILL
-          override def getFlowingTexture: ResourceLocation = MILK_FLOW
+      override def initializeClient(consumer: Consumer[IClientFluidTypeExtensions]): Unit = {
+        consumer.accept(new IClientFluidTypeExtensions() {
+          private val STILL = new ResourceLocation(Generators.ModId, "blocks/steam/still")
+          private val FLOW = new ResourceLocation(Generators.ModId, "blocks/steam/flowing")
+          override def getStillTexture: ResourceLocation = STILL
+          override def getFlowingTexture: ResourceLocation = FLOW
         })
       }
     },
