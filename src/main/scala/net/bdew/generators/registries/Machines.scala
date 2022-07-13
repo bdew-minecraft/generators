@@ -13,6 +13,7 @@ import net.bdew.generators.modules.fluidInput.{BlockFluidInput, TileFluidInput}
 import net.bdew.generators.modules.fluidOutputSelect.{BlockFluidOutputSelect, TileFluidOutputSelect}
 import net.bdew.generators.modules.forgeOutput.{BlockForgeOutput, BlockItemForgeOutput, TileForgeOutput}
 import net.bdew.generators.modules.fuelTank.{BlockFuelTank, BlockItemFuelTank, TileFuelTank}
+import net.bdew.generators.modules.gasInput.{BlockGasInput, TileGasInput}
 import net.bdew.generators.modules.heatingChamber.{BlockHeatingChamber, TileHeatingChamber}
 import net.bdew.generators.modules.itemInput.{BlockItemInput, TileItemInput}
 import net.bdew.generators.modules.itemOutput.{BlockItemOutput, TileItemOutput}
@@ -23,6 +24,8 @@ import net.bdew.generators.modules.turbine.{BlockItemTurbine, BlockTurbine, Tile
 import net.bdew.lib.multiblock.data.{OutputConfigFluidSlots, OutputConfigManager}
 import net.bdew.lib.multiblock.item.{ControllerBlockItem, ModuleBlockItem}
 import net.bdew.lib.multiblock.{MultiblockMachineManager, ResourceProvider}
+import net.minecraftforge.data.loading.DatagenModLoader
+import net.minecraftforge.fml.ModList
 
 object Machines extends MultiblockMachineManager(Blocks) {
   override def resources: ResourceProvider = GeneratorsResourceProvider
@@ -139,9 +142,9 @@ object Machines extends MultiblockMachineManager(Blocks) {
   val moduleSensor: Machines.ModuleDef[BlockSensor, TileSensor, ModuleBlockItem] =
     registerModule("sensor", () => new BlockSensor, new TileSensor(_, _, _))
 
-  //  if (ModList.get.isLoaded("mekanism") || DatagenModLoader.isRunningDataGen) {
-  //    registerModule("gas_input", () => new BlockGasInput, new TileGasInput(_,_,_))
-  //  }
+  if (ModList.get.isLoaded("mekanism") || DatagenModLoader.isRunningDataGen) {
+    registerModule("gas_input", () => new BlockGasInput, new TileGasInput(_, _, _))
+  }
 
   OutputConfigManager.register(OutputSlotsSyngas.outputConfigId, () => new OutputConfigFluidSlots(OutputSlotsSyngas))
   OutputConfigManager.register(OutputSlotsExchanger.outputConfigId, () => new OutputConfigFluidSlots(OutputSlotsExchanger))

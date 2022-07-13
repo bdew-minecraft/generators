@@ -122,7 +122,7 @@ dependencies {
     }
 
     compileOnly fg.deobf("mezz.jei:jei-${config.minecraft.version}:${config.jei.version}:api")
-    //compileOnly "mekanism:Mekanism:${config.mekanism.version}:api"
+    compileOnly "mekanism:Mekanism:${config.mekanism.version}:api"
 }
 
 jar {
