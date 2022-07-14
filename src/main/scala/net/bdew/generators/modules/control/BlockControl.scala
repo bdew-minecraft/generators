@@ -26,7 +26,7 @@ class BlockControl extends BaseModule[TileControl](Modules.control) {
   override def activateGui(state: BlockState, world: Level, pos: BlockPos, controller: TileController, player: Player): Boolean = {
     player match {
       case serverPlayer: ServerPlayer =>
-        NetworkHooks.openGui(serverPlayer, getTE(world, pos), pos)
+        NetworkHooks.openScreen(serverPlayer, getTE(world, pos), pos)
         true
       case _ => false
     }
