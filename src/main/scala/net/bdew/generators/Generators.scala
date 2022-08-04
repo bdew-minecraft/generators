@@ -8,9 +8,7 @@ import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext
 
 @Mod(Generators.ModId)
-object Generators {
-  final val ModId = "advgenerators"
-
+class Generators {
   Config.init()
   Items.init()
   Blocks.init()
@@ -21,4 +19,8 @@ object Generators {
   NetworkHandler.init()
 
   FMLJavaModLoadingContext.get().getModEventBus.addListener(DataGeneration.onGatherData)
+}
+
+object Generators {
+  final val ModId = "advgenerators"
 }
