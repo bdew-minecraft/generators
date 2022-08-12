@@ -10,6 +10,7 @@ buildscript {
 
 plugins {
     id "com.matthewprenger.cursegradle" version "1.4.0"
+    id "com.modrinth.minotaur" version "2.+"
 }
 
 apply plugin: 'scala'
@@ -176,5 +177,20 @@ curseforge {
             optionalDependency 'mekanism'
             optionalDependency 'thermal-expansion'
         }
+    }
+}
+
+modrinth {
+    token = project.hasProperty("modrinthApiKey") ? project.modrinthApiKey : ""
+    projectId = config.modrinth.id
+    versionName = "${simpleVersion} (MC ${config.minecraft.version})"
+    versionNumber = simpleVersion
+    versionType = "alpha"
+    uploadFile = jar
+    gameVersions = [config.minecraft.version]
+    changelog = project.hasProperty("changelog") ? project.changelog : "No changelog available"
+    dependencies {
+        required.project "scalable-cats-force"
+        required.project "bdlib"
     }
 }
