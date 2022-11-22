@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "ic2"
+    }
+  ],
+  "pattern": [
+    "XXX",
+    "XRX",
+    "XXX"
+  ],
+  "key": {
+    "X": {
+      "item": "ic2:plate_advanced_alloy"
+    },
+    "R": {
+      "item": "advgenerators:turbine_rotor_tier4"
+    }
+  },
+  "result": {
+    "item": "advgenerators:turbine_rotor_tier5",
+    "count": 1
+  }
+}

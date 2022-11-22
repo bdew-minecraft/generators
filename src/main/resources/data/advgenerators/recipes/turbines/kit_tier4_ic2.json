@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "ic2"
+    }
+  ],
+  "pattern": [
+    "XXX",
+    "XRX",
+    "XXX"
+  ],
+  "key": {
+    "X": {
+      "tag": "forge:ingots/refined_iron"
+    },
+    "R": {
+      "item": "advgenerators:upgrade_kit"
+    }
+  },
+  "result": {
+    "item": "advgenerators:turbine_kit_tier4",
+    "count": 1
+  }
+}

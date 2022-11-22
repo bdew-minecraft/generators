@@ -4,6 +4,7 @@ import net.bdew.generators.Generators
 import net.bdew.generators.modules.control.BlockControl
 import net.bdew.generators.registries.Blocks
 import net.bdew.lib.datagen.BlockStateGenerator
+import net.bdew.lib.rotate.StatefulBlockFacing
 import net.bdew.lib.sensors.multiblock.BlockRedstoneSensorModule
 import net.minecraft.core.Direction
 import net.minecraft.data.DataGenerator
@@ -46,6 +47,24 @@ class BlockStates(gen: DataGenerator, efh: ExistingFileHelper) extends BlockStat
             builder.build()
           })
         makeBlockItem(block, modelOff)
+      case block: StatefulBlockFacing =>
+        val model = uncheckedModel("block/" + ForgeRegistries.BLOCKS.getKey(block).getPath)
+        getVariantBuilder(block)
+          .forAllStates(state => {
+            val facing = block.getFacing(state)
+            val builder = ConfiguredModel.builder()
+              .modelFile(model)
+            facing match {
+              case Direction.UP => builder.rotationX(270)
+              case Direction.DOWN => builder.rotationX(90)
+              case Direction.SOUTH => builder.rotationY(180)
+              case Direction.WEST => builder.rotationY(270)
+              case Direction.EAST => builder.rotationY(90)
+              case Direction.NORTH => //nothing
+            }
+            builder.build()
+          })
+        makeBlockItem(block, model)
       case x => makeBlock(x)
     })
   }

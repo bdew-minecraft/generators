@@ -4,6 +4,7 @@ import net.bdew.generators.controllers.exchanger.ConfigExchanger
 import net.bdew.generators.controllers.steam.ConfigSteamTurbine
 import net.bdew.generators.controllers.syngas.ConfigSyngas
 import net.bdew.generators.controllers.turbine.ConfigFuelTurbine
+import net.bdew.generators.integration.IntegrationConfig
 import net.bdew.lib.config.ConfigSection
 import net.minecraftforge.common.ForgeConfigSpec
 import net.minecraftforge.fml.ModLoadingContext
@@ -17,6 +18,8 @@ object Config {
   val SyngasProducer: ConfigSyngas = ConfigSection(commonBuilder, "SyngasProducer", new ConfigSyngas(commonBuilder))
   val HeatExchanger: ConfigExchanger = ConfigSection(commonBuilder, "HeatExchanger", new ConfigExchanger(commonBuilder))
   val Modules: ModulesConfig = ConfigSection(commonBuilder, "Modules", new ModulesConfig(commonBuilder))
+
+  val Integration: IntegrationConfig = ConfigSection(commonBuilder, "Integration", new IntegrationConfig(commonBuilder))
 
   val COMMON: ForgeConfigSpec = commonBuilder.build()
 

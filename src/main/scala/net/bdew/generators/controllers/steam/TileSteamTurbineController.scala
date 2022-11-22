@@ -3,6 +3,7 @@ package net.bdew.generators.controllers.steam
 import net.bdew.generators.GeneratorsResourceProvider
 import net.bdew.generators.config.Config
 import net.bdew.generators.control.{CIControl, ControlActions}
+import net.bdew.generators.controllers.CIPowerAccess
 import net.bdew.generators.modules.powerCapacitor.BlockCapacitor
 import net.bdew.generators.modules.turbine.BlockTurbine
 import net.bdew.generators.registries.Fluids
@@ -21,8 +22,6 @@ import net.bdew.lib.tile.TileExtended
 import net.bdew.lib.{Misc, Text}
 import net.minecraft.core.BlockPos
 import net.minecraft.network.chat.Component
-import net.minecraft.resources.ResourceLocation
-import net.minecraft.tags.FluidTags
 import net.minecraft.world.entity.player.{Inventory, Player}
 import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.level.block.entity.{BlockEntity, BlockEntityType}
@@ -32,7 +31,7 @@ import net.minecraftforge.fluids.capability.IFluidHandler
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction
 
 class TileSteamTurbineController(teType: BlockEntityType[_], pos: BlockPos, state: BlockState) extends TileExtended(teType, pos, state)
-  with TileControllerGui with CIPowerOutput with CIFluidInput with CIOutputFaces with CIRedstoneSensors with CIControl {
+  with TileControllerGui with CIPowerOutput with CIFluidInput with CIOutputFaces with CIRedstoneSensors with CIControl with CIPowerAccess {
 
   val cfg: ConfigSteamTurbine = Config.SteamTurbine
   val resources: ResourceProvider = GeneratorsResourceProvider

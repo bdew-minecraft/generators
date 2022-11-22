@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "ic2"
+    }
+  ],
+  "pattern": [
+    "IDI",
+    "IXI",
+    "IDI"
+  ],
+  "key": {
+    "X": {
+      "item": "advgenerators:power_capacitor_tier1"
+    },
+    "I": {
+      "tag": "forge:ingots/refined_iron"
+    },
+    "D": {
+      "item": "ic2:energy_crystal"
+    }
+  },
+  "result": {
+    "item": "advgenerators:power_capacitor_tier2"
+  }
+}
