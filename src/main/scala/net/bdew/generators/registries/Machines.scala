@@ -145,6 +145,10 @@ object Machines extends MultiblockMachineManager(Blocks) {
     MekanismIntegration.registerMachines()
   }
 
+  if (IC2CIntegration.isAvailable) {
+    IC2CIntegration.registerMachines()
+  }
+
   OutputConfigManager.register(OutputSlotsSyngas.outputConfigId, () => new OutputConfigFluidSlots(OutputSlotsSyngas))
   OutputConfigManager.register(OutputSlotsExchanger.outputConfigId, () => new OutputConfigFluidSlots(OutputSlotsExchanger))
 }

@@ -198,6 +198,7 @@
   "advgenerators.recipe.exchanger.cooling": "Heat Exchanger - Cooling",
   "advgenerators.recipe.upgrade": "In-world upgrade",
   "bdlib.unit.carbon": "Carbon",
+  "bdlib.unit.eu": "EU",
   "bdlib.unit.carbon_short": "C",
   "bdlib.unit.hu": "HU",
   "bdlib.unit.rpm": "RPM"

@@ -3,6 +3,7 @@ package net.bdew.generators.controllers.turbine
 import net.bdew.generators.GeneratorsResourceProvider
 import net.bdew.generators.config.{Config, TurbineFuelRegistry}
 import net.bdew.generators.control.{CIControl, ControlActions}
+import net.bdew.generators.controllers.CIPowerAccess
 import net.bdew.generators.modules.powerCapacitor.BlockCapacitor
 import net.bdew.generators.modules.turbine.BlockTurbine
 import net.bdew.generators.registries.Modules
@@ -31,7 +32,7 @@ import net.minecraftforge.fluids.capability.IFluidHandler
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction
 
 class TileFuelTurbineController(teType: BlockEntityType[_], pos: BlockPos, state: BlockState) extends TileExtended(teType, pos, state)
-  with TileControllerGui with CIFluidInput with CIOutputFaces with CIPowerOutput with CIRedstoneSensors with CIControl {
+  with TileControllerGui with CIFluidInput with CIOutputFaces with CIPowerOutput with CIRedstoneSensors with CIControl with CIPowerAccess {
 
   val cfg: ConfigFuelTurbine = Config.FuelTurbine
   val resources: ResourceProvider = GeneratorsResourceProvider

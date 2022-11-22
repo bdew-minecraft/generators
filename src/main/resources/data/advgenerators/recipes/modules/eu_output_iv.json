@@ -1,0 +1,34 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "ic2"
+    }
+  ],
+  "pattern": [
+    "FMF",
+    "CPC",
+    "FWF"
+  ],
+  "key": {
+    "C": {
+      "item": "ic2:super_cable_item"
+    },
+    "M": {
+      "item": "advgenerators:power_io"
+    },
+    "F": {
+      "item": "advgenerators:iron_frame"
+    },
+    "W": {
+      "item": "advgenerators:iron_wiring"
+    },
+    "P": {
+      "item": "advgenerators:iron_tubing"
+    }
+  },
+  "result": {
+    "item": "advgenerators:eu_output_iv"
+  }
+}
