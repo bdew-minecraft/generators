@@ -2,14 +2,11 @@ package net.bdew.generators.registries
 
 import net.bdew.generators.items.UpgradeKit
 import net.bdew.lib.managers.ItemManager
-import net.minecraft.world.item.{CreativeModeTab, Item, ItemStack}
+import net.minecraft.network.chat.Component
+import net.minecraft.world.item.Item
 import net.minecraftforge.registries.RegistryObject
 
-object CreativeTab extends CreativeModeTab("bdew.generators") {
-  override def makeIcon(): ItemStack = new ItemStack(Machines.controllerFuelTurbine.item.get())
-}
-
-object Items extends ItemManager(CreativeTab) {
+object Items extends ItemManager {
   def craftingItemProps: Item.Properties = props
   def upgradeKitProps: Item.Properties = props
 
@@ -38,4 +35,11 @@ object Items extends ItemManager(CreativeTab) {
 
   register("capacitor_kit_tier2", () => new UpgradeKit)
   register("capacitor_kit_tier3", () => new UpgradeKit)
+
+  creativeTabs.registerTab(
+    "main",
+    Component.translatable("itemGroup.bdew.generators"),
+    Machines.controllerFuelTurbine.block,
+    all
+  )
 }

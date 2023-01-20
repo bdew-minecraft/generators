@@ -42,10 +42,10 @@ object Textures {
 }
 
 object GeneratorsResourceProvider extends ResourceProvider {
-  override def edge = new ResourceLocation("advgenerators:blocks/connected/edge")
-  override def arrow = new ResourceLocation("advgenerators:blocks/connected/arrow")
-  override def output = new ResourceLocation("advgenerators:blocks/connected/output")
-  override def disabled = new ResourceLocation("advgenerators:blocks/connected/disabled")
+  override def edge = new ResourceLocation("advgenerators:block/connected/edge")
+  override def arrow = new ResourceLocation("advgenerators:block/connected/arrow")
+  override def output = new ResourceLocation("advgenerators:block/connected/output")
+  override def disabled = new ResourceLocation("advgenerators:block/connected/disabled")
 
   override def btRsOff: Texture = Textures.Button16.rsOff
   override def btRsOn: Texture = Textures.Button16.rsOn

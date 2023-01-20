@@ -7,13 +7,13 @@ import net.bdew.lib.datagen.BlockStateGenerator
 import net.bdew.lib.rotate.StatefulBlockFacing
 import net.bdew.lib.sensors.multiblock.BlockRedstoneSensorModule
 import net.minecraft.core.Direction
-import net.minecraft.data.DataGenerator
+import net.minecraft.data.PackOutput
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraftforge.client.model.generators.ConfiguredModel
 import net.minecraftforge.common.data.ExistingFileHelper
 import net.minecraftforge.registries.ForgeRegistries
 
-class BlockStates(gen: DataGenerator, efh: ExistingFileHelper) extends BlockStateGenerator(gen, Generators.ModId, efh) {
+class BlockStates(gen: PackOutput, efh: ExistingFileHelper) extends BlockStateGenerator(gen, Generators.ModId, efh) {
   override def registerStatesAndModels(): Unit = {
     Blocks.all.foreach(_.get() match {
       case block: BlockControl =>

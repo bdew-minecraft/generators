@@ -19,8 +19,8 @@ object Fluids extends FluidManager(Blocks, Items) {
 
       override def initializeClient(consumer: Consumer[IClientFluidTypeExtensions]): Unit = {
         consumer.accept(new IClientFluidTypeExtensions() {
-          private val MILK_STILL = new ResourceLocation(Generators.ModId, "blocks/syngas/still")
-          private val MILK_FLOW = new ResourceLocation(Generators.ModId, "blocks/syngas/flowing")
+          private val MILK_STILL = new ResourceLocation(Generators.ModId, "block/syngas/still")
+          private val MILK_FLOW = new ResourceLocation(Generators.ModId, "block/syngas/flowing")
           override def getStillTexture: ResourceLocation = MILK_STILL
           override def getFlowingTexture: ResourceLocation = MILK_FLOW
         })
@@ -34,8 +34,8 @@ object Fluids extends FluidManager(Blocks, Items) {
     define("steam", () => new FluidType(gasProps.descriptionId("block.advgenerators.steam")) {
       override def initializeClient(consumer: Consumer[IClientFluidTypeExtensions]): Unit = {
         consumer.accept(new IClientFluidTypeExtensions() {
-          private val STILL = new ResourceLocation(Generators.ModId, "blocks/steam/still")
-          private val FLOW = new ResourceLocation(Generators.ModId, "blocks/steam/flowing")
+          private val STILL = new ResourceLocation(Generators.ModId, "block/steam/still")
+          private val FLOW = new ResourceLocation(Generators.ModId, "block/steam/flowing")
           override def getStillTexture: ResourceLocation = STILL
           override def getFlowingTexture: ResourceLocation = FLOW
         })

@@ -4,18 +4,18 @@ import mekanism.api.Action
 import mekanism.api.chemical.gas.GasStack
 import mekanism.api.inventory.IgnoredIInventory
 import mekanism.api.recipes.RotaryRecipe
-import net.minecraft.core.Registry
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.Level
 import net.minecraftforge.fluids.FluidStack
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction
+import net.minecraftforge.registries.ForgeRegistries
 
 import scala.jdk.CollectionConverters._
 
 object GasConversion {
   val rotaryRecipeType: RecipeType[RotaryRecipe] =
-    Registry.RECIPE_TYPE.get(new ResourceLocation("mekanism", "rotary")).asInstanceOf[RecipeType[RotaryRecipe]]
+    ForgeRegistries.RECIPE_TYPES.getValue(new ResourceLocation("mekanism", "rotary")).asInstanceOf[RecipeType[RotaryRecipe]]
 
   def getRecipes(world: Level): List[RotaryRecipe] =
     world.getRecipeManager.getAllRecipesFor[IgnoredIInventory, RotaryRecipe](rotaryRecipeType).asScala.toList
