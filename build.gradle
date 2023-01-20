@@ -23,7 +23,9 @@ file "build.properties" withReader {
     ext.config = new ConfigSlurper().parse prop
 }
 
-if (project.hasProperty('buildnum')) {
+ext.buildnum = System.getenv('BUILDNUM')
+
+if (buildnum) {
     ext.simpleVersion = "${config.mod.version}.${project.buildnum}"
 } else {
     ext.simpleVersion = "${config.mod.version}-DEV"
@@ -85,10 +87,6 @@ sourceSets.main.resources {
 
 repositories {
     maven {
-        name = "bdew"
-        url = "https://jenkins.bdew.net/maven"
-    }
-    maven {
         name = "Azure-SLP"
         url = uri("https://pkgs.dev.azure.com/Kotori316/minecraft/_packaging/mods/maven/v1")
         content {
@@ -103,6 +101,10 @@ repositories {
     }
     maven {
         url "https://cursemaven.com"
+    }
+    maven {
+        name = "bdew-mvn"
+        url "https://mvn.bdew.net/mc"
     }
     repositories.stream().filter { it instanceof MavenArtifactRepository }.forEach { repo ->
         repo.content {
@@ -158,18 +160,23 @@ publishing {
     }
     repositories {
         maven {
-            url "file://var/www/maven"
+            name = "bdew-mvn"
+            url "https://mvn.bdew.net/mc"
+            credentials {
+                username = System.getenv("MAVEN_USER")
+                password = System.getenv("MAVEN_PASS")
+            }
         }
     }
 }
 
 curseforge {
-    apiKey = project.hasProperty("curseForgeApiKey") ? project.curseForgeApiKey : ""
+    apiKey = System.getenv('KEY_CURSEFORGE') ?: ""
     project {
         id = config.curseforge.id
 
         releaseType = "alpha"
-        changelog = project.hasProperty("changelog") ? project.changelog : "No changelog available"
+        changelog = file("changelog.md")
 
         addGameVersion config.minecraft.version
 
@@ -189,14 +196,14 @@ curseforge {
 }
 
 modrinth {
-    token = project.hasProperty("modrinthApiKey") ? project.modrinthApiKey : ""
+    token = System.getenv('KEY_MODRINTH') ?: ""
     projectId = config.modrinth.id
     versionName = "${simpleVersion} (MC ${config.minecraft.version})"
     versionNumber = simpleVersion
     versionType = "alpha"
     uploadFile = jar
     gameVersions = [config.minecraft.version]
-    changelog = project.hasProperty("changelog") ? project.changelog : "No changelog available"
+    changelog = file("changelog.md").text
     dependencies {
         required.project "scalable-cats-force"
         required.project "bdlib"
