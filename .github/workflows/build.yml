@@ -22,6 +22,15 @@ jobs:
       with:
         java-version: '17'
         distribution: 'adopt'      
+
+    - name: Data Generation
+      uses: gradle/gradle-build-action@v2
+      with:
+        arguments: runData
+        cache-read-only: false
+      env:
+        BUILDNUM: ${{ github.run_number }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         
     - name: Build
       uses: gradle/gradle-build-action@v2
