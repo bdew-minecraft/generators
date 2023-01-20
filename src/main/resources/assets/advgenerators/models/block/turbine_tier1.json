@@ -2,7 +2,7 @@
   "loader": "advgenerators:multiblock_model",
   "parent": "minecraft:block/cube_top",
   "textures": {
-    "side": "advgenerators:blocks/turbine/tier1/main",
-    "up": "advgenerators:blocks/turbine/tier1/top"
+    "side": "advgenerators:block/turbine/tier1/main",
+    "up": "advgenerators:block/turbine/tier1/top"
   }
 }

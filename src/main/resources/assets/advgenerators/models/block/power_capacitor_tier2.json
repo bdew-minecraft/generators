@@ -2,6 +2,6 @@
   "loader": "advgenerators:multiblock_model",
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "advgenerators:blocks/powercapacitor/tier2"
+    "all": "advgenerators:block/powercapacitor/tier2"
   }
 }

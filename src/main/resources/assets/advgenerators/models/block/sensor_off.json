@@ -2,9 +2,9 @@
   "loader": "advgenerators:multiblock_model",
   "parent": "advgenerators:block/rotated",
   "textures": {
-    "front": "advgenerators:blocks/sensor/front_off",
-    "side": "advgenerators:blocks/sensor/side_off",
-    "back": "advgenerators:blocks/sensor/back",
-    "particle": "advgenerators:blocks/sensor/back"
+    "front": "advgenerators:block/sensor/front_off",
+    "side": "advgenerators:block/sensor/side_off",
+    "back": "advgenerators:block/sensor/back",
+    "particle": "advgenerators:block/sensor/back"
   }
 }

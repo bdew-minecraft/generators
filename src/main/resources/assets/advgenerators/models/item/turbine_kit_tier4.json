@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "advgenerators:items/turbine/tier4/kit"
+    "layer0": "advgenerators:item/turbine/tier4/kit"
   }
 }

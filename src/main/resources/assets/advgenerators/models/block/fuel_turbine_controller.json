@@ -2,8 +2,8 @@
   "loader": "advgenerators:multiblock_model",
   "parent": "minecraft:block/cube_bottom_top",
   "textures": {
-    "side": "advgenerators:blocks/turbinecontroller/main",
-    "top": "advgenerators:blocks/turbinecontroller/top",
-    "bottom": "advgenerators:blocks/turbinecontroller/bottom"
+    "side": "advgenerators:block/turbinecontroller/main",
+    "top": "advgenerators:block/turbinecontroller/top",
+    "bottom": "advgenerators:block/turbinecontroller/bottom"
   }
 }

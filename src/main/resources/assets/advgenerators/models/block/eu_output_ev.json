@@ -2,9 +2,9 @@
   "loader": "advgenerators:multiblock_model",
   "parent": "advgenerators:block/rotated",
   "textures": {
-    "front": "advgenerators:blocks/euoutput/front_ev",
-    "side": "advgenerators:blocks/euoutput/main",
-    "back": "advgenerators:blocks/euoutput/main",
-    "particle": "advgenerators:blocks/euoutput/main"
+    "front": "advgenerators:block/euoutput/front_ev",
+    "side": "advgenerators:block/euoutput/main",
+    "back": "advgenerators:block/euoutput/main",
+    "particle": "advgenerators:block/euoutput/main"
   }
 }

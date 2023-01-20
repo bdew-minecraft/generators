@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "advgenerators:items/capacitorkit/tier3"
+    "layer0": "advgenerators:item/capacitorkit/tier3"
   }
 }

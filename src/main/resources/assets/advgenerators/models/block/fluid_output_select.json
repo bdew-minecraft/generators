@@ -2,6 +2,6 @@
   "loader": "advgenerators:multiblock_model",
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "advgenerators:blocks/fluidoutputselect/main"
+    "all": "advgenerators:block/fluidoutputselect/main"
   }
 }

@@ -2,6 +2,6 @@
   "loader": "advgenerators:multiblock_model",
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "advgenerators:blocks/efficiencyupgradetier1/main"
+    "all": "advgenerators:block/efficiencyupgradetier1/main"
   }
 }
