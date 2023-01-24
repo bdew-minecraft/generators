@@ -1,0 +1,14 @@
+{
+  "sources": [
+    {
+      "type": "directory",
+      "source": "sensor",
+      "prefix": "sensor/"
+    },
+    {
+      "type": "directory",
+      "source": "control",
+      "prefix": "control/"
+    }
+  ]
+}
