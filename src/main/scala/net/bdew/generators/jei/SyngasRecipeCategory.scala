@@ -1,6 +1,5 @@
 package net.bdew.generators.jei
 
-import com.mojang.blaze3d.vertex.PoseStack
 import mezz.jei.api.constants.VanillaTypes
 import mezz.jei.api.forge.ForgeTypes
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
@@ -15,6 +14,7 @@ import net.bdew.generators.recipes.CarbonSourceRecipe
 import net.bdew.generators.registries.{Fluids, Machines, Recipes}
 import net.bdew.lib.Text
 import net.bdew.lib.recipes.RecipeReloadListener
+import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
@@ -61,21 +61,22 @@ object SyngasRecipeCategory extends IRecipeCategory[CarbonSourceRecipe] {
       .setOverlay(fluidOverlay, 0, 0)
   }
 
-  override def draw(recipe: CarbonSourceRecipe, recipeSlotsView: IRecipeSlotsView, stack: PoseStack, mouseX: Double, mouseY: Double): Unit = {
+
+  override def draw(recipe: CarbonSourceRecipe, recipeSlotsView: IRecipeSlotsView, guiGraphics: GuiGraphics, mouseX: Double, mouseY: Double): Unit = {
     val fullHeight = 35
     var fillHeight = (fullHeight * recipe.carbonValue / maxCarbon).ceil.toInt
     var pos = 0
     while (fillHeight > 0) {
       if (fillHeight > 16) {
-        coal.draw(stack, 77, 11 + fullHeight - pos - 16)
+        coal.draw(guiGraphics, 77, 11 + fullHeight - pos - 16)
         fillHeight -= 16
         pos += 16
       } else {
-        coal.draw(stack, 77, 11 + fullHeight - pos - 16, 16 - fillHeight, 0, 0, 0)
+        coal.draw(guiGraphics, 77, 11 + fullHeight - pos - 16, 16 - fillHeight, 0, 0, 0)
         fillHeight = 0
       }
     }
-    fluidOverlay.draw(stack, 77, 11)
+    fluidOverlay.draw(guiGraphics, 77, 11)
   }
 
   override def getTooltipStrings(recipe: CarbonSourceRecipe, recipeSlotsView: IRecipeSlotsView, mouseX: Double, mouseY: Double): util.List[Component] = {

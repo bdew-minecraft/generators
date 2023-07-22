@@ -1,6 +1,5 @@
 package net.bdew.generators.jei
 
-import com.mojang.blaze3d.vertex.PoseStack
 import mezz.jei.api.constants.VanillaTypes
 import mezz.jei.api.forge.ForgeTypes
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
@@ -15,6 +14,7 @@ import net.bdew.generators.registries.{Machines, Recipes}
 import net.bdew.lib.gui.Color
 import net.bdew.lib.recipes.{MixedIngredient, RecipeReloadListener, ResourceOutput}
 import net.bdew.lib.{Client, Text}
+import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
@@ -70,8 +70,8 @@ object ExchangerCoolingRecipeCategory extends IRecipeCategory[ExchangerRecipeCoo
     }
   }
 
-  override def draw(recipe: ExchangerRecipeCooling, recipeSlotsView: IRecipeSlotsView, stack: PoseStack, mouseX: Double, mouseY: Double): Unit = {
-    Client.fontRenderer.draw(stack, Text.amount(1000 / recipe.inPerHU, "hu"), 118, 50, Color.darkGray.asRGB)
+  override def draw(recipe: ExchangerRecipeCooling, recipeSlotsView: IRecipeSlotsView, guiGraphics: GuiGraphics, mouseX: Double, mouseY: Double): Unit = {
+    guiGraphics.drawString(Client.fontRenderer, Text.amount(1000 / recipe.inPerHU, "hu"), 118, 50, Color.darkGray.asRGB)
   }
 
   def initRecipes(reg: IRecipeRegistration): Unit = {

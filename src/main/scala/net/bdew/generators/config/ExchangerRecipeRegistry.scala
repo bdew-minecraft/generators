@@ -4,13 +4,14 @@ import net.bdew.generators.recipes.ExchangerRecipe
 import net.bdew.generators.registries.Recipes
 import net.bdew.lib.recipes.RecipeReloadListener
 import net.bdew.lib.resource.Resource
+import net.minecraft.core.RegistryAccess
 import net.minecraft.world.item.crafting.RecipeManager
 
 object ExchangerRecipeRegistry {
   var coolers = Set.empty[ExchangerRecipe]
   var heaters = Set.empty[ExchangerRecipe]
 
-  def refreshRecipes(manager: RecipeManager): Unit = {
+  def refreshRecipes(manager: RecipeManager, ra: RegistryAccess): Unit = {
     coolers = Recipes.exchangerHeating.from(manager).toSet
     heaters = Recipes.exchangerCooling.from(manager).toSet
   }

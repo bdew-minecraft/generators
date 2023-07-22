@@ -1,6 +1,5 @@
 package net.bdew.generators.jei
 
-import com.mojang.blaze3d.vertex.PoseStack
 import mezz.jei.api.constants.VanillaTypes
 import mezz.jei.api.forge.ForgeTypes
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
@@ -14,6 +13,7 @@ import net.bdew.generators.recipes.LiquidFuelRecipe
 import net.bdew.generators.registries.{Machines, Recipes}
 import net.bdew.lib.Text
 import net.bdew.lib.recipes.RecipeReloadListener
+import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
@@ -57,8 +57,8 @@ object TurbineFuelRecipeCategory extends IRecipeCategory[LiquidFuelRecipe] {
       .setOverlay(fluidOverlay, 0, 0)
   }
 
-  override def draw(recipe: LiquidFuelRecipe, recipeSlotsView: IRecipeSlotsView, stack: PoseStack, mouseX: Double, mouseY: Double): Unit = {
-    powerFill.draw(stack, 104, 2, ((1 - (recipe.fePerMb * 1000 / maxPower)) * 58).floor.toInt, 0, 0, 0)
+  override def draw(recipe: LiquidFuelRecipe, recipeSlotsView: IRecipeSlotsView, guiGraphics: GuiGraphics, mouseX: Double, mouseY: Double): Unit = {
+    powerFill.draw(guiGraphics, 104, 2, ((1 - (recipe.fePerMb * 1000 / maxPower)) * 58).floor.toInt, 0, 0, 0)
   }
 
   override def getTooltipStrings(recipe: LiquidFuelRecipe, recipeSlotsView: IRecipeSlotsView, mouseX: Double, mouseY: Double): util.List[Component] = {

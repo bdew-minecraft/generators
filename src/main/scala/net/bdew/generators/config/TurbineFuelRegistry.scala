@@ -3,6 +3,7 @@ package net.bdew.generators.config
 import net.bdew.generators.recipes.LiquidFuelRecipe
 import net.bdew.generators.registries.Recipes
 import net.bdew.lib.recipes.RecipeReloadListener
+import net.minecraft.core.RegistryAccess
 import net.minecraft.world.item.crafting.RecipeManager
 import net.minecraft.world.level.material.Fluid
 import net.minecraftforge.fluids.FluidStack
@@ -10,7 +11,7 @@ import net.minecraftforge.fluids.FluidStack
 object TurbineFuelRegistry {
   var recipes = Set.empty[LiquidFuelRecipe]
 
-  def refreshRecipes(manager: RecipeManager): Unit = {
+  def refreshRecipes(manager: RecipeManager, ra: RegistryAccess): Unit = {
     recipes = Recipes.liquidFuel.from(manager).toSet
   }
 

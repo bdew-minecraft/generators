@@ -1,10 +1,10 @@
 package net.bdew.generators.sensor.data
 
-import com.mojang.blaze3d.vertex.PoseStack
 import net.bdew.generators.sensor.{CastSensor, Icons}
 import net.bdew.lib.gui.{DrawTarget, Rect}
 import net.bdew.lib.resource.DataSlotResource
 import net.bdew.lib.sensors.GenericSensorParameter
+import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.world.item.{ItemStack, Items}
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraftforge.api.distmarker.{Dist, OnlyIn}
@@ -26,13 +26,13 @@ case class SensorResource[T: ClassTag](uid: String, iconName: String, accessor: 
   )
 
   @OnlyIn(Dist.CLIENT)
-  override def drawParameter(m: PoseStack, rect: Rect, target: DrawTarget, obj: BlockEntity, param: GenericSensorParameter): Unit =
+  override def drawParameter(graphics: GuiGraphics, rect: Rect, target: DrawTarget, obj: BlockEntity, param: GenericSensorParameter): Unit =
     param match {
       case ParameterResource.solid =>
-        target.drawItem(m, new ItemStack(Items.COBBLESTONE), rect.origin)
+        target.drawItem(graphics, new ItemStack(Items.COBBLESTONE), rect.origin)
       case ParameterResource.fluid =>
-        target.drawItem(m, new ItemStack(Items.WATER_BUCKET), rect.origin)
-      case _ => super.drawParameter(m: PoseStack, rect, target, obj, param)
+        target.drawItem(graphics, new ItemStack(Items.WATER_BUCKET), rect.origin)
+      case _ => super.drawParameter(graphics, rect, target, obj, param)
     }
 
   override def getResultTyped(param: GenericSensorParameter, te: T): Boolean = (param, te) match {

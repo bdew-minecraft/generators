@@ -1,6 +1,5 @@
 package net.bdew.generators.controllers.syngas
 
-import com.mojang.blaze3d.vertex.PoseStack
 import net.bdew.generators.gui.{GuiOutputConfig, WidgetFillDataSlotTooltip}
 import net.bdew.generators.network.{NetworkHandler, PktDumpBuffers}
 import net.bdew.generators.registries.Fluids
@@ -10,6 +9,7 @@ import net.bdew.lib.gui._
 import net.bdew.lib.gui.widgets.{WidgetButtonIcon, WidgetFluidGauge, WidgetLabel}
 import net.bdew.lib.multiblock.gui.WidgetInfo
 import net.bdew.lib.{Client, DecFormat, Text}
+import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.player.Inventory
 import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions
@@ -54,11 +54,11 @@ class GuiSyngas(container: ContainerSyngas, playerInv: Inventory) extends BaseSc
           tip += Text.translate("advgenerators.label.syngas.heat.disabled").setColor(Text.Color.RED)
       }
 
-      override def draw(m: PoseStack, mouse: Point, partial: Float): Unit = {
+      override def draw(graphics: GuiGraphics, mouse: Point, partial: Float): Unit = {
         if (te.heatingChambers > 0)
-          super.draw(m, mouse, partial)
+          super.draw(graphics, mouse, partial)
         else
-          parent.drawTexture(m, rect, Textures.Button16.disabled)
+          parent.drawTexture(graphics, rect, Textures.Button16.disabled)
       }
     })
 
